@@ -22,6 +22,9 @@ const FormField = (props) => {
         placeholder="enter here.."
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
+        onKeyDown={(e) => {
+          props.onKeyDown(e);
+        }}
       />
     </div>
   );
@@ -58,6 +61,11 @@ const Registration = (props) => {
       );
     }
   };
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13 && password && username) {
+      doRegistration();
+    }
+  };
 
   return (
     <BaseContainer>
@@ -67,18 +75,19 @@ const Registration = (props) => {
             label="Username"
             value={username}
             onChange={(un) => setUsername(un)}
+            onKeyDown={handleKeyDown}
           />
           <FormField
             label="Password"
             value={password}
             onChange={(n) => setPassword(n)}
+            onKeyDown={handleKeyDown}
           />
           <div className="registration button-container">
             <Button
               disabled={!username || !password}
               width="100%"
-              onClick={() => doRegistration()}
-            >
+              onClick={() => doRegistration()}>
               Register
             </Button>
           </div>
