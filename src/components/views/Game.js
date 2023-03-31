@@ -10,10 +10,10 @@ import "styles/views/Game.scss";
 const Player = ({ user }) => (
   <div className="player container">
     <div className="player username">
-      <Link to={"/game/profile/" + user.id}>{user.username}</Link>
+      <Link to={"/game/profile/" + user.userId}>{user.username}</Link>
     </div>
     {/* <div className="player name">{user.name}</div> */}
-    <div className="player id">id: {user.id}</div>
+    <div className="player id">userId: {user.userId}</div>
   </div>
 );
 
@@ -35,7 +35,8 @@ const Game = () => {
   const logout = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await api.post("/logout/" + userId);
+
+      const response = await api.put("/logout/" + userId);
       console.log(response);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -100,7 +101,7 @@ const Game = () => {
       <div className="game">
         <ul className="game user-list">
           {users.map((user) => (
-            <Player user={user} key={user.id} />
+            <Player user={user} key={user.userId} />
           ))}
         </ul>
         <Button width="100%" onClick={() => logout()}>
