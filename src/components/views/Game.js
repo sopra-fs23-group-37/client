@@ -6,24 +6,51 @@ import { Link, useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+import Header from "./Header";
 
 const Game = () => {
-  // use react-router-dom's hook to access the history
+  const [lobby, setLobby] = useState(0);
+
+  const getLobbies = () => {};
+
+  const createLobby = () => {};
+
+  const lobbyBrowser = () => {};
+
+  const joinLobby = () => {};
+
+  const spectate = () => {};
 
   return (
     <BaseContainer className="game container">
       <div class="row">
-        <button>Matchmaking Lobbies: </button>
-        <p>Your Statistics</p>
+        <button2>
+          Matchmaking Lobbies: <br /> {lobby}
+        </button2>
+        <button2>
+          <u>Your Statistics</u>
+          <br />
+          wins: 0
+          <br />
+          losses: 0
+        </button2>
       </div>
       <div class="row">
         {" "}
-        <button class="with-icon">Create Lobby</button>
-        <button class="with-icon">Lobby Browser</button>
+        <button1 class="with-icon" onClick={() => createLobby()}>
+          Create Lobby
+        </button1>
+        <button1 class="with-icon" onClick={() => lobbyBrowser()}>
+          Lobby Browser
+        </button1>
       </div>
       <div class="row">
-        <button class="with-icon">Join Lobby</button>
-        <button class="with-icon">Spectate</button>
+        <button1 class="with-icon" onClick={() => joinLobby()}>
+          Join Lobby
+        </button1>
+        <button1 class="with-icon" onClick={() => spectate()}>
+          Spectate
+        </button1>
       </div>
     </BaseContainer>
   );
