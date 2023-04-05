@@ -11,49 +11,60 @@
   &.container {
     background: $background;
     padding: 1.5em;
+    margin-top: calc(100vh/4);
+    margin-left: calc(100vw/2);
+    margin-right: auto;
+    margin-bottom: auto;
     border-radius: $borderRadius;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: $dropShadow;
+    
   }
-  &.user-list {
-    list-style: none;
-    padding-left: 0;
-  }
-  &.user-item {
+  .row {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1em;
+    width: 100%;
+  }
+  button {
+    width: 50%;
+    padding: 1em;
+    border: none;
+    border-radius: $borderRadius;
+    background: $accent;
+    color: $textColor;
+    font-size: 1.2em;
+    text-align: center;
+    margin: 0 0.5em;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &:first-child {
+      margin-left: 0;
+    }
+    
+    &:last-child {
+      margin-right: 0;
+    }
+    
+    &:hover {
+      background: $accentDark;
+      transform: translateY(-1px);
+      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    &.with-icon {
+      background-image: url('/image/add.svg');
+      background-position: center top;
+      background-repeat: no-repeat;
+      padding-top: 2em; /* adjust the padding to make space for the image */
+      padding-right: 10px;
+    }
   }
   & p,h2 {
     margin: 0.5em 0;
-  }
-}
-
-.player {
-  &.container {
-    margin: 0.5em 0;
-    width: 20em;
-    padding: 10px;
-    border-radius: $borderRadius;
-    display: flex;
-    align-items: center;
-    background: lighten($background, 5);
-  }
-  &.name {
-    font-weight: 300;
-    margin-left: 5px;
-  }
-  &.username {
-    font-weight: 500;
-    color: $accent;
-  }
-  &.id {
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: $fontMono;
-    font-weight: 300;
   }
 }
