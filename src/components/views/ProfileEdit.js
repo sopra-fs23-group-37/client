@@ -33,13 +33,13 @@ const ProfileEdit = () => {
   const history = useHistory();
   const profileId = useParams().profileId;
   const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [birthday, setBirthday] = useState(null);
+  const [username, setUsername] = useState(localStorage.getItem('username'));
+  const [birthday, setBirthday] = useState(localStorage.getItem('birthday'));
 
   const logout = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await api.post("/logout/" + userId);
+      const response = await api.put("/logout/" + userId);
       console.log(response);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -62,8 +62,11 @@ const ProfileEdit = () => {
     try {
       const requestBody = JSON.stringify({ username, birthday });
       const response = await api.put("/users/" + profileId, requestBody);
+      
       console.log(response);
 
+      localStorage.setItem("username", username);
+      localStorage.setItem("birthday", birthday);
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game/profile/` + profileId);
     } catch (error) {

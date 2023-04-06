@@ -19,7 +19,10 @@ const Game = () => {
 
   const joinLobby = () => {};
 
+
   const spectate = () => {};
+
+
 
   return (
     <BaseContainer className="game container">

@@ -14,7 +14,7 @@ const Profile = () => {
   const logout = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await api.post("/logout/" + userId);
+      const response = await api.put("/logout/" + userId);
       console.log(response);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
