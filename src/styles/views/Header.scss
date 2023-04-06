@@ -3,11 +3,17 @@
 .header {
   &.container {
     @include center;
+    background-color: white;
+    max-width: 80%;
+    margin: 0 auto;
+    box-shadow: $dropShadow;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
 
   &.title {
     font-weight: bold;
-    color: $background;
+    color: black;
     text-align: center;
   }
 }
