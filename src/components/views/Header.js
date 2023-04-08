@@ -1,54 +1,51 @@
 import React from "react";
-
-import { ReactLogo } from "components/ui/ReactLogo";
-
+import { api, handleError } from "helpers/api";
 import PropTypes from "prop-types";
-
 import "styles/views/Header.scss";
+import { useHistory } from "react-router-dom";
 
-/**
+const rulebook = () => {
+  console.log(localStorage.getItem("token"));
+  console.log(localStorage.getItem("userId"));
+};
 
-* This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
+const Header = (props) => {
+  const history = useHistory();
 
-* Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called “props”) and return React elements describing what should appear on the screen.
+  const logout = async () => {
+    try {
+      const localId = localStorage.getItem("userId");
 
-* They are reusable pieces, and think about each piece in isolation.
+      await api.put("logout/" + localId);
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
 
-* Functional components have to return always something. However, they don't need a "render()" method.
+      // Redirect to the login page
+      window.location.reload();
+    } catch (error) {
+      alert(`Changes could not be stored: \n${handleError(error)}`);
+      console.error("Error logging out:", error);
+    }
+  };
 
-* https://reactjs.org/docs/components-and-props.html
-
-* @FunctionalComponent
-
-*/
-
-const logout = () => {};
-
-const rulebook = () => {};
-
-const Header = (props) => (
-  <div className="header container" style={{ height: props.height }}>
-    <h1 className="header title">Welcome User</h1>{" "}
-    <div className="header buttons">
-      {" "}
-      <button className="header logoutButton" onClick={() => logout()}>
-        Logout{" "}
-      </button>{" "}
-      <button className="header rulebookButton" onClick={() => rulebook()}>
-        Rulebook{" "}
-      </button>{" "}
-    </div>{" "}
-  </div>
-);
+  return (
+    <div className="header container" style={{ height: props.height }}>
+      <h1 className="header title">Welcome User</h1>{" "}
+      <div className="header buttons">
+        {" "}
+        <button className="header logoutButton" onClick={() => logout()}>
+          Logout{" "}
+        </button>{" "}
+        <button className="header rulebookButton" onClick={() => rulebook()}>
+          Rulebook{" "}
+        </button>{" "}
+      </div>{" "}
+    </div>
+  );
+};
 
 Header.propTypes = {
   height: PropTypes.string,
 };
-
-/**
-
-* Don't forget to export your component!
-
-*/
 
 export default Header;
