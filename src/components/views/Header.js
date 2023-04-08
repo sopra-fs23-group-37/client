@@ -10,8 +10,6 @@ const rulebook = () => {
 };
 
 const Header = (props) => {
-  const history = useHistory();
-
   const logout = async () => {
     try {
       const localId = localStorage.getItem("userId");
