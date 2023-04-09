@@ -8,6 +8,9 @@ class Game {
     this.winner = null;
     this.createdDate = null;
     this.gameStatus = null;
+    this.startingPlayer = null;
+    this.currentround = null;
+    this.totalRounds = null;
     Object.assign(this, data);
   }
 }
