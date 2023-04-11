@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
 import Game from "models/Game";
+import Header from "components/views/Header";
 
 const Home = () => {
   const history = useHistory();
@@ -63,37 +64,40 @@ const Home = () => {
   }
 
   return (
-    <BaseContainer className="game container">
-      <div class="row">
-        <button2>
-          Open Lobbies: <br /> {openLobbies}
-        </button2>
-        <button2>
-          <u>Your Statistics</u>
-          <br />
-          wins: 0
-          <br />
-          losses: 0
-        </button2>
-      </div>
-      <div class="row">
-        {" "}
-        <button1 class="with-icon" onClick={() => createLobby()}>
-          Create Lobby
-        </button1>
-        <button1 class="with-icon" onClick={() => lobbyBrowser()}>
-          Lobby Browser
-        </button1>
-      </div>
-      <div class="row">
-        <button1 class="with-icon" onClick={() => joinLobby()}>
-          Join Lobby
-        </button1>
-        <button1 class="with-icon" onClick={() => spectate()}>
-          Spectate
-        </button1>
-      </div>
-    </BaseContainer>
+    <div>
+      <Header text="Welcome User" />
+      <BaseContainer className="game container">
+        <div class="row">
+          <button2>
+            Open Lobbies: <br /> {openLobbies}
+          </button2>
+          <button2>
+            <u>Your Statistics</u>
+            <br />
+            wins: 0
+            <br />
+            losses: 0
+          </button2>
+        </div>
+        <div class="row">
+          {" "}
+          <button1 class="with-icon" onClick={() => createLobby()}>
+            Create Lobby
+          </button1>
+          <button1 class="with-icon" onClick={() => lobbyBrowser()}>
+            Lobby Browser
+          </button1>
+        </div>
+        <div class="row">
+          <button1 class="with-icon" onClick={() => joinLobby()}>
+            Join Lobby
+          </button1>
+          <button1 class="with-icon" onClick={() => spectate()}>
+            Spectate
+          </button1>
+        </div>
+      </BaseContainer>
+    </div>
   );
 };
 
