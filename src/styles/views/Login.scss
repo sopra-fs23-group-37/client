@@ -1,10 +1,24 @@
 @import 'styles/theme';
 
+body{
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url("/image/loginBackground.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .login {
   &.container {
-    margin-top: 2em;
+    padding-top: calc(100vh/4);
+    padding-left: calc(100vw/4);
     min-height: 300px;
-    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
   }
@@ -38,6 +52,8 @@
     margin-bottom: 20px;
     background: transparentize(white, 0.85);
     color: $textColor;
+    background-color: $accent;
+    box-shadow: $dropShadow;
   }
   &.label {
     color: $textColor;
@@ -45,9 +61,13 @@
     text-transform: lowercase;
     font-weight: 300;
   }
-  &.button-container {
+  .button-container {
+    position: relative;
     display: flex;
     justify-content: center;
     margin-top: 2em;
+    button {
+      background-color: #E9C46A;
+    }
   }
 }

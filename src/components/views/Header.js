@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import "styles/views/Header.scss";
 import { useHistory } from "react-router-dom";
 
-const rulebook = () => {
-  console.log(localStorage.getItem("token"));
-  console.log(localStorage.getItem("userId"));
-};
+// TODO: Rulebook anzeigen lassen
+const rulebook = () => {};
 
 const Header = (props) => {
   const logout = async () => {
@@ -28,7 +26,7 @@ const Header = (props) => {
 
   return (
     <div className="header container" style={{ height: props.height }}>
-      <h1 className="header title">Welcome User</h1>{" "}
+      <h1 className="header title">{props.title}</h1>{" "}
       <div className="header buttons">
         {" "}
         <button className="header logoutButton" onClick={() => logout()}>
