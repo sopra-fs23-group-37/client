@@ -73,6 +73,8 @@ const Login = (props) => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
+          <h1 className="login title">Welcome to 2-10</h1>
+          <h2 className="login subtitle">Login</h2>
           <FormField
             label="Username"
             value={username}
@@ -93,7 +95,9 @@ const Login = (props) => {
               Login
             </Button>
           </div>
-          <div className="login button-container">
+          <div
+            className="login button-container"
+            style={{ marginBottom: "2em" }}>
             <Button width="100%" onClick={() => doRegistration()}>
               Click to register
             </Button>

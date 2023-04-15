@@ -16,8 +16,8 @@ body{
 
 .login {
   &.container {
-    padding-top: calc(100vh/4);
-    padding-left: calc(100vw/4);
+    padding-top: calc(100vh / 4);
+    padding-left: calc(100vw / 4);
     min-height: 300px;
     @include center;
     flex-direction: column;
@@ -28,7 +28,7 @@ body{
     justify-content: center;
     width: 60%;
     max-width: 30em;
-    height: 20em;
+    height: auto;
     font-size: 16px;
     font-weight: 300;
     padding-left: 37px;
@@ -37,6 +37,7 @@ body{
     background-color: $background;
     transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
+    margin-bottom: 2em;
   }
   &.field {
     display: flex;
@@ -58,7 +59,6 @@ body{
   &.label {
     color: $textColor;
     margin-bottom: 10px;
-    text-transform: lowercase;
     font-weight: 300;
   }
   .button-container {
@@ -67,7 +67,20 @@ body{
     justify-content: center;
     margin-top: 2em;
     button {
-      background-color: #E9C46A;
+      background-color: #e9c46a;
     }
+  }
+  .title{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0.4 em;
+  }
+  .subtitle{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    color: #E76F51;
+    margin-top: 0em;
   }
 }
