@@ -66,6 +66,8 @@ const Registration = (props) => {
     <BaseContainer>
       <div className="registration container">
         <div className="registration form">
+          <h1 className="registration title">Welcome to 2-10</h1>
+          <h2 className="registration subtitle">Registration</h2>
           <FormField
             label="Username"
             value={username}
