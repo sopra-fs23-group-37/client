@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Registration.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
 const FormField = (props) => {
   return (
     <div className="registration field">
@@ -54,13 +48,14 @@ const Registration = (props) => {
       localStorage.setItem("userId", user.userId);
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
+      history.push("/game");
     } catch (error) {
       alert(
         `Something went wrong during the registration: \n${handleError(error)}`
       );
     }
   };
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && password && username) {
       doRegistration();
@@ -90,6 +85,11 @@ const Registration = (props) => {
               onClick={() => doRegistration()}>
               Register
             </Button>
+          </div>
+          <div className="registration button-container">
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
           </div>
         </div>
       </div>

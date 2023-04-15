@@ -8,12 +8,13 @@
  */
 
 .game {
+  
   &.container {
     background: $background;
     padding: 1.5em;
     margin-top: calc(100vh/4);
     margin-left: calc(100vw/2);
-    margin-right: auto;
+    margin-right: calc(100vw/4);
     margin-bottom: auto;
     border-radius: $borderRadius;
     display: flex;
@@ -22,6 +23,14 @@
     box-shadow: $dropShadow;
     
   }
+
+  .rectangle {
+    background-color: #ffffff;
+    width: 80%;
+    height: 10vh;
+    margin: 0 auto; 
+  }
+
   .row {
     display: flex;
     flex-direction: row;
@@ -29,7 +38,8 @@
     margin-top: 1em;
     width: 100%;
   }
-  button {
+
+  button1 {
     width: 50%;
     padding: 1em;
     border: none;
@@ -39,8 +49,9 @@
     font-size: 1.2em;
     text-align: center;
     margin: 0 0.5em;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;    
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
 
     &:first-child {
       margin-left: 0;
@@ -59,11 +70,37 @@
     &.with-icon {
       background-image: url('/image/add.svg');
       background-position: center top;
+      background-position-y: calc(5%);
       background-repeat: no-repeat;
-      padding-top: 2em; /* adjust the padding to make space for the image */
+      padding-top: 2em; 
       padding-right: 10px;
     }
   }
+
+  button2{
+    width: 50%;
+    padding: 1em;
+    border: none;
+    border-radius: $borderRadius;
+    background: $accentDark;
+    color: $textColor;
+    font-size: 1.2em;
+    text-align: center;
+    margin: 0 0.5em;  
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+
+    &:first-child {
+      margin-left: 0;
+    }
+    
+    &:last-child {
+      margin-right: 0;
+    }
+
+    
+  }
+
   & p,h2 {
     margin: 0.5em 0;
   }
