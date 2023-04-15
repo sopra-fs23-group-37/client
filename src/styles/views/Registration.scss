@@ -1,30 +1,43 @@
 @import 'styles/theme';
 
+body{
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url("/image/loginBackground.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .registration {
   &.container {
-    margin-top: 4em;
+    padding-top: calc(100vh / 4);
+    padding-left: calc(100vw / 4);
     min-height: 300px;
-    margin-left: 200px;
-    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
   }
   &.form {
-    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 60%;
     max-width: 30em;
-    height: 20em;
+    height: auto;
     font-size: 16px;
     font-weight: 300;
     padding-left: 37px;
     padding-right: 37px;
     border-radius: 0.75em;
-    background-color: rgba(255, 255, 255, 0.921);
+    background-color: $background;
     transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
+    margin-bottom: 2em;
   }
   &.field {
     display: flex;
@@ -32,28 +45,42 @@
     justify-content: center;
   }
   &.input {
-    display: block;
     height: 35px;
     padding-left: 15px;
     margin-left: -4px;
     border: none;
     border-radius: 0.75em;
     margin-bottom: 20px;
-    background: transparentize(rgb(223, 147, 6), 0.85);
+    background: transparentize(white, 0.85);
     color: $textColor;
+    background-color: $accent;
+    box-shadow: $dropShadow;
   }
   &.label {
     color: $textColor;
     margin-bottom: 10px;
-    text-transform: upercase;
     font-weight: 300;
   }
-  &.button-container {
+  .button-container {
+    position: relative;
     display: flex;
     justify-content: center;
     margin-top: 2em;
+    button {
+      background-color: #e9c46a;
+    }
   }
-
-
-
+  .title{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0.4 em;
+  }
+  .subtitle{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    color: #E76F51;
+    margin-top: 0em;
+  }
 }
