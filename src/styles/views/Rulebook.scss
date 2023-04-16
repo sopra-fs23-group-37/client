@@ -1,0 +1,91 @@
+.rulebook {
+  &.container {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+  }
+
+  &.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  &.cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  &.section {
+    margin-bottom: 20px;
+  }
+
+  &.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  &.card-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    // Beispiel: Stil für einzelne PokerCard-Komponenten
+    .poker-card {
+      margin-right: 10px;
+    }
+  }
+
+  &.rules-list {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+
+  &.rule-item {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-group {
+    display: flex;
+    gap: 10px;
+    transition: transform 0.5s ease; /* CSS-Transition hinzufügen */
+  }
+
+  .card-group:hover {
+    transform: scale(1.1); /* Animationseffekt bei Hover */
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: column; /* Ändern von 'row' auf 'column' */
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 16px; /* Add margin to create space between title and buttons */
+  }
+
+  .button {
+    margin-top: 8px; /* Ändern von 'margin-right' auf 'margin-top' */
+  }
+
+  .button:hover {
+    background-color: #fb9200; /* Hintergrundfarbe des Buttons bei Hover */
+  }
+
+  .rulebook.card-group {
+    display: flex;
+    align-items: center;
+    height: 100px; /* Set the desired height based on your rule button height */
+  }
+  
+  
+
+}

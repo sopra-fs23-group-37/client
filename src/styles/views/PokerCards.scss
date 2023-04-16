@@ -1,0 +1,57 @@
+.poker-card {
+  width: 60px; /* ursprünglich 120px, jetzt 50% verkleinert */
+  height: 90px; /* ursprünglich 180px, jetzt 50% verkleinert */
+  background-color: white;
+  border-radius: 5px; /* ursprünglich 10px, jetzt 50% verkleinert */
+  box-shadow: 0px 1px 2.5px rgba(0, 0, 0, 0.1); /* ursprünglich 0px 2px 5px, jetzt 50% verkleinert */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px; /* ursprünglich 36px, jetzt 50% verkleinert */
+  font-weight: bold;
+  color: black;
+  position: relative;
+  margin-right: 5px; /* ursprünglich 10px, jetzt 50% verkleinert */
+
+  &.spades {
+    .poker-card-inner {
+      color: #000;
+    }
+  }
+
+  &.hearts {
+    .poker-card-inner {
+      color: #f00;
+    }
+  }
+
+  &.diamonds {
+    .poker-card-inner {
+      color: #f00;
+    }
+  }
+
+  &.clubs {
+    .poker-card-inner {
+      color: #000;
+    }
+  }
+
+  .poker-card-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .poker-card-rank {
+    margin-bottom: 2.5px; /* ursprünglich 5px, jetzt 50% verkleinert */
+  }
+
+  .poker-card-suit {
+    margin-bottom: -5px; /* ursprünglich -10px, jetzt 50% verkleinert */
+  }
+}

@@ -5,9 +5,11 @@ import "styles/views/Header.scss";
 import { useHistory } from "react-router-dom";
 
 // TODO: Rulebook anzeigen lassen
-const rulebook = () => {};
+
 
 const Header = (props) => {
+  const history = useHistory();
+
   const logout = async () => {
     try {
       const localId = localStorage.getItem("userId");
@@ -24,18 +26,21 @@ const Header = (props) => {
     }
   };
 
+  const showRulebook = () => {
+    history.push("/rulebook");
+  };
+
   return (
     <div className="header container" style={{ height: props.height }}>
-      <h1 className="header title">{props.title}</h1>{" "}
+      <h1 className="header title">{props.title}</h1>
       <div className="header buttons">
-        {" "}
         <button className="header logoutButton" onClick={() => logout()}>
-          Logout{" "}
-        </button>{" "}
-        <button className="header rulebookButton" onClick={() => rulebook()}>
-          Rulebook{" "}
-        </button>{" "}
-      </div>{" "}
+          Logout
+        </button>
+        <button className="header rulebookButton" onClick={() => showRulebook()}>
+          Rulebook
+        </button>
+      </div>
     </div>
   );
 };
