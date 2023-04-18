@@ -4,6 +4,7 @@
   &.container {
     @include center;
     background-color: white;
+    font-family: $fontDefault;
     max-width: 80%;
     height: 90px;
     margin: 0 auto;

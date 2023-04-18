@@ -26,7 +26,7 @@ const Header = (props) => {
 
   return (
     <div className="header container" style={{ height: props.height }}>
-      <h1 className="header title">{props.title}</h1>{" "}
+      <h1 className="header title">{props.title}</h1>{""}
       <div className="header buttons">
         {" "}
         <button className="header logoutButton" onClick={() => logout()}>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { Link, useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
+import { Button, ButtonLight } from "components/ui/Button";
 import "styles/views/Registration.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -81,16 +81,15 @@ const Registration = (props) => {
             onKeyDown={handleKeyDown}
           />
           <div className="registration button-container">
-            <Button
+            <ButtonLight
               disabled={!username || !password}
-              width="100%"
+              width="80%"
               onClick={() => doRegistration()}>
               Register
-            </Button>
-          </div>
-          <div className="registration button-container">
+            </ButtonLight>
+            <div class="hr-sect"> or </div>
             <Link to="/login">
-              <Button>Login</Button>
+              <ButtonLight width = "80%">Login</ButtonLight>
             </Link>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
-import { useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
+import { Link, useHistory } from "react-router-dom";
+import { Button, ButtonLight } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -60,9 +60,6 @@ const Login = (props) => {
     }
   };
 
-  const doRegistration = () => {
-    history.push("/registration");
-  };
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && password && username) {
       doLogin();
@@ -87,21 +84,19 @@ const Login = (props) => {
             onChange={(n) => setPassword(n)}
             onKeyDown={handleKeyDown}
           />
-          <div className="login button-container">
-            <Button
+          <div 
+            className="login button-container">
+            <ButtonLight
               disabled={!username || !password}
-              width="100%"
+              width="80%"
               onClick={() => doLogin()}>
               Login
-            </Button>
-          </div>
-          <div
-            className="login button-container"
-            style={{ marginBottom: "2em" }}>
-            <Button width="100%" onClick={() => doRegistration()}>
-              Click to register
-            </Button>
-          </div>
+            </ButtonLight>
+            <div class="hr-sect"> or </div>
+            <Link to="/registration">
+              <ButtonLight width = "80%">Register</ButtonLight>
+            </Link>
+          </div>  
         </div>
       </div>
     </BaseContainer>
