@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Game.scss";
+import "styles/views/Home.scss";
 import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
@@ -62,7 +62,7 @@ const Lobby = () => {
   );
 
   return (
-    <BaseContainer className="game container">
+    <BaseContainer className="home container">
       <h2>Lobby for Game {gameId} </h2>
       {content}
       {/* <div className="login container">

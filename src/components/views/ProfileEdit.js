@@ -1,6 +1,6 @@
 import { useHistory, useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Game.scss";
+import "styles/views/Home.scss";
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import { Spinner } from "../ui/Spinner";
@@ -149,7 +149,7 @@ const ProfileEdit = () => {
   }
 
   return (
-    <BaseContainer className="game container">
+    <BaseContainer className="Home container">
       <h2>Edit Profile</h2>
       {content}
     </BaseContainer>

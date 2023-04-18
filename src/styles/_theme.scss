@@ -9,7 +9,8 @@
 */
 
 $accent: #F4A261;
-$accentDark: #E76F51;;
+$accentDark: #E76F51;
+$accentLight: #E9C46A;
 $textColor: black;
 $background: white;
 
@@ -29,6 +30,7 @@ $fontMono: "Roboto Mono", monospace;
 $dropShadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
 
 $borderRadius: 0.75em;
+$borderRadiusSmallButtons: 0.4em;
 
 /* mixins
 
