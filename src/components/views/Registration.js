@@ -35,6 +35,8 @@ const Registration = (props) => {
   const [password, setPassword] = useState(null);
   const [username, setUsername] = useState(null);
 
+  
+
   const doRegistration = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
