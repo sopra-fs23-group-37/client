@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Profile from "../../views/Profile";
 import ProfileEdit from "../../views/ProfileEdit";
 import CreateGame from "components/views/CreateGame";
-import GameView from "components/views/Game";
+import GameView from "components/views/GameView";
 import Lobby from "components/views/Lobby";
 
 const GameRouter = (props) => {

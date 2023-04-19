@@ -30,6 +30,7 @@ const Lobby = () => {
       );
     });
     setConnected(true);
+    console.log(connected);
   }
 
   const updateGame = (data) => {
@@ -70,6 +71,13 @@ const Lobby = () => {
     <BaseContainer className="game container">
       <h2>Lobby for Game {gameId} </h2>
       {content}
+      {/* <div className="login container">
+        <div className="login button-container">
+          <Button width="100%" onClick={() => startGame(stompClient)}>
+            Start Game
+          </Button>
+        </div>
+      </div> */}
     </BaseContainer>
   );
 };
