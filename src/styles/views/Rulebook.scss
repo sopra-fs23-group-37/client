@@ -1,15 +1,23 @@
+@import 'styles/theme';
+
 .rulebook {
   &.container {
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 20px;
+    height: 100vh;
+    background-image: url("/image/Egyptian-Rat-Screw.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 10;
+    bottom: 0;
   }
-
   &.title {
     font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: rgb(0, 0, 0);
     margin-bottom: 10px;
+    background-image: url(https://scoop.com.au/wp-content/uploads/2020/04/amanda-jones-P787-xixGio-unsplash-1.jpg);
   }
 
   &.cards {
@@ -25,7 +33,7 @@
   &.section-title {
     font-size: 18px;
     font-weight: bold;
-    color: #666;
+    color: rgb(0, 0, 0);
     margin-bottom: 10px;
   }
 
@@ -41,13 +49,15 @@
   }
 
   &.rules-list {
+    background-color: wheat;
     list-style-type: none;
     padding-left: 20px;
   }
 
   &.rule-item {
+    background-color: white;
     font-size: 14px;
-    color: #777;
+    color: rgb(0, 0, 0);
     margin-bottom: 5px;
     &:last-child {
       margin-bottom: 0;
@@ -55,6 +65,7 @@
   }
 
   .card-group {
+    
     display: flex;
     gap: 10px;
     transition: transform 0.5s ease; /* CSS-Transition hinzufügen */
