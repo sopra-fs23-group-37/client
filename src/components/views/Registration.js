@@ -15,6 +15,7 @@ const FormField = (props) => {
         className="registration input"
         placeholder="enter here.."
         value={props.value}
+        type={props.type}
         onChange={(e) => props.onChange(e.target.value)}
         onKeyDown={(e) => {
           props.onKeyDown(e);
@@ -79,6 +80,7 @@ const Registration = (props) => {
           <FormField
             label="Password"
             value={password}
+            type="password"
             onChange={(n) => setPassword(n)}
             onKeyDown={handleKeyDown}
           />

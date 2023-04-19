@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Game.scss";
+import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
