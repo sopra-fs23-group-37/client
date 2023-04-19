@@ -1,19 +1,17 @@
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Home.scss";
+import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
 
-const Lobby = () => {
+const GameView = () => {
   const gameId = useParams().gameId;
-  const [game, setGame] = useState(new Game());
+  const [setGame] = useState(new Game());
   const [connected, setConnected] = useState(false);
   const socket = new SockJS("http://localhost:8080/websocket");
   const stompClient = Stomp.over(socket);
-  const history = useHistory();
-
 
   function connect() {
     const playerId = parseInt(localStorage.getItem("userId"));
@@ -30,7 +28,6 @@ const Lobby = () => {
       );
     });
     setConnected(true);
-    console.log(connected);
   }
 
   const updateGame = (data) => {
@@ -43,7 +40,6 @@ const Lobby = () => {
 
   const startGame = () => {
     stompClient.send("/game/start/" + gameId, {});
-    history.push(`/game/${gameId}`);
   };
 
   useEffect(() => {
@@ -53,33 +49,55 @@ const Lobby = () => {
     }
   });
 
-  //useEffect(() => {}, [game]);
+  let playerHand = (
+    <div className="card-container">
+      {/* Placeholder for player hand */}
+      <div className="card"></div>
+      <div className="card"></div>
+      <div className="card"></div>
+    </div>
+  );
+
+  let opponentHand = (
+    <div className="card-container">
+      {/* Placeholder for opponent hand */}
+      <div className="card"></div>
+      <div className="card"></div>
+      <div className="card"></div>
+    </div>
+  );
+
+  let deck = (
+    <div className="card-container">
+      {/* Placeholder for deck */}
+      <div className="card back"></div>
+    </div>
+  );
+
+  let tableCards = (
+    <div className="card-container">
+      {/* Placeholder for table cards */}
+      <div className="card"></div>
+      <div className="card"></div>
+      <div className="card"></div>
+    </div>
+  );
 
   let content = (
-    <div className="profile overview">
-      <div>Game id: {gameId}</div>
-      <div>Host Status: {game.hostStatus}</div>
-      <div>Guest Status: {game.guestStatus}</div>
-      <div>Game Status: {game.gameStatus}</div>
-      {game.hostStatus === "CONNECTED" && game.guestStatus === "CONNECTED" && (
-        <div>Both players are in the lobby. The game will start soon.</div>
-      )}
+    <div className="game-container">
+      <div className="player-hand">{playerHand}</div>
+      <div className="opponent-hand">{opponentHand}</div>
+      <div className="table-cards">{tableCards}</div>
+      <div className="deck">{deck}</div>
     </div>
   );
 
   return (
-    <BaseContainer className="home container">
-      <h2>Lobby for Game {gameId} </h2>
+    <BaseContainer className="game container">
+      <h2>Game {gameId} </h2>
       {content}
-      {/* <div className="login container">
-        <div className="login button-container">
-          <Button width="100%" onClick={() => startGame(stompClient)}>
-            Start Game
-          </Button>
-        </div>
-      </div> */}
     </BaseContainer>
   );
 };
 
-export default Lobby;
+export default GameView;
