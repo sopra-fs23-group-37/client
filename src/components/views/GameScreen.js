@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/GameScreen.scss";
+import "styles/views/Gamescreen.scss";
 import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
 
-const GameView = () => {
+const GameScreen = () => {
   const gameId = useParams().gameId;
   const [game, setGame] = useState(new Game());
   const [connected, setConnected] = useState(false);
@@ -86,7 +86,7 @@ const GameView = () => {
   );
 
   return (
-    <BaseContainer className="game container">
+    <BaseContainer className="gamescreen container">
       <h2>Game {gameId} </h2>
       <h1> {game.gameId} </h1>
       {content}
@@ -94,4 +94,4 @@ const GameView = () => {
   );
 };
 
-export default GameView;
+export default GameScreen;

@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import Profile from "../../views/Profile";
 import ProfileEdit from "../../views/ProfileEdit";
 import CreateGame from "components/views/CreateGame";
-import GameView from "components/views/GameView";
 import Lobby from "components/views/Lobby";
+import GameScreen from "components/views/GameScreen";
 
 const GameRouter = (props) => {
   /**
@@ -32,7 +32,7 @@ const GameRouter = (props) => {
         <Lobby />
       </Route>
       <Route path={`${props.base}/game/:gameId`}>
-        <GameView />
+        <GameScreen />
       </Route>
     </div>
   );
