@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Game.scss";
+import "styles/views/Home.scss";
 import Game from "models/Game";
 import Header from "components/views/Header";
 
@@ -66,13 +66,14 @@ const Home = () => {
   return (
     <div>
       <Header text="Welcome User" />
-      <BaseContainer className="game container">
+      <BaseContainer className="home container">
         <div class="row">
           <button2>
-            Open Lobbies: <br /> {openLobbies}
+            Open Lobbies: <br /> 
+            {openLobbies}
           </button2>
           <button2>
-            <u>Your Statistics</u>
+            <u>Your Statistics:</u>
             <br />
             wins: 0
             <br />
