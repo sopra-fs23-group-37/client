@@ -16,7 +16,7 @@ body{
 
 .login {
   &.container {
-    padding-top: calc(100vh / 4);
+    padding-top: calc(100vh / 6);
     padding-left: calc(100vw / 4);
     min-height: 300px;
     @include center;
@@ -26,10 +26,10 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
+    width: 80%;
     max-width: 30em;
     height: auto;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 300;
     padding-left: 37px;
     padding-right: 37px;
@@ -37,7 +37,6 @@ body{
     background-color: $background;
     transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
-    margin-bottom: 2em;
   }
   &.field {
     display: flex;
@@ -45,9 +44,12 @@ body{
     justify-content: center;
   }
   &.input {
-    height: 35px;
+    height: 40px;
     padding-left: 15px;
     margin-left: -4px;
+    max-width: 80%;
+    font-family: $fontDefault;
+    font-size: medium;
     border: none;
     border-radius: 0.75em;
     margin-bottom: 20px;
@@ -58,29 +60,50 @@ body{
   }
   &.label {
     color: $textColor;
+    font-family: $fontDefault;
     margin-bottom: 10px;
     font-weight: 300;
   }
   .button-container {
     position: relative;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-top: 2em;
+    margin-bottom: 2em;
     button {
       background-color: #e9c46a;
     }
   }
   .title{
-    font-family: 'Inter';
+    font-family: $fontDefault;
     font-style: normal;
     font-weight: 400;
-    margin-bottom: 0.4 em;
+    margin-bottom: 0.2em;
   }
   .subtitle{
-    font-family: 'Inter';
+    font-family: $fontDefault;
     font-style: normal;
-    font-weight: 400;
+    font-weight: bold;
     color: #E76F51;
     margin-top: 0em;
+  }
+
+  .hr-sect {
+    display: flex;
+    flex-basis: 100%;
+    width: 80%;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.35);
+    margin: 8px 0px;
+  }
+  .hr-sect::before,
+  .hr-sect::after {
+    content: "";
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0px 8px;
   }
 }

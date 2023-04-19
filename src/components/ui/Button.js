@@ -8,3 +8,12 @@ export const Button = props => (
     {props.children}
   </button>
 );
+
+export const ButtonLight = props => (
+  <button
+    {...props}
+    style={{width: props.width, ...props.style}}
+    className={`primary-button-light ${props.className}`}>
+    {props.children}
+  </button>
+);
