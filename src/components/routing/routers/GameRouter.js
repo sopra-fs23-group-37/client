@@ -31,7 +31,7 @@ const GameRouter = (props) => {
       <Route path={`${props.base}/lobby/:gameId`}>
         <Lobby />
       </Route>
-      <Route path={`${props.base}/game/:gameId`}>
+      <Route path={`${props.base}/:gameId`}>
         <GameScreen />
       </Route>
     </div>
