@@ -9,7 +9,7 @@ class Game {
     this.createdDate = null;
     this.gameStatus = null;
     this.startingPlayer = null;
-    this.currentround = null;
+    this.currentRound = null;
     this.totalRounds = null;
     Object.assign(this, data);
   }
