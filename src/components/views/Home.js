@@ -14,7 +14,10 @@ const Home = () => {
     history.push("/game/createGame");
   };
 
-  const lobbyBrowser = () => {};
+  const lobbyBrowser = () => {
+    //TODO: DELETE
+    console.log(localStorage.getItem("token"));
+  };
 
   const joinLobby = async () => {
     try {
@@ -65,11 +68,11 @@ const Home = () => {
 
   return (
     <div>
-      <Header text="Welcome User" />
+      <Header text="Welcome User " />
       <BaseContainer className="home container">
         <div class="row">
           <button2>
-            Open Lobbies: <br /> 
+            Open Lobbies: <br />
             {openLobbies}
           </button2>
           <button2>
