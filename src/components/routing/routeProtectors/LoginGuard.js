@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 export const LoginGuard = (props) => {
   if (localStorage.getItem("token") === null) {
     return props.children;
-  } else if (typeof localStorage.getItem("token") === String) {
+  } else if (typeof localStorage.getItem("token") === "string") {
     if (localStorage.getItem("token") === "null") {
       return props.children;
     }
