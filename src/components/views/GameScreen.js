@@ -6,9 +6,9 @@ import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
 
-const GameView = () => {
+const GameScreen = () => {
   const gameId = useParams().gameId;
-  const [setGame] = useState(new Game());
+  const [game, setGame] = useState(new Game());
   const [connected, setConnected] = useState(false);
   const socket = new SockJS("http://localhost:8080/websocket");
   const stompClient = Stomp.over(socket);
@@ -33,13 +33,6 @@ const GameView = () => {
   const updateGame = (data) => {
     console.log("game data received:", data);
     setGame(new Game(data));
-    if (data.gameStatus === "CONNECTED") {
-      startGame();
-    }
-  };
-
-  const startGame = () => {
-    stompClient.send("/game/start/" + gameId, {});
   };
 
   useEffect(() => {
@@ -93,11 +86,12 @@ const GameView = () => {
   );
 
   return (
-    <BaseContainer className="game container">
+    <BaseContainer className="gamescreen container">
       <h2>Game {gameId} </h2>
+      <h1> {game.gameId} </h1>
       {content}
     </BaseContainer>
   );
 };
 
-export default GameView;
+export default GameScreen;
