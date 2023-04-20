@@ -6,7 +6,6 @@ import "styles/views/Header.scss";
 
 // TODO: Rulebook anzeigen lassen
 
-
 const Header = (props) => {
   const history = useHistory();
 
@@ -33,12 +32,18 @@ const Header = (props) => {
   return (
     <div className="header container" style={{ height: props.height }}>
       <h1 className="header title">{props.title}</h1>
-      <h1> hello {localStorage.getItem("userId")} </h1>
+      <h1>
+        {" "}
+        {props.text}
+        {localStorage.getItem("userId")}{" "}
+      </h1>
       <div className="header buttons">
         <button className="header logoutButton" onClick={() => logout()}>
           Logout
         </button>
-        <button className="header rulebookButton" onClick={() => showRulebook()}>
+        <button
+          className="header rulebookButton"
+          onClick={() => showRulebook()}>
           Rulebook
         </button>
       </div>
