@@ -1,102 +1,66 @@
 @import 'styles/theme';
 
-.rulebook {
-  &.container {
-    height: 100vh;
-    background-image: url("/image/Egyptian-Rat-Screw.jpeg");
-    background-repeat: no-repeat;
-    background-size:cover;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 10;
-    bottom: 0;
-  }
-  &.title {
-    font-size: 24px;
+body {
+  background: #dc802a;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 100px;
+
+  h1 {
+    font-size: 40px;
+    line-height: 0.8em;
+    color: rgba(0, 0, 0, 0.613);
     font-weight: bold;
-    color: rgb(0, 0, 0);
-    margin-bottom: 10px;
-    background-image: url(https://scoop.com.au/wp-content/uploads/2020/04/amanda-jones-P787-xixGio-unsplash-1.jpg);
-  }
-
-  &.cards {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  }
-
-  &.section {
-    margin-bottom: 20px;
-  }
-
-  &.section-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    margin-bottom: 10px;
-  }
-
-  &.card-group {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-
-    // Beispiel: Stil für einzelne PokerCard-Komponenten
-    .poker-card {
-      margin-right: 10px;
-    }
-  }
-
-  &.rules-list {
-    background-color: wheat;
-    list-style-type: none;
-    padding-left: 20px;
-  }
-
-  &.rule-item {
-    background-color: white;
-    font-size: 14px;
-    color: rgb(0, 0, 0);
-    margin-bottom: 5px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  .card-group {
     
-    display: flex;
-    gap: 10px;
-    transition: transform 0.5s ease; /* CSS-Transition hinzufügen */
+
+      }
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 0.8em;
+    color: rgba(0, 0, 0, 0.613);
+    } 
   }
 
-  .card-group:hover {
-    transform: scale(1.1); /* Animationseffekt bei Hover */
-  }
-
-  .buttons-container {
-    display: flex;
-    flex-direction: column; /* Ändern von 'row' auf 'column' */
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 16px; /* Add margin to create space between title and buttons */
-  }
-
-  .button {
-    margin-top: 8px; /* Ändern von 'margin-right' auf 'margin-top' */
-  }
-
-  .button:hover {
-    background-color: #fb9200; /* Hintergrundfarbe des Buttons bei Hover */
-  }
-
-  .rulebook.card-group {
-    display: flex;
-    align-items: center;
-    height: 100px; /* Set the desired height based on your rule button height */
-  }
+  .rulebook {
+    &.rulebook-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    
+      .rulebook-tab {
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px 4px 0 0;
+        background-color: #222;
+        color: #fff;
+        margin-right: 1rem;
+        transition: background-color 0.2s ease-in-out;
+    
+        &:last-child {
+          margin-right: 0;
+        }
+    
+        &.active {
+          background-color: #444;
+        }
+      }
+    }
+    
+    .rulebook-section {
+      display: block;
+    
+      &.active {
+        display: block;
+      }
+    }
   
-  
 
-}
+    
+  }
