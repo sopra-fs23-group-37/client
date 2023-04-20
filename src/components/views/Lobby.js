@@ -43,7 +43,7 @@ const Lobby = () => {
 
   const startGame = () => {
     stompClient.send("/game/start/" + gameId, {});
-    history.push(`/play/${gameId}`);
+    history.push(`/game/play/${gameId}`);
   };
 
   useEffect(() => {
