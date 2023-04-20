@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
-import Round from "models/Round";
+import { Button } from "components/ui/Button"; 
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
   const [game, setGame] = useState(new Game());
-  const [round, setRound] = useState(new Round());
   const [connected, setConnected] = useState(false);
   const socket = new SockJS("http://localhost:8080/websocket");
   const stompClient = Stomp.over(socket);
@@ -32,8 +31,16 @@ const GameScreen = () => {
     setConnected(true);
   }
 
+  function printStuff() {
+    console.log(game);
+    console.log(game.currentRound.tableCards[0].code)
+  }
+
   const updateGame = (data) => {
+    // json data from server doesn't match class variables on server so be careful when parsing
+    // classes for round, player and card exist according to json if smaller objects are needed
     console.log("game data received:", data);
+    setGame(new Game(data));
   };
 
   useEffect(() => {
@@ -89,8 +96,11 @@ const GameScreen = () => {
   return (
     <BaseContainer className="gamescreen container">
       <h2>Game {gameId} </h2>
-      <h1> {round.currentCardsOnTable} </h1>
+      <h1> {game.gameId} </h1>
       {content}
+      <Button width="100%" onClick={() => printStuff()}>
+            Print to console
+      </Button>
     </BaseContainer>
   );
 };
