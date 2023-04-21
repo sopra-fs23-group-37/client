@@ -4,6 +4,7 @@ import "styles/views/Rulebook.scss";
 import { useState } from "react";
 import { Button } from "components/ui/Button";
 
+
 const Rulebook = () => {
   const [activeTab, setActiveTab] = useState("player-cards");
 
@@ -18,6 +19,14 @@ const Rulebook = () => {
 
 
         <div className="rulebook-tabs">
+        <Button
+            className={activeTab === "cheat-sheet" ? "active" : ""}
+            onClick={() => handleTabClick("cheat-sheet")}
+            style={{ marginRight: "10px" }} // Hier wird der Abstand erhöht
+          >
+            Cheat-Sheet
+          </Button>
+
           <Button
             className={activeTab === "player-cards" ? "active" : ""}
             onClick={() => handleTabClick("player-cards")}
@@ -47,6 +56,24 @@ const Rulebook = () => {
             Scoring
           </Button>
         </div>
+
+
+        {activeTab === "cheat-sheet" && (
+        <div className="rulebook-section">
+          <div className="rulebook-section-title">
+
+            <strong><h3>Cheat-Sheet</h3></strong>
+            </div>
+            <div className="rulebook-rules-list">
+            <ul className="rulebook-rule-item">
+
+            < img src=  "src/image/imagecheat.jpg" alt="Cheat-Sheet" style={{ height: '200px', width: '300px' }}  />
+          
+          </ul>
+          </div>
+                        
+        </div>
+      )}
 
 
         <div className="rulebook-content">
@@ -91,6 +118,8 @@ const Rulebook = () => {
               </ul>
             </div>
           )}
+
+
 
           {activeTab === "play" && (
             <div className="rulebook-section">
@@ -149,10 +178,17 @@ const Rulebook = () => {
                   <li>2 of clubs: 1 point</li>
                   <li>The player or team with most cards: 3 points</li>
                   <li>That makes a total of 25 points.</li>
+                  
                 </ul>
+               
               </div>
-            </div>
+              </div>
+
           )}
+
+              
+          
+          
         </div>
       </div>
     </BaseContainer>
