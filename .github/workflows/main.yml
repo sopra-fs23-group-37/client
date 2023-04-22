@@ -39,7 +39,7 @@ jobs:
       - name: Authenticate with Google Cloud Platform
         uses: google-github-actions/auth@v1
         with:
-          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
       - name: Deploy to App Engine
         id: deploy
