@@ -42,7 +42,6 @@ jobs:
         with:
           deliverables: app.yaml
           version: v1
-          credentials: ${{ secrets.GCP_SERVICE_CREDENTIALS }}
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
