@@ -6,6 +6,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
+  - name: Print PATH environment variable
+    run: echo ${{ env.PATH }}
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
