@@ -3,13 +3,18 @@ import React from "react";
 import "styles/views/Rulebook.scss";
 import { useState } from "react";
 import { Button } from "components/ui/Button";
+import { useHistory } from "react-router-dom";
 
 
 const Rulebook = () => {
   const [activeTab, setActiveTab] = useState("player-cards");
-
+  const history = useHistory();
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const homescreen = () => {
+    history.push("/game/dashboard");
   };
 
   return (
@@ -54,6 +59,11 @@ const Rulebook = () => {
             style={{ marginRight: "10px" }} // Hier wird der Abstand erhöht
           >
             Scoring
+          </Button>
+
+          <Button  onClick={() => homescreen()}
+          style={{ marginRight: "40px" }}>
+            homepage
           </Button>
         </div>
 
