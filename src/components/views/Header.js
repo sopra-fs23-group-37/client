@@ -1,5 +1,5 @@
 import React from "react";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
