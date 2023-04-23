@@ -8,6 +8,10 @@ import Game from "models/Game";
 import { Button } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 
+
+// TODO: Finish the GameScreen
+
+
 const GameScreen = () => {
   const gameId = useParams().gameId;
   const [game, setGame] = useState(new Game());
