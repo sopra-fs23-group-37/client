@@ -15,7 +15,7 @@ const Lobby = () => {
   const socket = new SockJS(domain + "/websocket");
   const stompClient = Stomp.over(socket);
   const history = useHistory();
-  const playerId = parseInt(localStorage.getItem("userId"));
+  const playerId = parseInt(sessionStorage.getItem("userId"));
 
   function connect() {
     stompClient.connect({}, function (frame) {

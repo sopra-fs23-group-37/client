@@ -45,8 +45,8 @@ const Registration = (props) => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("token", user.token);
+      sessionStorage.setItem("userId", user.userId);
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
@@ -86,8 +86,7 @@ const Registration = (props) => {
             <ButtonLight
               disabled={!username || !password}
               width="80%"
-              onClick={() => doRegistration()}
-            >
+              onClick={() => doRegistration()}>
               Register
             </ButtonLight>
             <div class="hr-sect"> or </div>

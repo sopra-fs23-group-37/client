@@ -6,10 +6,10 @@ import PropTypes from "prop-types";
  * Another way to export directly your functional component.
  */
 export const LoginGuard = (props) => {
-  if (localStorage.getItem("token") === null) {
+  if (sessionStorage.getItem("token") === null) {
     return props.children;
-  } else if (typeof localStorage.getItem("token") === "string") {
-    if (localStorage.getItem("token") === "null") {
+  } else if (typeof sessionStorage.getItem("token") === "string") {
+    if (sessionStorage.getItem("token") === "null") {
       return props.children;
     }
   }
