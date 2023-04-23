@@ -16,7 +16,7 @@ const GameScreen = () => {
   const stompClient = Stomp.over(socket);
 
   function connect() {
-    const playerId = parseInt(sessionStorage.getItem("userId"));
+    // const playerId = parseInt(sessionStorage.getItem("userId")); (will be used in the future)
 
     stompClient.connect({}, function (frame) {
       console.log("Connected: " + frame);
@@ -95,16 +95,17 @@ const GameScreen = () => {
     <BaseContainer className="gamescreen container">
       <h2>Game {gameId} </h2>
       <h1> {game.gameId} </h1>
-      {game.currentRound.roundStatus === "FINISHED" ? (
-        <EndOfRound />
-      ) : (
-        <>
-          {content}
-          <Button width="100%" onClick={() => printStuff()}>
-            Print to console
-          </Button>
-        </>
-      )}
+        {game.currentRound && game.currentRound.roundStatus === "FINISHED" ? (
+          <EndOfRound />
+        ) : (
+          <>
+            {content}
+            <Button width="100%" onClick={() => printStuff()}>
+              Print to console
+            </Button>
+          </>
+        )}
+
     </BaseContainer>
   );
 };
