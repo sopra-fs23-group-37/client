@@ -1,5 +1,5 @@
 import React from 'react';
-import "styles/components/EndOfRound.scss";
+import "styles/views/EndOfRound.scss";
 
 const EndOfRound = ({ scores, players }) => {
   const highestCards = Math.max(...scores);

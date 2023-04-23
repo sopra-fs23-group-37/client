@@ -6,6 +6,7 @@ import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
 import { Button } from "components/ui/Button";
+import EndOfRound from "components/views/EndOfRound";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -37,6 +38,7 @@ const GameScreen = () => {
     console.log("game data received:", data);
     setGame(new Game(data));
   };
+
 
   useEffect(() => {
     if (!connected) {
@@ -88,14 +90,21 @@ const GameScreen = () => {
     </div>
   );
 
+
   return (
     <BaseContainer className="gamescreen container">
       <h2>Game {gameId} </h2>
       <h1> {game.gameId} </h1>
-      {content}
-      <Button width="100%" onClick={() => printStuff()}>
-        Print to console
-      </Button>
+      {game.currentRound.roundStatus === "FINISHED" ? (
+        <EndOfRound />
+      ) : (
+        <>
+          {content}
+          <Button width="100%" onClick={() => printStuff()}>
+            Print to console
+          </Button>
+        </>
+      )}
     </BaseContainer>
   );
 };
