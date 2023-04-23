@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
-import { Button } from "components/ui/Button"; 
+import { Button } from "components/ui/Button";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -15,25 +15,20 @@ const GameScreen = () => {
   const stompClient = Stomp.over(socket);
 
   function connect() {
-    const playerId = parseInt(localStorage.getItem("userId"));
+    // const playerId = parseInt(localStorage.getItem("userId"));
 
     stompClient.connect({}, function (frame) {
       console.log("Connected: " + frame);
       stompClient.subscribe("/topic/game/" + gameId, function (data) {
         updateGame(JSON.parse(data.body));
       });
-      stompClient.send(
-        "/game/join/" + gameId,
-        {},
-        JSON.stringify({ playerId })
-      );
     });
     setConnected(true);
   }
 
   function printStuff() {
     console.log(game);
-    console.log(game.currentRound.tableCards[0].code)
+    console.log(game.currentRound.tableCards[0].code);
   }
 
   const updateGame = (data) => {
@@ -99,7 +94,7 @@ const GameScreen = () => {
       <h1> {game.gameId} </h1>
       {content}
       <Button width="100%" onClick={() => printStuff()}>
-            Print to console
+        Print to console
       </Button>
     </BaseContainer>
   );
