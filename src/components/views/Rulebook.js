@@ -4,7 +4,7 @@ import "styles/views/Rulebook.scss";
 import { useState } from "react";
 import { Button } from "components/ui/Button";
 import { useHistory } from "react-router-dom";
-import myImage from "image/imagecheat.jpg";
+import myImage from "image/Sheet.png";
 
 const Rulebook = () => {
   const [activeTab, setActiveTab] = useState("player-cards");
@@ -23,6 +23,7 @@ const Rulebook = () => {
         <h1 className="rulebook-title">Rulebook</h1>
 
         <div className="rulebook-tabs">
+          <div className="rulebook-section">
           <Button
             className={activeTab === "cheat-sheet" ? "active" : ""}
             onClick={() => handleTabClick("cheat-sheet")}
@@ -30,6 +31,7 @@ const Rulebook = () => {
           >
             Cheat-Sheet
           </Button>
+          </div>
 
           <Button
             className={activeTab === "player-cards" ? "active" : ""}
@@ -73,13 +75,13 @@ const Rulebook = () => {
               </strong>
             </div>
             <div className="rulebook-rules-list">
-              <ul className="rulebook-rule-item">
+              
                 <img
                   src={myImage}
                   alt="Cheat-Sheet"
-                  style={{ height: "200px", width: "300px" }}
+                  style={{ height: "500px", width: "800px", marginLeft: 0 }}
                 />
-              </ul>
+              
             </div>
           </div>
         )}
