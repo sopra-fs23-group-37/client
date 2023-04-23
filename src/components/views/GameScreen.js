@@ -37,6 +37,11 @@ const GameScreen = () => {
   };
 
 
+  const printStuff = () => {
+    console.log("GuestStatus: ", game.guestStatus);
+    console.log("HostStatus: ", game.hostStatus);
+  };
+  
   useEffect(() => {
     if (!connected) {
       console.log("Use Effect starting connection.");
