@@ -7,9 +7,7 @@ import * as Stomp from "stompjs";
 import Game from "models/Game";
 import { Button } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
-
-
-// TODO: Finish the GameScreen
+import EndOfGame from "components/views/EndOfGame";
 
 
 const GameScreen = () => {
@@ -29,11 +27,6 @@ const GameScreen = () => {
       });
     });
     setConnected(true);
-  }
-
-  function printStuff() {
-    console.log(game);
-    console.log(game.currentRound.tableCards[0].code);
   }
 
   const updateGame = (data) => {
@@ -97,21 +90,25 @@ const GameScreen = () => {
 
   return (
     <BaseContainer className="gamescreen container">
-      <h2>Game {gameId} </h2>
-      <h1> {game.gameId} </h1>
-        {game.currentRound && game.currentRound.roundStatus === "FINISHED" ? (
-          <EndOfRound />
-        ) : (
-          <>
-            {content}
-            <Button width="100%" onClick={() => printStuff()}>
-              Print to console
-            </Button>
-          </>
-        )}
-
+      <h2>Game {gameId}</h2>
+      <h1>{game.gameId}</h1>
+      {game.winner ? (
+        <EndOfGame winner={game.winner} />
+      ) : (
+        <>
+          {game.currentRound && game.currentRound.roundStatus === "FINISHED" && (
+            <EndOfRound />
+          )}
+          {content}
+          <Button width="100%" onClick={() => printStuff()}>
+            Print to console
+          </Button>
+        </>
+      )}
     </BaseContainer>
   );
-};
+  
+  
+}
 
 export default GameScreen;
