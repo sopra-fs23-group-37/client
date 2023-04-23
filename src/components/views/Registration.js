@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { Link, useHistory } from "react-router-dom";
-import { Button, ButtonLight } from "components/ui/Button";
+import { ButtonLight } from "components/ui/Button";
 import "styles/views/Registration.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
@@ -36,8 +36,6 @@ const Registration = (props) => {
   const [password, setPassword] = useState(null);
   const [username, setUsername] = useState(null);
 
-  
-
   const doRegistration = async () => {
     try {
       const requestBody = JSON.stringify({ username, password });
@@ -47,8 +45,8 @@ const Registration = (props) => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("token", user.token);
+      sessionStorage.setItem("userId", user.userId);
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
@@ -93,7 +91,7 @@ const Registration = (props) => {
             </ButtonLight>
             <div class="hr-sect"> or </div>
             <Link to="/login">
-              <ButtonLight width = "80%">Login</ButtonLight>
+              <ButtonLight width="80%">Login</ButtonLight>
             </Link>
           </div>
         </div>

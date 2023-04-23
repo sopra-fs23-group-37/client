@@ -5,19 +5,19 @@ import { useEffect, useState } from "react";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import Game from "models/Game";
+import { getDomain } from "helpers/getDomain";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
   const [game, setGame] = useState(new Game());
   const [connected, setConnected] = useState(false);
-  const socket = new SockJS("http://localhost:8080/websocket");
+  const domain = getDomain();
+  const socket = new SockJS(domain + "/websocket");
   const stompClient = Stomp.over(socket);
   const history = useHistory();
-
+  const playerId = parseInt(sessionStorage.getItem("userId"));
 
   function connect() {
-    const playerId = parseInt(localStorage.getItem("userId"));
-
     stompClient.connect({}, function (frame) {
       console.log("Connected: " + frame);
       stompClient.subscribe("/topic/game/" + gameId, function (data) {
@@ -36,14 +36,16 @@ const Lobby = () => {
   const updateGame = (data) => {
     console.log("game data received:", data);
     setGame(new Game(data));
-    if (data.gameStatus === "CONNECTED") {
+    if (data.gameStatus === "CONNECTED" && data.host.userId === playerId) {
       startGame();
+    }
+    if (data.gameStatus === "ONGOING") {
+      history.push(`/game/play/${gameId}`);
     }
   };
 
   const startGame = () => {
     stompClient.send("/game/start/" + gameId, {});
-    history.push(`/game/play/${gameId}`);
   };
 
   useEffect(() => {
