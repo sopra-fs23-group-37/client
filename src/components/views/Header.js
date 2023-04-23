@@ -34,7 +34,7 @@ const Header = (props) => {
       <h1>
         {" "}
         {props.text}
-        {sessionStorage.getItem("userId")}{" "}
+        {sessionStorage.getItem("username")}{" "}
       </h1>
       <div className="header buttons">
         <button className="header logoutButton" onClick={() => logout()}>

@@ -65,7 +65,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header text="Welcome User " />
+      <Header text="Welcome " />
       <BaseContainer className="home container">
         <div class="row">
           <button2>

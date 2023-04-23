@@ -16,6 +16,7 @@ const FormField = (props) => {
         placeholder="enter here.."
         value={props.value}
         type={props.type}
+        maxLength={20}
         onChange={(e) => props.onChange(e.target.value)}
         onKeyDown={(e) => {
           props.onKeyDown(e);
@@ -47,6 +48,7 @@ const Registration = (props) => {
       // Store the token into the local storage.
       sessionStorage.setItem("token", user.token);
       sessionStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("username", user.username);
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
