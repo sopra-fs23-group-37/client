@@ -16,6 +16,7 @@ const FormField = (props) => {
         placeholder="enter here.."
         value={props.value}
         type={props.type}
+        maxLength={20}
         onChange={(e) => props.onChange(e.target.value)}
         onKeyDown={(e) => {
           props.onKeyDown(e);
@@ -45,8 +46,9 @@ const Registration = (props) => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("token", user.token);
+      sessionStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("username", user.username);
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
@@ -86,8 +88,7 @@ const Registration = (props) => {
             <ButtonLight
               disabled={!username || !password}
               width="80%"
-              onClick={() => doRegistration()}
-            >
+              onClick={() => doRegistration()}>
               Register
             </ButtonLight>
             <div class="hr-sect"> or </div>

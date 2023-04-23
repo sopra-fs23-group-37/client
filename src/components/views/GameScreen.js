@@ -16,7 +16,7 @@ const GameScreen = () => {
   const stompClient = Stomp.over(socket);
 
   function connect() {
-    // const playerId = parseInt(localStorage.getItem("userId"));
+    const playerId = parseInt(sessionStorage.getItem("userId"));
 
     stompClient.connect({}, function (frame) {
       console.log("Connected: " + frame);

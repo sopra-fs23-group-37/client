@@ -14,7 +14,7 @@ const CreateGame = () => {
 
   const createGame = async () => {
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
       const host = new User();
       host.userId = userId;
       const requestBody = JSON.stringify({ host });

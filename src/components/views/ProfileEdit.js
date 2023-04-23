@@ -33,23 +33,23 @@ const ProfileEdit = () => {
   const history = useHistory();
   const profileId = useParams().profileId;
   const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState(localStorage.getItem('username'));
-  const [birthday, setBirthday] = useState(localStorage.getItem('birthday'));
+  const [username, setUsername] = useState(sessionStorage.getItem("username"));
+  const [birthday, setBirthday] = useState(sessionStorage.getItem("birthday"));
 
   const logout = async () => {
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
       const response = await api.put("/logout/" + userId);
       console.log(response);
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
       history.push("/login");
     } catch (error) {
       alert(
         `Something went wrong when trying to logout: \n${handleError(error)}`
       );
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
       history.push("/login");
     }
   };
@@ -62,11 +62,11 @@ const ProfileEdit = () => {
     try {
       const requestBody = JSON.stringify({ username, birthday });
       const response = await api.put("/users/" + profileId, requestBody);
-      
+
       console.log(response);
 
-      localStorage.setItem("username", username);
-      localStorage.setItem("birthday", birthday);
+      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("birthday", birthday);
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game/profile/` + profileId);
     } catch (error) {
@@ -100,7 +100,7 @@ const ProfileEdit = () => {
 
   let content = <Spinner />;
 
-  if (profileId !== localStorage.getItem("userId")) {
+  if (profileId !== sessionStorage.getItem("userId")) {
     content = (
       <div className="profile">
         <p>
@@ -116,7 +116,7 @@ const ProfileEdit = () => {
       </div>
     );
     console.log("profile ID: ", profileId);
-    console.log("user ID: ", localStorage.getItem("userId"));
+    console.log("user ID: ", sessionStorage.getItem("userId"));
   } else if (profile) {
     content = (
       <div className="profile">
