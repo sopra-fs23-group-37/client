@@ -4,24 +4,23 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
 
-// TODO: Rulebook anzeigen lassen
-
 const Header = (props) => {
   const history = useHistory();
 
   const logout = async () => {
     try {
-      const localId = localStorage.getItem("userId");
+      const localId = sessionStorage.getItem("userId");
 
       await api.put("logout/" + localId);
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
 
       // Redirect to the login page
-      window.location.reload();
+      history.push("/login");
     } catch (error) {
-      alert(`Changes could not be stored: \n${handleError(error)}`);
-      console.error("Error logging out:", error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
+      history.push("/login");
     }
   };
 
@@ -35,7 +34,7 @@ const Header = (props) => {
       <h1>
         {" "}
         {props.text}
-        {localStorage.getItem("userId")}{" "}
+        {sessionStorage.getItem("userId")}{" "}
       </h1>
       <div className="header buttons">
         <button className="header logoutButton" onClick={() => logout()}>

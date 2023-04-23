@@ -14,14 +14,11 @@ const Home = () => {
     history.push("/game/createGame");
   };
 
-  const lobbyBrowser = () => {
-    //TODO: DELETE
-    console.log(localStorage.getItem("token"));
-  };
+  const lobbyBrowser = () => {};
 
   const joinLobby = async () => {
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
       const response = await api.put("/games/join/" + userId);
       console.log(response);
 

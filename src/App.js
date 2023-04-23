@@ -6,19 +6,6 @@ import { useEffect } from "react";
  * Overhauled by Kyrill Hux
  */
 const App = () => {
-  useEffect(() => {
-    const handleUnload = (event) => {
-      event.preventDefault();
-      localStorage.removeItem("token");
-    };
-
-    window.addEventListener("unload", handleUnload);
-
-    return () => {
-      window.removeEventListener("unload", handleUnload);
-    };
-  }, []);
-
   return (
     <div>
       <AppRouter />
