@@ -51,7 +51,7 @@ const GameScreen = () => {
     console.log("GuestStatus: ", game.guestStatus);
     console.log("HostStatus: ", game.hostStatus);
   };
-  
+
   const fetchGame = async () => {
     try {
       const response = await api.get("/games/" + gameId);
@@ -78,7 +78,7 @@ const GameScreen = () => {
   const setTestingValues = () => {
     setEndOfRound(false);
     setEndOfGame(true);
-    setPlayerCards(test);
+    //setPlayerCards(test);
     // continue here afterwards.
   };
 
@@ -149,29 +149,43 @@ const GameScreen = () => {
     </div>
   );
 
+  /*
+  TODO: Timons code gibt Errors und lässt nicht rendern
 
-  return (
-    <BaseContainer className="gamescreen container">
-      <h2>Game {gameId}</h2>
+  { <h2>Game {gameId}</h2>
       <h1>{game.gameId}</h1>
       {game.winner ? (
         <EndOfGame winner={game.winner} />
       ) : (
         <>
-          {game.currentRound && game.currentRound.roundStatus === "FINISHED" && (
-            <EndOfRound />
-          )}
+          {game.currentRound &&
+            game.currentRound.roundStatus === "FINISHED" && <EndOfRound />}
           {content}
           <Button width="100%" onClick={() => printStuff()}>
             Print to console
           </Button>
         </>
       )}
+          }*/
 
-    </BaseContainer>
+  return (
+    <div className="gamescreen container">
+      <div className="top">
+        <div className="left">
+          <div className="opponent">
+            <div className="opponent-card">Opponent's Cards</div>
+            <div className="empty">Empty Div</div>
+          </div>
+          <div className="table">Playing Table</div>
+        </div>
+        <div className="right">
+          <div className="statistics">Statistics</div>
+          <div className="discard-pile">Discard Pile</div>
+        </div>
+      </div>
+      <div className="bottom">Player's card</div>
+    </div>
   );
-  
-  
-}
+};
 
 export default GameScreen;
