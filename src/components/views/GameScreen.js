@@ -14,7 +14,7 @@ const GameScreen = () => {
 
   function printStuff() {
     console.log(game);
-    // console.log(game.currentRound.cardsOnTable[0].code);
+    console.log(game.currentRound.tableCards[0].code);
   }
 
   const updateGame = (data) => {
@@ -40,10 +40,14 @@ const GameScreen = () => {
     }
   };
 
+  // const fetchGame = () => {
+  //   sockClient.reloadGame(gameId);
+  // };
+
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("Use Effect started");
-    console.log("websocket status:", sockClient.isConnected);
+    console.log("websocket status:", sockClient.isConnected());
     sockClient.addOnMessageFunction("Game", updateGame);
   };
 
@@ -59,6 +63,7 @@ const GameScreen = () => {
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
       sockClient.disconnect();
+      sockClient.removeMessageFunctions();
     });
 
     return () => {
