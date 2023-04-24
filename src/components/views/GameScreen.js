@@ -9,13 +9,40 @@ import { api, handleError } from "helpers/api";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
+
+  // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
+  // end of round contains points for the round and total points
+  const [endOfRound, setEndOfRound] = useState(false);
+  // end of game contains total points and winner
+  const [endOfGame, setEndOfGame] = useState(false);
+  // contains all cards from the player and on the discard
+  const [playerCards, setPlayerCards] = useState(null);
+  const [playerDiscards, setPlayerDiscardCards] = useState(null);
+  // contains number of cards of the opponent
+  const [opponentCards, setOpponentCards] = useState(null);
+  const [opponentDiscard, setOpponentDiscard] = useState(null)
+  // contains the cards on the table as array
+  const [tableCards, setTableCards] = useState(null);
+  // whether or not there are still cards in the deck
+  const [deckCards, setDeckCards] = useState(true);
+  // contains id of the player who's turn it is
+  const [playerTurn, setPlayerTurn] = useState(null);
+  // true if the opponent has left
+  const [opponentLeft, setOpponentLeft] = useState(false);
+  // set reason for why the player has left (e.g. unexpected disconnect, surrender)
+  const [opponentLeftReason, setOpponentLeftReason] = useState(null);
+
+  // these datapoints are set by the player when playing to form the move
+  const [selectedCard, setSelectedCard] = useState(null);
+
   const history = useHistory();
 
   function printStuff() {
     console.log(game);
     console.log(game.currentRound.tableCards[0].code);
   }
+
 
   const updateGame = (data) => {
     // json data from server doesn't match class variables on server so be careful when parsing
@@ -40,18 +67,23 @@ const GameScreen = () => {
     }
   };
 
-  // const fetchGame = () => {
-  //   sockClient.reloadGame(gameId);
-  // };
-
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
-    console.log("Use Effect started");
     console.log("websocket status:", sockClient.isConnected());
     sockClient.addOnMessageFunction("Game", updateGame);
   };
 
+  //use this function to change values!
+  const setTestingValues = () => {
+    setEndOfRound(false);
+    setEndOfGame(true);
+    setPlayerCards(game.)
+
+  }
+
+
   useEffect(() => {
+    console.log("Use Effect started");
     checkWebsocket();
 
     // fetch the game data if it is not there yet
@@ -65,6 +97,8 @@ const GameScreen = () => {
       sockClient.disconnect();
       sockClient.removeMessageFunctions();
     });
+
+    setTestingValues();
 
     return () => {
       console.log("Component is unmounting");
@@ -97,7 +131,7 @@ const GameScreen = () => {
     </div>
   );
 
-  let tableCards = (
+  let table = (
     <div className="card-container">
       {/* Placeholder for table cards */}
       <div className="card"></div>
@@ -110,7 +144,7 @@ const GameScreen = () => {
     <div className="game-container">
       <div className="player-hand">{playerHand}</div>
       <div className="opponent-hand">{opponentHand}</div>
-      <div className="table-cards">{tableCards}</div>
+      <div className="table-cards">{table}</div>
       <div className="deck">{deck}</div>
     </div>
   );
