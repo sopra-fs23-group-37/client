@@ -21,7 +21,7 @@ const GameScreen = () => {
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
-  const [opponentDiscard, setOpponentDiscard] = useState(null)
+  const [opponentDiscard, setOpponentDiscard] = useState(null);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
   // whether or not there are still cards in the deck
@@ -42,7 +42,6 @@ const GameScreen = () => {
     console.log(game);
     console.log(game.currentRound.tableCards[0].code);
   }
-
 
   const updateGame = (data) => {
     // json data from server doesn't match class variables on server so be careful when parsing
@@ -77,10 +76,9 @@ const GameScreen = () => {
   const setTestingValues = () => {
     setEndOfRound(false);
     setEndOfGame(true);
-    setPlayerCards(game.)
-
-  }
-
+    setPlayerCards(test);
+    // continue here afterwards.
+  };
 
   useEffect(() => {
     console.log("Use Effect started");
