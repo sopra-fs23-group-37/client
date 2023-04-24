@@ -8,20 +8,17 @@ import Header from "components/views/Header";
 
 const Home = () => {
   const history = useHistory();
-  const [waitingLobbies, setWaitingLobbies] = useState(0);
+  const [waitingGames, setWaitingGames] = useState(0);
 
-  const createLobby = () => {
+  const createGame = () => {
     history.push("/game/createGame");
   };
 
-  const lobbyBrowser = () => {
-    //TODO: DELETE
-    console.log(localStorage.getItem("token"));
-  };
+  // const lobbyBrowser = () => {};
 
-  const joinLobby = async () => {
+  const joinGame = async () => {
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
       const response = await api.put("/games/join/" + userId);
       console.log(response);
 
@@ -37,14 +34,14 @@ const Home = () => {
     }
   };
 
-  const spectate = () => {};
+  // const spectate = () => {};
 
   useEffect(() => {
-    async function fetchLobbies() {
+    async function fetchGames() {
       try {
         const response = await api.get("/games/");
         console.log(response);
-        setWaitingLobbies(response.data);
+        setWaitingGames(response.data);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the lobbies: \n${handleError(
@@ -57,48 +54,48 @@ const Home = () => {
         );
       }
     }
-    fetchLobbies();
+    fetchGames();
   }, []);
 
-  let openLobbies = 0;
+  let openGames = 0;
 
-  if (waitingLobbies) {
-    openLobbies = waitingLobbies.length;
+  if (waitingGames) {
+    openGames = waitingGames.length;
   }
 
   return (
     <div>
-      <Header text="Welcome User " />
+      <Header text="Welcome " />
       <BaseContainer className="home container">
         <div class="row">
           <button2>
-            Open Lobbies: <br />
-            {openLobbies}
+            Open Games: <br />
+            {openGames}
           </button2>
-          <button2>
+          {/* <button2>
             <u>Your Statistics:</u>
             <br />
             wins: 0
             <br />
             losses: 0
-          </button2>
+          </button2> */}
         </div>
         <div class="row">
           {" "}
-          <button1 class="with-icon" onClick={() => createLobby()}>
-            Create Lobby
+          <button1 class="with-icon" onClick={() => createGame()}>
+            Create Game
           </button1>
-          <button1 class="with-icon" onClick={() => lobbyBrowser()}>
+          {/* <button1 class="with-icon" onClick={() => lobbyBrowser()}>
             Lobby Browser
-          </button1>
+          </button1> */}
         </div>
         <div class="row">
-          <button1 class="with-icon" onClick={() => joinLobby()}>
-            Join Lobby
+          <button1 class="with-icon" onClick={() => joinGame()}>
+            Join Game
           </button1>
-          <button1 class="with-icon" onClick={() => spectate()}>
+          {/* <button1 class="with-icon" onClick={() => spectate()}>
             Spectate
-          </button1>
+          </button1> */}
         </div>
       </BaseContainer>
     </div>

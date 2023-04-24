@@ -13,18 +13,18 @@ const Profile = () => {
 
   const logout = async () => {
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
       const response = await api.put("/logout/" + userId);
       console.log(response);
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
       history.push("/login");
     } catch (error) {
       alert(
         `Something went wrong when trying to logout: \n${handleError(error)}`
       );
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
       history.push("/login");
     }
   };

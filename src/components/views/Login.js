@@ -51,8 +51,9 @@ const Login = (props) => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("token", user.token);
+      sessionStorage.setItem("userId", user.userId);
+      sessionStorage.setItem("username", user.username);
 
       // Login successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
@@ -90,8 +91,7 @@ const Login = (props) => {
             <ButtonLight
               disabled={!username || !password}
               width="80%"
-              onClick={() => doLogin()}
-            >
+              onClick={() => doLogin()}>
               Login
             </ButtonLight>
             <div class="hr-sect"> or </div>
