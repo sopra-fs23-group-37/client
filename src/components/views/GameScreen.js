@@ -8,6 +8,7 @@ import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 import { api, handleError } from "helpers/api";
+import Card from "components/views/Card.js";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -48,14 +49,14 @@ const GameScreen = () => {
   };
 
   const printStuff = () => {
-    console.log("GuestStatus: ", game.guestStatus);
-    console.log("HostStatus: ", game.hostStatus);
+    fetchGame();
   };
 
   const fetchGame = async () => {
     try {
       const response = await api.get("/games/" + gameId);
-      console.log("REST Response:", response);
+      console.log("REST Response Current Round:", response.data.currentRound);
+      const responseJSON = response.data.currentRound;
       setGame(new Game(response.data));
     } catch (error) {
       console.error(
@@ -183,7 +184,18 @@ const GameScreen = () => {
           <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
-      <div className="bottom">Player's card</div>
+      <div className="bottom">
+        {
+          //Beispiel wie Card-Komponent verwendet wird für eine Karte.
+        }
+        <Card
+          code="JD"
+          suit="DIAMONDS"
+          value="JACK"
+          image="https://deckofcardsapi.com/static/img/JD.png"
+          onClick={console.log("I'm clickable")}
+        />
+      </div>
     </div>
   );
 };
