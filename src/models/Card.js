@@ -1,6 +1,5 @@
 class Card {
     constructor(data = {}) {
-      this.cardId = null;
       this.code = null;
       this.image = null;
       this.images = null;
