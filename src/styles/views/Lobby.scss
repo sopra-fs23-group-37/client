@@ -24,7 +24,7 @@
         font-style: normal;
         color: black;
         margin-top: 0;
-        margin-bottom: 1em;
+        margin-bottom: 0;
       }
 
       .lobby-code {
@@ -107,42 +107,6 @@
         font-family: $fontDefault;
         font-style: normal;
         font-size: 11px;
-      }
-    }
-
-    //Game modus
-    .modus-container {
-      margin-top: 1em;
-      margin-left: 0.5em;
-      h4 {
-        margin: 0;
-        margin-bottom: 0.5em;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-        display: inline-block;
-        margin-right: 0.5em;
-      }
-      select {
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-        margin-right: 0.5em;
-      }
-    }
-
-    //Homepage & Start Game Button
-    .button-container {
-      display: flex;
-
-      position: relative;
-      justify-content: space-between;
-      margin-top: 5em;
-      margin-bottom: 2em;
-
-      button {
-        background-color: #e9c46a;
-        margin: 0.5em;
       }
     }
   }
