@@ -1,5 +1,4 @@
 import BaseContainer from "components/ui/BaseContainer";
-import React from "react";
 import "styles/views/Rulebook.scss";
 import { useState } from "react";
 import { Button } from "components/ui/Button";

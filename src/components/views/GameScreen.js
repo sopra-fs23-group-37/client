@@ -4,6 +4,8 @@ import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import { Button } from "components/ui/Button";
+import EndOfRound from "components/views/EndOfRound";
+import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 import { api, handleError } from "helpers/api";
 
@@ -38,11 +40,6 @@ const GameScreen = () => {
 
   const history = useHistory();
 
-  function printStuff() {
-    console.log(game);
-    console.log(game.currentRound.tableCards[0].code);
-  }
-
   const updateGame = (data) => {
     // json data from server doesn't match class variables on server so be careful when parsing
     // classes for round, player and card exist according to json if smaller objects are needed
@@ -50,6 +47,11 @@ const GameScreen = () => {
     setGame(new Game(data));
   };
 
+  const printStuff = () => {
+    console.log("GuestStatus: ", game.guestStatus);
+    console.log("HostStatus: ", game.hostStatus);
+  };
+  
   const fetchGame = async () => {
     try {
       const response = await api.get("/games/" + gameId);
@@ -147,16 +149,29 @@ const GameScreen = () => {
     </div>
   );
 
+
   return (
     <BaseContainer className="gamescreen container">
-      <h2>Game {gameId} </h2>
-      <h1> {gameId} </h1>
-      {content}
-      <Button width="100%" onClick={() => printStuff()}>
-        Print to console
-      </Button>
+      <h2>Game {gameId}</h2>
+      <h1>{game.gameId}</h1>
+      {game.winner ? (
+        <EndOfGame winner={game.winner} />
+      ) : (
+        <>
+          {game.currentRound && game.currentRound.roundStatus === "FINISHED" && (
+            <EndOfRound />
+          )}
+          {content}
+          <Button width="100%" onClick={() => printStuff()}>
+            Print to console
+          </Button>
+        </>
+      )}
+
     </BaseContainer>
   );
-};
+  
+  
+}
 
 export default GameScreen;
