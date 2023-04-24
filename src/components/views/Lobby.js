@@ -4,7 +4,7 @@ import "styles/views/Lobby.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import sockClient from "helpers/sockClient";
-
+import { Button } from "components/ui/Button";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
@@ -42,25 +42,24 @@ const Lobby = () => {
       sockClient.disconnect();
     });
 
-
     return () => {
       console.log("Component is unmounting");
       unlisten();
     };
   });
 
-  let content = (
-    <div className="profile overview">
-      <div>Game id: {gameId}</div>
-      <div>Host Status: {game.hostStatus}</div>
-      <div>Guest Status: {game.guestStatus}</div>
-      <div>Game Status: {game.gameStatus}</div>
-      {game.hostStatus === "CONNECTED" && game.guestStatus === "CONNECTED" && (
-        <div>Both players are in the lobby. The game will start soon.</div>
-      )}
-    </div>
-  );
-*/
+  // let content = (
+  //   <div className="profile overview">
+  //     <div>Game id: {gameId}</div>
+  //     <div>Host Status: {game.hostStatus}</div>
+  //     <div>Guest Status: {game.guestStatus}</div>
+  //     <div>Game Status: {game.gameStatus}</div>
+  //     {game.hostStatus === "CONNECTED" && game.guestStatus === "CONNECTED" && (
+  //       <div>Both players are in the lobby. The game will start soon.</div>
+  //     )}
+  //   </div>
+  // );
+
   return (
     <BaseContainer>
       <div className="createGame container">
@@ -84,7 +83,8 @@ const Lobby = () => {
         </div>
         <div
           className="createGame player-container"
-          style={{ marginBottom: "2em" }}>
+          style={{ marginBottom: "2em" }}
+        >
           <h4 className="createGame name">{game.guestStatus} ...</h4>
           <Button className="createGame kick-player" disabled="true">
             kick player
