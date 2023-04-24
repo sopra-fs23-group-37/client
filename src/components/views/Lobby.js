@@ -2,37 +2,14 @@ import { useParams, useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Home.scss";
 import { useEffect, useState } from "react";
-// import * as SockJS from "sockjs-client";
-// import * as Stomp from "stompjs";
 import Game from "models/Game";
-// import { getDomain } from "helpers/getDomain";
 import sockClient from "helpers/sockClient";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
   const [game, setGame] = useState(new Game());
-  // const [connected, setConnected] = useState(false);
-  // const domain = getDomain();
-  // const socket = new SockJS(domain + "/websocket");
-  // const stompClient = Stomp.over(socket);
   const history = useHistory();
   const playerId = parseInt(sessionStorage.getItem("userId"));
-
-  // function connect() {
-  //   stompClient.connect({}, function (frame) {
-  //     console.log("Connected: " + frame);
-  //     stompClient.subscribe("/topic/game/" + gameId, function (data) {
-  //       updateGame(JSON.parse(data.body));
-  //     });
-  //     stompClient.send(
-  //       "/game/join/" + gameId,
-  //       {},
-  //       JSON.stringify({ playerId })
-  //     );
-  //   });
-  //   setConnected(true);
-  //   console.log(connected);
-  // }
 
   const updateGame = (data) => {
     console.log("game data received:", data);
@@ -41,23 +18,34 @@ const Lobby = () => {
       sockClient.startGame(gameId);
     }
     if (data.gameStatus === "ONGOING") {
+      sessionStorage.setItem("currentPage", "Game");
       history.push(`/game/play/${gameId}`);
     }
   };
 
-  // const startGame = () => {
-  //   stompClient.send("/game/start/" + gameId, {});
-  // };
+  const connectAndJoin = () => {
+    console.log("websocket status:", sockClient.isConnected());
+    if (!sockClient.isConnected()) {
+      console.log("Starting connection.");
+      if (sockClient.addOnMessageFunction("Lobby", updateGame)) {
+        sockClient.connectAndJoin(gameId, playerId);
+      }
+    }
+  };
 
   useEffect(() => {
-    if (!sockClient.isConnected) {
-      console.log("Use Effect starting connection.");
-      sockClient.connect(gameId, updateGame);
-      sockClient.joinGame(gameId, playerId);
-    }
-  });
+    console.log("Use Effect started");
+    connectAndJoin();
+    const unlisten = history.listen(() => {
+      console.log("User is leaving the page");
+      sockClient.disconnect();
+    });
 
-  //useEffect(() => {}, [game]);
+    return () => {
+      console.log("Component is unmounting");
+      unlisten();
+    };
+  });
 
   let content = (
     <div className="profile overview">
