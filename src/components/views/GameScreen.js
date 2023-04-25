@@ -38,6 +38,7 @@ const GameScreen = () => {
 
   // these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedTableCards, setSelectedTableCards] = useState(null);
 
   const history = useHistory();
 
@@ -54,16 +55,26 @@ const GameScreen = () => {
     setPlayerCards(game.currentRound.host.cardsInHand);
   };
 
+  const makeMove = () => {
+    // use this function to build move and send via websocket
+  }
+
+  const selectCardFromField = (card) => {
+    // if card is already clicked
+    if (card.clicked) {
+      const filteredArray = selectedTableCards.filter(item => item.code !== card.code);
+    } else {
+      setSelectedTableCards((selectedTableCards) => ([...selectedTableCards, card]));
+    }
+  }
+
   const selectCardFromHand = (card) => {
     const filteredArray = playerCards.filter(item => item.code !== card.code);
-
     if (selectedCard) {
       filteredArray.push(selectedCard);
     }
-
     setPlayerCards(filteredArray);
     setSelectedCard(card);
-
   }
 
   const unselectCard = (card) => {
@@ -166,6 +177,13 @@ const GameScreen = () => {
     </div>
   );
 
+  let turnInfo = (
+    <div className="turnInfo">
+      <h1> Current player </h1>
+      <h1> displays turn info </h1>
+    </div>
+  )
+
   let table = (
     <div className="card-container">
       {/* Placeholder for table cards */}
@@ -181,7 +199,7 @@ const GameScreen = () => {
         <div className="left">
           <div className="opponent">
             <div className="opponent-card">Opponent's Cards</div>
-            <div className="empty">Empty Div</div>
+            {turnInfo}
           </div>
           <div className="table">Playing Table</div>
         </div>
