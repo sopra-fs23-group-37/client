@@ -9,6 +9,7 @@ import Round from "models/Round";
 // import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
+import Card from "components/views/Card.js";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -174,7 +175,18 @@ const GameScreen = () => {
           <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
-      <div className="bottom">Player's card</div>
+      <div className="bottom">
+        {
+          //Beispiel wie Card-Komponent verwendet wird für eine Karte.
+        }
+        <Card
+          code="JD"
+          suit="DIAMONDS"
+          value="JACK"
+          image="https://deckofcardsapi.com/static/img/JD.png"
+          onClick={console.log("I'm clickable")}
+        />
+      </div>
     </div>
   );
 };
