@@ -11,13 +11,15 @@ const Lobby = () => {
   const [game, setGame] = useState(new Game());
   const history = useHistory();
   const playerId = parseInt(sessionStorage.getItem("userId"));
+  const [goingToGame, setGoingToGame] = useState(false);
 
   const updateLobby = async (data) => {
     console.log("lobby data received:", data);
     setGame(new Game(data));
     console.log("new game: ", game);
     if (data.gameStatus === "CONNECTED") {
-      await delay(1500);
+      setGoingToGame(true);
+      await delay(1000);
       history.push(`/game/play/${gameId}`);
     }
   };
@@ -35,9 +37,13 @@ const Lobby = () => {
   useEffect(() => {
     console.log("Use Effect started");
     connectAndJoin();
+
     const unlisten = history.listen(() => {
-      console.log("User is leaving the page");
-      sockClient.disconnect();
+      console.log("is the user going to the game? ", goingToGame);
+      if (!goingToGame) {
+        console.log("User left the lobby");
+        sockClient.disconnect();
+      }
     });
 
     return () => {

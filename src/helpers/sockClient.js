@@ -38,16 +38,12 @@ class SockClient {
     this._connected = true;
   }
 
-  joinGame(gameId, playerId) {
+  startGame(gameId, playerId) {
     this.stompClient.send(
-      "/game/join/" + gameId,
+      "/game/start/" + gameId,
       {},
       JSON.stringify({ playerId })
     );
-  }
-
-  startGame(gameId) {
-    this.stompClient.send("/game/start/" + gameId, {});
   }
 
   addOnMessageFunction(page, onMessagefunction) {

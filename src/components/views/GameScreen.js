@@ -7,13 +7,15 @@ import Game from "models/Game";
 // import EndOfRound from "components/views/EndOfRound";
 // import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
-import { api, handleError } from "helpers/api";
+// import { api, handleError } from "helpers/api";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
+  const playerId = parseInt(sessionStorage.getItem("userId"));
 
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
+  const [gameStarted, setGameStarted] = useState(false);
   // end of round contains points for the round and total points
   // const [endOfRound, setEndOfRound] = useState(false);
   // // end of game contains total points and winner
@@ -41,9 +43,8 @@ const GameScreen = () => {
   const history = useHistory();
 
   const updateGame = (data) => {
-    // json data from server doesn't match class variables on server so be careful when parsing
-    // classes for round, player and card exist according to json if smaller objects are needed
-    console.log("game data received:", data);
+    // take the game update data and set it in here
+    console.log("game data received: ", data);
     setGame(new Game(data));
   };
 
@@ -52,26 +53,28 @@ const GameScreen = () => {
   //   console.log("HostStatus: ", game.hostStatus);
   // };
 
-  const fetchGame = async () => {
-    try {
-      const response = await api.get("/games/" + gameId);
-      console.log("REST Response:", response);
-      setGame(new Game(response.data));
-    } catch (error) {
-      console.error(
-        `Something went wrong while fetching the game: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      alert(
-        "Something went wrong while fetching the game! See the console for details."
-      );
-    }
-  };
+  // const fetchGame = async () => {
+  //   try {
+  //     const response = await api.get("/games/" + gameId);
+  //     console.log("REST Response:", response);
+  //     setGame(new Game(response.data));
+  //   } catch (error) {
+  //     console.error(
+  //       `Something went wrong while fetching the game: \n${handleError(error)}`
+  //     );
+  //     console.error("Details:", error);
+  //     alert(
+  //       "Something went wrong while fetching the game! See the console for details."
+  //     );
+  //   }
+  // };
+
+  const updateRoundStatus = () => {};
+  const updatePlayerRoundInfo = () => {};
 
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
-    sockClient.addOnMessageFunction("game", updateGame);
   };
 
   // //use this function to change values!
@@ -82,14 +85,34 @@ const GameScreen = () => {
   //   // continue here afterwards.
   // };
 
+  const startGame = () => {
+    // add subscriptions
+    console.log("adding subscriptions");
+    sockClient.addOnMessageFunction("game", updateGame);
+    sockClient.addOnMessageFunction("roundstatus", updateRoundStatus);
+    sockClient.addOnMessageFunction("playerroundinfo", updatePlayerRoundInfo);
+
+    // start the game
+    console.log("starting the game");
+    sockClient.startGame(gameId, playerId);
+    setGameStarted(true);
+  };
+
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
 
-    // fetch the game data if it is not there yet
-    if (!game) {
-      fetchGame();
+    // // fetch the game data if it is not there yet
+    // if (!game) {
+    //   fetchGame();
+    // }
+
+    // if the game has not started yet, start the game
+    if (!gameStarted) {
+      startGame();
     }
+
+    console.log("current game data: ", game);
 
     // handle user leaving page
     const unlisten = history.listen(() => {

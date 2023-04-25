@@ -1,15 +1,17 @@
 class Game {
   constructor(data = {}) {
     this.gameId = null;
-    this.hostId = null;
+    this.gameStatus = null;
     this.guestId = null;
-    this.hostUsername = null;
-    this.guestUsername = null;
-    this.hostStatus = null;
+    this.guestPoints = null;
     this.guestStatus = null;
+    this.guestUsername = null;
+    this.hostId = null;
+    this.hostPoints = null;
+    this.hostStatus = null;
+    this.hostUsername = null;
     this.winnerId = null;
     this.winnerUsername = null;
-    this.gameStatus = null;
     Object.assign(this, data);
   }
 }
