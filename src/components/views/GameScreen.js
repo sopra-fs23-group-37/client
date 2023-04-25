@@ -39,6 +39,7 @@ const GameScreen = () => {
   // these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState(null);
+  const [selectPutOnField, setSelectPutOnField] = useState(false);
 
   const history = useHistory();
 
@@ -57,12 +58,14 @@ const GameScreen = () => {
 
   const makeMove = () => {
     // use this function to build move and send via websocket
+    // check type of move
   }
 
   const selectCardFromField = (card) => {
     // if card is already clicked
     if (card.clicked) {
       const filteredArray = selectedTableCards.filter(item => item.code !== card.code);
+      setSelectedTableCards(filteredArray);
     } else {
       setSelectedTableCards((selectedTableCards) => ([...selectedTableCards, card]));
     }
