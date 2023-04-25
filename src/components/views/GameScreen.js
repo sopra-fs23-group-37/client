@@ -116,66 +116,8 @@ const GameScreen = () => {
     };
   });
 
-  let playerHand = (
-    <div className="card-container">
-      {/* Placeholder for player hand */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
-  );
-
-  let opponentHand = (
-    <div className="card-container">
-      {/* Placeholder for opponent hand */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
-  );
-
-  let deck = (
-    <div className="card-container">
-      {/* Placeholder for deck */}
-      <div className="card back"></div>
-    </div>
-  );
-
-  let table = (
-    <div className="card-container">
-      {/* Placeholder for table cards */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
-  );
-
-  let content = (
-    <div className="game-container">
-      <div className="player-hand">{playerHand}</div>
-      <div className="opponent-hand">{opponentHand}</div>
-      <div className="table-cards">{table}</div>
-      <div className="deck">{deck}</div>
-    </div>
-  );
-
-
-  return (
-    <div className="gamescreen container">
-      <div className="top">
-        <div className="left">
-          <div className="opponent">
-            <div className="opponent-card">Opponent's Cards</div>
-            <div className="empty">Empty Div</div>
-          </div>
-          <div className="table">Playing Table</div>
-        </div>
-        <div className="right">
-          <div className="statistics">Statistics</div>
-          <div className="discard-pile">Discard Pile</div>
-        </div>
-      </div>
-      <div className="bottom">
+  let playerHandContainer = (
+    <div className="playerHandContainer">
         <div className="selectedCard">  
           {(selectedCard) ? (<Card
               key={selectedCard.code}
@@ -203,6 +145,49 @@ const GameScreen = () => {
           </Button>
         </div>
       </div>
+  );
+
+  let opponentHand = (
+    <div className="card-container">
+      {/* Placeholder for opponent hand */}
+      <div className="card"></div>
+      <div className="card"></div>
+      <div className="card"></div>
+    </div>
+  );
+
+  let deck = (
+    <div className="card-container">
+      {/* Placeholder for deck */}
+      <div className="card back"></div>
+    </div>
+  );
+
+  let table = (
+    <div className="card-container">
+      {/* Placeholder for table cards */}
+      <div className="card"></div>
+      <div className="card"></div>
+      <div className="card"></div>
+    </div>
+  );
+
+  return (
+    <div className="gamescreen container">
+      <div className="top">
+        <div className="left">
+          <div className="opponent">
+            <div className="opponent-card">Opponent's Cards</div>
+            <div className="empty">Empty Div</div>
+          </div>
+          <div className="table">Playing Table</div>
+        </div>
+        <div className="right">
+          <div className="statistics">Statistics</div>
+          <div className="discard-pile">Discard Pile</div>
+        </div>
+      </div>
+      {playerHandContainer}
     </div>
   );
 };
