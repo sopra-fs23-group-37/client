@@ -27,12 +27,12 @@ class SockClient {
     this.stompClient.connect({}, (frame) => {
       console.log("Connected: " + frame);
       this.stompClient.subscribe("/topic/game/" + gameId + "/*", (response) => {
-        this.topicHandleResponseByChannel(response);
+        this.handleResponseByChannel(response);
       });
       this.stompClient.subscribe(
         "/queue/user/" + playerId + "/*",
         (response) => {
-          this.queueHandleResponseByChannel(response);
+          this.handleResponseByChannel(response);
         }
       );
       this.stompClient.send(
@@ -67,28 +67,12 @@ class SockClient {
     } else return false;
   }
 
-  topicHandleResponseByChannel(response) {
+  handleResponseByChannel(response) {
     let data = JSON.parse(response.body);
     console.log("data received: ", data);
 
-    let channel = response.headers.destination.replace(/.+\/game\/.+\//i, "");
-    console.log("on channel: ", channel);
-
-    if (!this._onMessageFunctions.hasOwnProperty(channel)) {
-      console.log("no onMessage function defined for this channel");
-    }
-
-    for (let messageFunction of this._onMessageFunctions[channel]) {
-      console.log("invoking message function for channel ", channel);
-      messageFunction(data);
-    }
-  }
-
-  queueHandleResponseByChannel(response) {
-    let data = JSON.parse(response.body);
-    console.log("data received: ", data);
-
-    let channel = response.headers.destination.replace(/.+\/user\/.+\//i, "");
+    //let channel = response.headers.destination.replace(/.+\/game\/.+\//i, "");
+    let channel = response.headers.destination.split("/").pop();
     console.log("on channel: ", channel);
 
     if (!this._onMessageFunctions.hasOwnProperty(channel)) {
