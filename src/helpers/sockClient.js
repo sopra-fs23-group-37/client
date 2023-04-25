@@ -107,16 +107,18 @@ class SockClient {
     console.log("websocket disconnected, websocket status:", this._connected);
   }
 
-  reloadGame(gameId) {
-    this.stompClient.send("/game/forceUpdate/" + gameId, {});
-  }
-
   removeMessageFunctions() {
     this._onMessageFunctions = {};
     console.log("All message functions removed.");
   }
 
-  sendMove() {}
+  sendMove(gameId, playerMoveMessage) {
+    this.stompClient.send(
+      "/game/move/" + gameId,
+      {},
+      JSON.stringify({ playerMoveMessage })
+    );
+  }
 }
 
 export default new SockClient();
