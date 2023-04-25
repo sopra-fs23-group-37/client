@@ -17,7 +17,8 @@ const GameScreen = () => {
 
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
-  const [currentRound, setCurrentRound] = useState(null);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [round, setRound] = useState(null);
   // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(true);
   // end of game contains total points and winner
@@ -98,6 +99,8 @@ const GameScreen = () => {
   const surrenderGame = () => {
     // Code to handle surrender
   };
+
+  
   const handleNextRound = () => {
     setEndOfRound(false);
   };
@@ -207,23 +210,24 @@ const GameScreen = () => {
       <div className="table">Playing Table</div>
     </div>
     <div className="right">
+    {game && (
       <div className="statistics">
         <div className="player-names">
-          <span className="guest-name">Peter</span>
+          <span className="guest-name">{game.guest.username}</span>
           <span className="points">
-            <span className="guest-points">2</span>
+            <span className="guest-points">{game.guestPoints || 0}</span>
             <span className="points-divider">:</span>
-            <span className="host-points">1</span>
+            <span className="host-points">{game.hostPoints || 0}</span>
           </span>
-          <span className="host-name">Steven</span>
+          <span className="host-name">{game.host.username}</span>
         </div>
         <div className="surrender-button-container">
           <button className="surrender-button" onClick={surrenderGame}>
             Surrender
           </button>
         </div>
-  </div>
-
+      </div>
+    )}
       <div className="discard-pile">Discard Pile</div>
     </div>
   </div>
@@ -239,13 +243,14 @@ const GameScreen = () => {
           onClick={console.log("I'm clickable")}
         />
       </div>
-      {endOfRound && (
+      {round && endOfRound && (
         <div className ="endOfRound">
           <EndOfRound 
+          game={game}
+          round={round}
           onNextRound={handleNextRound}
           />
         </div>
-
       )}
     </div>
   );
