@@ -20,7 +20,14 @@ const Rulebook = () => {
   return (
     <BaseContainer>
       <div className="rulebook-container">
-        <h1 className="rulebook-title">Rulebook</h1>
+   
+         
+        <h1 className="rulebook-title"style={{color: "white"}}>Rulebook <Button onClick={() => homescreen()} style={{ marginLeft: "800px",color: "white", backgroundColor: "E76F51"   }}>
+           Back to homepage
+          </Button > </h1>
+        
+        
+        
 
         <div className="rulebook-tabs">
           <div className="rulebook-section">
@@ -31,7 +38,7 @@ const Rulebook = () => {
           >
             Cheat-Sheet
           </Button>
-          </div>
+          
 
           <Button
             className={activeTab === "player-cards" ? "active" : ""}
@@ -43,7 +50,7 @@ const Rulebook = () => {
           <Button
             className={activeTab === "dealing" ? "active" : ""}
             onClick={() => handleTabClick("dealing")}
-            style={{ marginRight: "10px" }} // Hier wird der Abstand erhöht
+            style={{ marginRight: "10px", backgroundColor: "E76F51" }} // Hier wird der Abstand erhöht
           >
             Dealing
           </Button>
@@ -62,24 +69,24 @@ const Rulebook = () => {
             Scoring
           </Button>
 
-          <Button onClick={() => homescreen()} style={{ marginRight: "40px" }}>
-            homepage
-          </Button>
+          
+
+         
         </div>
 
         {activeTab === "cheat-sheet" && (
           <div className="rulebook-section">
             <div className="rulebook-section-title">
               <strong>
-                <h3>Cheat-Sheet</h3>
+                <h3></h3>
               </strong>
             </div>
             <div className="rulebook-rules-list">
               
                 <img
                   src={myImage}
-                  alt="Cheat-Sheet"
-                  style={{ height: "500px", width: "800px", marginLeft: 0 }}
+                  alt=""
+                  style={{ height: "500px", width: "1000px", marginLeft: 0 }}
                 />
               
             </div>
@@ -239,6 +246,7 @@ const Rulebook = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </BaseContainer>
   );
