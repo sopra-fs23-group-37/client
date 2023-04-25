@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import './CardDisplay.scss';
 import sockClient from "helpers/sockClient";
+import Card from "components/views/Card"
 
 function CardDisplay() {
-  const [cards, setCards] = useState([]);
+  //const [cards, setCards] = useState([]);
 
-  useEffect(() => {
+  //useEffect(() => {
     // Connect to the backend API using SockClient
-    const client = sockClient; // TODO: Connect with deck
-    client.connect({}, () => {
-      // Subscribe to the card data topic and update the cards state
-      client.subscribe('/topic/cards', message => {
-        const data = JSON.parse(message.body);
-        setCards(data);
-      });
-    });
+   // const client = sockClient; // TODO: Connect with deck
+   // client.connect({}, () => {
+   //   // Subscribe to the card data topic and update the cards state
+   //   client.subscribe('/topic/cards', message => {
+  //      const data = JSON.parse(message.body);
+   //     setCards(data);
+   //   });
+  //  });
 
-    return () => {
+  //  return () => {
       // Disconnect from the backend API when the component unmounts
-      client.disconnect();
-    };
-  }, []);
-
+   //   client.disconnect();
+  //  };
+  //}, []);
+  
   return (
+    <div className='gamescreen-table'>
     <div className="card-display">
       <div className="card-row">
-        {cards.slice(0, 4).map(card => (
+        {Card.slice(0, 4).map(card => (
           <div className="card-placeholder" key={card.id}>
             <img src={card.image} alt={card.name} />
           </div>
@@ -38,6 +40,7 @@ function CardDisplay() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }
