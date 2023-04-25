@@ -4,7 +4,7 @@ import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-// import { Button } from "components/ui/Button";
+import { Button } from "components/ui/Button";
 // import EndOfRound from "components/views/EndOfRound";
 // import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
@@ -59,9 +59,8 @@ const GameScreen = () => {
   };
 
   const printStuff = () => {
-    console.log(game);
-    console.log(game.currentRound.host.cardsInHand);
-    setPlayerCards(game.currentRound.host.cardsInHand);
+    console.log(round);
+    setPlayerCards(round.myCardsInHand);
   };
 
   const makeMove = () => {
@@ -92,7 +91,7 @@ const GameScreen = () => {
     setPlayerCards((playerCards) => ([...playerCards, card]));
     setSelectedCard(null);
   }
-  
+
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
