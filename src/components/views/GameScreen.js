@@ -1,21 +1,25 @@
 import { useParams, useHistory } from "react-router-dom";
-import BaseContainer from "components/ui/BaseContainer";
+// import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
+import Round from "models/Round";
 import { Button } from "components/ui/Button";
-import EndOfRound from "components/views/EndOfRound";
-import EndOfGame from "components/views/EndOfGame";
+// import EndOfRound from "components/views/EndOfRound";
+// import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
-import { api, handleError } from "helpers/api";
+// import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
+  const playerId = parseInt(sessionStorage.getItem("userId"));
 
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [round, setRound] = useState(null);
   // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
@@ -37,61 +41,86 @@ const GameScreen = () => {
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
   const [opponentLeftReason, setOpponentLeftReason] = useState(null);
 
-  // these datapoints are set by the player when playing to form the move
+  //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedTableCards, setSelectedTableCards] = useState(null);
+  const [selectPutOnField, setSelectPutOnField] = useState(false);
 
   const history = useHistory();
 
   const updateGame = (data) => {
-    // json data from server doesn't match class variables on server so be careful when parsing
-    // classes for round, player and card exist according to json if smaller objects are needed
-    console.log("game data received:", data);
+    // take the game update data and set it in here
+    console.log("game data received: ", data);
     setGame(new Game(data));
   };
 
-  const printStuff = () => {
-    fetchGame();
+  const updateRound = (data) => {
+    console.log("round update received:", data);
+    setRound(new Round(data));
   };
 
-  const fetchGame = async () => {
-    try {
-      const response = await api.get("/games/" + gameId);
-      console.log("REST Response Current Round:", response.data.currentRound);
-      const responseJSON = response.data.currentRound;
-      setGame(new Game(response.data));
-    } catch (error) {
-      console.error(
-        `Something went wrong while fetching the game: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      alert(
-        "Something went wrong while fetching the game! See the console for details."
-      );
-    }
+  const printStuff = () => {
+    console.log(round);
+    setPlayerCards(round.myCardsInHand);
   };
+
+  const makeMove = () => {
+    // use this function to build move and send via websocket
+    // check type of move
+  }
+
+  const selectCardFromField = (card) => {
+    // if card is already clicked
+    if (card.clicked) {
+      const filteredArray = selectedTableCards.filter(item => item.code !== card.code);
+      setSelectedTableCards(filteredArray);
+    } else {
+      setSelectedTableCards((selectedTableCards) => ([...selectedTableCards, card]));
+    }
+  }
+
+  const selectCardFromHand = (card) => {
+    const filteredArray = playerCards.filter(item => item.code !== card.code);
+    if (selectedCard) {
+      filteredArray.push(selectedCard);
+    }
+    setPlayerCards(filteredArray);
+    setSelectedCard(card);
+  }
+
+  const unselectCard = (card) => {
+    setPlayerCards((playerCards) => ([...playerCards, card]));
+    setSelectedCard(null);
+  }
 
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
-    sockClient.addOnMessageFunction("Game", updateGame);
   };
 
-  //use this function to change values!
-  const setTestingValues = () => {
-    setEndOfRound(false);
-    setEndOfGame(true);
-    //setPlayerCards(test);
-    // continue here afterwards.
+  const startGame = () => {
+    // add subscriptions
+    console.log("adding subscriptions");
+    sockClient.addOnMessageFunction("game", updateGame);
+    sockClient.addOnMessageFunction("round", updateRound);
+
+    // start the game
+    console.log("starting the game");
+    sockClient.startGame(gameId, playerId);
+    setGameStarted(true);
   };
 
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
 
-    // fetch the game data if it is not there yet
-    if (!game) {
-      fetchGame();
+    // if the game has not started yet, start the game
+    if (!gameStarted) {
+      startGame();
     }
+
+    console.log("current game data: ", game);
+    console.log("current round data:", round);
 
     // handle user leaving page
     const unlisten = history.listen(() => {
@@ -100,21 +129,44 @@ const GameScreen = () => {
       sockClient.removeMessageFunctions();
     });
 
-    setTestingValues();
-
     return () => {
       console.log("Component is unmounting");
       unlisten();
     };
   });
 
-  let playerHand = (
-    <div className="card-container">
-      {/* Placeholder for player hand */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
+  let playerHandContainer = (
+    <div className="playerHandContainer">
+        <div className="selectedCard">  
+          {(selectedCard) ? (<Card
+              key={selectedCard.code}
+              code={selectedCard.code}
+              suit={selectedCard.suit}
+              value={selectedCard.value}
+              image={selectedCard.image}
+              onClick={() => unselectCard(selectedCard)}
+            />) : <h1> No card selected </h1> }
+            <h1> selected </h1>
+        </div>
+        <div className="playerHand">
+            {(playerCards) ? (playerCards.map(((card) => <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => selectCardFromHand(card)}
+            />
+            ))) : <h1> not loaded </h1> }
+            <h1> hand </h1>
+          </div>
+          
+        <div className="playerInfo">
+          <Button width="80%" onClick={() => printStuff()}>
+              Play Move
+          </Button>
+        </div>
+      </div>
   );
 
   let opponentHand = (
@@ -133,39 +185,18 @@ const GameScreen = () => {
     </div>
   );
 
+  let turnInfo = (
+    <div className="turnInfo">
+      <h1> Current player </h1>
+      <h1> {round.myTurn ? ("my turn") : ("op turn")} </h1>
+    </div>
+  )
+
   let table = (
     <div className="table">
       <CardDisplay/>
     </div>
   );
-
-  let content = (
-    <div className="game-container">
-      <div className="player-hand">{playerHand}</div>
-      <div className="opponent-hand">{opponentHand}</div>
-      <div className="table-cards">{table}</div>
-      <div className="deck">{deck}</div>
-    </div>
-  );
-
-  /*
-  TODO: Timons code gibt Errors und lässt nicht rendern
-
-  { <h2>Game {gameId}</h2>
-      <h1>{game.gameId}</h1>
-      {game.winner ? (
-        <EndOfGame winner={game.winner} />
-      ) : (
-        <>
-          {game.currentRound &&
-            game.currentRound.roundStatus === "FINISHED" && <EndOfRound />}
-          {content}
-          <Button width="100%" onClick={() => printStuff()}>
-            Print to console
-          </Button>
-        </>
-      )}
-          }*/
 
   return (
     <div className="gamescreen container">
@@ -173,7 +204,7 @@ const GameScreen = () => {
         <div className="left">
           <div className="opponent">
             <div className="opponent-card">Opponent's Cards</div>
-            <div className="empty">Empty Div</div>
+            {turnInfo}
           </div>
           <div className="table">Playing Table
           {table}</div>
@@ -184,18 +215,7 @@ const GameScreen = () => {
           <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
-      <div className="bottom">
-        {
-          //Beispiel wie Card-Komponent verwendet wird für eine Karte.
-        }
-        <Card
-          code="JD"
-          suit="DIAMONDS"
-          value="JACK"
-          image="https://deckofcardsapi.com/static/img/JD.png"
-          onClick={console.log("I'm clickable")}
-        />
-      </div>
+      {playerHandContainer}
     </div>
   );
 };
