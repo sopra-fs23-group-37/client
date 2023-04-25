@@ -23,11 +23,11 @@ class SockClient {
     this.sock = new SockJS(`${getDomain()}/websocket`);
     this.stompClient = Stomp.over(this.sock);
 
-    // connect
+    // connect and subscribe
     this.stompClient.connect({}, (frame) => {
       console.log("Connected: " + frame);
-      this.stompClient.subscribe("/topic/game/" + gameId, (response) => {
-        this.handleResponse(response);
+      this.stompClient.subscribe("/topic/game/" + gameId + "/*", (response) => {
+        this.handleResponseByChannel(response);
       });
       this.stompClient.send(
         "/game/join/" + gameId,
@@ -65,17 +65,19 @@ class SockClient {
     } else return false;
   }
 
-  handleResponse(response) {
+  handleResponseByChannel(response) {
     let data = JSON.parse(response.body);
-    console.log(data);
-    let page = sessionStorage.getItem("currentPage");
-    console.log("current page:", page);
+    console.log("data received: ", data);
 
-    if (!this._onMessageFunctions.hasOwnProperty(page)) {
-      console.log("no onMessage function defined for this page");
+    let channel = response.headers.destination.replace(/.+\/game\/.+\//i, "");
+    console.log("on channel: ", channel);
+
+    if (!this._onMessageFunctions.hasOwnProperty(channel)) {
+      console.log("no onMessage function defined for this channel");
     }
 
-    for (let messageFunction of this._onMessageFunctions[page]) {
+    for (let messageFunction of this._onMessageFunctions[channel]) {
+      console.log("invoking message function for channel ", channel);
       messageFunction(data);
     }
   }
