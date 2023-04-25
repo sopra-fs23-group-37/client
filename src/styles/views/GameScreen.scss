@@ -37,8 +37,7 @@
           .opponent-card {
             border: 0.1px solid gray;
           }
-
-          .empty {
+          .turnInfo {
             border: 0.1px solid gray;
           }
         }
@@ -153,6 +152,40 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      
+    .playerHandContainer {
+      border: 0.1px solid gray;
+      display: flex;
+
+      .playerHand {
+        background: rgb(55, 116, 40);
+        width: fit-content;
+        height: fit-content;
+        padding: 1.5em;
+        margin: 0 auto;
+        display: table-column;
+        justify-content: center;
+      }
+
+      .selectedCard {
+        background: rgb(55, 116, 40);
+        width: fit-content;
+        height: fit-content;
+        padding: 1.5em;
+        margin: 0 auto;
+        display: table-column;
+        justify-content: center;
+      }
+
+      .playerInfo {
+        background: rgb(55, 116, 40);
+        width: fit-content;
+        height: fit-content;
+        padding: 1.5em;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }

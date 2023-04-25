@@ -24,7 +24,6 @@ const Home = () => {
 
       const game = new Game(response.data);
       console.log("gameId is: ", game.gameId);
-      sessionStorage.setItem("currentPage", "Lobby");
       history.push("/game/lobby/" + game.gameId);
     } catch (error) {
       alert(
