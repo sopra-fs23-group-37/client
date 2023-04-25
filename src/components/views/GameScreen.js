@@ -4,7 +4,7 @@ import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-// import { Button } from "components/ui/Button";
+import { Button } from "components/ui/Button";
 // import EndOfRound from "components/views/EndOfRound";
 // import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
@@ -42,6 +42,8 @@ const GameScreen = () => {
 
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedTableCards, setSelectedTableCards] = useState(null);
+  const [selectPutOnField, setSelectPutOnField] = useState(false);
 
   const history = useHistory();
 
@@ -55,6 +57,40 @@ const GameScreen = () => {
     console.log("round update received:", data);
     setRound(new Round(data));
   };
+
+  const printStuff = () => {
+    console.log(round);
+    setPlayerCards(round.myCardsInHand);
+  };
+
+  const makeMove = () => {
+    // use this function to build move and send via websocket
+    // check type of move
+  }
+
+  const selectCardFromField = (card) => {
+    // if card is already clicked
+    if (card.clicked) {
+      const filteredArray = selectedTableCards.filter(item => item.code !== card.code);
+      setSelectedTableCards(filteredArray);
+    } else {
+      setSelectedTableCards((selectedTableCards) => ([...selectedTableCards, card]));
+    }
+  }
+
+  const selectCardFromHand = (card) => {
+    const filteredArray = playerCards.filter(item => item.code !== card.code);
+    if (selectedCard) {
+      filteredArray.push(selectedCard);
+    }
+    setPlayerCards(filteredArray);
+    setSelectedCard(card);
+  }
+
+  const unselectCard = (card) => {
+    setPlayerCards((playerCards) => ([...playerCards, card]));
+    setSelectedCard(null);
+  }
 
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
@@ -98,13 +134,38 @@ const GameScreen = () => {
     };
   });
 
-  let playerHand = (
-    <div className="card-container">
-      {/* Placeholder for player hand */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
+  let playerHandContainer = (
+    <div className="playerHandContainer">
+        <div className="selectedCard">  
+          {(selectedCard) ? (<Card
+              key={selectedCard.code}
+              code={selectedCard.code}
+              suit={selectedCard.suit}
+              value={selectedCard.value}
+              image={selectedCard.image}
+              onClick={() => unselectCard(selectedCard)}
+            />) : <h1> No card selected </h1> }
+            <h1> selected </h1>
+        </div>
+        <div className="playerHand">
+            {(playerCards) ? (playerCards.map(((card) => <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => selectCardFromHand(card)}
+            />
+            ))) : <h1> not loaded </h1> }
+            <h1> hand </h1>
+          </div>
+          
+        <div className="playerInfo">
+          <Button width="80%" onClick={() => printStuff()}>
+              Play Move
+          </Button>
+        </div>
+      </div>
   );
 
   let opponentHand = (
@@ -123,6 +184,13 @@ const GameScreen = () => {
     </div>
   );
 
+  let turnInfo = (
+    <div className="turnInfo">
+      <h1> Current player </h1>
+      <h1> {round.myTurn ? ("my turn") : ("op turn")} </h1>
+    </div>
+  )
+
   let table = (
     <div className="card-container">
       {/* Placeholder for table cards */}
@@ -132,41 +200,13 @@ const GameScreen = () => {
     </div>
   );
 
-  let content = (
-    <div className="game-container">
-      <div className="player-hand">{playerHand}</div>
-      <div className="opponent-hand">{opponentHand}</div>
-      <div className="table-cards">{table}</div>
-      <div className="deck">{deck}</div>
-    </div>
-  );
-
-  /*
-  TODO: Timons code gibt Errors und lässt nicht rendern
-
-  { <h2>Game {gameId}</h2>
-      <h1>{game.gameId}</h1>
-      {game.winner ? (
-        <EndOfGame winner={game.winner} />
-      ) : (
-        <>
-          {game.currentRound &&
-            game.currentRound.roundStatus === "FINISHED" && <EndOfRound />}
-          {content}
-          <Button width="100%" onClick={() => printStuff()}>
-            Print to console
-          </Button>
-        </>
-      )}
-          }*/
-
   return (
     <div className="gamescreen container">
       <div className="top">
         <div className="left">
           <div className="opponent">
             <div className="opponent-card">Opponent's Cards</div>
-            <div className="empty">Empty Div</div>
+            {turnInfo}
           </div>
           <div className="table">Playing Table</div>
         </div>
@@ -175,18 +215,7 @@ const GameScreen = () => {
           <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
-      <div className="bottom">
-        {
-          //Beispiel wie Card-Komponent verwendet wird für eine Karte.
-        }
-        <Card
-          code="JD"
-          suit="DIAMONDS"
-          value="JACK"
-          image="https://deckofcardsapi.com/static/img/JD.png"
-          onClick={console.log("I'm clickable")}
-        />
-      </div>
+      {playerHandContainer}
     </div>
   );
 };
