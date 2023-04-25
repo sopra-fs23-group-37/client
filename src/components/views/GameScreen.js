@@ -232,6 +232,7 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">Playing Table</div>
+        </div>
     <div className="right">
     {game && (
       <div className="statistics">
@@ -253,6 +254,7 @@ const GameScreen = () => {
     )}
       <div className="discard-pile">Discard Pile</div>
     </div>
+    </div>
       {playerHandContainer}
 
       {round && endOfRound && (
@@ -265,7 +267,6 @@ const GameScreen = () => {
         </div>
       )}
     </div>
-
   );
 };
 
