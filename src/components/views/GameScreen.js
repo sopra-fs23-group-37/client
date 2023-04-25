@@ -127,6 +127,7 @@ const GameScreen = () => {
               image={selectedCard.image}
               onClick={() => unselectCard(selectedCard)}
             />) : <h1> No card selected </h1> }
+            <h1> selected </h1>
         </div>
         <div className="playerHand">
             {(playerCards) ? (playerCards.map(((card) => <Card
@@ -138,10 +139,12 @@ const GameScreen = () => {
               onClick={() => selectCardFromHand(card)}
             />
             ))) : <h1> not loaded </h1> }
+            <h1> hand </h1>
           </div>
+          
         <div className="playerInfo">
-          <Button width="50%" onClick={() => printStuff()}>
-              Print to console
+          <Button width="80%" onClick={() => printStuff()}>
+              Play Move
           </Button>
         </div>
       </div>
