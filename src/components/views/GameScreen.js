@@ -19,7 +19,7 @@ const GameScreen = () => {
   const [game, setGame] = useState(null);
   const [currentRound, setCurrentRound] = useState(null);
   // end of round contains points for the round and total points
-  const [endOfRound, setEndOfRound] = useState(false);
+  const [endOfRound, setEndOfRound] = useState(true);
   // end of game contains total points and winner
   const [endOfGame, setEndOfGame] = useState(false);
   // contains all cards from the player and on the discard
@@ -82,7 +82,6 @@ const GameScreen = () => {
 
   //use this function to change values!
   const setTestingValues = () => {
-    setEndOfRound(false);
     setEndOfGame(true);
     //setPlayerCards(test);
     // continue here afterwards.
@@ -99,7 +98,9 @@ const GameScreen = () => {
   const surrenderGame = () => {
     // Code to handle surrender
   };
-
+  const handleNextRound = () => {
+    setEndOfRound(false);
+  };
 
   useEffect(() => {
     console.log("Use Effect started");
@@ -124,7 +125,6 @@ const GameScreen = () => {
     }
 
     console.log(game);
-    
     return () => {
       console.log("Component is unmounting");
       unlisten();
@@ -239,15 +239,13 @@ const GameScreen = () => {
           onClick={console.log("I'm clickable")}
         />
       </div>
-    
       {endOfRound && (
         <div className ="endOfRound">
           <EndOfRound 
-              hostPoints={game.hostPoints} 
-              guestPoints={game.guestPoints} 
-              totalRounds ={game.totalRounds} 
+          onNextRound={handleNextRound}
           />
         </div>
+
       )}
     </div>
   );
