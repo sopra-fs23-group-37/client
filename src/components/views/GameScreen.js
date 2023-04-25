@@ -9,12 +9,15 @@ import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
+import Round from "models/Round";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
+  const playerId = parseInt(sessionStorage.getItem("userId"));
 
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
+  const [currentRound, setCurrentRound] = useState(null);
   // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
@@ -46,6 +49,7 @@ const GameScreen = () => {
     // classes for round, player and card exist according to json if smaller objects are needed
     console.log("game data received:", data);
     setGame(new Game(data));
+
   };
 
   const printStuff = () => {
@@ -58,6 +62,7 @@ const GameScreen = () => {
       console.log("REST Response Current Round:", response.data.currentRound);
       const responseJSON = response.data.currentRound;
       setGame(new Game(response.data));
+
     } catch (error) {
       console.error(
         `Something went wrong while fetching the game: \n${handleError(error)}`
@@ -83,6 +88,19 @@ const GameScreen = () => {
     // continue here afterwards.
   };
 
+  const checkEndOfRound = () => {
+
+    if (game.roundStatus === "FINISHED") {
+      setEndOfRound(true);
+      setTimeout(() => setEndOfRound(false), 3000);
+    }
+  };
+
+  const surrenderGame = () => {
+    // Code to handle surrender
+  };
+
+
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -101,6 +119,12 @@ const GameScreen = () => {
 
     setTestingValues();
 
+    if (game) {
+      checkEndOfRound();
+    }
+
+    console.log(game);
+    
     return () => {
       console.log("Component is unmounting");
       unlisten();
@@ -169,21 +193,40 @@ const GameScreen = () => {
       )}
           }*/
 
+
+
+
   return (
-    <div className="gamescreen container">
-      <div className="top">
-        <div className="left">
-          <div className="opponent">
-            <div className="opponent-card">Opponent's Cards</div>
-            <div className="empty">Empty Div</div>
-          </div>
-          <div className="table">Playing Table</div>
-        </div>
-        <div className="right">
-          <div className="statistics">Statistics</div>
-          <div className="discard-pile">Discard Pile</div>
-        </div>
+<div className="gamescreen container">
+  <div className="top">
+    <div className="left">
+      <div className="opponent">
+        <div className="opponent-card">Opponent's Cards</div>
+        <div className="empty">Empty Div</div>
       </div>
+      <div className="table">Playing Table</div>
+    </div>
+    <div className="right">
+      <div className="statistics">
+        <div className="player-names">
+          <span className="guest-name">Peter</span>
+          <span className="points">
+            <span className="guest-points">2</span>
+            <span className="points-divider">:</span>
+            <span className="host-points">1</span>
+          </span>
+          <span className="host-name">Steven</span>
+        </div>
+        <div className="surrender-button-container">
+          <button className="surrender-button" onClick={surrenderGame}>
+            Surrender
+          </button>
+        </div>
+  </div>
+
+      <div className="discard-pile">Discard Pile</div>
+    </div>
+  </div>
       <div className="bottom">
         {
           //Beispiel wie Card-Komponent verwendet wird für eine Karte.
@@ -196,6 +239,16 @@ const GameScreen = () => {
           onClick={console.log("I'm clickable")}
         />
       </div>
+    
+      {endOfRound && (
+        <div className ="endOfRound">
+          <EndOfRound 
+              hostPoints={game.hostPoints} 
+              guestPoints={game.guestPoints} 
+              totalRounds ={game.totalRounds} 
+          />
+        </div>
+      )}
     </div>
   );
 };
