@@ -9,6 +9,7 @@ import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
+import CardDisplay from "./CardDisplay";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -133,11 +134,8 @@ const GameScreen = () => {
   );
 
   let table = (
-    <div className="card-container">
-      {/* Placeholder for table cards */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
+    <div className="table">
+      <CardDisplay/>
     </div>
   );
 
@@ -177,7 +175,9 @@ const GameScreen = () => {
             <div className="opponent-card">Opponent's Cards</div>
             <div className="empty">Empty Div</div>
           </div>
-          <div className="table">Playing Table</div>
+          <div className="table">Playing Table
+          {table}</div>
+      
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>

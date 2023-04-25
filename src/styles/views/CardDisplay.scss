@@ -1,5 +1,5 @@
 .card-display {
-  width: 600px;
+  width: 500px;
   height:600px;
   display: flex;
   flex-direction: row;
@@ -8,27 +8,19 @@
 }
 
 .card-row {
-  margin-bottom: 45px;
-  margin-left:150px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.card-placeholder {
-  width: 100px;
-  height: 300px;
-  margin: 10px;
-  border-radius: 5px;
-}
-
-
 .card {
-  width: 100px;
-  height: 150px;
-  margin: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   cursor: pointer;
+  height: 120px;
+  margin-right: 16px;
+  width: 80px;
 }
 
 .selected {
