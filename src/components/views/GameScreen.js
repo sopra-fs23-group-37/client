@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
+import Round from "models/Round";
 // import { Button } from "components/ui/Button";
 // import EndOfRound from "components/views/EndOfRound";
 // import EndOfGame from "components/views/EndOfGame";
@@ -16,6 +17,7 @@ const GameScreen = () => {
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
+  const [round, setRound] = useState(null);
   // end of round contains points for the round and total points
   // const [endOfRound, setEndOfRound] = useState(false);
   // // end of game contains total points and winner
@@ -69,8 +71,10 @@ const GameScreen = () => {
   //   }
   // };
 
-  const updateRoundStatus = () => {};
-  const updatePlayerRoundInfo = () => {};
+  const updateRound = (data) => {
+    console.log("round update received:", data);
+    setRound(new Round(data));
+  };
 
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
@@ -89,8 +93,7 @@ const GameScreen = () => {
     // add subscriptions
     console.log("adding subscriptions");
     sockClient.addOnMessageFunction("game", updateGame);
-    sockClient.addOnMessageFunction("roundstatus", updateRoundStatus);
-    sockClient.addOnMessageFunction("playerroundinfo", updatePlayerRoundInfo);
+    sockClient.addOnMessageFunction("round", updateRound);
 
     // start the game
     console.log("starting the game");
@@ -113,6 +116,7 @@ const GameScreen = () => {
     }
 
     console.log("current game data: ", game);
+    console.log("current round data:", round);
 
     // handle user leaving page
     const unlisten = history.listen(() => {
