@@ -11,15 +11,15 @@ const Lobby = () => {
   const [game, setGame] = useState(new Game());
   const history = useHistory();
   const playerId = parseInt(sessionStorage.getItem("userId"));
+  const [goingToGame, setGoingToGame] = useState(false);
 
-  const updateGame = (data) => {
-    console.log("game data received:", data);
+  const updateLobby = async (data) => {
+    console.log("lobby data received:", data);
     setGame(new Game(data));
-    if (data.gameStatus === "CONNECTED" && data.host.userId === playerId) {
-      sockClient.startGame(gameId);
-    }
-    if (data.gameStatus === "ONGOING") {
-      sessionStorage.setItem("currentPage", "Game");
+    console.log("new game: ", game);
+    if (data.gameStatus === "CONNECTED") {
+      setGoingToGame(true);
+      await delay(1000);
       history.push(`/game/play/${gameId}`);
     }
   };
@@ -28,7 +28,7 @@ const Lobby = () => {
     console.log("websocket status:", sockClient.isConnected());
     if (!sockClient.isConnected()) {
       console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("Lobby", updateGame)) {
+      if (sockClient.addOnMessageFunction("lobby", updateLobby)) {
         sockClient.connectAndJoin(gameId, playerId);
       }
     }
@@ -37,9 +37,13 @@ const Lobby = () => {
   useEffect(() => {
     console.log("Use Effect started");
     connectAndJoin();
+
     const unlisten = history.listen(() => {
-      console.log("User is leaving the page");
-      sockClient.disconnect();
+      console.log("is the user going to the game? ", goingToGame);
+      if (!goingToGame) {
+        console.log("User left the lobby");
+        sockClient.disconnect();
+      }
     });
 
     return () => {
@@ -48,17 +52,7 @@ const Lobby = () => {
     };
   });
 
-  // let content = (
-  //   <div className="profile overview">
-  //     <div>Game id: {gameId}</div>
-  //     <div>Host Status: {game.hostStatus}</div>
-  //     <div>Guest Status: {game.guestStatus}</div>
-  //     <div>Game Status: {game.gameStatus}</div>
-  //     {game.hostStatus === "CONNECTED" && game.guestStatus === "CONNECTED" && (
-  //       <div>Both players are in the lobby. The game will start soon.</div>
-  //     )}
-  //   </div>
-  // );
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   return (
     <BaseContainer>

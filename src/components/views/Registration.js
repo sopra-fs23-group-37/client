@@ -38,17 +38,24 @@ const Registration = (props) => {
   const [username, setUsername] = useState(null);
 
   const doRegistration = async () => {
+    console.log("starting registration");
     try {
       const requestBody = JSON.stringify({ username, password });
       const response = await api.post("/users", requestBody);
 
       // Get the returned user and update a new object.
       const user = new User(response.data);
+      console.log(user);
 
       // Store the token into the local storage.
       sessionStorage.setItem("token", user.token);
       sessionStorage.setItem("userId", user.userId);
       sessionStorage.setItem("username", user.username);
+
+      console.log(
+        "successfully registered. token in sessionStorage is: ",
+        sessionStorage.getItem("token")
+      );
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
@@ -88,7 +95,8 @@ const Registration = (props) => {
             <ButtonLight
               disabled={!username || !password}
               width="80%"
-              onClick={() => doRegistration()}>
+              onClick={() => doRegistration()}
+            >
               Register
             </ButtonLight>
             <div class="hr-sect"> or </div>
