@@ -21,7 +21,6 @@ const GameScreen = () => {
   const [endOfGame, setEndOfGame] = useState(false);
   // contains all cards from the player and on the discard
   const [playerCards, setPlayerCards] = useState(null);
-  const [playedCard, setPlayedCard] = useState(null);
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
@@ -58,18 +57,18 @@ const GameScreen = () => {
   const selectCardFromHand = (card) => {
     const filteredArray = playerCards.filter(item => item.code !== card.code);
 
-    if (playedCard) {
-      filteredArray.push(playedCard);
+    if (selectedCard) {
+      filteredArray.push(selectedCard);
     }
 
     setPlayerCards(filteredArray);
-    setPlayedCard(card);
+    setSelectedCard(card);
 
   }
 
   const unselectCard = (card) => {
     setPlayerCards((playerCards) => ([...playerCards, card]));
-    setPlayedCard(null);
+    setSelectedCard(null);
   }
 
   const fetchGame = async () => {
@@ -177,14 +176,14 @@ const GameScreen = () => {
         </div>
       </div>
       <div className="bottom">
-        <div className="playedCard">  
-          {(playedCard) ? (<Card
-              key={playedCard.code}
-              code={playedCard.code}
-              suit={playedCard.suit}
-              value={playedCard.value}
-              image={playedCard.image}
-              onClick={() => unselectCard(playedCard)}
+        <div className="selectedCard">  
+          {(selectedCard) ? (<Card
+              key={selectedCard.code}
+              code={selectedCard.code}
+              suit={selectedCard.suit}
+              value={selectedCard.value}
+              image={selectedCard.image}
+              onClick={() => unselectCard(selectedCard)}
             />) : <h1> No card selected </h1> }
         </div>
         <div className="playerHand">
@@ -198,10 +197,11 @@ const GameScreen = () => {
             />
             ))) : <h1> not loaded </h1> }
           </div>
-      
-        <Button width="10%" onClick={() => printStuff()}>
-            Print to console
-        </Button>
+        <div className="playerInfo">
+          <Button width="50%" onClick={() => printStuff()}>
+              Print to console
+          </Button>
+        </div>
       </div>
     </div>
   );
