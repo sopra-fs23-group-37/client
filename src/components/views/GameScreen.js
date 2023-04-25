@@ -8,6 +8,7 @@ import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 import { api, handleError } from "helpers/api";
+import Card from "components/views/Card.js";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -48,14 +49,14 @@ const GameScreen = () => {
   };
 
   const printStuff = () => {
-    console.log("GuestStatus: ", game.guestStatus);
-    console.log("HostStatus: ", game.hostStatus);
+    fetchGame();
   };
-  
+
   const fetchGame = async () => {
     try {
       const response = await api.get("/games/" + gameId);
-      console.log("REST Response:", response);
+      console.log("REST Response Current Round:", response.data.currentRound);
+      const responseJSON = response.data.currentRound;
       setGame(new Game(response.data));
     } catch (error) {
       console.error(
@@ -78,7 +79,7 @@ const GameScreen = () => {
   const setTestingValues = () => {
     setEndOfRound(false);
     setEndOfGame(true);
-    setPlayerCards(test);
+    //setPlayerCards(test);
     // continue here afterwards.
   };
 
@@ -149,29 +150,54 @@ const GameScreen = () => {
     </div>
   );
 
+  /*
+  TODO: Timons code gibt Errors und lässt nicht rendern
 
-  return (
-    <BaseContainer className="gamescreen container">
-      <h2>Game {gameId}</h2>
+  { <h2>Game {gameId}</h2>
       <h1>{game.gameId}</h1>
       {game.winner ? (
         <EndOfGame winner={game.winner} />
       ) : (
         <>
-          {game.currentRound && game.currentRound.roundStatus === "FINISHED" && (
-            <EndOfRound />
-          )}
+          {game.currentRound &&
+            game.currentRound.roundStatus === "FINISHED" && <EndOfRound />}
           {content}
           <Button width="100%" onClick={() => printStuff()}>
             Print to console
           </Button>
         </>
       )}
+          }*/
 
-    </BaseContainer>
+  return (
+    <div className="gamescreen container">
+      <div className="top">
+        <div className="left">
+          <div className="opponent">
+            <div className="opponent-card">Opponent's Cards</div>
+            <div className="empty">Empty Div</div>
+          </div>
+          <div className="table">Playing Table</div>
+        </div>
+        <div className="right">
+          <div className="statistics">Statistics</div>
+          <div className="discard-pile">Discard Pile</div>
+        </div>
+      </div>
+      <div className="bottom">
+        {
+          //Beispiel wie Card-Komponent verwendet wird für eine Karte.
+        }
+        <Card
+          code="JD"
+          suit="DIAMONDS"
+          value="JACK"
+          image="https://deckofcardsapi.com/static/img/JD.png"
+          onClick={console.log("I'm clickable")}
+        />
+      </div>
+    </div>
   );
-  
-  
-}
+};
 
 export default GameScreen;

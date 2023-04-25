@@ -1,4 +1,4 @@
-@import 'styles/theme';
+@import "styles/theme";
 
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
@@ -8,19 +8,50 @@
  */
 
 .gamescreen {
-  
+  width: 100vw;
+  height: 100vh;
   &.container {
     background: $background;
-    padding: 1.5em;
-    margin-top: calc(100vh/4);
-    margin-left: calc(100vw/2);
-    margin-right: calc(100vw/4);
-    margin-bottom: auto;
-    border-radius: $borderRadius;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: $dropShadow;
-    
+    display: grid;
+    grid-template-rows: 70% 30%;
+    grid-template-columns: 1fr;
+    .top {
+      grid-template-rows: 1fr;
+      grid-template-columns: 75% 25%;
+      display: grid;
+      .left {
+        grid-template-rows: 30% 70%;
+        grid-template-columns: 1fr;
+        display: grid;
+        .opponent {
+          grid-template-rows: 1fr;
+          grid-template-columns: 75% 25%;
+          display: grid;
+          .opponent-card {
+            border: 0.1px solid gray;
+          }
+          .empty {
+            border: 0.1px solid gray;
+          }
+        }
+        .table {
+          border: 0.1px solid gray;
+        }
+      }
+      .right {
+        grid-template-rows: 60% 40%;
+        grid-template-columns: 1fr;
+        display: grid;
+        .statistics {
+          border: o.1px solid gray;
+        }
+        .discard-pile {
+          border: 0.1px solid gray;
+        }
+      }
+    }
+    .bottom {
+      border: 0.1px solid gray;
+    }
   }
 }
