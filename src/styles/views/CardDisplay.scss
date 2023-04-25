@@ -1,24 +1,36 @@
 .card-display {
-    width: 860px;
-    height: 450px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .card-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .card-placeholder {
-    width: 100px;
-    height: 150px;
-    background-color: #ccc;
-    border: 1px solid #888;
-    margin: 10px;
-    border-radius: 5px;
-  }
-  
+  width: 600px;
+  height:600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-row {
+  margin-bottom: 45px;
+  margin-left:150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-placeholder {
+  width: 100px;
+  height: 300px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+
+.card {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: red;
+}

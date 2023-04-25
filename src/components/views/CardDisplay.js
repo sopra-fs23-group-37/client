@@ -1,10 +1,12 @@
+
+
 import React, { useState, useEffect } from 'react';
-import './CardDisplay.scss';
+import 'styles/views/CardDisplay.scss';
 import sockClient from "helpers/sockClient";
 import Card from "components/views/Card"
 
 function CardDisplay() {
-  //const [cards, setCards] = useState([]);
+  
 
   //useEffect(() => {
     // Connect to the backend API using SockClient
@@ -23,25 +25,88 @@ function CardDisplay() {
   //  };
   //}, []);
   
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const handleCardClick = (code) => {
+    setSelectedCard(code);
+  };
+
   return (
-    <div className='gamescreen-table'>
     <div className="card-display">
-      <div className="card-row">
-        {Card.slice(0, 4).map(card => (
-          <div className="card-placeholder" key={card.id}>
-            <img src={card.image} alt={card.name} />
+      <div className="card-container">
+        
+        <div className="card-row">
+          {/* Placeholder for table cards */}
+          <div className={`card ${selectedCard === "JD" ? "selected" : ""}`}>
+            <Card
+              code="JD"
+              suit="DIAMONDS"
+              value="JACK"
+              image="https://deckofcardsapi.com/static/img/JD.png"
+              onClick={() => handleCardClick("JD")}
+            />
           </div>
-        ))}
-      </div>
-      <div className="card-row">
-        {cards.slice(4, 8).map(card => (
-          <div className="card-placeholder" key={card.id}>
-            <img src={card.image} alt={card.name} />
+          <div className={`card ${selectedCard === "QS" ? "selected" : ""}`}>
+            <Card
+              code="QS"
+              suit="SPADES"
+              value="QUEEN"
+              image="https://deckofcardsapi.com/static/img/QS.png"
+              onClick={() => handleCardClick("QS")}
+            />
           </div>
-        ))}
+          <div className={`card ${selectedCard === "KC" ? "selected" : ""}`}>
+            <Card
+              code="KC"
+              suit="CLUBS"
+              value="KING"
+              image="https://deckofcardsapi.com/static/img/KC.png"
+              onClick={() => handleCardClick("KC")}
+            />
+          </div>
+
+          <div className={`card ${selectedCard === "AH" ? "selected" : ""}`}>
+            
+          </div>
+
+          <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+
+            </div>
+
+            <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+
+            </div>
+        </div>
+
+        <div className="card-row">
+        <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+
+        </div>
+        <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+          
+        </div>
+        <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+          
+        </div>
+        <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+          
+        </div>
+        <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+          
+        </div>
+        <div className={`card ${selectedCard === Card.code ? "selected" : ""}`}>
+          
+        </div>
+        
+        </div>
+        
       </div>
-    </div>
-    </div>
+      </div>
+    
+    
+
+    
+
   );
 }
 
