@@ -21,6 +21,7 @@ const GameScreen = () => {
   const [endOfGame, setEndOfGame] = useState(false);
   // contains all cards from the player and on the discard
   const [playerCards, setPlayerCards] = useState(null);
+  const [playedCard, setPlayedCard] = useState(null);
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
@@ -49,8 +50,27 @@ const GameScreen = () => {
   };
 
   const printStuff = () => {
-    fetchGame();
+    console.log(game);
+    console.log(game.currentRound.host.cardsInHand);
+    setPlayerCards(game.currentRound.host.cardsInHand);
   };
+
+  const selectCardFromHand = (card) => {
+    const filteredArray = playerCards.filter(item => item.code !== card.code);
+
+    if (playedCard) {
+      filteredArray.push(playedCard);
+    }
+
+    setPlayerCards(filteredArray);
+    setPlayedCard(card);
+
+  }
+
+  const unselectCard = (card) => {
+    setPlayerCards((playerCards) => ([...playerCards, card]));
+    setPlayedCard(null);
+  }
 
   const fetchGame = async () => {
     try {
@@ -75,14 +95,6 @@ const GameScreen = () => {
     sockClient.addOnMessageFunction("Game", updateGame);
   };
 
-  //use this function to change values!
-  const setTestingValues = () => {
-    setEndOfRound(false);
-    setEndOfGame(true);
-    //setPlayerCards(test);
-    // continue here afterwards.
-  };
-
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -98,8 +110,6 @@ const GameScreen = () => {
       sockClient.disconnect();
       sockClient.removeMessageFunctions();
     });
-
-    setTestingValues();
 
     return () => {
       console.log("Component is unmounting");
@@ -150,24 +160,6 @@ const GameScreen = () => {
     </div>
   );
 
-  /*
-  TODO: Timons code gibt Errors und lässt nicht rendern
-
-  { <h2>Game {gameId}</h2>
-      <h1>{game.gameId}</h1>
-      {game.winner ? (
-        <EndOfGame winner={game.winner} />
-      ) : (
-        <>
-          {game.currentRound &&
-            game.currentRound.roundStatus === "FINISHED" && <EndOfRound />}
-          {content}
-          <Button width="100%" onClick={() => printStuff()}>
-            Print to console
-          </Button>
-        </>
-      )}
-          }*/
 
   return (
     <div className="gamescreen container">
@@ -185,16 +177,31 @@ const GameScreen = () => {
         </div>
       </div>
       <div className="bottom">
-        {
-          //Beispiel wie Card-Komponent verwendet wird für eine Karte.
-        }
-        <Card
-          code="JD"
-          suit="DIAMONDS"
-          value="JACK"
-          image="https://deckofcardsapi.com/static/img/JD.png"
-          onClick={console.log("I'm clickable")}
-        />
+        <div className="playedCard">  
+          {(playedCard) ? (<Card
+              key={playedCard.code}
+              code={playedCard.code}
+              suit={playedCard.suit}
+              value={playedCard.value}
+              image={playedCard.image}
+              onClick={() => unselectCard(playedCard)}
+            />) : <h1> No card selected </h1> }
+        </div>
+        <div className="playerHand">
+            {(playerCards) ? (playerCards.map(((card) => <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => selectCardFromHand(card)}
+            />
+            ))) : <h1> not loaded </h1> }
+          </div>
+      
+        <Button width="10%" onClick={() => printStuff()}>
+            Print to console
+        </Button>
       </div>
     </div>
   );
