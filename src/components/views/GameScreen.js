@@ -61,6 +61,7 @@ const GameScreen = () => {
     console.log("round update received:", data);
     setRound(new Round(data));
     setPlayerCards(data.myCardsInHand);
+    setTableCards(data.cardsOnTable);
   };
 
   // Creates Message for the makeMove Websocket
@@ -76,6 +77,7 @@ const GameScreen = () => {
 
   const makeMove = () => {
     let message;
+    console.log(selectedTableCards);
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.suit === "JACK") {
@@ -93,6 +95,7 @@ const GameScreen = () => {
       else {
         message = createMessage(playerId, 4, selectedCard, selectedTableCards);
       }
+      console.log("Move message: ", message);
       sockClient.sendMove(gameId, message);
     }
     // use this function to build move and send via websocket
@@ -114,7 +117,7 @@ const GameScreen = () => {
     if (round.myTurn) {
       // if card is already clicked
       console.log(card);
-      /*
+      console.log(card.active);
       if (card.active) {
         const filteredArray = selectedTableCards.filter(
           (item) => item.code !== card.code
@@ -125,7 +128,7 @@ const GameScreen = () => {
           ...selectedTableCards,
           card,
         ]);
-      }*/
+      }
     }
   };
 
@@ -281,6 +284,26 @@ const GameScreen = () => {
     </div>
   );
 
+  let cardsOnTableContainer = (
+    <div> 
+      {tableCards ? (
+        tableCards.map((card) => (
+          <Card
+            key={card.code}
+            code={card.code}
+            suit={card.suit}
+            value={card.value}
+            image={card.image}
+            onClick={() => selectCardFromField(card)}
+            fromField={true}
+          />
+        ))
+      ) : (
+        <div className="card-blank" > </div>
+      )}
+    </div> 
+  );
+
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -291,8 +314,8 @@ const GameScreen = () => {
           </div>
           <div className="table">
             <CardDisplay
-              cards={round ? round.cardsOnTable : []}
-              onClickCard={() => selectCardFromField(this)}
+            // if it works it works
+              cards={cardsOnTableContainer}
               onClickSpace={() => toggleSelectPutOnField()}
               selectPutOnField={selectPutOnField}
             />

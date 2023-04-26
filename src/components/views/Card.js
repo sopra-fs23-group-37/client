@@ -19,7 +19,7 @@ const Card = ({ code, image, suit, value, onClick, fromField}) => {
     alt={`${value} of ${suit}`}
     className={`card ${suit.toLowerCase()}`}
     onClick={handleClick}
-    clicked={false}
+    active={active}
     style={{borderColor: active ? "red" : "black", borderStyle: active ? "dotted" : "none"}}
   />)
 };
@@ -33,7 +33,7 @@ Card.propTypes = {
     PropTypes.oneOf(["JACK", "KING", "QUEEN", "ACE"]),
   ]).isRequired,
   onClick: PropTypes.func,
-  hand: PropTypes.bool,
+  fromField: PropTypes.bool,
 };
 
 export default Card;
