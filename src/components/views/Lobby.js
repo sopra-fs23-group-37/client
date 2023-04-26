@@ -1,11 +1,10 @@
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { ButtonLight } from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Lobby.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import sockClient from "helpers/sockClient";
-import { Button } from "components/ui/Button";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
@@ -29,7 +28,7 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
-    if (game.gameStatus === "CONNECTED") {
+    if (game.gameStatus === "CONNECTED" || game.gameStatus === "ONGOING") {
       setGoingToGame(true);
       await delay(1000);
       history.push(`/game/play/${gameId}`);
@@ -67,7 +66,7 @@ const Lobby = () => {
           <div className="title-container">
             <h1 className="title"> {game.hostUsername}'s Lobby </h1>
           </div>
-          <div className="listings-container"> 
+          <div className="listings-container">
             <div className="subtitle-spectator-container">
               <h2 className="subtitle">Players</h2>
               {/*<h4 className="createGame spectators">
@@ -78,13 +77,16 @@ const Lobby = () => {
               </h4>*/}
             </div>
             <div className="row-container">
-              <h4 className="name">
-                {game.hostUsername}
-              </h4>
+              <h4 className="name">{game.hostUsername}</h4>
               <h4 className="host">Host</h4>
             </div>
             <div className="row-container">
-              <h4 className="name"> {(game.guestStatus === "WAITING") ? (game.guestStatus + "...") : (game.guestUsername)} </h4>
+              <h4 className="name">
+                {" "}
+                {game.guestStatus === "WAITING"
+                  ? game.guestStatus + "..."
+                  : game.guestUsername}{" "}
+              </h4>
               <h4 className="host">Guest</h4>
             </div>
           </div>

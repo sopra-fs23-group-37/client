@@ -44,6 +44,40 @@ class SockClient {
     this._connected = true;
   }
 
+  async reconnect(gameId, playerId) {
+    // close the existing connection if there already is one
+
+    try {
+      this.sock.close();
+    } catch {}
+
+    // set up new sock to the current domain
+    this.sock = new SockJS(`${getDomain()}/websocket`);
+    this.stompClient = Stomp.over(this.sock);
+
+    // connect and subscribe
+    this.stompClient.connect({}, (frame) => {
+      console.log("Connected: " + frame);
+      this.stompClient.subscribe("/topic/game/" + gameId + "/*", (response) => {
+        this.handleResponseByChannel(response);
+      });
+      this.stompClient.subscribe(
+        "/queue/user/" + playerId + "/*",
+        (response) => {
+          this.handleResponseByChannel(response);
+        }
+      );
+      console.log("reconnecting to game with id: ", gameId);
+      this.stompClient.send(
+        "/game/reconnect/" + gameId,
+        {},
+        JSON.stringify({ playerId })
+      );
+      console.log("finished connecting");
+      this._connected = true;
+    });
+  }
+
   startGame(gameId, playerId) {
     this.stompClient.send(
       "/game/start/" + gameId,
