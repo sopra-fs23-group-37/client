@@ -21,7 +21,7 @@ const GameScreen = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [round, setRound] = useState(null);
   // end of round contains points for the round and total points
-  const [endOfRound, setEndOfRound] = useState(true);
+  const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
   const [endOfGame, setEndOfGame] = useState(false);
   // contains all cards from the player and on the discard
@@ -153,7 +153,7 @@ const GameScreen = () => {
 
   const checkEndOfGame = () => {
 
-    if (game.winner !== null) {
+    if (game.winner != null) {
       setEndOfGame(true);
       setTimeout(() => setEndOfGame(false), 3000);
     }
@@ -164,7 +164,7 @@ const GameScreen = () => {
   };
 
   
-  const handleNextRound = () => {
+  const handleEndRound = () => {
     setEndOfRound(false);
   };
 
@@ -289,13 +289,13 @@ const GameScreen = () => {
     {game && (
       <div className="statistics">
         <div className="player-names">
-          <span className="guest-name">{game.guest.username}</span>
+          <span className="guest-name">{game.guestUsername}</span>
           <span className="points">
             <span className="guest-points">{game.guestPoints || 0}</span>
             <span className="points-divider">:</span>
             <span className="host-points">{game.hostPoints || 0}</span>
           </span>
-          <span className="host-name">{game.host.username}</span>
+          <span className="host-name">{game.hostUsername}</span>
         </div>
         <div className="surrender-button-container">
           <button className="surrender-button" onClick={surrenderGame}>
@@ -307,6 +307,7 @@ const GameScreen = () => {
       <div className="discard-pile">Discard Pile</div>
     </div>
     </div>
+              
       {playerHandContainer}
 
       {game && round && endOfRound && (
@@ -314,21 +315,16 @@ const GameScreen = () => {
           <EndOfRound 
           game={game}
           round={round}
-          onNextRound={handleNextRound}
+          onEndRound={handleEndRound}
           />
         </div>
       )}
-      <div className ="endOfGame">
-        <EndOfGame
-          onEndGame={handleEndGame}
-        />
-      </div>
-
-      {game && round && endOfGame && (
-              <div className ="endOfGame">
+      
+      {game && endOfGame && (
+              <div className ="endOfRound">
                 <EndOfGame
                 game={game}
-                round= {round}
+                playerId={playerId}
                 onEndGame={handleEndGame}
                 />
               </div>
