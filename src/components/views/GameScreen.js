@@ -10,7 +10,7 @@ import { Button } from "components/ui/Button";
 import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
-import Round from "models/Round";
+import EndOfRound from "./EndOfRound";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -52,7 +52,6 @@ const GameScreen = () => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
     setGame(new Game(data));
-
   };
 
   const updateRound = (data) => {
@@ -68,37 +67,42 @@ const GameScreen = () => {
   const makeMove = () => {
     // use this function to build move and send via websocket
     // check type of move
-  }
+  };
 
   const selectCardFromField = (card) => {
     // if card is already clicked
     if (card.clicked) {
-      const filteredArray = selectedTableCards.filter(item => item.code !== card.code);
+      const filteredArray = selectedTableCards.filter(
+        (item) => item.code !== card.code
+      );
       setSelectedTableCards(filteredArray);
     } else {
-      setSelectedTableCards((selectedTableCards) => ([...selectedTableCards, card]));
+      setSelectedTableCards((selectedTableCards) => [
+        ...selectedTableCards,
+        card,
+      ]);
     }
-  }
+  };
 
   const selectCardFromHand = (card) => {
-    const filteredArray = playerCards.filter(item => item.code !== card.code);
+    const filteredArray = playerCards.filter((item) => item.code !== card.code);
     if (selectedCard) {
       filteredArray.push(selectedCard);
     }
     setPlayerCards(filteredArray);
     setSelectedCard(card);
-  }
+  };
 
   const unselectCard = (card) => {
-    setPlayerCards((playerCards) => ([...playerCards, card]));
+    setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
-  }
+  };
 
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
   };
-    
+
   const startGame = () => {
     // add subscriptions
     console.log("adding subscriptions");
@@ -112,7 +116,6 @@ const GameScreen = () => {
   };
 
   const checkEndOfRound = () => {
-
     if (game.roundStatus === "FINISHED") {
       setEndOfRound(true);
       setTimeout(() => setEndOfRound(false), 3000);
@@ -123,7 +126,6 @@ const GameScreen = () => {
     // Code to handle surrender
   };
 
-  
   const handleNextRound = () => {
     setEndOfRound(false);
   };
@@ -159,19 +161,25 @@ const GameScreen = () => {
 
   let playerHandContainer = (
     <div className="playerHandContainer">
-        <div className="selectedCard">  
-          {(selectedCard) ? (<Card
-              key={selectedCard.code}
-              code={selectedCard.code}
-              suit={selectedCard.suit}
-              value={selectedCard.value}
-              image={selectedCard.image}
-              onClick={() => unselectCard(selectedCard)}
-            />) : <h1> No card selected </h1> }
-            <h1> selected </h1>
-        </div>
-        <div className="playerHand">
-            {(playerCards) ? (playerCards.map(((card) => <Card
+      <div className="selectedCard">
+        {selectedCard ? (
+          <Card
+            key={selectedCard.code}
+            code={selectedCard.code}
+            suit={selectedCard.suit}
+            value={selectedCard.value}
+            image={selectedCard.image}
+            onClick={() => unselectCard(selectedCard)}
+          />
+        ) : (
+          <h1> No card selected </h1>
+        )}
+        <h1> selected </h1>
+      </div>
+      <div className="playerHand">
+        {playerCards ? (
+          playerCards.map((card) => (
+            <Card
               key={card.code}
               code={card.code}
               suit={card.suit}
@@ -179,16 +187,19 @@ const GameScreen = () => {
               image={card.image}
               onClick={() => selectCardFromHand(card)}
             />
-            ))) : <h1> not loaded </h1> }
-            <h1> hand </h1>
-          </div>
-          
-        <div className="playerInfo">
-          <Button width="80%" onClick={() => printStuff()}>
-              Play Move
-          </Button>
-        </div>
+          ))
+        ) : (
+          <h1> not loaded </h1>
+        )}
+        <h1> hand </h1>
       </div>
+
+      <div className="playerInfo">
+        <Button width="80%" onClick={() => printStuff()}>
+          Play Move
+        </Button>
+      </div>
+    </div>
   );
 
   let opponentHand = (
@@ -210,9 +221,9 @@ const GameScreen = () => {
   let turnInfo = (
     <div className="turnInfo">
       <h1> Current player </h1>
-      <h1> {round.myTurn ? ("my turn") : ("op turn")} </h1>
+      <h1> {round.myTurn ? "my turn" : "op turn"} </h1>
     </div>
-  )
+  );
 
   let table = (
     <div className="card-container">
@@ -233,37 +244,33 @@ const GameScreen = () => {
           </div>
           <div className="table">Playing Table</div>
         </div>
-    <div className="right">
-    {game && (
-      <div className="statistics">
-        <div className="player-names">
-          <span className="guest-name">{game.guest.username}</span>
-          <span className="points">
-            <span className="guest-points">{game.guestPoints || 0}</span>
-            <span className="points-divider">:</span>
-            <span className="host-points">{game.hostPoints || 0}</span>
-          </span>
-          <span className="host-name">{game.host.username}</span>
-        </div>
-        <div className="surrender-button-container">
-          <button className="surrender-button" onClick={surrenderGame}>
-            Surrender
-          </button>
+        <div className="right">
+          {game && (
+            <div className="statistics">
+              <div className="player-names">
+                <span className="guest-name">{game.guest.username}</span>
+                <span className="points">
+                  <span className="guest-points">{game.guestPoints || 0}</span>
+                  <span className="points-divider">:</span>
+                  <span className="host-points">{game.hostPoints || 0}</span>
+                </span>
+                <span className="host-name">{game.host.username}</span>
+              </div>
+              <div className="surrender-button-container">
+                <button className="surrender-button" onClick={surrenderGame}>
+                  Surrender
+                </button>
+              </div>
+            </div>
+          )}
+          <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
-    )}
-      <div className="discard-pile">Discard Pile</div>
-    </div>
-    </div>
       {playerHandContainer}
 
       {round && endOfRound && (
-        <div className ="endOfRound">
-          <EndOfRound 
-          game={game}
-          round={round}
-          onNextRound={handleNextRound}
-          />
+        <div className="endOfRound">
+          <EndOfRound game={game} round={round} onNextRound={handleNextRound} />
         </div>
       )}
     </div>
