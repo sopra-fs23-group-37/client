@@ -1,6 +1,5 @@
-class Card {
+class PlayingCard {
     constructor(data = {}) {
-      this.cardId = null;
       this.code = null;
       this.image = null;
       this.images = null;
@@ -9,4 +8,4 @@ class Card {
       Object.assign(this, data);
     }
   }
-  export default Card;
+  export default PlayingCard;

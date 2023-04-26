@@ -1,0 +1,55 @@
+@import 'styles/theme';
+
+.endOfRound {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    color: white;
+    font-size: 2rem;
+  
+    .title {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    .points {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-top: 20px;
+      width: 100%;
+  
+      button {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+  
+        &:hover {
+          background-color: black;
+          color: white;
+        }
+      }
+    }
+  }
+  
