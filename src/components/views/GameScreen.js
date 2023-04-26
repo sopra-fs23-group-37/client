@@ -19,7 +19,7 @@ const GameScreen = () => {
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
-  const [round, setRound] = useState(null);
+  const [round, setRound] = useState(new Round());
   // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
@@ -43,7 +43,7 @@ const GameScreen = () => {
 
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
-  const [selectedTableCards, setSelectedTableCards] = useState(null);
+  const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
 
   const history = useHistory();
@@ -68,24 +68,51 @@ const GameScreen = () => {
     console.log("round update received:", data);
     setRound(new Round(data));
     setPlayerCards(data.myCardsInHand);
-  };
-
-  const printStuff = () => {
-    console.log(round);
-    setPlayerCards(round.myCardsInHand);
+    setTableCards(data.cardsOnTable);
   };
 
   const makeMove = () => {
+    console.log(selectedTableCards);
     if (round.myTurn) {
+      // 3: JACK
+      if (selectedCard.suit === "JACK") {
+        sockClient.sendMove(gameId, playerId, 3, selectedCard, selectedTableCards);
+      }
+      // 2: x-1 move
+      else if (selectedTableCards.length > 1) {
+        sockClient.sendMove(gameId, playerId, 2, selectedCard, selectedTableCards);
+      }
+      // 1: 1-1 move
+      else if (selectedTableCards.length === 1) {
+        sockClient.sendMove(gameId, playerId, 1, selectedCard, selectedTableCards);
+      }
+      // 4: to field
+      else {
+        sockClient.sendMove(gameId, playerId, 4, selectedCard, selectedTableCards);
+      }
+      setSelectedCard(null);
     }
     // use this function to build move and send via websocket
     // check type of move
   };
 
+  const checkButton = () => {
+    if (!round.myTurn) {
+      return false;
+    } else if (selectedCard) {
+      return false;
+    } else if (selectedTableCards.length > 0 && selectPutOnField) {
+      return false;
+    }
+    return true;
+  };
+
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
-      if (card.clicked) {
+      console.log(card);
+      console.log(card.active);
+      if (card.active) {
         const filteredArray = selectedTableCards.filter(
           (item) => item.code !== card.code
         );
@@ -128,6 +155,12 @@ const GameScreen = () => {
       ) {
         sockClient.reconnect(gameId, playerId);
       }
+    }
+  };
+
+  const toggleSelectPutOnField = () => {
+    if (round.myTurn) {
+      setSelectPutOnField((current) => !current);
     }
   };
 
@@ -186,6 +219,7 @@ const GameScreen = () => {
             suit={selectedCard.suit}
             value={selectedCard.value}
             image={selectedCard.image}
+            fromField={false}
             onClick={() => unselectCard(selectedCard)}
           />
         ) : (
@@ -202,6 +236,7 @@ const GameScreen = () => {
               suit={card.suit}
               value={card.value}
               image={card.image}
+              fromField={false}
               onClick={() => selectCardFromHand(card)}
             />
           ))
@@ -212,7 +247,7 @@ const GameScreen = () => {
       </div>
 
       <div className="playerInfo">
-        <Button width="80%" onClick={() => printStuff()}>
+        <Button width="80%" onClick={() => makeMove()} disable={checkButton()}>
           Play Move
         </Button>
       </div>
@@ -243,6 +278,26 @@ const GameScreen = () => {
     </div>
   );
 
+  let cardsOnTableContainer = (
+    <div> 
+      {tableCards ? (
+        tableCards.map((card) => (
+          <Card
+            key={card.code}
+            code={card.code}
+            suit={card.suit}
+            value={card.value}
+            image={card.image}
+            onClick={() => selectCardFromField(card)}
+            fromField={true}
+          />
+        ))
+      ) : (
+        <div className="card-blank" > </div>
+      )}
+    </div> 
+  );
+
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -252,7 +307,12 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-            <CardDisplay />
+            <CardDisplay
+            // if it works it works
+              cards={cardsOnTableContainer}
+              onClickSpace={() => toggleSelectPutOnField()}
+              selectPutOnField={selectPutOnField}
+            />
           </div>
         </div>
         <div className="right">
