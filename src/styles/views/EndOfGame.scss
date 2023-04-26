@@ -1,64 +1,76 @@
-@import 'styles/theme';
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-.end-of-game-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 999;
+  .end-of-game {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
   
-  .end-of-game-container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 8px;
-    max-width: 600px;
-    text-align: center;
-  }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
   
-  .end-of-game-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
+    .scoreboard {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+      margin-bottom: 2rem;
   
-  .end-of-game-subtitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 10px;
-  }
+      .player1-score,
+      .player2-score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
   
-  .end-of-game-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+        h2 {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
   
-  .end-of-game-item {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
+        p {
+          font-size: 1.5rem;
+          margin-bottom: 0;
+        }
+      }
+    }
   
-  .end-of-game-button {
-    background-color: #FFC107;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    margin-top: 40px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
+    .winner,
+    .draw {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
   
-  .end-of-game-button:hover {
-    background-color: #FFA000;
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+  
+      p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+      }
+    }
+  
+    .button {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: #4a4e69;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+  
+      &:hover {
+        background-color: #3d405b;
+      }
+    }
   }
   

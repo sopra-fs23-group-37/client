@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
 import { Button } from "components/ui/Button";
-// import EndOfRound from "components/views/EndOfRound";
-// import EndOfGame from "components/views/EndOfGame";
+import EndOfRound from "components/views/EndOfRound";
+import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
-import Round from "models/Round";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -119,12 +118,24 @@ const GameScreen = () => {
     }
   };
 
+  const checkEndOfGame = () => {
+
+    if (game.winner !== null) {
+      setEndOfGame(true);
+      setTimeout(() => setEndOfGame(false), 3000);
+    }
+  };
+
   const surrenderGame = () => {
     // Code to handle surrender
   };
 
   
   const handleNextRound = () => {
+    setEndOfRound(false);
+  };
+
+  const handleEndGame = () => {
     setEndOfRound(false);
   };
 
@@ -149,6 +160,10 @@ const GameScreen = () => {
 
     if (game) {
       checkEndOfRound();
+    }
+
+    if (game) {
+      checkEndOfGame();
     }
 
     return () => {
@@ -257,7 +272,7 @@ const GameScreen = () => {
     </div>
       {playerHandContainer}
 
-      {round && endOfRound && (
+      {game && round && endOfRound && (
         <div className ="endOfRound">
           <EndOfRound 
           game={game}
@@ -266,6 +281,23 @@ const GameScreen = () => {
           />
         </div>
       )}
+
+      <div className ="endOfGame">
+        <EndOfGame
+          onEndGame={handleEndGame}
+        />
+      </div>
+
+      {game && round && endOfGame && (
+              <div className ="endOfGame">
+                <EndOfGame
+                game={game}
+                round= {round}
+                onEndGame={handleEndGame}
+                />
+              </div>
+      )}
+
     </div>
   );
 };
