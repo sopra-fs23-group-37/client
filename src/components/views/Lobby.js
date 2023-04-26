@@ -12,9 +12,20 @@ const Lobby = () => {
   const history = useHistory();
   const playerId = parseInt(sessionStorage.getItem("userId"));
   const [goingToGame, setGoingToGame] = useState(false);
+  // true if the opponent has left
+  const [opponentLeft, setOpponentLeft] = useState(false);
+  // set reason for why the player has left (e.g. unexpected disconnect, surrender)
+  const [opponentLeftReason, setOpponentLeftReason] = useState(null);
 
   const updateLobby = (data) => {
     setGame(new Game(data));
+    if (
+      data.gameStatus === "DISCONNECTED" ||
+      data.gameStatus === "SURRENDERED"
+    ) {
+      setOpponentLeft(true);
+      setOpponentLeftReason(data.endGameReason);
+    }
   };
 
   const connectAndJoin = () => {
@@ -27,12 +38,15 @@ const Lobby = () => {
     }
   };
 
-  const goToGame = async () => {
+  const checkGoToGame = () => {
     if (game.gameStatus === "CONNECTED" || game.gameStatus === "ONGOING") {
       setGoingToGame(true);
-      await delay(1000);
-      history.push(`/game/play/${gameId}`);
     }
+  };
+
+  const goToGame = async () => {
+    await delay(2000);
+    history.push(`/game/play/${gameId}`);
   };
 
   useEffect(() => {
@@ -41,7 +55,11 @@ const Lobby = () => {
 
     console.log("Current Lobby data: ", game);
 
-    goToGame();
+    checkGoToGame();
+
+    if (goingToGame) {
+      goToGame();
+    }
 
     const unlisten = history.listen(() => {
       console.log("is the user going to the game? ", goingToGame);
