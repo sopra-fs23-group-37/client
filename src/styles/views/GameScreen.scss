@@ -53,87 +53,21 @@
             }
           }
         }
-
-        .right {
-          grid-template-rows: 60% 40%;
-          grid-template-columns: 1fr;
-          display: grid;
-
-          .statistics {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 2rem;
-            font-weight: bold;
-
-            .player-names {
-              display: flex;
-              align-items: center;
-              margin-bottom: 2rem;
-
-              .guest-name {
-                font-size: 1.2rem;
-                margin-right: 4rem;
-              }
-
-              .points {
-                display: flex;
-                align-items: center;
-
-                .guest-points {
-                  font-size: 2rem;
-                  color: #f00;
-                  margin-right: 0.5rem;
-                }
-
-                .points-divider {
-                  font-size: 2rem;
-                  color: #000;
-                }
-
-                .host-points {
-                  font-size: 2rem;
-                  color: #00f;
-                  margin-left: 0.5rem;
-                }
-              }
-
-              .host-name {
-                font-size: 1.2rem;
-                margin-left: 4rem;
-              }
-            }
-
-            .surrender-button-container {
-              display: flex;
-              justify-content: center;
-              margin-top: 2rem;
-
-              .surrender-button {
-                font-family: 'Inter', sans-serif;
-                font-size: 1.2rem;
-                font-weight: bold;
-                padding: 1rem 3rem;
-                background-color: #E9C46A;
-                color: #fff;
-                border: 1px solid #8F8F8F;
-                border-radius: 10px;
-                cursor: pointer;
-
-                &:hover {
-                  background-color: #fff;
-                  color: #f00;
-                  border: 2px solid #f00;
-                }
-              }
-            }
-          }
-
-          .discard-pile {
-            border: 0.1px solid gray;
-          }
+        .table {
+          border: 0.1px solid gray;
+          display: flex;
+          justify-content: center;
+        }
+      }
+      .right {
+        grid-template-rows: 60% 40%;
+        grid-template-columns: 1fr;
+        display: grid;
+        .statistics {
+          border: o.1px solid gray;
+        }
+        .discard-pile {
+          border: 0.1px solid gray;
         }
       }
 
