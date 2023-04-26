@@ -1,0 +1,28 @@
+.card-display {
+  width: 500px;
+  height:600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-row {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  height: 120px;
+  margin-right: 16px;
+  width: 80px;
+}
+
+.selected {
+  box-shadow: 0px 8px 8px rgba(255, 0, 0, 0.5);
+}
