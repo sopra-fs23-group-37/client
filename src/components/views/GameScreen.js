@@ -10,6 +10,7 @@ import { Button } from "components/ui/Button";
 import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
+import CardDisplay from "./CardDisplay";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -206,14 +207,6 @@ const GameScreen = () => {
     </div>
   );
 
-  let table = (
-    <div className="card-container">
-      {/* Placeholder for table cards */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
-  );
 
   return (
     <div className="gamescreen container">
@@ -223,7 +216,9 @@ const GameScreen = () => {
             <div className="opponent-card">Opponent's Cards</div>
             {turnInfo}
           </div>
-          <div className="table">Playing Table</div>
+          <div className="table">
+          <CardDisplay/></div>
+      
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>
