@@ -83,7 +83,7 @@ const GameScreen = () => {
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
-      console.log(card.active)
+      console.log(card)
       /*
       if (card.active) {
         const filteredArray = selectedTableCards.filter(
@@ -132,7 +132,6 @@ const GameScreen = () => {
   const toggleSelectPutOnField = () => {
     if (round.myTurn) {
       setSelectPutOnField((current) => !current);
-      console.log(selectPutOnField);
     }
   }
 
@@ -191,6 +190,7 @@ const GameScreen = () => {
             suit={selectedCard.suit}
             value={selectedCard.value}
             image={selectedCard.image}
+            fromField={false}
             onClick={() => unselectCard(selectedCard)}
           />
         ) : (
@@ -207,6 +207,7 @@ const GameScreen = () => {
               suit={card.suit}
               value={card.value}
               image={card.image}
+              fromField={false}
               onClick={() => selectCardFromHand(card)}
             />
           ))
@@ -258,8 +259,8 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-          <CardDisplay cards={round ? round.cardsOnTable : []} onClickCard={() => selectCardFromField(this)} onClickSpace={() => toggleSelectPutOnField()}/></div>
-      e
+          <CardDisplay cards={round ? round.cardsOnTable : []} 
+            onClickCard={() => selectCardFromField()} onClickSpace={() => toggleSelectPutOnField()} selectPutOnField={selectPutOnField}/></div>
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>

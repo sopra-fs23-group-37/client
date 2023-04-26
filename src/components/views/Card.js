@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "styles/views/Card.scss";
 
-const Card = ({ code, image, suit, value, onClick }) => {
+const Card = ({ code, image, suit, value, onClick, fromField}) => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
-    setActive(!active);
-    onClick();
+    if (fromField) {
+      setActive(!active);
+      onClick();
+    } else {
+      onClick();
+    }
   };
 
   return (<img
@@ -29,6 +33,7 @@ Card.propTypes = {
     PropTypes.oneOf(["JACK", "KING", "QUEEN", "ACE"]),
   ]).isRequired,
   onClick: PropTypes.func,
+  hand: PropTypes.bool,
 };
 
 export default Card;
