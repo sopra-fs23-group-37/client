@@ -137,6 +137,14 @@ class SockClient {
       JSON.stringify({ playerMoveMessage })
     );
   }
+
+  surrender(gameId, playerId) {
+    this.stompClient.send(
+      "/game/surrender/" + gameId,
+      {},
+      JSON.stringify({ playerId })
+    );
+  }
 }
 
 export default new SockClient();

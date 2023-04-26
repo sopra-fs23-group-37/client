@@ -2,21 +2,43 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Rulebook.scss";
 import { useState } from "react";
 import { Button } from "components/ui/Button";
-//
+import { useHistory } from "react-router-dom";
+import myImage from "image/Sheet.png";
 
 const Rulebook = () => {
   const [activeTab, setActiveTab] = useState("player-cards");
-
+  const history = useHistory();
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const homescreen = () => {
+    history.push("/game/dashboard");
   };
 
   return (
     <BaseContainer>
       <div className="rulebook-container">
-        <h1 className="rulebook-title">Rulebook</h1>
+   
+         
+        <h1 className="rulebook-title"style={{color: "white"}}>Rulebook <Button onClick={() => homescreen()} style={{ marginLeft: "800px",color: "white", backgroundColor: "E76F51"   }}>
+           Back to homepage
+          </Button > </h1>
+        
+        
+        
 
         <div className="rulebook-tabs">
+          <div className="rulebook-section">
+          <Button
+            className={activeTab === "cheat-sheet" ? "active" : ""}
+            onClick={() => handleTabClick("cheat-sheet")}
+            style={{ marginRight: "10px" }} // Hier wird der Abstand erhöht
+          >
+            Cheat-Sheet
+          </Button>
+          
+
           <Button
             className={activeTab === "player-cards" ? "active" : ""}
             onClick={() => handleTabClick("player-cards")}
@@ -27,7 +49,7 @@ const Rulebook = () => {
           <Button
             className={activeTab === "dealing" ? "active" : ""}
             onClick={() => handleTabClick("dealing")}
-            style={{ marginRight: "10px" }} // Hier wird der Abstand erhöht
+            style={{ marginRight: "10px", backgroundColor: "E76F51" }} // Hier wird der Abstand erhöht
           >
             Dealing
           </Button>
@@ -45,9 +67,32 @@ const Rulebook = () => {
           >
             Scoring
           </Button>
-        </div>
 
+          
+
+         
+        </div>
         <div className="rulebook-content">
+        {activeTab === "cheat-sheet" && (
+          <div className="rulebook-section">
+            <div className="rulebook-section-title">
+              <strong>
+                <h3></h3>
+              </strong>
+            </div>
+           
+              
+                <img
+                  src={myImage}
+                  alt=""
+                  style={{ height: "500px", width: "1000px", marginLeft: 0 }}
+                />
+              
+            
+          </div>
+        )}
+
+       
           {activeTab === "player-cards" && (
             <div className="rulebook-section">
               <div className="rulebook-section-title">
@@ -85,10 +130,10 @@ const Rulebook = () => {
 
               <ul className="rulebook-rules-list">
                 <li className="rulebook-rule-item">
-                  The dealer distributes 6 cards to each player and places four
+                  The dealer distributes 8 cards to each player and places 4
                   cards on the table. The remaining cards are placed aside. Once
-                  all players have played all their cards, the dealer takes the
-                  deck of cards and again deals six cards to each player. When
+                  all players have played all their cards from the hand, the dealer takes the
+                  deck of cards and again deals 8 cards to each player. When
                   all the cards have been played and the entire deck has been
                   used, the game ends.
                 </li>
@@ -189,20 +234,23 @@ const Rulebook = () => {
                   captured cards as follows:
                 </p>
                 <ul className="rulebook-rule-item">
-                  <li>Each Ace, King, Queen or Jack: 1 point</li>
-                  <li>10 of diamonds: 2 points</li>
-                  <li>Other tens: 1 point</li>
-                  <li>2 of clubs: 1 point</li>
-                  <li>The player or team with most cards: 3 points</li>
-                  <li>That makes a total of 25 points.</li>
+                <li>For highest number of cards: 2 points</li>
+                  <li>10 of diamonds: 1 points</li>
+                   <li>2 of clubs: 1 point</li>
+                  <li>The player with most clubs: 1 points</li>
+                  
                 </ul>
               </div>
             </div>
           )}
         </div>
       </div>
+      </div>
     </BaseContainer>
   );
 };
 
 export default Rulebook;
+
+   // <li>Each Ace, King, Queen or Jack: 1 point</li>
+   //<li>Other tens: 1 point</li>

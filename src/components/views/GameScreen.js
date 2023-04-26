@@ -55,6 +55,13 @@ const GameScreen = () => {
     if (data.gameSatus === "ONGOING") {
       setGameStarted(true);
     }
+    if (
+      data.gameStatus === "DISCONNECTED" ||
+      data.gameStatus === "SURRENDERED"
+    ) {
+      setOpponentLeft(true);
+      setOpponentLeftReason(data.endGameReason);
+    }
   };
 
   const updateRound = (data) => {
