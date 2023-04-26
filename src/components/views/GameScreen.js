@@ -71,6 +71,7 @@ const GameScreen = () => {
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
+    setPlayerDiscardCards(data.myCardsInDiscard);
   };
 
   const makeMove = () => {
@@ -345,6 +346,35 @@ const GameScreen = () => {
     </div>
   );
 
+  let cardsDiscard = (
+    <div className="discard-pile">
+      <div className="stack">
+        {playerDiscards ? (
+          playerDiscards.map((card) => (
+            <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => {}}
+              fromField={true}
+            />
+          ))
+        ) : (
+          <div className="card-blank"> </div>
+        )}
+      </div>
+      <div className="stackHeight">
+        {playerCards ? (
+          <h1> Stack Height: {playerCards.length} </h1>
+        ) : (
+          <h1> Stack Height: 0 </h1>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -364,7 +394,7 @@ const GameScreen = () => {
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>
-          <div className="discard-pile">Discard Pile</div>
+          {cardsDiscard}
         </div>
       </div>
       {playerHandContainer}

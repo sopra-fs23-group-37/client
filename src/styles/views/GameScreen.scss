@@ -53,10 +53,28 @@
         grid-template-columns: 1fr;
         display: grid;
         .statistics {
-          border: o.1px solid gray;
+          border: 0.1px solid gray;
         }
         .discard-pile {
           border: 0.1px solid gray;
+          grid-template-rows: 60% 40%;
+          grid-template-columns: 1fr;
+          display: grid;
+          .stack {
+            position: relative;
+            text-align: center;
+            margin-left: 35%;
+            margin-top: 20px;
+          }
+          .stack .card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid black;
+          }
+          .stackHeight {
+            text-align: center;
+          }
         }
       }
     }
