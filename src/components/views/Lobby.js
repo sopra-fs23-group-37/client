@@ -14,15 +14,8 @@ const Lobby = () => {
   const playerId = parseInt(sessionStorage.getItem("userId"));
   const [goingToGame, setGoingToGame] = useState(false);
 
-  const updateLobby = async (data) => {
-    console.log("lobby data received:", data);
+  const updateLobby = (data) => {
     setGame(new Game(data));
-    console.log("new game: ", game);
-    if (data.gameStatus === "CONNECTED") {
-      setGoingToGame(true);
-      await delay(1000);
-      history.push(`/game/play/${gameId}`);
-    }
   };
 
   const connectAndJoin = () => {
@@ -35,9 +28,21 @@ const Lobby = () => {
     }
   };
 
+  const goToGame = async () => {
+    if (game.gameStatus === "CONNECTED") {
+      setGoingToGame(true);
+      await delay(1000);
+      history.push(`/game/play/${gameId}`);
+    }
+  };
+
   useEffect(() => {
     console.log("Use Effect started");
     connectAndJoin();
+
+    console.log("Current Lobby data: ", game);
+
+    goToGame();
 
     const unlisten = history.listen(() => {
       console.log("is the user going to the game? ", goingToGame);
