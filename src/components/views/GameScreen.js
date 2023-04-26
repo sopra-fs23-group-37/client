@@ -207,9 +207,10 @@ const GameScreen = () => {
   );
 
   let turnInfo = (
-    <div className="turnInfo">
-      <h1> Current player </h1>
-      <h1> {round && round.myTurn ? "my turn" : "op turn"} </h1>
+    <div className="turn-info-container">
+      <div className="turn-info-form">
+        <h1> {round && round.myTurn ? "Your turn" : "Opponents turn"} </h1>
+      </div>
     </div>
   );
 
