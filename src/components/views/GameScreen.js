@@ -52,6 +52,9 @@ const GameScreen = () => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
     setGame(new Game(data));
+    if (data.gameSatus === "ONGOING") {
+      setGameStarted(true);
+    }
   };
 
   const updateRound = (data) => {
@@ -109,18 +112,35 @@ const GameScreen = () => {
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
+    if (!sockClient.isConnected()) {
+      console.log("websocket is not connected! Attempting reconnect");
+      if (
+        sockClient.addOnMessageFunction("game", updateGame) &&
+        sockClient.addOnMessageFunction("round", updateRound)
+      ) {
+        sockClient.reconnect(gameId, playerId);
+      }
+    }
   };
 
   const startGame = () => {
+    // check that the websocket is still connected
+    if (!sockClient.isConnected()) {
+      console.log("can't start game until the websocket is connected!");
+      return;
+    }
+
     // add subscriptions
     console.log("adding subscriptions");
-    sockClient.addOnMessageFunction("game", updateGame);
-    sockClient.addOnMessageFunction("round", updateRound);
-
-    // start the game
-    console.log("starting the game");
-    sockClient.startGame(gameId, playerId);
-    setGameStarted(true);
+    if (
+      sockClient.addOnMessageFunction("game", updateGame) &&
+      sockClient.addOnMessageFunction("round", updateRound)
+    ) {
+      // start the game
+      console.log("starting the game");
+      sockClient.startGame(gameId, playerId);
+      setGameStarted(true);
+    }
   };
 
   useEffect(() => {
