@@ -123,6 +123,13 @@ const GameScreen = () => {
     }
   };
 
+  const toggleSelectPutOnField = () => {
+    if (round.myTurn) {
+      setSelectPutOnField((current) => !current);
+      console.log(selectPutOnField);
+    }
+  }
+
   const startGame = () => {
     // check that the websocket is still connected
     if (!sockClient.isConnected()) {
@@ -245,7 +252,7 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-          <CardDisplay/></div>
+          <CardDisplay cards={round ? round.cardsOnTable : []} onClickCard={() => printStuff()} onClickSpace={() => toggleSelectPutOnField()}/></div>
       
         </div>
         <div className="right">

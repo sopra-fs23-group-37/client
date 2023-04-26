@@ -44,6 +44,8 @@
         }
         .table {
           border: 0.1px solid gray;
+          display: flex;
+          justify-content: center;
         }
       }
       .right {

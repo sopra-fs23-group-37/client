@@ -17,7 +17,7 @@ Card.propTypes = {
   suit: PropTypes.oneOf(["DIAMONDS", "HEARTS", "CLUBS", "SPADES"]).isRequired,
   value: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.oneOf(["JACK", "KING", "QUEEN"]),
+    PropTypes.oneOf(["JACK", "KING", "QUEEN", "ACE"]),
   ]).isRequired,
   onClick: PropTypes.func,
 };
