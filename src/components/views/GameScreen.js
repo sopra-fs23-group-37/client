@@ -10,6 +10,7 @@ import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
+import CardDisplay from "./CardDisplay";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -51,7 +52,9 @@ const GameScreen = () => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
     setGame(new Game(data));
-
+    if (data.gameSatus === "ONGOING") {
+      setGameStarted(true);
+    }
   };
 
   const updateRound = (data) => {
@@ -109,18 +112,35 @@ const GameScreen = () => {
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
+    if (!sockClient.isConnected()) {
+      console.log("websocket is not connected! Attempting reconnect");
+      if (
+        sockClient.addOnMessageFunction("game", updateGame) &&
+        sockClient.addOnMessageFunction("round", updateRound)
+      ) {
+        sockClient.reconnect(gameId, playerId);
+      }
+    }
   };
     
   const startGame = () => {
+    // check that the websocket is still connected
+    if (!sockClient.isConnected()) {
+      console.log("can't start game until the websocket is connected!");
+      return;
+    }
+
     // add subscriptions
     console.log("adding subscriptions");
-    sockClient.addOnMessageFunction("game", updateGame);
-    sockClient.addOnMessageFunction("round", updateRound);
-
-    // start the game
-    console.log("starting the game");
-    sockClient.startGame(gameId, playerId);
-    setGameStarted(true);
+    if (
+      sockClient.addOnMessageFunction("game", updateGame) &&
+      sockClient.addOnMessageFunction("round", updateRound)
+    ) {
+      // start the game
+      console.log("starting the game");
+      sockClient.startGame(gameId, playerId);
+      setGameStarted(true);
+    }
   };
 
   const checkEndOfRound = () => {
@@ -252,14 +272,6 @@ const GameScreen = () => {
     </div>
   );
 
-  let table = (
-    <div className="card-container">
-      {/* Placeholder for table cards */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
-    </div>
-  );
 
   return (
     <div className="gamescreen container">
@@ -269,7 +281,9 @@ const GameScreen = () => {
             <div className="opponent-card">Opponent's Cards</div>
             {turnInfo}
           </div>
-          <div className="table">Playing Table</div>
+          <div className="table">
+          <CardDisplay/></div>
+      
         </div>
     <div className="right">
     {game && (
