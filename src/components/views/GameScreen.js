@@ -19,7 +19,7 @@ const GameScreen = () => {
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
-  const [round, setRound] = useState(null);
+  const [round, setRound] = useState(new Round());
   // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
@@ -43,7 +43,7 @@ const GameScreen = () => {
 
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
-  const [selectedTableCards, setSelectedTableCards] = useState(null);
+  const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
 
   const history = useHistory();
@@ -102,7 +102,7 @@ const GameScreen = () => {
   const checkButton = () => {
     if (!round.myTurn) {
       return false;
-    } else if (selectedCard.length === 0) {
+    } else if (selectedCard) {
       return false;
     } else if (selectedTableCards.length > 0 && selectPutOnField) {
       return false;
@@ -294,6 +294,7 @@ const GameScreen = () => {
               cards={round ? round.cardsOnTable : []}
               onClickCard={() => selectCardFromField(this)}
               onClickSpace={() => toggleSelectPutOnField()}
+              selectPutOnField={selectPutOnField}
             />
           </div>
         </div>
