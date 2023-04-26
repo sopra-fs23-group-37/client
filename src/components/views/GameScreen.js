@@ -207,11 +207,6 @@ const GameScreen = () => {
     </div>
   );
 
-  let table = (
-    <div className="table">
-      <CardDisplay/>
-    </div>
-  );
 
   return (
     <div className="gamescreen container">
@@ -221,8 +216,8 @@ const GameScreen = () => {
             <div className="opponent-card">Opponent's Cards</div>
             {turnInfo}
           </div>
-          <div className="table">Playing Table
-          {table}</div>
+          <div className="table">
+          <CardDisplay/></div>
       
         </div>
         <div className="right">
