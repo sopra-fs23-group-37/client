@@ -27,12 +27,15 @@ const Lobby = () => {
     }
   };
 
-  const goToGame = async () => {
+  const checkGoToGame = () => {
     if (game.gameStatus === "CONNECTED" || game.gameStatus === "ONGOING") {
       setGoingToGame(true);
-      await delay(1000);
-      history.push(`/game/play/${gameId}`);
     }
+  };
+
+  const goToGame = async () => {
+    await delay(2000);
+    history.push(`/game/play/${gameId}`);
   };
 
   useEffect(() => {
@@ -41,7 +44,11 @@ const Lobby = () => {
 
     console.log("Current Lobby data: ", game);
 
-    goToGame();
+    checkGoToGame();
+
+    if (goingToGame) {
+      goToGame();
+    }
 
     const unlisten = history.listen(() => {
       console.log("is the user going to the game? ", goingToGame);
