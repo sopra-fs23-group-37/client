@@ -75,19 +75,23 @@ const GameScreen = () => {
     console.log(selectedTableCards);
     if (round.myTurn) {
       // 3: JACK
-      if (selectedCard.suit === "JACK") {
-        sockClient.sendMove(gameId, playerId, 3, selectedCard, selectedTableCards);
+      if (selectedCard.value === "JACK") {
+        console.log("3")
+        sockClient.sendMove(gameId, playerId, 3, selectedCard, round.cardsOnTable);
       }
       // 2: x-1 move
       else if (selectedTableCards.length > 1) {
+        console.log("2")
         sockClient.sendMove(gameId, playerId, 2, selectedCard, selectedTableCards);
       }
       // 1: 1-1 move
       else if (selectedTableCards.length === 1) {
+        console.log("1")
         sockClient.sendMove(gameId, playerId, 1, selectedCard, selectedTableCards);
       }
       // 4: to field
       else {
+        console.log("4")
         sockClient.sendMove(gameId, playerId, 4, selectedCard, selectedTableCards);
       }
       setSelectedCard(null);
@@ -110,9 +114,8 @@ const GameScreen = () => {
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
-      console.log(card);
-      console.log(card.active);
-      if (card.active) {
+      // TODO: implement a way to determine if a card is clicked already
+      if (false) {
         const filteredArray = selectedTableCards.filter(
           (item) => item.code !== card.code
         );
