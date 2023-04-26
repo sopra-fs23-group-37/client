@@ -72,7 +72,10 @@ const GameScreen = () => {
   };
 
   const makeMove = () => {
+    console.log("Show message");
+    console.log(selectedCard);
     console.log(selectedTableCards);
+    console.log(selectPutOnField);
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.value === "JACK") {
@@ -94,6 +97,8 @@ const GameScreen = () => {
         console.log("4")
         sockClient.sendMove(gameId, playerId, 4, selectedCard, selectedTableCards);
       }
+      setSelectedTableCards([]);
+      setSelectPutOnField(false);
       setSelectedCard(null);
     }
     // use this function to build move and send via websocket
