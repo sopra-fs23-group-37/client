@@ -66,32 +66,39 @@ const GameScreen = () => {
   };
 
   const makeMove = () => {
+    if (round.myTurn) { 
+
+    }
     // use this function to build move and send via websocket
     // check type of move
   };
 
   const selectCardFromField = (card) => {
-    // if card is already clicked
-    if (card.clicked) {
-      const filteredArray = selectedTableCards.filter(
-        (item) => item.code !== card.code
-      );
-      setSelectedTableCards(filteredArray);
-    } else {
-      setSelectedTableCards((selectedTableCards) => [
-        ...selectedTableCards,
-        card,
-      ]);
+    if (round.myTurn) {
+      // if card is already clicked
+      if (card.clicked) {
+        const filteredArray = selectedTableCards.filter(
+          (item) => item.code !== card.code
+        );
+        setSelectedTableCards(filteredArray);
+      } else {
+        setSelectedTableCards((selectedTableCards) => [
+          ...selectedTableCards,
+          card,
+        ]);
+      }
     }
   };
 
   const selectCardFromHand = (card) => {
-    const filteredArray = playerCards.filter((item) => item.code !== card.code);
-    if (selectedCard) {
-      filteredArray.push(selectedCard);
+    if (round.myTurn) {
+      const filteredArray = playerCards.filter((item) => item.code !== card.code);
+      if (selectedCard) {
+        filteredArray.push(selectedCard);
+      }
+      setPlayerCards(filteredArray);
+      setSelectedCard(card);
     }
-    setPlayerCards(filteredArray);
-    setSelectedCard(card);
   };
 
   const unselectCard = (card) => {
@@ -201,9 +208,10 @@ const GameScreen = () => {
   );
 
   let turnInfo = (
-    <div className="turnInfo">
-      <h1> Current player </h1>
-      <h1> {round && round.myTurn ? "my turn" : "op turn"} </h1>
+    <div className="turn-info-container">
+      <div className="turn-info-form">
+        <h1> {round && round.myTurn ? "Your turn" : "Opponents turn"} </h1>
+      </div>
     </div>
   );
 
