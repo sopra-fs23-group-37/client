@@ -68,9 +68,13 @@ const GameScreen = () => {
     setPlayerCards(round.myCardsInHand);
   };
 
+  // TODO: Beni
   const makeMove = () => {
     if (round.myTurn) { 
-
+      // 1: 1-1 move
+      // 2: x-1 move
+      // 3: JACK
+      // 4: to field
     }
     // use this function to build move and send via websocket
     // check type of move
@@ -79,7 +83,9 @@ const GameScreen = () => {
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
-      if (card.clicked) {
+      console.log(card.active)
+      /*
+      if (card.active) {
         const filteredArray = selectedTableCards.filter(
           (item) => item.code !== card.code
         );
@@ -89,7 +95,7 @@ const GameScreen = () => {
           ...selectedTableCards,
           card,
         ]);
-      }
+      }*/
     }
   };
 
@@ -252,8 +258,8 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-          <CardDisplay cards={round ? round.cardsOnTable : []} onClickCard={() => printStuff()} onClickSpace={() => toggleSelectPutOnField()}/></div>
-      
+          <CardDisplay cards={round ? round.cardsOnTable : []} onClickCard={() => selectCardFromField(this)} onClickSpace={() => toggleSelectPutOnField()}/></div>
+      e
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>
