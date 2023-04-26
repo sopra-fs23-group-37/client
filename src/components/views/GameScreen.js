@@ -57,6 +57,7 @@ const GameScreen = () => {
   const updateRound = (data) => {
     console.log("round update received:", data);
     setRound(new Round(data));
+    setPlayerCards(data.myCardsInHand);
   };
 
   const printStuff = () => {
@@ -67,31 +68,36 @@ const GameScreen = () => {
   const makeMove = () => {
     // use this function to build move and send via websocket
     // check type of move
-  }
+  };
 
   const selectCardFromField = (card) => {
     // if card is already clicked
     if (card.clicked) {
-      const filteredArray = selectedTableCards.filter(item => item.code !== card.code);
+      const filteredArray = selectedTableCards.filter(
+        (item) => item.code !== card.code
+      );
       setSelectedTableCards(filteredArray);
     } else {
-      setSelectedTableCards((selectedTableCards) => ([...selectedTableCards, card]));
+      setSelectedTableCards((selectedTableCards) => [
+        ...selectedTableCards,
+        card,
+      ]);
     }
-  }
+  };
 
   const selectCardFromHand = (card) => {
-    const filteredArray = playerCards.filter(item => item.code !== card.code);
+    const filteredArray = playerCards.filter((item) => item.code !== card.code);
     if (selectedCard) {
       filteredArray.push(selectedCard);
     }
     setPlayerCards(filteredArray);
     setSelectedCard(card);
-  }
+  };
 
   const unselectCard = (card) => {
-    setPlayerCards((playerCards) => ([...playerCards, card]));
+    setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
-  }
+  };
 
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
@@ -137,19 +143,25 @@ const GameScreen = () => {
 
   let playerHandContainer = (
     <div className="playerHandContainer">
-        <div className="selectedCard">  
-          {(selectedCard) ? (<Card
-              key={selectedCard.code}
-              code={selectedCard.code}
-              suit={selectedCard.suit}
-              value={selectedCard.value}
-              image={selectedCard.image}
-              onClick={() => unselectCard(selectedCard)}
-            />) : <h1> No card selected </h1> }
-            <h1> selected </h1>
-        </div>
-        <div className="playerHand">
-            {(playerCards) ? (playerCards.map(((card) => <Card
+      <div className="selectedCard">
+        {selectedCard ? (
+          <Card
+            key={selectedCard.code}
+            code={selectedCard.code}
+            suit={selectedCard.suit}
+            value={selectedCard.value}
+            image={selectedCard.image}
+            onClick={() => unselectCard(selectedCard)}
+          />
+        ) : (
+          <h1> No card selected </h1>
+        )}
+        <h1> selected </h1>
+      </div>
+      <div className="playerHand">
+        {playerCards ? (
+          playerCards.map((card) => (
+            <Card
               key={card.code}
               code={card.code}
               suit={card.suit}
@@ -157,16 +169,19 @@ const GameScreen = () => {
               image={card.image}
               onClick={() => selectCardFromHand(card)}
             />
-            ))) : <h1> not loaded </h1> }
-            <h1> hand </h1>
-          </div>
-          
-        <div className="playerInfo">
-          <Button width="80%" onClick={() => printStuff()}>
-              Play Move
-          </Button>
-        </div>
+          ))
+        ) : (
+          <h1> not loaded </h1>
+        )}
+        <h1> hand </h1>
       </div>
+
+      <div className="playerInfo">
+        <Button width="80%" onClick={() => printStuff()}>
+          Play Move
+        </Button>
+      </div>
+    </div>
   );
 
   let opponentHand = (
@@ -188,9 +203,9 @@ const GameScreen = () => {
   let turnInfo = (
     <div className="turnInfo">
       <h1> Current player </h1>
-      <h1> {round.myTurn ? ("my turn") : ("op turn")} </h1>
+      <h1> {round && round.myTurn ? "my turn" : "op turn"} </h1>
     </div>
-  )
+  );
 
   let table = (
     <div className="table">

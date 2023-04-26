@@ -5,13 +5,30 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Home.scss";
 import Game from "models/Game";
 import Header from "components/views/Header";
+import User from "models/User";
 
 const Home = () => {
   const history = useHistory();
   const [waitingGames, setWaitingGames] = useState(0);
 
-  const createGame = () => {
-    history.push("/game/createGame");
+  const createGame = async () => {
+    try {
+      const userId = sessionStorage.getItem("userId");
+      const host = new User();
+      host.userId = userId;
+      const requestBody = JSON.stringify({ host });
+      const response = await api.post("/games", requestBody);
+      console.log(response);
+      const game = new Game(response.data);
+      console.log(game.gameId);
+      history.push("/game/lobby/" + game.gameId);
+    } catch (error) {
+      alert(
+        `Something went wrong when trying to create a game: \n${handleError(
+          error
+        )}`
+      );
+    }
   };
 
   // const lobbyBrowser = () => {};
