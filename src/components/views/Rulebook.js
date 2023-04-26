@@ -73,7 +73,7 @@ const Rulebook = () => {
          
         </div>
         <div className="rulebook-content">
-        {activeTab === "player-cards" && (
+        {activeTab === "cheat-sheet" && (
           <div className="rulebook-section">
             <div className="rulebook-section-title">
               <strong>
