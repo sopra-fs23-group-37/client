@@ -11,6 +11,7 @@ import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
+import backOfCard from "image/BackOfCard.svg";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -69,6 +70,7 @@ const GameScreen = () => {
     setRound(new Round(data));
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
+    setOpponentCards(data.oppCards);
   };
 
   const makeMove = () => {
@@ -76,23 +78,47 @@ const GameScreen = () => {
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.value === "JACK") {
-        console.log("3")
-        sockClient.sendMove(gameId, playerId, 3, selectedCard, round.cardsOnTable);
+        console.log("3");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          3,
+          selectedCard,
+          round.cardsOnTable
+        );
       }
       // 2: x-1 move
       else if (selectedTableCards.length > 1) {
-        console.log("2")
-        sockClient.sendMove(gameId, playerId, 2, selectedCard, selectedTableCards);
+        console.log("2");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          2,
+          selectedCard,
+          selectedTableCards
+        );
       }
       // 1: 1-1 move
       else if (selectedTableCards.length === 1) {
-        console.log("1")
-        sockClient.sendMove(gameId, playerId, 1, selectedCard, selectedTableCards);
+        console.log("1");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          1,
+          selectedCard,
+          selectedTableCards
+        );
       }
       // 4: to field
       else {
-        console.log("4")
-        sockClient.sendMove(gameId, playerId, 4, selectedCard, selectedTableCards);
+        console.log("4");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          4,
+          selectedCard,
+          selectedTableCards
+        );
       }
       setSelectedCard(null);
     }
@@ -258,11 +284,24 @@ const GameScreen = () => {
   );
 
   let opponentHand = (
-    <div className="card-container">
-      {/* Placeholder for opponent hand */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
+    <div className="opponent-card">
+      {opponentCards ? (
+        Array.from({ length: opponentCards }, (_, index) => (
+          <Card
+            key="2H"
+            code="2H"
+            suit="Hearts"
+            value="2"
+            image={backOfCard}
+            fromField={false}
+            onClick={() => {
+              console.log();
+            }}
+          />
+        ))
+      ) : (
+        <h1> not loaded </h1>
+      )}
     </div>
   );
 
@@ -282,7 +321,7 @@ const GameScreen = () => {
   );
 
   let cardsOnTableContainer = (
-    <div> 
+    <div>
       {tableCards ? (
         tableCards.map((card) => (
           <Card
@@ -296,9 +335,9 @@ const GameScreen = () => {
           />
         ))
       ) : (
-        <div className="card-blank" > </div>
+        <div className="card-blank"> </div>
       )}
-    </div> 
+    </div>
   );
 
   return (
@@ -306,12 +345,12 @@ const GameScreen = () => {
       <div className="top">
         <div className="left">
           <div className="opponent">
-            <div className="opponent-card">Opponent's Cards</div>
+            {opponentHand}
             {turnInfo}
           </div>
           <div className="table">
             <CardDisplay
-            // if it works it works
+              // if it works it works
               cards={cardsOnTableContainer}
               onClickSpace={() => toggleSelectPutOnField()}
               selectPutOnField={selectPutOnField}
