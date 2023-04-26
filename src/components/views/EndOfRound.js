@@ -1,7 +1,19 @@
 import React from 'react';
 import "styles/views/EndOfRound.scss";
 
-const EndOfRound = ({ game, round, onEndRound }) => {
+const EndOfRound = ({ game, round, playerId, onEndRound }) => {
+
+    let myUsername, oppUsername = 0;
+  if (game && game.hostId && game.guestId != null) {
+    if (playerId === game.hostId) {
+      myUsername = game.hostUsername;
+      oppUsername = game.guestUsername;
+    } else {
+      myUsername = game.guestUsername;
+      oppUsername = game.hostUsername;
+    } 
+  }
+
   return (
     <div className="end-of-round">
       <h1>Round End</h1>
@@ -18,7 +30,7 @@ const EndOfRound = ({ game, round, onEndRound }) => {
         </thead>
         <tbody>
           <tr>
-            <td>{game.hostUsername}</td>
+            <td>{myUsername}</td>
             <td>{round.myCardsInDiscard?.length ?? 0}</td>
             <td>{round.myPointClubs}</td>
             <td>{round.myTwoOfClubs}</td>
@@ -26,7 +38,7 @@ const EndOfRound = ({ game, round, onEndRound }) => {
             <td>{round.myTotalPoints}</td>
           </tr>
           <tr>
-            <td>{game.guestUsername}</td>
+            <td>{oppUsername}</td>
             <td>{round.oppCardsInDiscard?.length ?? 0}</td>
             <td>{round.oppPointClubs}</td>
             <td>{round.oppTwoOfClubs}</td>

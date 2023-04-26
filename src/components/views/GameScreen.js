@@ -315,6 +315,7 @@ const GameScreen = () => {
           <EndOfRound 
           game={game}
           round={round}
+          playerId={playerId}
           onEndRound={handleEndRound}
           />
         </div>
