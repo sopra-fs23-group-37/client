@@ -12,9 +12,20 @@ const Lobby = () => {
   const history = useHistory();
   const playerId = parseInt(sessionStorage.getItem("userId"));
   const [goingToGame, setGoingToGame] = useState(false);
+  // true if the opponent has left
+  const [opponentLeft, setOpponentLeft] = useState(false);
+  // set reason for why the player has left (e.g. unexpected disconnect, surrender)
+  const [opponentLeftReason, setOpponentLeftReason] = useState(null);
 
   const updateLobby = (data) => {
     setGame(new Game(data));
+    if (
+      data.gameStatus === "DISCONNECTED" ||
+      data.gameStatus === "SURRENDERED"
+    ) {
+      setOpponentLeft(true);
+      setOpponentLeftReason(data.endGameReason);
+    }
   };
 
   const connectAndJoin = () => {

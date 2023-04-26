@@ -55,6 +55,13 @@ const GameScreen = () => {
     if (data.gameSatus === "ONGOING") {
       setGameStarted(true);
     }
+    if (
+      data.gameStatus === "DISCONNECTED" ||
+      data.gameStatus === "SURRENDERED"
+    ) {
+      setOpponentLeft(true);
+      setOpponentLeftReason(data.endGameReason);
+    }
   };
 
   const updateRound = (data) => {
@@ -69,8 +76,7 @@ const GameScreen = () => {
   };
 
   const makeMove = () => {
-    if (round.myTurn) { 
-
+    if (round.myTurn) {
     }
     // use this function to build move and send via websocket
     // check type of move
@@ -95,7 +101,9 @@ const GameScreen = () => {
 
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
-      const filteredArray = playerCards.filter((item) => item.code !== card.code);
+      const filteredArray = playerCards.filter(
+        (item) => item.code !== card.code
+      );
       if (selectedCard) {
         filteredArray.push(selectedCard);
       }
@@ -235,7 +243,6 @@ const GameScreen = () => {
     </div>
   );
 
-
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -245,8 +252,8 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-          <CardDisplay/></div>
-      
+            <CardDisplay />
+          </div>
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>
