@@ -72,15 +72,15 @@ const Rulebook = () => {
 
          
         </div>
-
-        {activeTab === "cheat-sheet" && (
+        <div className="rulebook-content">
+        {activeTab === "player-cards" && (
           <div className="rulebook-section">
             <div className="rulebook-section-title">
               <strong>
                 <h3></h3>
               </strong>
             </div>
-            <div className="rulebook-rules-list">
+           
               
                 <img
                   src={myImage}
@@ -88,11 +88,11 @@ const Rulebook = () => {
                   style={{ height: "500px", width: "1000px", marginLeft: 0 }}
                 />
               
-            </div>
+            
           </div>
         )}
 
-        <div className="rulebook-content">
+       
           {activeTab === "player-cards" && (
             <div className="rulebook-section">
               <div className="rulebook-section-title">
@@ -130,10 +130,10 @@ const Rulebook = () => {
 
               <ul className="rulebook-rules-list">
                 <li className="rulebook-rule-item">
-                  The dealer distributes 6 cards to each player and places four
+                  The dealer distributes 8 cards to each player and places 4
                   cards on the table. The remaining cards are placed aside. Once
-                  all players have played all their cards, the dealer takes the
-                  deck of cards and again deals six cards to each player. When
+                  all players have played all their cards from the hand, the dealer takes the
+                  deck of cards and again deals 8 cards to each player. When
                   all the cards have been played and the entire deck has been
                   used, the game ends.
                 </li>
@@ -234,12 +234,11 @@ const Rulebook = () => {
                   captured cards as follows:
                 </p>
                 <ul className="rulebook-rule-item">
-                  <li>Each Ace, King, Queen or Jack: 1 point</li>
-                  <li>10 of diamonds: 2 points</li>
-                  <li>Other tens: 1 point</li>
-                  <li>2 of clubs: 1 point</li>
-                  <li>The player or team with most cards: 3 points</li>
-                  <li>That makes a total of 25 points.</li>
+                <li>For highest number of cards: 2 points</li>
+                  <li>10 of diamonds: 1 points</li>
+                   <li>2 of clubs: 1 point</li>
+                  <li>The player with most clubs: 1 points</li>
+                  
                 </ul>
               </div>
             </div>
@@ -252,3 +251,6 @@ const Rulebook = () => {
 };
 
 export default Rulebook;
+
+   // <li>Each Ace, King, Queen or Jack: 1 point</li>
+   //<li>Other tens: 1 point</li>
