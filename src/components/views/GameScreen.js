@@ -63,27 +63,57 @@ const GameScreen = () => {
     setPlayerCards(data.myCardsInHand);
   };
 
-  const printStuff = () => {
-    console.log(round);
-    setPlayerCards(round.myCardsInHand);
-  };
+  // Creates Message for the makeMove Websocket
+  function createMessage(playerId, moveType, cardFromHand, cardsFromField) {
+    const message = {
+      playerId: playerId,
+      moveType: moveType,
+      cardFromHand: cardFromHand,
+      cardsFromField: cardsFromField,
+    };
+    return message;
+  }
 
-  // TODO: Beni
   const makeMove = () => {
-    if (round.myTurn) { 
-      // 1: 1-1 move
-      // 2: x-1 move
+    let message;
+    if (round.myTurn) {
       // 3: JACK
+      if (selectedCard.suit === "JACK") {
+        message = createMessage(playerId, 3, selectedCard, round.cardsOnTable);
+      }
+      // 2: x-1 move
+      else if (selectedTableCards.length > 1) {
+        message = createMessage(playerId, 2, selectedCard, selectedTableCards);
+      }
+      // 1: 1-1 move
+      else if (selectedTableCards.length === 1) {
+        message = createMessage(playerId, 1, selectedCard, selectedTableCards);
+      }
       // 4: to field
+      else {
+        message = createMessage(playerId, 4, selectedCard, selectedTableCards);
+      }
+      sockClient.sendMove(gameId, message);
     }
     // use this function to build move and send via websocket
     // check type of move
   };
 
+  const checkButton = () => {
+    if (!round.myTurn) {
+      return false;
+    } else if (selectedCard.length === 0) {
+      return false;
+    } else if (selectedTableCards.length > 0 && selectPutOnField) {
+      return false;
+    }
+    return true;
+  };
+
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
-      console.log(card)
+      console.log(card);
       /*
       if (card.active) {
         const filteredArray = selectedTableCards.filter(
@@ -101,7 +131,9 @@ const GameScreen = () => {
 
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
-      const filteredArray = playerCards.filter((item) => item.code !== card.code);
+      const filteredArray = playerCards.filter(
+        (item) => item.code !== card.code
+      );
       if (selectedCard) {
         filteredArray.push(selectedCard);
       }
@@ -133,7 +165,7 @@ const GameScreen = () => {
     if (round.myTurn) {
       setSelectPutOnField((current) => !current);
     }
-  }
+  };
 
   const startGame = () => {
     // check that the websocket is still connected
@@ -218,7 +250,7 @@ const GameScreen = () => {
       </div>
 
       <div className="playerInfo">
-        <Button width="80%" onClick={() => printStuff()}>
+        <Button width="80%" onClick={() => makeMove()} disable={checkButton()}>
           Play Move
         </Button>
       </div>
@@ -249,7 +281,6 @@ const GameScreen = () => {
     </div>
   );
 
-
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -259,8 +290,12 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-          <CardDisplay cards={round ? round.cardsOnTable : []} 
-            onClickCard={() => selectCardFromField()} onClickSpace={() => toggleSelectPutOnField()} selectPutOnField={selectPutOnField}/></div>
+            <CardDisplay
+              cards={round ? round.cardsOnTable : []}
+              onClickCard={() => selectCardFromField(this)}
+              onClickSpace={() => toggleSelectPutOnField()}
+            />
+          </div>
         </div>
         <div className="right">
           <div className="statistics">Statistics</div>
