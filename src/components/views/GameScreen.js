@@ -304,7 +304,6 @@ const GameScreen = () => {
           />
         </div>
       )}
-
       <div className ="endOfGame">
         <EndOfGame
           onEndGame={handleEndGame}

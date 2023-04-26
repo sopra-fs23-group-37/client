@@ -32,4 +32,3 @@ const EndOfGame = ({ onEndGame }) => {
 };
 
 export default EndOfGame;
-

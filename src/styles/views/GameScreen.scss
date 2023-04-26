@@ -171,9 +171,10 @@
           justify-content: center;
           align-items: center;
         }
-      .playerHandContainer {
-        border: 0.1px solid gray;
-        display: flex;
+
+        .playerHandContainer {
+          border: 0.1px solid gray;
+          display: flex;
 
         .playerHand {
           background: rgb(55, 116, 40);
