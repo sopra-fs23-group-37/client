@@ -44,6 +44,7 @@ function CardDisplay() {
                 onClick={() => handleCardClick("QS")}
               />
             </div>
+
             <div
               className={`card ${
                 selectedCard.includes("KC") ? "selected" : ""
@@ -56,6 +57,8 @@ function CardDisplay() {
                 onClick={() => handleCardClick("KC")}
               />
             </div>
+
+
             <div
               className={`card ${
                 selectedCard.includes("AH") ? "selected" : ""
@@ -68,40 +71,42 @@ function CardDisplay() {
                 onClick={() => handleCardClick("AH")}
               />
             </div>
-            <div
-              className={`card ${
-                selectedCard.includes(Card.code) ? "selected" : ""
-              }`}></div>
-            <div
-              className={`card ${
-                selectedCard.includes(Card.code) ? "selected" : ""
-              }`}></div>
+
 
             <div
-              className={`card ${selectedCard === "" ? "selected" : ""}`}></div>
+              className={`card ${
+                selectedCard.includes(Card.code) ? "selected" : ""
+              }`}>
+      
+           
+              </div>
+
+            <div
+              className={`card ${
+                selectedCard.includes(Card.code) ? "selected" : ""
+              }`}>
+                
+              </div>
+
+            <div
+              className={`card ${selectedCard === "" ? "selected" : ""}`}>
+
+              </div>
           </div>
 
           <div className="card-row">
             {/* Placeholder for table cards */}
-            <div className={`card ${selectedCard === "AD" ? "selected" : ""}`}>
-              <Card
-                code="AD"
-                suit="DIAMONDS"
-                value="ACE"
-                image="https://deckofcardsapi.com/static/img/AD.png"
-                onClick={() => handleCardClick("AD")}
-              />
-            </div>
-            <div className={`card ${selectedCard === "2S" ? "selected" : ""}`}>
-              <Card
-                code="2S"
-                suit="SPADES"
-                value="TWO"
-                image="https://deckofcardsapi.com/static/img/2S.png"
-                onClick={() => handleCardClick("2S")}
-              />
-            </div>
-            <div className={`card ${selectedCard === "9D" ? "selected" : ""}`}>
+            <div
+              className={`card ${
+                selectedCard.includes(Card.code) ? "selected" : ""
+              }`}></div>
+
+            <div
+              className={`card ${
+                selectedCard.includes(Card.code) ? "selected" : ""
+              }`}></div>
+
+            <div className={`card ${selectedCard.includes("9D") ? "selected" : ""}`}>
               <Card
                 code="9D"
                 suit="DIAMONDS"
@@ -110,7 +115,7 @@ function CardDisplay() {
                 onClick={() => handleCardClick("9D")}
               />
             </div>
-            <div className={`card ${selectedCard === "AS" ? "selected" : ""}`}>
+            <div className={`card ${selectedCard.includes("AS") ? "selected" : ""}`}>
               <Card
                 code="AS"
                 suit="SPADES"
@@ -119,18 +124,20 @@ function CardDisplay() {
                 onClick={() => handleCardClick("AS")}
               />
             </div>
+
             <div
               className={`card ${
-                selectedCard === Card.code ? "selected" : ""
-              }`}></div>
-            <div
-              className={`card ${
-                selectedCard === Card.code ? "selected" : ""
+                selectedCard.includes(Card.code) ? "selected" : ""
               }`}></div>
 
             <div
               className={`card ${
-                selectedCard === Card.code ? "selected" : ""
+                selectedCard.includes(Card.code) ? "selected" : ""
+              }`}></div>
+
+            <div
+              className={`card ${
+                selectedCard.includes(Card.code) ? "selected" : ""
               }`}></div>
           </div>
         </div>
