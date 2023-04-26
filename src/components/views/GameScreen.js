@@ -71,39 +71,26 @@ const GameScreen = () => {
     setTableCards(data.cardsOnTable);
   };
 
-  // Creates Message for the makeMove Websocket
-  function createMessage(playerId, moveType, cardFromHand, cardsFromField) {
-    const message = {
-      playerId: playerId,
-      moveType: moveType,
-      cardFromHand: cardFromHand,
-      cardsFromField: cardsFromField,
-    };
-    return message;
-  }
-
   const makeMove = () => {
-    let message;
     console.log(selectedTableCards);
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.suit === "JACK") {
-        message = createMessage(playerId, 3, selectedCard, round.cardsOnTable);
+        sockClient.sendMove(gameId, playerId, 3, selectedCard, selectedTableCards);
       }
       // 2: x-1 move
       else if (selectedTableCards.length > 1) {
-        message = createMessage(playerId, 2, selectedCard, selectedTableCards);
+        sockClient.sendMove(gameId, playerId, 2, selectedCard, selectedTableCards);
       }
       // 1: 1-1 move
       else if (selectedTableCards.length === 1) {
-        message = createMessage(playerId, 1, selectedCard, selectedTableCards);
+        sockClient.sendMove(gameId, playerId, 1, selectedCard, selectedTableCards);
       }
       // 4: to field
       else {
-        message = createMessage(playerId, 4, selectedCard, selectedTableCards);
+        sockClient.sendMove(gameId, playerId, 4, selectedCard, selectedTableCards);
       }
-      console.log("Move message: ", message);
-      sockClient.sendMove(gameId, message);
+      setSelectedCard(null);
     }
     // use this function to build move and send via websocket
     // check type of move

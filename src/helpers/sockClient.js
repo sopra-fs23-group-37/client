@@ -130,11 +130,11 @@ class SockClient {
     console.log("All message functions removed.");
   }
 
-  sendMove(gameId, playerMoveMessage) {
+  sendMove(gameId, playerId, moveType, cardFromHand, cardsFromField) {
     this.stompClient.send(
       "/game/move/" + gameId,
       {},
-      JSON.stringify({ playerMoveMessage })
+      JSON.stringify({playerId, moveType, cardFromHand, cardsFromField})
     );
   }
 
