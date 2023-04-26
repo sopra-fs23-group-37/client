@@ -5,10 +5,13 @@ import Card from "components/views/Card";
 
 function CardDisplay() {
   const [selectedCard, setSelectedCard] = useState([]);
-  const [chosen, setChosen] = useState(false);
 
   const handleCardClick = (cardCode) => {
-    setChosen(cardCode);
+    if (selectedCard.includes(cardCode)) {
+      setSelectedCard(selectedCard.filter((item) => item !== cardCode));
+    } else {
+      setSelectedCard([...selectedCard, cardCode]);
+    }
   };
 
   return (
@@ -17,7 +20,10 @@ function CardDisplay() {
         <div className="card-container">
           <div className="card-row">
             {/* Placeholder for table cards */}
-            <div className={`card ${selectedCard === "JD" ? "selected" : ""}`}>
+            <div
+              className={`card ${
+                selectedCard.includes("JD") ? "selected" : ""
+              }`}>
               <Card
                 code="JD"
                 suit="DIAMONDS"
@@ -26,7 +32,10 @@ function CardDisplay() {
                 onClick={() => handleCardClick("JD")}
               />
             </div>
-            <div className={`card ${selectedCard === "QS" ? "selected" : ""}`}>
+            <div
+              className={`card ${
+                selectedCard.includes("QS") ? "selected" : ""
+              }`}>
               <Card
                 code="QS"
                 suit="SPADES"
@@ -35,7 +44,10 @@ function CardDisplay() {
                 onClick={() => handleCardClick("QS")}
               />
             </div>
-            <div className={`card ${selectedCard === "KC" ? "selected" : ""}`}>
+            <div
+              className={`card ${
+                selectedCard.includes("KC") ? "selected" : ""
+              }`}>
               <Card
                 code="KC"
                 suit="CLUBS"
@@ -44,7 +56,10 @@ function CardDisplay() {
                 onClick={() => handleCardClick("KC")}
               />
             </div>
-            <div className={`card ${selectedCard === "AH" ? "selected" : ""}`}>
+            <div
+              className={`card ${
+                selectedCard.includes("AH") ? "selected" : ""
+              }`}>
               <Card
                 code="AH"
                 suit="HEARTS"
@@ -55,11 +70,11 @@ function CardDisplay() {
             </div>
             <div
               className={`card ${
-                selectedCard === Card.code ? "selected" : ""
+                selectedCard.includes(Card.code) ? "selected" : ""
               }`}></div>
             <div
               className={`card ${
-                selectedCard === Card.code ? "selected" : ""
+                selectedCard.includes(Card.code) ? "selected" : ""
               }`}></div>
 
             <div
