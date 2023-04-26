@@ -30,8 +30,16 @@
           .opponent-card {
             border: 0.1px solid gray;
           }
-          .turnInfo {
+          .turn-info-container {
             border: 0.1px solid gray;
+            text-align: center;
+            display: flex;
+
+            .turn-info-form {
+              background: rgb(55, 116, 40);
+              width: 80%;
+              margin: auto;
+            }
           }
         }
         .table {
