@@ -1,6 +1,6 @@
-@import 'styles/theme';
+@import "styles/theme";
 
-body{
+body {
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -16,7 +16,7 @@ body{
 
 .login {
   &.container {
-    padding-top: calc(100vh / 6);
+    padding-top: calc(100vh / 50);
     padding-left: calc(100vw / 4);
     min-height: 300px;
     @include center;
@@ -74,17 +74,17 @@ body{
       background-color: #e9c46a;
     }
   }
-  .title{
+  .title {
     font-family: $fontDefault;
     font-style: normal;
     font-weight: 400;
     margin-bottom: 0.2em;
   }
-  .subtitle{
+  .subtitle {
     font-family: $fontDefault;
     font-style: normal;
     font-weight: bold;
-    color: #E76F51;
+    color: #e76f51;
     margin-top: 0em;
   }
 
