@@ -231,7 +231,6 @@ const GameScreen = () => {
 
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
-    sockClient.removeMessageFunctions();
   };
 
   const handleEndRound = () => {
@@ -447,7 +446,7 @@ const GameScreen = () => {
               </div>
             </div>
           )}
-          <div className="discard-pile">Discard Pile</div>
+          {cardsDiscard}
         </div>
       </div>
 
