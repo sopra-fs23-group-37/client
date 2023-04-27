@@ -242,7 +242,8 @@ const GameScreen = () => {
   };
 
   const handleEndRound = () => {
-    sockClient.confirmEndOfRound();
+    console.log("user is confirming that the round ended");
+    sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
   };
 
