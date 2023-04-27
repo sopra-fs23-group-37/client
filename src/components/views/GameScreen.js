@@ -49,7 +49,8 @@ const GameScreen = () => {
     if (data.gameSatus === "ONGOING") {
       setGameStarted(true);
     }
-    if (data.gameSatus === "FINISHED") {
+    if (data.gameStatus === "FINISHED") {
+      console.log("the game has ended!");
       setEndOfGame(true);
     }
     if (
