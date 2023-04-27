@@ -79,23 +79,47 @@ const GameScreen = () => {
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.value === "JACK") {
-        console.log("3")
-        sockClient.sendMove(gameId, playerId, 3, selectedCard, round.cardsOnTable);
+        console.log("3");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          3,
+          selectedCard,
+          round.cardsOnTable
+        );
       }
       // 2: x-1 move
       else if (selectedTableCards.length > 1) {
-        console.log("2")
-        sockClient.sendMove(gameId, playerId, 2, selectedCard, selectedTableCards);
+        console.log("2");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          2,
+          selectedCard,
+          selectedTableCards
+        );
       }
       // 1: 1-1 move
       else if (selectedTableCards.length === 1) {
-        console.log("1")
-        sockClient.sendMove(gameId, playerId, 1, selectedCard, selectedTableCards);
+        console.log("1");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          1,
+          selectedCard,
+          selectedTableCards
+        );
       }
       // 4: to field
       else {
-        console.log("4")
-        sockClient.sendMove(gameId, playerId, 4, selectedCard, selectedTableCards);
+        console.log("4");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          4,
+          selectedCard,
+          selectedTableCards
+        );
       }
       setSelectedTableCards([]);
       setSelectPutOnField(false);
@@ -193,7 +217,6 @@ const GameScreen = () => {
   };
 
   const checkEndOfRound = () => {
-
     if (game.roundStatus === "FINISHED") {
       setEndOfRound(true);
       setTimeout(() => setEndOfRound(false), 3000);
@@ -201,7 +224,6 @@ const GameScreen = () => {
   };
 
   const checkEndOfGame = () => {
-
     if (game.winner != null) {
       setEndOfGame(true);
       setTimeout(() => setEndOfGame(false), 3000);
@@ -209,10 +231,10 @@ const GameScreen = () => {
   };
 
   const surrenderGame = () => {
-    // Code to handle surrender
+    sockClient.surrender(gameId, playerId);
+    sockClient.removeMessageFunctions();
   };
 
-  
   const handleEndRound = () => {
     setEndOfRound(false);
   };
@@ -237,6 +259,7 @@ const GameScreen = () => {
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
       sockClient.disconnect();
+      sockClient.removeMessageFunctions();
       sockClient.removeMessageFunctions();
     });
 
@@ -324,7 +347,7 @@ const GameScreen = () => {
   );
 
   let cardsOnTableContainer = (
-    <div> 
+    <div>
       {tableCards ? (
         tableCards.map((card) => (
           <Card
@@ -338,9 +361,9 @@ const GameScreen = () => {
           />
         ))
       ) : (
-        <div className="card-blank" > </div>
+        <div className="card-blank"> </div>
       )}
-    </div> 
+    </div>
   );
 
   return (
@@ -353,59 +376,58 @@ const GameScreen = () => {
           </div>
           <div className="table">
             <CardDisplay
-            // if it works it works
+              // if it works it works
               cards={cardsOnTableContainer}
               onClickSpace={() => toggleSelectPutOnField()}
               selectPutOnField={selectPutOnField}
             />
           </div>
         </div>
-    <div className="right">
-    {game && (
-      <div className="statistics">
-        <div className="player-names">
-          <span className="guest-name">{game.guestUsername}</span>
-          <span className="points">
-            <span className="guest-points">{game.guestPoints || 0}</span>
-            <span className="points-divider">:</span>
-            <span className="host-points">{game.hostPoints || 0}</span>
-          </span>
-          <span className="host-name">{game.hostUsername}</span>
-        </div>
-        <div className="surrender-button-container">
-          <button className="surrender-button" onClick={surrenderGame}>
-            Surrender
-          </button>
+        <div className="right">
+          {game && (
+            <div className="statistics">
+              <div className="player-names">
+                <span className="guest-name">{game.guestUsername}</span>
+                <span className="points">
+                  <span className="guest-points">{game.guestPoints || 0}</span>
+                  <span className="points-divider">:</span>
+                  <span className="host-points">{game.hostPoints || 0}</span>
+                </span>
+                <span className="host-name">{game.hostUsername}</span>
+              </div>
+              <div className="surrender-button-container">
+                <button className="surrender-button" onClick={surrenderGame}>
+                  Surrender
+                </button>
+              </div>
+            </div>
+          )}
+          <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
-    )}
-      <div className="discard-pile">Discard Pile</div>
-    </div>
-    </div>
-              
+
       {playerHandContainer}
 
       {game && round && endOfRound && (
-        <div className ="endOfRound">
-          <EndOfRound 
-          game={game}
-          round={round}
-          playerId={playerId}
-          onEndRound={handleEndRound}
+        <div className="endOfRound">
+          <EndOfRound
+            game={game}
+            round={round}
+            playerId={playerId}
+            onEndRound={handleEndRound}
           />
         </div>
       )}
-      
-      {game && endOfGame && (
-              <div className ="endOfRound">
-                <EndOfGame
-                game={game}
-                playerId={playerId}
-                onEndGame={handleEndGame}
-                />
-              </div>
-      )}
 
+      {game && endOfGame && (
+        <div className="endOfRound">
+          <EndOfGame
+            game={game}
+            playerId={playerId}
+            onEndGame={handleEndGame}
+          />
+        </div>
+      )}
     </div>
   );
 };
