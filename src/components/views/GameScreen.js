@@ -231,7 +231,6 @@ const GameScreen = () => {
 
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
-    sockClient.removeMessageFunctions();
   };
 
   const handleEndRound = () => {
