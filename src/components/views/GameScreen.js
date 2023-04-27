@@ -238,7 +238,7 @@ const GameScreen = () => {
   };
 
   const handleEndGame = () => {
-    setEndOfRound(false);
+    history.push("/game");
   };
 
   useEffect(() => {
@@ -353,11 +353,7 @@ const GameScreen = () => {
       <div className="turn-info-form">
         <h1>{round && round.myTurn ? "Your turn" : "Opponent's turn"}</h1>
         {!round.myTurn && (
-          <img
-            src={loadingGif}
-            alt="Loading..."
-            className="loading-gif"
-          />
+          <img src={loadingGif} alt="Loading..." className="loading-gif" />
         )}
       </div>
     </div>
