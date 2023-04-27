@@ -45,7 +45,7 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
-    await delay(2000);
+    await delay(1000);
     history.push(`/game/play/${gameId}`);
   };
 
@@ -89,12 +89,6 @@ const Lobby = () => {
           <div className="listings-container">
             <div className="subtitle-spectator-container">
               <h2 className="subtitle">Players</h2>
-              {/*<h4 className="createGame spectators">
-                Spectators:
-                <span className="spectators-number">
-                  TODO: function to get number of spectators 0
-                </span>
-              </h4>*/}
             </div>
             <div className="row-container">
               <h4 className="name">{game.hostUsername}</h4>
@@ -112,7 +106,7 @@ const Lobby = () => {
           </div>
           <div className="listings-container">
             <div className="subtitle-spectator-container">
-              <h2 className="subtitle">Game Informations</h2>
+              <h2 className="subtitle">Game Information</h2>
             </div>
             <div className="row-container">
               <h4 className="name">Game Id</h4>
@@ -123,7 +117,6 @@ const Lobby = () => {
               <h4 className="host">{game.gameStatus}</h4>
             </div>
           </div>
-          <ButtonLight width="40%"> Dummy Button </ButtonLight>
         </div>
       </div>
     </BaseContainer>

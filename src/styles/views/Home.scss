@@ -1,4 +1,4 @@
-@import 'styles/theme';
+@import "styles/theme";
 
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
@@ -11,9 +11,9 @@
   &.container {
     background: $background;
     padding: 1.5em;
-    margin-top: calc(100vh/4);
-    margin-left: calc(100vw/2);
-    margin-right: calc(100vw/4);
+    margin-top: calc(100vw / 50);
+    margin-left: calc(100vw / 2);
+    margin-right: calc(100vw / 4);
     margin-bottom: auto;
     border-radius: 2px;
     font-family: $fontDefault;
@@ -21,14 +21,14 @@
     flex-direction: column;
     align-items: center;
     box-shadow: $dropShadow;
-    
+    overflow-y: auto;
   }
 
   .rectangle {
     background-color: #ffffff;
     width: 80%;
     height: 10vh;
-    margin: 0 auto; 
+    margin: 0 auto;
   }
 
   .row {
@@ -49,18 +49,17 @@
     font-size: 1.3em;
     text-align: center;
     margin: 0 0.5em;
-    transition: background-color 0.2s ease-in-out;    
+    transition: background-color 0.2s ease-in-out;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
 
     &:first-child {
       margin-left: 0;
     }
-    
+
     &:last-child {
       margin-right: 0;
     }
-    
+
     &:hover {
       background: $accentDark;
       transform: translateY(-1px);
@@ -68,11 +67,11 @@
     }
 
     &.with-icon {
-      background-image: url('/image/add.svg');
+      background-image: url("/image/add.svg");
       background-position: center top;
       background-position-y: calc(25%);
       background-repeat: no-repeat;
-      padding-top: 3em; 
+      padding-top: 3em;
       padding-right: 10px;
     }
   }
@@ -86,22 +85,20 @@
     color: $textColor;
     font-size: 1.3em;
     text-align: center;
-    margin: 0 0.5em;  
+    margin: 0 0.5em;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
 
     &:first-child {
       margin-left: 0;
     }
-    
+
     &:last-child {
       margin-right: 0;
     }
-
-    
   }
 
-  & p,h2 {
+  & p,
+  h2 {
     margin: 0.5em 0;
   }
 }

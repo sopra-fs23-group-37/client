@@ -3,11 +3,12 @@
 .lobby {
   &.container {
     flex-direction: column;
-    margin-top: calc(100vh / 6);
+    margin-top: calc(100vh / 50);
     margin-left: calc(100vw / 4);
     margin-right: auto;
     margin-bottom: auto;
     @include center;
+    overflow-y: auto;
   }
 
   &.form {
@@ -50,82 +51,82 @@
     .listings-container {
       margin-bottom: 3em;
       // Subtitle and Spectators
-    .subtitle-spectator-container {
-      h4 {
-        margin-bottom: 0;
-      }
-      h2 {
-        margin-bottom: 0;
-      }
-      display: flex;
-      height: min-content;
-      align-items: baseline;
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      margin-bottom: 0.2em;
-      border-bottom: 0.1px solid #8f8f8f;
-      .subtitle {
-        margin-left: 0em;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: bold;
-        font-size: x-large;
-        color: #e76f51;
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-      }
-
-      .spectators {
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-        margin-left: auto;
-        margin-right: 0.5em;
-      }
-      .spectators-number {
+      .subtitle-spectator-container {
+        h4 {
+          margin-bottom: 0;
+        }
+        h2 {
+          margin-bottom: 0;
+        }
+        display: flex;
+        height: min-content;
+        align-items: baseline;
         margin-left: 0.5em;
-      }
-    }
+        margin-right: 0.5em;
+        margin-bottom: 0.2em;
+        border-bottom: 0.1px solid #8f8f8f;
+        .subtitle {
+          margin-left: 0em;
+          font-family: $fontDefault;
+          font-style: normal;
+          font-weight: bold;
+          font-size: x-large;
+          color: #e76f51;
+          margin-top: 0.5em;
+          margin-bottom: 0.5em;
+        }
 
-    //Player list
-    .row-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      border-bottom: 0.1px solid #8f8f8f;
-
-      h4 {
-        display: inline-block;
-        margin: 0;
-        font-size: x-large;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-      }
-
-      .name {
-        margin: 0.5em;
-      }
-
-      .host {
-        margin: 0.5em;
-        margin-left: auto;
+        .spectators {
+          font-family: $fontDefault;
+          font-style: normal;
+          font-weight: 100;
+          margin-left: auto;
+          margin-right: 0.5em;
+        }
+        .spectators-number {
+          margin-left: 0.5em;
+        }
       }
 
-      .kick-player {
-        background-color: white;
-        border: 0.1px solid #8f8f8f;
-        color: red;
-        margin: 0;
-        height: auto;
-        box-shadow: $dropShadow;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-size: 11px;
+      //Player list
+      .row-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        border-bottom: 0.1px solid #8f8f8f;
+
+        h4 {
+          display: inline-block;
+          margin: 0;
+          font-size: x-large;
+          font-family: $fontDefault;
+          font-style: normal;
+          font-weight: 100;
+        }
+
+        .name {
+          margin: 0.5em;
+        }
+
+        .host {
+          margin: 0.5em;
+          margin-left: auto;
+        }
+
+        .kick-player {
+          background-color: white;
+          border: 0.1px solid #8f8f8f;
+          color: red;
+          margin: 0;
+          height: auto;
+          box-shadow: $dropShadow;
+          font-family: $fontDefault;
+          font-style: normal;
+          font-size: 11px;
+        }
       }
-    }
     }
   }
 }

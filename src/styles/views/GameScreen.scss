@@ -1,6 +1,6 @@
 @import "styles/theme";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
@@ -9,95 +9,95 @@
   for more information visit https://sass-lang.com/guide
  */
 
-  .gamescreen {
-    width: 100vw;
-    height: 100vh;
+.gamescreen {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
 
-    &.container {
-      background: $background;
+  &.container {
+    background: $background;
+    display: grid;
+    grid-template-rows: 70% 25% 5%;
+    grid-template-columns: 1fr;
+
+    .top {
+      grid-template-rows: 1fr;
+      grid-template-columns: 75% 25%;
       display: grid;
-      grid-template-rows: 70% 25% 5%;
-      grid-template-columns: 1fr;
 
-      .top {
-        grid-template-rows: 1fr;
-        grid-template-columns: 75% 25%;
-        display: grid;
-
-        .left {
-          grid-template-rows: 30% 70%;
-          grid-template-columns: 1fr;
-          display: grid;
-
-          .opponent {
-            grid-template-rows: 1fr;
-            grid-template-columns: 75% 25%;
-            display: grid;
-
-            .opponent-card {
-              border: 0.1px solid gray;
-            }
-            .turnInfo {
-              border: 0.1px solid gray;
-            }
-          }
-          .turn-info-container {
-            border: 0.1px solid gray;
-            text-align: center;
-            display: flex;
-
-            .turn-info-form {
-              background: rgb(55, 116, 40);
-              width: 80%;
-              margin: auto;
-            }
-          }
-        }
-        .table {
-          border: 0.1px solid gray;
-          display: flex;
-          justify-content: center;
-        }
-      }
-      .right {
-        grid-template-rows: 60% 40%;
+      .left {
+        grid-template-rows: 30% 70%;
         grid-template-columns: 1fr;
         display: grid;
-        .statistics {
-          border: o.1px solid gray;
+
+        .opponent {
+          grid-template-rows: 1fr;
+          grid-template-columns: 75% 25%;
+          display: grid;
+
+          .opponent-card {
+            border: 0.1px solid gray;
+          }
+          .turnInfo {
+            border: 0.1px solid gray;
+          }
         }
-        .discard-pile {
+        .turn-info-container {
           border: 0.1px solid gray;
+          text-align: center;
+          display: flex;
+
+          .turn-info-form {
+            background: rgb(55, 116, 40);
+            width: 80%;
+            margin: auto;
+          }
         }
       }
-
-      .bottom {
+      .table {
         border: 0.1px solid gray;
         display: flex;
         justify-content: center;
-        align-items: center;
-        font-family: 'Inter', sans-serif;
-        font-size: 1.5rem;
-        font-weight: bold;
-        padding: 1rem;
-
       }
+    }
+    .right {
+      grid-template-rows: 60% 40%;
+      grid-template-columns: 1fr;
+      display: grid;
+      .statistics {
+        border: o.1px solid gray;
+      }
+      .discard-pile {
+        border: 0.1px solid gray;
+      }
+    }
 
-      .endOfRound {
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    .bottom {
+      border: 0.1px solid gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Inter", sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 1rem;
+    }
+
+    .endOfRound {
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .playerHandContainer {
+        border: 0.1px solid gray;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        
-
-        .playerHandContainer {
-          border: 0.1px solid gray;
-          display: flex;
+        overflow: hidden;
 
         .playerHand {
           background: rgb(55, 116, 40);
@@ -107,6 +107,7 @@
           margin: 0 auto;
           display: table-column;
           justify-content: center;
+          float: left;
         }
 
         .selectedCard {
@@ -117,6 +118,7 @@
           margin: 0 auto;
           display: table-column;
           justify-content: center;
+          float: left;
         }
 
         .playerInfo {
@@ -127,6 +129,7 @@
           margin: 0 auto;
           display: flex;
           justify-content: center;
+          float: left;
         }
       }
     }
