@@ -11,7 +11,6 @@ import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
-import backOfCard from "./image/BackOfCard.svg";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -298,7 +297,9 @@ const GameScreen = () => {
             code="2H"
             suit="Hearts"
             value="2"
-            image={backOfCard}
+            image={
+              "https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+            }
             fromField={false}
             onClick={() => {
               console.log();
