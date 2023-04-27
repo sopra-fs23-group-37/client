@@ -2,6 +2,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
+$card-background-image: url(../image/card-background.jpg);
+
+
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
   .game.user-list
@@ -13,9 +16,10 @@
   width: 100vw;
   height: 100vh;
   overflow-y: auto;
+  background: $card-background-image;
+  background-size: cover;
 
   &.container {
-    background: $background;
     display: grid;
     grid-template-rows: 70% 25% 5%;
     grid-template-columns: 1fr;
@@ -46,18 +50,63 @@
           border: 0.1px solid gray;
           text-align: center;
           display: flex;
-
+          justify-content: center;
+          align-items: center;
+          
           .turn-info-form {
-            background: rgb(55, 116, 40);
+            flex-direction: row;
+            background: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
             width: 80%;
             margin: auto;
+            padding: 0.5rem;
+            border: 2px solid black;
+            border-radius: 25px;
           }
+          .loading-gif {
+            width: 50px;
+            height: 50px;
+          }
+          
         }
       }
       .table {
         border: 0.1px solid gray;
         display: flex;
         justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      
+      .inner-table {
+        background-color: #8B0000;
+        width: 60%;
+        height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid white;
+        border-radius: 25px;
+        transition: border-style 1s ease-in-out;
+        overflow: hidden;
+      }
+      
+      .inner-table:hover {
+        border-style: dashed;
+        border-color: goldenrod;
+
+      }
+      
+      @keyframes border-disappear {
+        from {
+          border-width: 5px;
+        }
+        to {
+          border-width: 0px;
+        }
       }
     }
     .right {
@@ -65,7 +114,77 @@
       grid-template-columns: 1fr;
       display: grid;
       .statistics {
-        border: 0.1px solid gray;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+
+        .player-names {
+          background-color: white;
+          border-radius: 25px;
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 2rem;
+
+          .guest-name {
+            font-size: 1.2rem;
+            margin-right: 4rem;
+          }
+
+          .points {
+            display: flex;
+            align-items: center;
+
+            .guest-points {
+              font-size: 2rem;
+              color: #f00;
+              margin-right: 0.5rem;
+            }
+
+            .points-divider {
+              font-size: 2rem;
+              color: #000;
+            }
+
+            .host-points {
+              font-size: 2rem;
+              color: #00f;
+              margin-left: 0.5rem;
+            }
+          }
+
+          .host-name {
+            font-size: 1.2rem;
+            margin-left: 4rem;
+          }
+        }
+
+        .surrender-button-container {
+          display: flex;
+          justify-content: center;
+
+          .surrender-button {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 1rem 3rem;
+            background-color: darkred;
+            color: #ffffff;
+            border: 1px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #fff;
+              color: #f00;
+              border: 2px solid #f00;
+            }
+          }
+        }
       }
       .discard-pile {
         border: 0.1px solid gray;
@@ -117,20 +236,39 @@
       border: 0.1px solid gray;
       display: flex;
       overflow: hidden;
+      
 
       .playerHand {
-        background: rgb(55, 116, 40);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: bold;
+        background: #DAA520;
         width: fit-content;
         height: fit-content;
-        padding: 1.5em;
+        padding: 1.5em; 
         margin: 0 auto;
         display: table-column;
         justify-content: center;
         float: left;
+        border: 2px solid white;
+        border-radius: 25px;
+        transition: border-style 1s ease-in-out;
+        overflow: hidden;
+        
       }
+      
+      .playerHand:hover {
+        border-style: dashed;
+        border-color: darkred;
+
+      }
+      
 
       .selectedCard {
-        background: rgb(55, 116, 40);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: bold;
+        background: #DAA520;
         width: fit-content;
         height: fit-content;
         padding: 1.5em;
@@ -138,10 +276,17 @@
         display: table-column;
         justify-content: center;
         float: left;
+        border: 2px solid white;
+        border-radius: 25px;
+        transition: border-style 1s ease-in-out;
+        overflow: hidden;
       }
 
       .player-info {
-        background: rgb(55, 116, 40);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: bold;
+        background: #DAA520;
         width: fit-content;
         height: fit-content;
         padding: 1.5em;
@@ -149,6 +294,8 @@
         display: flex;
         justify-content: center;
         float: left;
+        border: 2px solid white;
+        border-radius: 25px;
       }
     }
   }
