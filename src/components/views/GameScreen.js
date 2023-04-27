@@ -1,14 +1,12 @@
 import { useParams, useHistory } from "react-router-dom";
-// import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-import { Button } from "components/ui/Button";
-// import EndOfRound from "components/views/EndOfRound";
-// import EndOfGame from "components/views/EndOfGame";
+import { ButtonGame } from "components/ui/Button";
+import EndOfRound from "components/views/EndOfRound";
+import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
-// import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 
@@ -32,10 +30,6 @@ const GameScreen = () => {
   const [opponentDiscard, setOpponentDiscard] = useState(null);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
-  // whether or not there are still cards in the deck
-  const [deckCards, setDeckCards] = useState(true);
-  // contains id of the player who's turn it is
-  const [playerTurn, setPlayerTurn] = useState(null);
   // true if the opponent has left
   const [opponentLeft, setOpponentLeft] = useState(false);
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
@@ -81,6 +75,14 @@ const GameScreen = () => {
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.value === "JACK") {
+        console.log("3");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          3,
+          selectedCard,
+          round.cardsOnTable
+        );
         console.log("3");
         sockClient.sendMove(
           gameId,
@@ -218,6 +220,34 @@ const GameScreen = () => {
     }
   };
 
+  const checkEndOfRound = () => {
+    if (game.roundStatus === "FINISHED") {
+      setEndOfRound(true);
+      setTimeout(() => setEndOfRound(false), 3000);
+    }
+  };
+
+  const checkEndOfGame = () => {
+    if (game.winner != null) {
+      setEndOfGame(true);
+      setTimeout(() => setEndOfGame(false), 3000);
+    }
+  };
+
+  const surrenderGame = () => {
+    sockClient.surrender(gameId, playerId);
+    sockClient.removeMessageFunctions();
+  };
+
+  const handleEndRound = () => {
+    sockClient.confirmEndOfRound();
+    setEndOfRound(false);
+  };
+
+  const handleEndGame = () => {
+    setEndOfRound(false);
+  };
+
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -235,7 +265,16 @@ const GameScreen = () => {
       console.log("User is leaving the page");
       sockClient.disconnect();
       sockClient.removeMessageFunctions();
+      sockClient.removeMessageFunctions();
     });
+
+    if (game) {
+      checkEndOfRound();
+    }
+
+    if (game) {
+      checkEndOfGame();
+    }
 
     return () => {
       console.log("Component is unmounting");
@@ -280,10 +319,13 @@ const GameScreen = () => {
         <h1> hand </h1>
       </div>
 
-      <div className="playerInfo">
-        <Button width="80%" onClick={() => makeMove()} disable={checkButton()}>
+      <div className="player-info">
+        <ButtonGame
+          width="80%"
+          onClick={() => makeMove()}
+          disable={checkButton()}>
           Play Move
-        </Button>
+        </ButtonGame>
       </div>
     </div>
   );
@@ -394,11 +436,50 @@ const GameScreen = () => {
           </div>
         </div>
         <div className="right">
-          <div className="statistics">Statistics</div>
-          {cardsDiscard}
+          {game && (
+            <div className="statistics">
+              <div className="player-names">
+                <span className="guest-name">{game.guestUsername}</span>
+                <span className="points">
+                  <span className="guest-points">{game.guestPoints || 0}</span>
+                  <span className="points-divider">:</span>
+                  <span className="host-points">{game.hostPoints || 0}</span>
+                </span>
+                <span className="host-name">{game.hostUsername}</span>
+              </div>
+              <div className="surrender-button-container">
+                <button className="surrender-button" onClick={surrenderGame}>
+                  Surrender
+                </button>
+              </div>
+            </div>
+          )}
+          <div className="discard-pile">Discard Pile</div>
         </div>
       </div>
+
       {playerHandContainer}
+
+      {game && round && endOfRound && (
+        <div className="endOfRound">
+          <EndOfRound
+            game={game}
+            round={round}
+            playerId={playerId}
+            onEndRound={handleEndRound}
+          />
+        </div>
+      )}
+
+      {game && endOfGame && (
+        <div className="endOfRound">
+          <EndOfGame
+            game={game}
+            playerId={playerId}
+            onEndGame={handleEndGame}
+          />
+        </div>
+      )}
     </div>
   );
 };
