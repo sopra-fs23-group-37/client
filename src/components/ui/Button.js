@@ -17,3 +17,12 @@ export const ButtonLight = props => (
     {props.children}
   </button>
 );
+
+export const ButtonGame = props => (
+  <button
+    {...props}
+    style={{width: props.width, ...props.style}}
+    className={`primary-button-game ${props.className}`}>
+    {props.children}
+  </button>
+);
