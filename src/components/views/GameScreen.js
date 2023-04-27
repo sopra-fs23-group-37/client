@@ -9,6 +9,7 @@ import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
+import loadingGif from "image/loading.gif";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -289,7 +290,7 @@ const GameScreen = () => {
         ) : (
           <h1> No card selected </h1>
         )}
-        <h1> selected </h1>
+        <h1> Selected </h1>
       </div>
       <div className="playerHand">
         {playerCards ? (
@@ -305,14 +306,15 @@ const GameScreen = () => {
             />
           ))
         ) : (
-          <h1> not loaded </h1>
+          <h1> Not loaded </h1>
         )}
-        <h1> hand </h1>
+        <h1> Your cards </h1>
       </div>
 
       <div className="player-info">
         <ButtonGame
           width="80%"
+          background="#FFFFFF"
           onClick={() => makeMove()}
           disable={checkButton()}
         >
@@ -356,7 +358,14 @@ const GameScreen = () => {
   let turnInfo = (
     <div className="turn-info-container">
       <div className="turn-info-form">
-        <h1> {round && round.myTurn ? "Your turn" : "Opponents turn"} </h1>
+        <h1>{round && round.myTurn ? "Your turn" : "Opponent's turn"}</h1>
+        {!round.myTurn && (
+          <img
+            src={loadingGif}
+            alt="Loading..."
+            className="loading-gif"
+          />
+        )}
       </div>
     </div>
   );
@@ -419,12 +428,14 @@ const GameScreen = () => {
             {turnInfo}
           </div>
           <div className="table">
-            <CardDisplay
-              // if it works it works
-              cards={cardsOnTableContainer}
-              onClickSpace={() => toggleSelectPutOnField()}
-              selectPutOnField={selectPutOnField}
-            />
+            <div className="inner-table">
+              <CardDisplay
+                // if it works it works
+                cards={cardsOnTableContainer}
+                onClickSpace={() => toggleSelectPutOnField()}
+                selectPutOnField={selectPutOnField}
+              />
+            </div>
           </div>
         </div>
         <div className="right">
