@@ -63,6 +63,8 @@ const GameScreen = () => {
     setRound(new Round(data));
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
+    setOpponentCards(data.oppCards);
+    setPlayerDiscardCards(data.myCardsInDiscard);
   };
 
   const makeMove = () => {
@@ -73,6 +75,14 @@ const GameScreen = () => {
     if (round.myTurn) {
       // 3: JACK
       if (selectedCard.value === "JACK") {
+        console.log("3");
+        sockClient.sendMove(
+          gameId,
+          playerId,
+          3,
+          selectedCard,
+          round.cardsOnTable
+        );
         console.log("3");
         sockClient.sendMove(
           gameId,
@@ -310,7 +320,10 @@ const GameScreen = () => {
       </div>
 
       <div className="player-info">
-        <ButtonGame width="80%" onClick={() => makeMove()} disable={checkButton()}>
+        <ButtonGame
+          width="80%"
+          onClick={() => makeMove()}
+          disable={checkButton()}>
           Play Move
         </ButtonGame>
       </div>
@@ -318,11 +331,26 @@ const GameScreen = () => {
   );
 
   let opponentHand = (
-    <div className="card-container">
-      {/* Placeholder for opponent hand */}
-      <div className="card"></div>
-      <div className="card"></div>
-      <div className="card"></div>
+    <div className="opponent-card">
+      {opponentCards ? (
+        Array.from({ length: opponentCards }, (_, index) => (
+          <Card
+            key="2H"
+            code="2H"
+            suit="Hearts"
+            value="2"
+            image={
+              "https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+            }
+            fromField={false}
+            onClick={() => {
+              console.log();
+            }}
+          />
+        ))
+      ) : (
+        <h1> not loaded </h1>
+      )}
     </div>
   );
 
@@ -361,12 +389,41 @@ const GameScreen = () => {
     </div>
   );
 
+  let cardsDiscard = (
+    <div className="discard-pile">
+      <div className="stack">
+        {playerDiscards ? (
+          playerDiscards.map((card) => (
+            <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => {}}
+              fromField={true}
+            />
+          ))
+        ) : (
+          <div className="card-blank"> </div>
+        )}
+      </div>
+      <div className="stackHeight">
+        {playerDiscards ? (
+          <h1> Captured cards: {playerDiscards.length} </h1>
+        ) : (
+          <h1> Captured cards: 0 </h1>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className="gamescreen container">
       <div className="top">
         <div className="left">
           <div className="opponent">
-            <div className="opponent-card">Opponent's Cards</div>
+            {opponentHand}
             {turnInfo}
           </div>
           <div className="table">
