@@ -3,7 +3,7 @@ import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-import { Button } from "components/ui/Button";
+import { ButtonGame } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
@@ -309,10 +309,10 @@ const GameScreen = () => {
         <h1> hand </h1>
       </div>
 
-      <div className="playerInfo">
-        <Button width="80%" onClick={() => makeMove()} disable={checkButton()}>
+      <div className="player-info">
+        <ButtonGame width="80%" onClick={() => makeMove()} disable={checkButton()}>
           Play Move
-        </Button>
+        </ButtonGame>
       </div>
     </div>
   );
