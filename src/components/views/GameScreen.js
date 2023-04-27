@@ -11,7 +11,7 @@ import sockClient from "helpers/sockClient";
 // import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
-import backOfCard from "image/BackOfCard.svg";
+import backOfCard from "./image/BackOfCard.svg";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
