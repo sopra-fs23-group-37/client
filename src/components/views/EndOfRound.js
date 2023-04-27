@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import "styles/views/EndOfRound.scss";
 
 const EndOfRound = ({ game, round, playerId, onEndRound }) => {
-
-    let myUsername, oppUsername = 0;
+  let myUsername,
+    oppUsername = 0;
   if (game && game.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
@@ -11,7 +11,7 @@ const EndOfRound = ({ game, round, playerId, onEndRound }) => {
     } else {
       myUsername = game.guestUsername;
       oppUsername = game.hostUsername;
-    } 
+    }
   }
 
   return (
@@ -21,7 +21,7 @@ const EndOfRound = ({ game, round, playerId, onEndRound }) => {
         <thead>
           <tr>
             <th>Player</th>
-            <th>Discarded Cards</th>
+            <th>Captured Cards</th>
             <th>Number of Clubs</th>
             <th>2 of Clubs</th>
             <th>10 of Diamonds</th>
