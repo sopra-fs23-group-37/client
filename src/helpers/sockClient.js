@@ -100,16 +100,14 @@ class SockClient {
   }
 
   checkOnMessageFunction(page) {
-    if (this.onMessagefunction.hasOwnProperty(page)) {
-      return true;
-    } else return false;
+    return this.onMessagefunction.hasOwnProperty(page);
   }
+  
 
   handleResponseByChannel(response) {
     let data = JSON.parse(response.body);
     console.log("data received: ", data);
 
-    //let channel = response.headers.destination.replace(/.+\/game\/.+\//i, "");
     let channel = response.headers.destination.split("/").pop();
     console.log("on channel: ", channel);
 

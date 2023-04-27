@@ -136,16 +136,8 @@ const GameScreen = () => {
     // check type of move
   };
 
-  const checkButton = () => {
-    if (!round.myTurn) {
-      return false;
-    } else if (selectedCard) {
-      return false;
-    } else if (selectedTableCards.length > 0 && selectPutOnField) {
-      return false;
-    }
-    return true;
-  };
+  const checkButton = () => !round.myTurn && !selectedCard && !(selectedTableCards.length > 0 && selectPutOnField);
+
 
   const selectCardFromField = (card) => {
     if (round.myTurn) {
@@ -310,19 +302,20 @@ const GameScreen = () => {
         )}
         <h1> Your cards </h1>
       </div>
-
+  
       <div className="player-info">
         <ButtonGame
           width="80%"
           background="#FFFFFF"
           onClick={() => makeMove()}
-          disable={checkButton()}
+          disabled={checkButton()}
         >
           Play Move
         </ButtonGame>
       </div>
     </div>
   );
+  
 
   let opponentHand = (
     <div className="opponent-card">
