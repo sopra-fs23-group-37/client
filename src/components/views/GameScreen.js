@@ -368,9 +368,9 @@ const GameScreen = () => {
       </div>
       <div className="stackHeight">
         {playerCards ? (
-          <h1> Stack Height: {playerCards.length} </h1>
+          <h1> Captured cards: {playerCards.length} </h1>
         ) : (
-          <h1> Stack Height: 0 </h1>
+          <h1> Captured cards: 0 </h1>
         )}
       </div>
     </div>
