@@ -222,13 +222,6 @@ const GameScreen = () => {
     }
   };
 
-  // const checkEndOfRound = () => {
-  //   if (round.roundStatus === "FINISHED") {
-  //     setEndOfRound(true);
-  //     // setTimeout(() => setEndOfRound(false), 3000);
-  //   }
-  // };
-
   const checkEndOfGame = () => {
     if (game.winner != null) {
       setEndOfGame(true);
@@ -270,10 +263,6 @@ const GameScreen = () => {
       sockClient.removeMessageFunctions();
       sockClient.removeMessageFunctions();
     });
-
-    // if (game) {
-    //   checkEndOfRound();
-    // }
 
     if (game) {
       checkEndOfGame();
