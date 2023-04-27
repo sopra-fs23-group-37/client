@@ -49,6 +49,9 @@ const GameScreen = () => {
     if (data.gameSatus === "ONGOING") {
       setGameStarted(true);
     }
+    if (data.gameSatus === "FINISHED") {
+      setEndOfGame(true);
+    }
     if (
       data.gameStatus === "DISCONNECTED" ||
       data.gameStatus === "SURRENDERED"
@@ -222,13 +225,6 @@ const GameScreen = () => {
     }
   };
 
-  const checkEndOfGame = () => {
-    if (game.winner != null) {
-      setEndOfGame(true);
-      setTimeout(() => setEndOfGame(false), 3000);
-    }
-  };
-
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
   };
@@ -262,10 +258,6 @@ const GameScreen = () => {
       sockClient.removeMessageFunctions();
       sockClient.removeMessageFunctions();
     });
-
-    if (game) {
-      checkEndOfGame();
-    }
 
     return () => {
       console.log("Component is unmounting");
