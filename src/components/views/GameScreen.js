@@ -65,6 +65,8 @@ const GameScreen = () => {
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
     setPlayerDiscardCards(data.myCardsInDiscard);
+    console.log();
+    setEndOfRound(data.roundStatus === "FINISHED");
   };
 
   const makeMove = () => {
@@ -220,12 +222,12 @@ const GameScreen = () => {
     }
   };
 
-  const checkEndOfRound = () => {
-    if (game.roundStatus === "FINISHED") {
-      setEndOfRound(true);
-      setTimeout(() => setEndOfRound(false), 3000);
-    }
-  };
+  // const checkEndOfRound = () => {
+  //   if (round.roundStatus === "FINISHED") {
+  //     setEndOfRound(true);
+  //     // setTimeout(() => setEndOfRound(false), 3000);
+  //   }
+  // };
 
   const checkEndOfGame = () => {
     if (game.winner != null) {
@@ -268,9 +270,9 @@ const GameScreen = () => {
       sockClient.removeMessageFunctions();
     });
 
-    if (game) {
-      checkEndOfRound();
-    }
+    // if (game) {
+    //   checkEndOfRound();
+    // }
 
     if (game) {
       checkEndOfGame();
@@ -323,7 +325,8 @@ const GameScreen = () => {
         <ButtonGame
           width="80%"
           onClick={() => makeMove()}
-          disable={checkButton()}>
+          disable={checkButton()}
+        >
           Play Move
         </ButtonGame>
       </div>
