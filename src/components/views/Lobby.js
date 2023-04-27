@@ -66,6 +66,8 @@ const Lobby = () => {
       if (!goingToGame) {
         console.log("User left the lobby");
         sockClient.disconnect();
+        sockClient.removeMessageFunctions();
+        sockClient.disconnect();
       }
     });
 

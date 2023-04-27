@@ -225,7 +225,8 @@ const GameScreen = () => {
   };
 
   const surrenderGame = () => {
-    // Code to handle surrender
+    sockClient.surrender(gameId, playerId);
+    sockClient.removeMessageFunctions();
   };
 
   const handleEndRound = () => {
@@ -253,6 +254,7 @@ const GameScreen = () => {
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
       sockClient.disconnect();
+      sockClient.removeMessageFunctions();
       sockClient.removeMessageFunctions();
     });
 

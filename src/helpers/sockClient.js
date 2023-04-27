@@ -76,6 +76,10 @@ class SockClient {
       console.log("finished connecting");
       this._connected = true;
     });
+
+    this.sock.onclose = (r) => {
+      console.log("Socket closed!", r);
+    };
   }
 
   startGame(gameId, playerId) {
@@ -135,6 +139,7 @@ class SockClient {
       "/game/move/" + gameId,
       {},
       JSON.stringify({ playerId, moveType, cardFromHand, cardsFromField })
+
     );
   }
 
@@ -143,6 +148,7 @@ class SockClient {
       "/game/confirmEOR/" + gameId,
       {},
       JSON.stringify({ playerId })
+
     );
   }
 
@@ -152,6 +158,10 @@ class SockClient {
       {},
       JSON.stringify({ playerId })
     );
+  }
+
+  removeSubscription() {
+    this._onMessageFunctions = {};
   }
 }
 
