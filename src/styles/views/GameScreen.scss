@@ -1,5 +1,7 @@
 @import "styles/theme";
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
   .game.user-list
@@ -7,28 +9,37 @@
   for more information visit https://sass-lang.com/guide
  */
 
-.gamescreen {
-  width: 100vw;
-  height: 100vh;
-  &.container {
-    background: $background;
-    display: grid;
-    grid-template-rows: 70% 30%;
-    grid-template-columns: 1fr;
-    .top {
-      grid-template-rows: 1fr;
-      grid-template-columns: 75% 25%;
+  .gamescreen {
+    width: 100vw;
+    height: 100vh;
+
+    &.container {
+      background: $background;
       display: grid;
-      .left {
-        grid-template-rows: 30% 70%;
-        grid-template-columns: 1fr;
+      grid-template-rows: 70% 25% 5%;
+      grid-template-columns: 1fr;
+
+      .top {
+        grid-template-rows: 1fr;
+        grid-template-columns: 75% 25%;
         display: grid;
-        .opponent {
-          grid-template-rows: 1fr;
-          grid-template-columns: 75% 25%;
+
+        .left {
+          grid-template-rows: 30% 70%;
+          grid-template-columns: 1fr;
           display: grid;
-          .opponent-card {
-            border: 0.1px solid gray;
+
+          .opponent {
+            grid-template-rows: 1fr;
+            grid-template-columns: 75% 25%;
+            display: grid;
+
+            .opponent-card {
+              border: 0.1px solid gray;
+            }
+            .turnInfo {
+              border: 0.1px solid gray;
+            }
           }
           .turn-info-container {
             border: 0.1px solid gray;
@@ -59,39 +70,64 @@
           border: 0.1px solid gray;
         }
       }
-    }
-    .playerHandContainer {
-      border: 0.1px solid gray;
-      display: flex;
 
-      .playerHand {
-        background: rgb(55, 116, 40);
-        width: fit-content;
-        height: fit-content;
-        padding: 1.5em;
-        margin: 0 auto;
-        display: table-column;
-        justify-content: center;
-      }
-
-      .selectedCard {
-        background: rgb(55, 116, 40);
-        width: fit-content;
-        height: fit-content;
-        padding: 1.5em;
-        margin: 0 auto;
-        display: table-column;
-        justify-content: center;
-      }
-
-      .playerInfo {
-        background: rgb(55, 116, 40);
-        width: fit-content;
-        height: fit-content;
-        padding: 1.5em;
-        margin: 0 auto;
+      .bottom {
+        border: 0.1px solid gray;
         display: flex;
         justify-content: center;
+        align-items: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 1rem;
+
+      }
+
+      .endOfRound {
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+
+        .playerHandContainer {
+          border: 0.1px solid gray;
+          display: flex;
+
+        .playerHand {
+          background: rgb(55, 116, 40);
+          width: fit-content;
+          height: fit-content;
+          padding: 1.5em;
+          margin: 0 auto;
+          display: table-column;
+          justify-content: center;
+        }
+
+        .selectedCard {
+          background: rgb(55, 116, 40);
+          width: fit-content;
+          height: fit-content;
+          padding: 1.5em;
+          margin: 0 auto;
+          display: table-column;
+          justify-content: center;
+        }
+
+        .playerInfo {
+          background: rgb(55, 116, 40);
+          width: fit-content;
+          height: fit-content;
+          padding: 1.5em;
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
+        }
       }
     }
   }

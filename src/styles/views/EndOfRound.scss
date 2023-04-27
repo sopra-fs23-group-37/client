@@ -1,55 +1,80 @@
-@import 'styles/theme';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-.endOfRound {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    color: white;
+$primary-color: #0074D9;
+$secondary-color: #FF4136;
+$light-gray: #F5F5F5;
+$dark-gray: #333333;
+$font-family: 'Inter', sans-serif;
+
+.end-of-round {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $light-gray;
+  padding: 50px;
+  font-family: $font-family;
+  
+  h1 {
     font-size: 2rem;
+    margin-bottom: 20px;
+  }
   
-    .title {
-      font-size: 3rem;
-      margin-bottom: 20px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    th, td {
       text-align: center;
+      padding: 10px;
     }
-  
-    .points {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      text-align: center;
+    
+    th {
+      font-weight: bold;
+      background-color: $primary-color;
+      color: white;
     }
-  
-    .buttons {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      margin-top: 20px;
-      width: 100%;
-  
-      button {
-        font-size: 1.5rem;
-        padding: 10px 20px;
-        border-radius: 10px;
-        border: none;
-        background-color: white;
-        color: black;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-  
-        &:hover {
-          background-color: black;
-          color: white;
-        }
+    
+    tr:nth-child(even) {
+      background-color: white;
+    }
+    
+    tr:nth-child(odd) {
+      background-color: $light-gray;
+    }
+    
+    tr:first-child {
+      background-color: $secondary-color;
+      color: white;
+    }
+    
+    td:first-child, th:first-child {
+      text-align: left;
+      padding-left: 20px;
+    }
+  }
+
+  .nextRound-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+
+    .nextRound-button {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 1rem 3rem;
+      background-color: #E9C46A;
+      color: #fff;
+      border: 1px solid #8F8F8F;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #fff;
+        color: green;
+        border: 2px solid green;
       }
     }
   }
-  
+}

@@ -1,39 +1,55 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import "styles/views/EndOfGame.scss";
 
-const EndOfGame = ({ players }) => {
-  const history = useHistory();
+const EndOfGame = ({ game, playerId, onEndGame }) => {
 
-  const scores = players.map(player => player.score);
-  const highestScore = Math.max(...scores);
-  const winningPlayers = players.filter(player => player.score === highestScore);
-
-  const handleEndGame = () => {
-    history.push('/game/dashboard');
-  };
+  let myUsername, oppUsername, myScore, oppScore = 0;
+  if (game && game.hostId && game.guestId != null) {
+    if (playerId === game.hostId) {
+      myUsername = game.hostUsername;
+      myScore = game.hostPoints;
+      oppUsername = game.guestUsername;
+      oppScore = game.guestPoints;
+    } else {
+      myUsername = game.guestUsername;
+      myScore = game.guestPoints;
+      oppUsername = game.hostUsername;
+      oppScore = game.hostPoints;
+    } 
+  }
+  let winnerElement = null;
+  if (game && game.winnerUsername != null) {
+    winnerElement = (
+      <div className="winner">
+        <h2>{game.winnerUsername} is the winner!</h2>
+      </div>
+    );
+  } else {
+    winnerElement = (
+    <div className="winner">
+    <h2>Nobody is the winner!</h2>
+    </div> 
+    );
+  }
 
   return (
-    <div className="end-of-game-overlay">
-      <div className="end-of-game-container">
-        <h1 className="end-of-game-title">End of Game</h1>
-        <h2 className="end-of-game-subtitle">Winner{winningPlayers.length > 1 ? "s" : ""}</h2>
-        <ul className="end-of-game-list">
-          {winningPlayers.map(player => (
-            <li key={player.id} className="end-of-game-item">
-              {player.name} ({player.score})
-            </li>
-          ))}
-        </ul>
-        <h2 className="end-of-game-subtitle">Final Scores</h2>
-        <ul className="end-of-game-list">
-          {players.map(player => (
-            <li key={player.id} className="end-of-game-item">
-              {player.name}: {player.score}
-            </li>
-          ))}
-        </ul>
-        <button className="end-of-game-button" onClick={handleEndGame}>End Game</button>
+    <div className="end-of-game">
+      <h1>Game Over</h1>
+      <div className="scoreboard">
+        <div className="player1-score">
+          <h2>{myUsername}</h2>
+          <p>Score: {myScore}</p>
+        </div>
+        <div className="player2-score">
+          <h2>{oppUsername}</h2>
+          <p>Score: {oppScore}</p>
+        </div>
+      </div>
+        {winnerElement}
+        <div className="endGame-button-container">
+        <button className="endGame-button" onClick={onEndGame}>
+          Leave game
+        </button>
       </div>
     </div>
   );
