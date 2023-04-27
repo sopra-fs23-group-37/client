@@ -1,5 +1,4 @@
 import { useParams, useHistory } from "react-router-dom";
-// import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
@@ -8,7 +7,6 @@ import { Button } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import sockClient from "helpers/sockClient";
-// import { api, handleError } from "helpers/api";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 
@@ -32,10 +30,6 @@ const GameScreen = () => {
   const [opponentDiscard, setOpponentDiscard] = useState(null);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
-  // whether or not there are still cards in the deck
-  const [deckCards, setDeckCards] = useState(true);
-  // contains id of the player who's turn it is
-  const [playerTurn, setPlayerTurn] = useState(null);
   // true if the opponent has left
   const [opponentLeft, setOpponentLeft] = useState(false);
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
@@ -236,6 +230,7 @@ const GameScreen = () => {
   };
 
   const handleEndRound = () => {
+    sockClient.confirmEndOfRound();
     setEndOfRound(false);
   };
 
