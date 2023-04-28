@@ -1,34 +1,14 @@
 @import "styles/theme";
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  background-image: url("/image/loginBackground.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
 .registration {
-  &.container {
-    padding-top: calc(100vh / 50);
-    padding-left: calc(100vw / 4);
-    min-height: 300px;
-    @include center;
-    flex-direction: column;
-  }
   &.form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 80%;
+    margin-left: auto;
+    margin-top: 5em;
     max-width: 30em;
-    height: auto;
+    min-width: fit-content;
+    min-height: fit-content;
     font-size: 20px;
     font-weight: 300;
     padding-left: 37px;

@@ -26,3 +26,11 @@ export const ButtonGame = props => (
     {props.children}
   </button>
 );
+
+export const ButtonHome = props => (
+  <button
+    {...props}
+    className={`primary-button-home-${props.className}`}>
+    {props.children}
+  </button>
+);

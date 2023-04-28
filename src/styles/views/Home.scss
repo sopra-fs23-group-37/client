@@ -8,22 +8,22 @@
  */
 
 .home {
-  &.container {
-    background: $background;
-    padding: 1.5em;
-    margin-top: calc(100vw / 50);
-    margin-left: calc(100vw / 2);
-    margin-right: calc(100vw / 4);
-    margin-bottom: auto;
-    border-radius: 2px;
-    font-family: $fontDefault;
+  &.form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin-left: auto;
+    margin-top: 5em;
+    max-width: 30em;
+    min-width: fit-content;
+    min-height: fit-content;
+    font-size: 20px;
+    font-weight: 300;
+    padding: 37px;
+    border-radius: 0.75em;
+    background-color: $background;
+    transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
-    overflow-y: auto;
   }
-
   .rectangle {
     background-color: #ffffff;
     width: 80%;
@@ -35,70 +35,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 1em;
     width: 100%;
-  }
-
-  button1 {
-    width: 50%;
-    padding: 1em;
-    border: none;
-    border-radius: $borderRadius;
-    background: $accent;
-    color: $textColor;
-    font-size: 1.3em;
-    text-align: center;
-    margin: 0 0.5em;
-    transition: background-color 0.2s ease-in-out;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    &:hover {
-      background: $accentDark;
-      transform: translateY(-1px);
-      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-    }
-
-    &.with-icon {
-      background-image: url("/image/add.svg");
-      background-position: center top;
-      background-position-y: calc(25%);
-      background-repeat: no-repeat;
-      padding-top: 3em;
-      padding-right: 10px;
-    }
-  }
-
-  button2 {
-    width: 50%;
-    padding: 1em;
-    border: none;
-    border-radius: $borderRadius;
-    background: $accentLight;
-    color: $textColor;
-    font-size: 1.3em;
-    text-align: center;
-    margin: 0 0.5em;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  & p,
-  h2 {
-    margin: 0.5em 0;
   }
 }

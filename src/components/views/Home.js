@@ -6,6 +6,7 @@ import "styles/views/Home.scss";
 import Game from "models/Game";
 import Header from "components/views/Header";
 import User from "models/User";
+import { ButtonHome } from "components/ui/Button";
 
 const Home = () => {
   const history = useHistory();
@@ -82,13 +83,15 @@ const Home = () => {
 
   return (
     <div>
-      <Header text="Welcome " />
-      <BaseContainer className="home container">
-        <div class="row">
-          <button2>
+      <Header/>
+      <BaseContainer>
+      <div className="home form">
+        <div className="row">
+          <ButtonHome
+            className="light">
             Open Games: <br />
             {openGames}
-          </button2>
+          </ButtonHome>
           {/* <button2>
             <u>Your Statistics:</u>
             <br />
@@ -97,23 +100,27 @@ const Home = () => {
             losses: 0
           </button2> */}
         </div>
-        <div class="row">
-          {" "}
-          <button1 class="with-icon" onClick={() => createGame()}>
+        <div className="row" style={{"margin-top": "20px"}}>
+          <ButtonHome
+            className="normal with-icon"
+            onClick={() => createGame()}>
             Create Game
-          </button1>
+          </ButtonHome>
           {/* <button1 class="with-icon" onClick={() => lobbyBrowser()}>
             Lobby Browser
           </button1> */}
         </div>
-        <div class="row">
-          <button1 class="with-icon" onClick={() => joinGame()}>
+        <div className="row" style={{"margin-top": "20px"}}>
+          <ButtonHome
+            className="normal with-icon"
+            onClick={() => joinGame()}>
             Join Game
-          </button1>
+          </ButtonHome>
           {/* <button1 class="with-icon" onClick={() => spectate()}>
             Spectate
           </button1> */}
         </div>
+      </div>
       </BaseContainer>
     </div>
   );

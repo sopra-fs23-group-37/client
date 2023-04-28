@@ -1,34 +1,14 @@
 @import "styles/theme";
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  background-image: url("/image/loginBackground.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
 .login {
-  &.container {
-    padding-top: calc(100vh / 50);
-    padding-left: calc(100vw / 4);
-    min-height: 300px;
-    @include center;
-    flex-direction: column;
-  }
   &.form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 80%;
+    margin-left: auto;
+    margin-top: 5em;
     max-width: 30em;
-    height: auto;
+    min-width: fit-content;
+    min-height: fit-content;
     font-size: 20px;
     font-weight: 300;
     padding-left: 37px;
@@ -48,7 +28,6 @@ body {
     padding-left: 15px;
     margin-left: -4px;
     max-width: 80%;
-    font-family: $fontDefault;
     font-size: medium;
     border: none;
     border-radius: 0.75em;
@@ -60,7 +39,6 @@ body {
   }
   &.label {
     color: $textColor;
-    font-family: $fontDefault;
     margin-bottom: 10px;
     font-weight: 300;
   }
@@ -75,13 +53,11 @@ body {
     }
   }
   .title {
-    font-family: $fontDefault;
     font-style: normal;
     font-weight: 400;
     margin-bottom: 0.2em;
   }
   .subtitle {
-    font-family: $fontDefault;
     font-style: normal;
     font-weight: bold;
     color: #e76f51;
