@@ -6,6 +6,7 @@ import Round from "models/Round";
 import { ButtonGame } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
+import OpponentLeft from "components/views/OpponentLeft";
 import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
@@ -241,6 +242,11 @@ const GameScreen = () => {
     history.push("/game");
   };
 
+  
+  const handleLeaveGame = () => {
+    history.push("/game");
+  };
+
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -472,6 +478,18 @@ const GameScreen = () => {
           />
         </div>
       )}
+
+      { game && opponentLeft && (
+              <div className="opponentLeft">
+                <OpponentLeft
+                  game={game}
+                  playerId={playerId}
+                  onLeaveGame={handleLeaveGame}
+                  opponentLeftReason={opponentLeftReason}
+                />
+              </div>
+      )}
+
     </div>
   );
 };
