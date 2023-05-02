@@ -39,7 +39,14 @@ $card-background-image: url(../image/card-background.jpg);
           grid-template-columns: 75% 25%;
           display: grid;
 
-          .opponent-card {
+          .opponent-cards {
+            padding: 1em;
+
+            .cardback {
+              width: 80px;
+              height: auto;
+              margin-right: -30px;
+            }
           }
           .turnInfo {
           }
@@ -73,36 +80,17 @@ $card-background-image: url(../image/card-background.jpg);
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 20px;
         overflow: hidden;
       }
       
       .inner-table {
         background-color: #8B0000;
-        width: 60%;
-        height: 70%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        max-width: 70%;
+        min-height: fit-content;
+        max-height: 90%;
         border: 2px solid white;
         border-radius: 25px;
         transition: border-style 1s ease-in-out;
-        overflow: hidden;
-      }
-      
-      .inner-table:hover {
-        border-style: dashed;
-        border-color: goldenrod;
-
-      }
-      
-      @keyframes border-disappear {
-        from {
-          border-width: 5px;
-        }
-        to {
-          border-width: 0px;
-        }
       }
     }
     .right {

@@ -30,18 +30,13 @@ const Header = (props) => {
 
   return (
     <div className="header container" style={{ height: props.height }}>
-      <h1 className="header title">{props.title}</h1>
-      <h1>
-        {" "}
-        {props.text}
-        {sessionStorage.getItem("username")}{" "}
-      </h1>
-      <div className="header buttons">
-        <button className="header logoutButton" onClick={() => logout()}>
+      <div className="title">  Welcome {sessionStorage.getItem("username")} </div>
+      <div className="buttons">
+        <button className="button" onClick={() => logout()}>
           Logout
         </button>
         <button
-          className="header rulebookButton"
+          className="button"
           onClick={() => showRulebook()}>
           Rulebook
         </button>

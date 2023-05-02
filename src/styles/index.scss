@@ -5,14 +5,16 @@
 /**
 This file contains the general and shared style of your application.
  */
-body {
+ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background-image: url("/image/background.svg");
+  background-image: url("/image/loginBackground.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
 }
+
 input,
 textarea,
 select,

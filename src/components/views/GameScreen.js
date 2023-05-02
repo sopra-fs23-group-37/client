@@ -318,23 +318,9 @@ const GameScreen = () => {
   );
 
   let opponentHand = (
-    <div className="opponent-card">
+    <div className="opponent-cards">
       {opponentCards ? (
-        Array.from({ length: opponentCards }, (_, index) => (
-          <Card
-            key="2H"
-            code="2H"
-            suit="Hearts"
-            value="2"
-            image={
-              "https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-            }
-            fromField={false}
-            onClick={() => {
-              console.log();
-            }}
-          />
-        ))
+        [...Array(opponentCards)].map((e, i) => <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg" className="cardback" key={i}/>)
       ) : (
         <h1> not loaded </h1>
       )}
@@ -360,7 +346,7 @@ const GameScreen = () => {
   );
 
   let cardsOnTableContainer = (
-    <div>
+    <div className="cards-on-table">
       {tableCards ? (
         tableCards.map((card) => (
           <Card
