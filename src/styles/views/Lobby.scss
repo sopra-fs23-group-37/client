@@ -3,12 +3,11 @@
 .lobby {
   &.container {
     flex-direction: column;
-    margin-top: calc(100vh / 50);
+    margin-top: 8vh;
     margin-left: calc(100vw / 4);
     margin-right: auto;
     margin-bottom: auto;
     @include center;
-    overflow-y: auto;
   }
 
   &.form {
@@ -19,7 +18,7 @@
     box-shadow: $dropShadow;
     height: auto;
     width: calc(100vw / 3);
-    min-width: 25em;
+    min-width: fit-content;
     max-width: 40em;
     border-radius: 0.75em;
 
