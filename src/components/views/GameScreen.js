@@ -62,6 +62,11 @@ const GameScreen = () => {
       setOpponentLeft(true);
       setOpponentLeftReason(data.endGameReason);
     }
+    if (!round.myTurn && 
+      (game.guestStatus === "DISCONNECTED" || 
+      game.guestStatus === "DISCONNECTED") ) {
+      
+    }
   };
 
   const updateRound = (data) => {

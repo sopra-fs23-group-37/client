@@ -3,6 +3,9 @@ import "styles/views/OpponentLeft.scss";
 
 const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason}) => {
 
+    const leftReason = opponentLeftReason ? 
+    opponentLeftReason : "One of the players left the game";
+
   let myUsername, oppUsername, myScore, oppScore = 0;
   if (game && game.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
@@ -20,7 +23,7 @@ const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason}) => {
 
   return (
     <div className="opponent-left">
-      <h1>{opponentLeftReason}</h1>
+      <h1>{leftReason}</h1>
       <div className="scoreboard">
         <div className="player1-score">
           <h2>{myUsername}</h2>
