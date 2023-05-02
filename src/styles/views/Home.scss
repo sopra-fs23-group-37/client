@@ -8,13 +8,11 @@
  */
 
 .home {
-  
-
   &.form {
     display: flex;
     flex-direction: column;
     margin-left: auto;
-    margin-right: 9%;
+    margin-right: 9vw;
     margin-top: 10vh;
     max-width: 30em;
     min-width: fit-content;

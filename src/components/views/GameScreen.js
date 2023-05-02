@@ -360,7 +360,7 @@ const GameScreen = () => {
   );
 
   let cardsOnTableContainer = (
-    <div>
+    <div className="cards-on-table">
       {tableCards ? (
         tableCards.map((card) => (
           <Card

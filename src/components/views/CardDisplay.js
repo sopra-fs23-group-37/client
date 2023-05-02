@@ -4,12 +4,9 @@ import React from "react";
 
 const CardDisplay = ({ cards, onClickSpace, selectPutOnField }) => {
   return (
-    <div className="display-table">
       <div className="card-display">
-        <div className="card-row">
           {cards}
-          <div
-            className="card-blank"
+        <div className="card-blank"
             style={{
               borderColor: selectPutOnField ? "red" : "black",
               borderStyle: selectPutOnField ? "dotted" : "none",
@@ -18,10 +15,7 @@ const CardDisplay = ({ cards, onClickSpace, selectPutOnField }) => {
           >
             {" "}
           </div>
-        </div>
-        <div className="card-row"></div>
       </div>
-    </div>
   );
 };
 

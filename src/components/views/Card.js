@@ -17,7 +17,7 @@ const Card = ({ code, image, suit, value, onClick, fromField}) => {
   return (<img
     src={image}
     alt={`${value} of ${suit}`}
-    className={`card ${suit.toLowerCase()}`}
+    className={"card"}
     onClick={handleClick}
     active={active}
     style={{borderColor: active ? "red" : "black", borderStyle: active ? "dotted" : "none"}}

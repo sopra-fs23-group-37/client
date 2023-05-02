@@ -84,7 +84,7 @@ const Home = () => {
   return (
     <div>
       <Header/>
-      <BaseContainer>
+      <BaseContainer style={{"margin-right": "0px"}}>
       <div className="home form">
         <div className="row">
           <ButtonHome
