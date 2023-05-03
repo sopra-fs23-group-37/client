@@ -61,6 +61,7 @@ const GameScreen = () => {
       window.location.reload();
       console.log("There was an error: ", error.message);
     }
+    return false;
   };
   const updateGame = (data) => {
     // take the game update data and set it in here
