@@ -220,25 +220,22 @@ const GameScreen = () => {
   };
 
   const startGame = () => {
-    if (PlayGuard()) {
-      // check that the websocket is still connected
-      if (!sockClient.isConnected()) {
-        console.log("can't start game until the websocket is connected!");
-        return;
-      }
-      // add subscriptions
-      console.log("adding subscriptions");
-      if (
-        sockClient.addOnMessageFunction("game", updateGame) &&
-        sockClient.addOnMessageFunction("round", updateRound)
-      ) {
-        // start the game
-        console.log("starting the game");
-        sockClient.startGame(gameId, playerId);
-        setGameStarted(true);
-      }
-    } else {
-      history.push("/game/dashboard");
+    PlayGuard();
+    // check that the websocket is still connected
+    if (!sockClient.isConnected()) {
+      console.log("can't start game until the websocket is connected!");
+      return;
+    }
+    // add subscriptions
+    console.log("adding subscriptions");
+    if (
+      sockClient.addOnMessageFunction("game", updateGame) &&
+      sockClient.addOnMessageFunction("round", updateRound)
+    ) {
+      // start the game
+      console.log("starting the game");
+      sockClient.startGame(gameId, playerId);
+      setGameStarted(true);
     }
   };
 
