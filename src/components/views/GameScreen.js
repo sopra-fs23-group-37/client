@@ -87,6 +87,7 @@ const GameScreen = () => {
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
+    setOpponentDiscard(data.oppCardsInDiscard);
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
@@ -217,7 +218,6 @@ const GameScreen = () => {
       setSelectPutOnField((current) => !current);
     }
   };
-
   const startGame = () => {
     if (PlayGuard()) {
       // check that the websocket is still connected
@@ -240,21 +240,17 @@ const GameScreen = () => {
       history.push("/game/dashboard");
     }
   };
-
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
   };
-
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
     sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
   };
-
   const handleEndGame = () => {
     history.push("/game");
   };
-
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -280,7 +276,6 @@ const GameScreen = () => {
       unlisten();
     };
   });
-
   let playerHandContainer = (
     <div className="playerHandContainer">
       <div className="selectedCard">
@@ -344,6 +339,9 @@ const GameScreen = () => {
         <h1> not loaded </h1>
       )}
     </div>
+  );
+  let opponentDiscardPile = (
+    <div className="opponent-discards">{console.log("nothing")}</div>
   );
 
   let deck = (

@@ -4,7 +4,6 @@
 
 $card-background-image: url(../image/card-background.jpg);
 
-
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
   .game.user-list
@@ -48,6 +47,9 @@ $card-background-image: url(../image/card-background.jpg);
               margin-right: -30px;
             }
           }
+          .opponent-discards {
+            background-color: black;
+          }
           .turnInfo {
           }
         }
@@ -56,11 +58,11 @@ $card-background-image: url(../image/card-background.jpg);
           display: flex;
           justify-content: center;
           align-items: center;
-          
+
           .turn-info-form {
             flex-direction: row;
             background: white;
-            font-family: 'Inter', sans-serif;
+            font-family: "Inter", sans-serif;
             font-size: 0.8rem;
             font-weight: bold;
             width: 80%;
@@ -73,7 +75,6 @@ $card-background-image: url(../image/card-background.jpg);
             width: 50px;
             height: 50px;
           }
-          
         }
       }
       .table {
@@ -82,9 +83,9 @@ $card-background-image: url(../image/card-background.jpg);
         align-items: center;
         overflow: hidden;
       }
-      
+
       .inner-table {
-        background-color: #8B0000;
+        background-color: #8b0000;
         max-width: 70%;
         min-height: fit-content;
         max-height: 90%;
@@ -102,7 +103,7 @@ $card-background-image: url(../image/card-background.jpg);
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 2rem;
         font-weight: bold;
 
@@ -153,7 +154,7 @@ $card-background-image: url(../image/card-background.jpg);
           justify-content: center;
 
           .surrender-button {
-            font-family: 'Inter', sans-serif;
+            font-family: "Inter", sans-serif;
             font-size: 1.2rem;
             font-weight: bold;
             padding: 1rem 3rem;
@@ -172,7 +173,6 @@ $card-background-image: url(../image/card-background.jpg);
         }
       }
       .discard-pile {
-        
         grid-template-rows: 60% 40%;
         grid-template-columns: 1fr;
         display: grid;
@@ -192,7 +192,7 @@ $card-background-image: url(../image/card-background.jpg);
           background-color: white;
           justify-content: center;
           align-items: center;
-          font-family: 'Inter', sans-serif;
+          font-family: "Inter", sans-serif;
           font-size: 0.8rem;
           width: 100%;
           height: 70%;
@@ -231,16 +231,15 @@ $card-background-image: url(../image/card-background.jpg);
       border: 0.1px solid gray;
       display: flex;
       overflow: hidden;
-      
 
       .playerHand {
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 0.8rem;
         font-weight: bold;
-        background: #DAA520;
+        background: #daa520;
         width: fit-content;
         height: fit-content;
-        padding: 1.5em; 
+        padding: 1.5em;
         margin: 0 auto;
         display: table-column;
         justify-content: center;
@@ -249,21 +248,18 @@ $card-background-image: url(../image/card-background.jpg);
         border-radius: 25px;
         transition: border-style 1s ease-in-out;
         overflow: hidden;
-        
       }
-      
+
       .playerHand:hover {
         border-style: dashed;
         border-color: darkred;
-
       }
-      
 
       .selectedCard {
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 0.8rem;
         font-weight: bold;
-        background: #DAA520;
+        background: #daa520;
         width: fit-content;
         height: fit-content;
         padding: 1.5em;
@@ -278,10 +274,10 @@ $card-background-image: url(../image/card-background.jpg);
       }
 
       .player-info {
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 0.8rem;
         font-weight: bold;
-        background: #DAA520;
+        background: #daa520;
         width: fit-content;
         height: fit-content;
         padding: 1.5em;
