@@ -6,10 +6,14 @@ import Round from "models/Round";
 import { ButtonGame } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
+import OpponentLeft from "components/views/OpponentLeft";
 import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
+import WaitEndOfRound from "./WaitEndOfRound";
+import { api } from "helpers/api";
+
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -35,7 +39,8 @@ const GameScreen = () => {
   const [opponentLeft, setOpponentLeft] = useState(false);
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
   const [opponentLeftReason, setOpponentLeftReason] = useState(null);
-
+  // needed for the waiting overlay after the EndOfRound
+  const [waitEndOfRound, setWaitEndOfRound] = useState(false);
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
@@ -43,6 +48,25 @@ const GameScreen = () => {
 
   const history = useHistory();
 
+  const PlayGuard = async () => {
+    try {
+      const response = await api.get("games/" + gameId);
+      if (
+        response.data.host.userId === playerId ||
+        response.data.guest.userId === playerId
+      ) {
+        return true;
+      } else {
+        alert("You tried to join a lobby you're not part of!");
+        history.push("/game");
+        return false;
+      }
+    } catch (error) {
+      window.location.reload();
+      console.log("There was an error: ", error.message);
+    }
+    return false;
+  };
   const updateGame = (data) => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
@@ -60,9 +84,10 @@ const GameScreen = () => {
     ) {
       setOpponentLeft(true);
       setOpponentLeftReason(data.endGameReason);
+      setEndOfRound(false);
+      setWaitEndOfRound(false);
     }
   };
-
   const updateRound = (data) => {
     console.log("round update received:", data);
     setRound(new Round(data));
@@ -72,8 +97,12 @@ const GameScreen = () => {
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
-  };
 
+    if (data.roundStatus === "ONGOING") {
+      setWaitEndOfRound(false);
+    }
+
+  };
   const makeMove = () => {
     console.log("Show message");
     console.log(selectedCard);
@@ -139,7 +168,6 @@ const GameScreen = () => {
     // use this function to build move and send via websocket
     // check type of move
   };
-
   const checkButton = () => {
     if (!round.myTurn) {
       return false;
@@ -150,7 +178,6 @@ const GameScreen = () => {
     }
     return true;
   };
-
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
@@ -168,7 +195,6 @@ const GameScreen = () => {
       }
     }
   };
-
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
       const filteredArray = playerCards.filter(
@@ -181,12 +207,10 @@ const GameScreen = () => {
       setSelectedCard(card);
     }
   };
-
   const unselectCard = (card) => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
   };
-
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -200,20 +224,23 @@ const GameScreen = () => {
       }
     }
   };
-
   const toggleSelectPutOnField = () => {
     if (round.myTurn) {
       setSelectPutOnField((current) => !current);
     }
   };
 
-  const startGame = () => {
+  const startGame = async () => {
+    try {
+      await PlayGuard();
+    } catch (error) {
+      console.log(error.message);
+    }
     // check that the websocket is still connected
     if (!sockClient.isConnected()) {
       console.log("can't start game until the websocket is connected!");
       return;
     }
-
     // add subscriptions
     console.log("adding subscriptions");
     if (
@@ -229,15 +256,23 @@ const GameScreen = () => {
 
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
+    setWaitEndOfRound(false);
+    setEndOfRound(false);
   };
 
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
     sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
+    setWaitEndOfRound(true);
   };
 
   const handleEndGame = () => {
+    history.push("/game");
+  };
+
+  
+  const handleLeaveGame = () => {
     history.push("/game");
   };
 
@@ -312,8 +347,7 @@ const GameScreen = () => {
           width="80%"
           background="#FFFFFF"
           onClick={() => makeMove()}
-          disable={checkButton()}
-        >
+          disable={checkButton()}>
           Play Move
         </ButtonGame>
       </div>
@@ -468,6 +502,28 @@ const GameScreen = () => {
           />
         </div>
       )}
+
+      { game && opponentLeft && (
+              <div className="opponentLeft">
+                <OpponentLeft
+                  game={game}
+                  playerId={playerId}
+                  onLeaveGame={handleLeaveGame}
+                  opponentLeftReason={opponentLeftReason}
+                />
+              </div>
+      )}
+
+      { game && waitEndOfRound && (
+                    <div className="waitEndOfRound">
+                      <WaitEndOfRound
+                        game={game}
+                        playerId={playerId}
+                        onLeaveGame={surrenderGame}
+                      />
+                    </div>
+            )}
+
     </div>
   );
 };

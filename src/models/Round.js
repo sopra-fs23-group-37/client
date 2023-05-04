@@ -31,6 +31,7 @@ class Round {
     // manage player leaving
     this.opponentLeft = null;
     this.opponentLeftReason = null;
+    
 
     Object.assign(this, data);
   }
