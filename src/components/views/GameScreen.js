@@ -14,7 +14,6 @@ import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
 
-
 const GameScreen = () => {
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
@@ -67,6 +66,7 @@ const GameScreen = () => {
     }
     return false;
   };
+
   const updateGame = (data) => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
@@ -101,7 +101,6 @@ const GameScreen = () => {
     if (data.roundStatus === "ONGOING") {
       setWaitEndOfRound(false);
     }
-
   };
   const makeMove = () => {
     console.log("Show message");
@@ -211,6 +210,12 @@ const GameScreen = () => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
   };
+
+  const handleError = (error) => {
+    // TODO: do somethind with the error data coming back
+    console.log(error);
+  };
+
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -218,7 +223,8 @@ const GameScreen = () => {
       console.log("websocket is not connected! Attempting reconnect");
       if (
         sockClient.addOnMessageFunction("game", updateGame) &&
-        sockClient.addOnMessageFunction("round", updateRound)
+        sockClient.addOnMessageFunction("round", updateRound) &&
+        sockClient.addOnMessageFunction("error", handleError)
       ) {
         sockClient.reconnect(gameId, playerId);
       }
@@ -245,7 +251,8 @@ const GameScreen = () => {
     console.log("adding subscriptions");
     if (
       sockClient.addOnMessageFunction("game", updateGame) &&
-      sockClient.addOnMessageFunction("round", updateRound)
+      sockClient.addOnMessageFunction("round", updateRound) &&
+      sockClient.addOnMessageFunction("error", handleError)
     ) {
       // start the game
       console.log("starting the game");
@@ -271,7 +278,6 @@ const GameScreen = () => {
     history.push("/game");
   };
 
-  
   const handleLeaveGame = () => {
     history.push("/game");
   };
@@ -344,7 +350,8 @@ const GameScreen = () => {
           width="80%"
           background="#FFFFFF"
           onClick={() => makeMove()}
-          disable={checkButton()}>
+          disable={checkButton()}
+        >
           Play Move
         </ButtonGame>
       </div>
@@ -499,27 +506,26 @@ const GameScreen = () => {
         </div>
       )}
 
-      { game && opponentLeft && (
-              <div className="opponentLeft">
-                <OpponentLeft
-                  game={game}
-                  playerId={playerId}
-                  onLeaveGame={handleLeaveGame}
-                  opponentLeftReason={opponentLeftReason}
-                />
-              </div>
+      {game && opponentLeft && (
+        <div className="opponentLeft">
+          <OpponentLeft
+            game={game}
+            playerId={playerId}
+            onLeaveGame={handleLeaveGame}
+            opponentLeftReason={opponentLeftReason}
+          />
+        </div>
       )}
 
-      { game && waitEndOfRound && (
-                    <div className="waitEndOfRound">
-                      <WaitEndOfRound
-                        game={game}
-                        playerId={playerId}
-                        onLeaveGame={surrenderGame}
-                      />
-                    </div>
-            )}
-
+      {game && waitEndOfRound && (
+        <div className="waitEndOfRound">
+          <WaitEndOfRound
+            game={game}
+            playerId={playerId}
+            onLeaveGame={surrenderGame}
+          />
+        </div>
+      )}
     </div>
   );
 };
