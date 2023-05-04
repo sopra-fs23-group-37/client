@@ -30,11 +30,24 @@ const Lobby = () => {
   };
 
   const connectAndJoin = () => {
-    console.log("websocket status:", sockClient.isConnected());
-    if (!sockClient.isConnected()) {
-      console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("lobby", updateLobby)) {
-        sockClient.connectAndJoin(gameId, playerId);
+    if (
+      !(
+        playerId === parseInt(game.guestId) ||
+        playerId === parseInt(game.hostId)
+      ) &&
+      sockClient.isConnected()
+    ) {
+      alert("You are not the host or opponent");
+      history.push("/game");
+      window.location.reload();
+    }
+    else {
+      console.log("websocket status:", sockClient.isConnected());
+      if (!sockClient.isConnected()) {
+        console.log("Starting connection.");
+        if (sockClient.addOnMessageFunction("lobby", updateLobby)) {
+          sockClient.connectAndJoin(gameId, playerId);
+        }
       }
     }
   };
