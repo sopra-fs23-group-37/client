@@ -17,7 +17,8 @@ const Lobby = () => {
   const [opponentLeft, setOpponentLeft] = useState(false);
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
   const [opponentLeftReason, setOpponentLeftReason] = useState(null);
-
+// true if the game is finished
+  const [isGameFinished, setIsGameFinished] = useState(false);
   const updateLobby = (data) => {
     setGame(new Game(data));
     if (
@@ -26,6 +27,10 @@ const Lobby = () => {
     ) {
       setOpponentLeft(true);
       setOpponentLeftReason(data.endGameReason);
+    }
+
+    if (data.gameStatus === "FINISHED") {
+      setIsGameFinished(true);
     }
   };
 
@@ -53,7 +58,10 @@ const Lobby = () => {
   };
 
   const checkGoToGame = () => {
-    if (game.gameStatus === "CONNECTED" || game.gameStatus === "ONGOING") {
+    if (isGameFinished) {
+      alert("The game has finished, you can not join the game");
+      history.push("/game");
+    } else if (game.gameStatus === "CONNECTED" || game.gameStatus === "ONGOING") {
       setGoingToGame(true);
     }
   };
