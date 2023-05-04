@@ -10,6 +10,7 @@ import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
+import { api } from "helpers/api";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -43,6 +44,25 @@ const GameScreen = () => {
 
   const history = useHistory();
 
+  const PlayGuard = async () => {
+    try {
+      const response = await api.get("games/" + gameId);
+      if (
+        response.data.host.userId === playerId ||
+        response.data.guest.userId === playerId
+      ) {
+        return true;
+      } else {
+        alert("You tried to join a lobby you're not part of!");
+        history.push("/game");
+        return false;
+      }
+    } catch (error) {
+      window.location.reload();
+      console.log("There was an error: ", error.message);
+    }
+    return false;
+  };
   const updateGame = (data) => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
@@ -62,7 +82,6 @@ const GameScreen = () => {
       setOpponentLeftReason(data.endGameReason);
     }
   };
-
   const updateRound = (data) => {
     console.log("round update received:", data);
     setRound(new Round(data));
@@ -73,7 +92,6 @@ const GameScreen = () => {
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
   };
-
   const makeMove = () => {
     console.log("Show message");
     console.log(selectedCard);
@@ -139,7 +157,6 @@ const GameScreen = () => {
     // use this function to build move and send via websocket
     // check type of move
   };
-
   const checkButton = () => {
     if (!round.myTurn) {
       return false;
@@ -150,7 +167,6 @@ const GameScreen = () => {
     }
     return true;
   };
-
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
@@ -168,7 +184,6 @@ const GameScreen = () => {
       }
     }
   };
-
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
       const filteredArray = playerCards.filter(
@@ -181,12 +196,10 @@ const GameScreen = () => {
       setSelectedCard(card);
     }
   };
-
   const unselectCard = (card) => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
   };
-
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -200,20 +213,23 @@ const GameScreen = () => {
       }
     }
   };
-
   const toggleSelectPutOnField = () => {
     if (round.myTurn) {
       setSelectPutOnField((current) => !current);
     }
   };
 
-  const startGame = () => {
+  const startGame = async () => {
+    try {
+      await PlayGuard();
+    } catch (error) {
+      console.log(error.message);
+    }
     // check that the websocket is still connected
     if (!sockClient.isConnected()) {
       console.log("can't start game until the websocket is connected!");
       return;
     }
-
     // add subscriptions
     console.log("adding subscriptions");
     if (
@@ -309,8 +325,7 @@ const GameScreen = () => {
           width="80%"
           background="#FFFFFF"
           onClick={() => makeMove()}
-          disable={checkButton()}
-        >
+          disable={checkButton()}>
           Play Move
         </ButtonGame>
       </div>
@@ -320,7 +335,13 @@ const GameScreen = () => {
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
-        [...Array(opponentCards)].map((e, i) => <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg" className="cardback" key={i}/>)
+        [...Array(opponentCards)].map((e, i) => (
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+            className="cardback"
+            key={i}
+          />
+        ))
       ) : (
         <h1> not loaded </h1>
       )}
