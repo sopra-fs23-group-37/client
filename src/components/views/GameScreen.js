@@ -60,6 +60,7 @@ const GameScreen = () => {
       window.location.reload();
       console.log("There was an error: ", error.message);
     }
+    return false;
   };
   const updateGame = (data) => {
     // take the game update data and set it in here
@@ -217,26 +218,28 @@ const GameScreen = () => {
       setSelectPutOnField((current) => !current);
     }
   };
-  const startGame = () => {
-    if (PlayGuard()) {
-      // check that the websocket is still connected
-      if (!sockClient.isConnected()) {
-        console.log("can't start game until the websocket is connected!");
-        return;
-      }
-      // add subscriptions
-      console.log("adding subscriptions");
-      if (
-        sockClient.addOnMessageFunction("game", updateGame) &&
-        sockClient.addOnMessageFunction("round", updateRound)
-      ) {
-        // start the game
-        console.log("starting the game");
-        sockClient.startGame(gameId, playerId);
-        setGameStarted(true);
-      }
-    } else {
-      history.push("/game/dashboard");
+
+  const startGame = async () => {
+    try {
+      await PlayGuard();
+    } catch (error) {
+      console.log(error.message);
+    }
+    // check that the websocket is still connected
+    if (!sockClient.isConnected()) {
+      console.log("can't start game until the websocket is connected!");
+      return;
+    }
+    // add subscriptions
+    console.log("adding subscriptions");
+    if (
+      sockClient.addOnMessageFunction("game", updateGame) &&
+      sockClient.addOnMessageFunction("round", updateRound)
+    ) {
+      // start the game
+      console.log("starting the game");
+      sockClient.startGame(gameId, playerId);
+      setGameStarted(true);
     }
   };
   const surrenderGame = () => {
