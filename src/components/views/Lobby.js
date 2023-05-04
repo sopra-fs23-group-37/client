@@ -37,7 +37,7 @@ const Lobby = () => {
       ) &&
       sockClient.isConnected()
     ) {
-      alert("You are not the host or opponent");
+      alert("You are not the host or guest of this lobby");
       history.push("/game");
       window.location.reload();
     }
