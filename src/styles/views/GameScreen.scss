@@ -35,7 +35,7 @@ $card-background-image: url(../image/card-background.jpg);
 
         .opponent {
           grid-template-rows: 1fr;
-          grid-template-columns: 75% 25%;
+          grid-template-columns: 50% 30% 20%;
           display: grid;
 
           .opponent-cards {
@@ -48,7 +48,12 @@ $card-background-image: url(../image/card-background.jpg);
             }
           }
           .opponent-discards {
-            background-color: black;
+            padding: 1em;
+            .cardback {
+              width: 80px;
+              height: auto;
+              margin-right: -30px;
+            }
           }
           .turnInfo {
           }

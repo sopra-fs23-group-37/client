@@ -45,6 +45,7 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
+    sessionStorage.setItem("oppCapturedCards", 0);
     await delay(1000);
     history.push(`/game/play/${gameId}`);
   };

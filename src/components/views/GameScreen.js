@@ -15,7 +15,6 @@ import { api } from "helpers/api";
 const GameScreen = () => {
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
-
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
@@ -29,7 +28,7 @@ const GameScreen = () => {
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
-  const [opponentDiscard, setOpponentDiscard] = useState(null);
+  const [opponentDiscard, setOpponentDiscard] = useState([]);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
   // true if the opponent has left
@@ -324,6 +323,14 @@ const GameScreen = () => {
       </div>
     </div>
   );
+  const countOppPile = () => {
+    const oldNumber = sessionStorage.getItem("oppCapturedCards");
+    const newNumber = opponentDiscard.length;
+    console.log("old number:", oldNumber);
+    console.log("new number:", newNumber);
+    const diff = newNumber - parseInt(oldNumber);
+    return diff;
+  };
 
   let opponentHand = (
     <div className="opponent-cards">
@@ -341,7 +348,15 @@ const GameScreen = () => {
     </div>
   );
   let opponentDiscardPile = (
-    <div className="opponent-discards">{console.log("nothing")}</div>
+    <div className="opponent-discards">
+      {opponentDiscard ? (
+        opponentDiscard.map((e, i) => (
+          <img src={e.image} className="cardback" key={i} />
+        ))
+      ) : (
+        <h1> No cards were captured </h1>
+      )}
+    </div>
   );
 
   let deck = (
@@ -417,6 +432,7 @@ const GameScreen = () => {
         <div className="left">
           <div className="opponent">
             {opponentHand}
+            {opponentDiscardPile}
             {turnInfo}
           </div>
           <div className="table">
