@@ -324,11 +324,15 @@ const GameScreen = () => {
     </div>
   );
   const countOppPile = () => {
+    let diff = sessionStorage.getItem("diff");
     const oldNumber = sessionStorage.getItem("oppCapturedCards");
     const newNumber = opponentDiscard.length;
-    console.log("old number:", oldNumber);
-    console.log("new number:", newNumber);
-    const diff = newNumber - parseInt(oldNumber);
+    const thisRound = parseInt(oldNumber) - newNumber;
+    if (round && thisRound < 0) {
+      sessionStorage.setItem("diff", thisRound);
+      diff = thisRound;
+    }
+    sessionStorage.setItem("oppCapturedCards", newNumber);
     return diff;
   };
 
@@ -349,13 +353,14 @@ const GameScreen = () => {
   );
   let opponentDiscardPile = (
     <div className="opponent-discards">
-      {opponentDiscard ? (
-        opponentDiscard.map((e, i) => (
-          <img src={e.image} className="cardback" key={i} />
-        ))
+      {opponentDiscard && parseInt(countOppPile()) !== 0 ? (
+        opponentDiscard
+          .slice(countOppPile())
+          .map((e, i) => <img src={e.image} className="cardback" key={i} />)
       ) : (
         <h1> No cards were captured </h1>
       )}
+      <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
 
@@ -431,8 +436,8 @@ const GameScreen = () => {
       <div className="top">
         <div className="left">
           <div className="opponent">
-            {opponentHand}
             {opponentDiscardPile}
+            {opponentHand}
             {turnInfo}
           </div>
           <div className="table">

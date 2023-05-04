@@ -35,7 +35,7 @@ $card-background-image: url(../image/card-background.jpg);
 
         .opponent {
           grid-template-rows: 1fr;
-          grid-template-columns: 50% 30% 20%;
+          grid-template-columns: 30% 50% 20%;
           display: grid;
 
           .opponent-cards {
@@ -48,11 +48,27 @@ $card-background-image: url(../image/card-background.jpg);
             }
           }
           .opponent-discards {
-            padding: 1em;
+            margin-top: 1.5em;
+            overflow: hidden;
+            text-align: center;
             .cardback {
               width: 80px;
               height: auto;
               margin-right: -30px;
+            }
+            .container-title {
+              margin: 0;
+              text-align: center;
+              flex-direction: row;
+              background: white;
+              font-family: "Inter", sans-serif;
+              font-size: 0.8rem;
+              font-weight: bold;
+              width: 80%;
+              margin: auto;
+              padding: 0.5rem;
+              border: 2px solid black;
+              border-radius: 25px;
             }
           }
           .turnInfo {
