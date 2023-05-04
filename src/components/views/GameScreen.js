@@ -17,7 +17,6 @@ import { api } from "helpers/api";
 const GameScreen = () => {
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
-
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
@@ -31,7 +30,7 @@ const GameScreen = () => {
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
-  const [opponentDiscard, setOpponentDiscard] = useState(null);
+  const [opponentDiscard, setOpponentDiscard] = useState([]);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
   // true if the opponent has left
@@ -94,6 +93,7 @@ const GameScreen = () => {
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
+    setOpponentDiscard(data.oppCardsInDiscard);
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
@@ -260,20 +260,17 @@ const GameScreen = () => {
       setGameStarted(true);
     }
   };
-
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
     setWaitEndOfRound(false);
     setEndOfRound(false);
   };
-
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
     sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
     setWaitEndOfRound(true);
   };
-
   const handleEndGame = () => {
     history.push("/game");
   };
@@ -307,7 +304,6 @@ const GameScreen = () => {
       unlisten();
     };
   });
-
   let playerHandContainer = (
     <div className="playerHandContainer">
       <div className="selectedCard">
@@ -324,14 +320,13 @@ const GameScreen = () => {
             />
           </div>
         ) : (
-            <div className="card-blank">  </div>
-
+          <div className="card-blank"> </div>
         )}
       </div>
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
-            <div className="card-container-hand"> 
+            <div className="card-container-hand">
               <Card
                 key={card.code}
                 code={card.code}
@@ -340,7 +335,7 @@ const GameScreen = () => {
                 image={card.image}
                 fromField={false}
                 onClick={() => selectCardFromHand(card)}
-              /> 
+              />
             </div>
           ))
         ) : (
@@ -353,24 +348,52 @@ const GameScreen = () => {
           width="80%"
           background="#FFFFFF"
           onClick={() => makeMove()}
-          disable={checkButton()}
-        >
+          disable={checkButton()}>
           Play Move
         </ButtonGame>
       </div>
     </div>
   );
+  const countOppPile = () => {
+    let diff = sessionStorage.getItem("diff");
+    const oldNumber = sessionStorage.getItem("oppCapturedCards");
+    const newNumber = opponentDiscard.length;
+    const thisRound = parseInt(oldNumber) - newNumber;
+    if (round && thisRound < 0) {
+      sessionStorage.setItem("diff", thisRound);
+      diff = thisRound;
+    }
+    sessionStorage.setItem("oppCapturedCards", newNumber);
+    return diff;
+  };
 
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
-        [...Array(opponentCards)].map((e, i) => 
-        <div className="card-container-opponent"> 
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg" className="cardback" key={i}/>
-        </div>)
+        [...Array(opponentCards)].map((e, i) => (
+          <div className="card-container-opponent">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+              className="cardback"
+              key={i}
+            />
+          </div>
+        ))
       ) : (
         <h1> not loaded </h1>
       )}
+    </div>
+  );
+  let opponentDiscardPile = (
+    <div className="opponent-discards">
+      {opponentDiscard && parseInt(countOppPile()) !== 0 ? (
+        opponentDiscard
+          .slice(countOppPile())
+          .map((e, i) => <img src={e.image} className="cardback" key={i} />)
+      ) : (
+        <h1> No cards were captured </h1>
+      )}
+      <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
 
@@ -450,6 +473,7 @@ const GameScreen = () => {
       <div className="top">
         <div className="left">
           <div className="opponent">
+            {opponentDiscardPile}
             {opponentHand}
             {turnInfo}
           </div>

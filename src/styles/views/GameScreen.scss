@@ -4,7 +4,6 @@
 
 $card-background-image: url(../image/card-background.jpg);
 
-
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
   .game.user-list
@@ -36,7 +35,7 @@ $card-background-image: url(../image/card-background.jpg);
 
         .opponent {
           grid-template-rows: 1fr;
-          grid-template-columns: 75% 25%;
+          grid-template-columns: 30% 50% 20%;
           display: grid;
           height: fit-content;
 
@@ -45,7 +44,7 @@ $card-background-image: url(../image/card-background.jpg);
             height: fit-content;
             display: flex;
 
-            .card-container-opponent  {
+            .card-container-opponent {
               height: auto;
               min-width: 60px;
               width: 7vw;
@@ -58,6 +57,31 @@ $card-background-image: url(../image/card-background.jpg);
               }
             }
           }
+          .opponent-discards {
+            margin-top: 1.5em;
+            overflow: hidden;
+            text-align: center;
+            .cardback {
+              width: 80px;
+              height: auto;
+              margin-right: -30px;
+            }
+            .container-title {
+              margin: 0;
+              text-align: center;
+              flex-direction: row;
+              background: white;
+              font-family: "Inter", sans-serif;
+              font-size: 0.8rem;
+              font-weight: bold;
+              width: 80%;
+              padding: 0.5rem;
+              border: 2px solid black;
+              border-radius: 25px;
+            }
+          }
+          .turnInfo {
+          }
         }
         .turn-info-container {
           text-align: center;
@@ -65,11 +89,11 @@ $card-background-image: url(../image/card-background.jpg);
           justify-content: center;
           align-items: center;
           margin-right: 10px;
-          
+
           .turn-info-form {
             flex-direction: row;
             background: white;
-            font-family: 'Inter', sans-serif;
+            font-family: "Inter", sans-serif;
             font-size: 0.8vw;
             font-weight: bold;
             width: 80%;
@@ -83,7 +107,6 @@ $card-background-image: url(../image/card-background.jpg);
             width: 25%;
             height: 25%;
           }
-          
         }
       }
       .table {
@@ -111,7 +134,7 @@ $card-background-image: url(../image/card-background.jpg);
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 2rem;
         font-weight: bold;
 
@@ -162,7 +185,7 @@ $card-background-image: url(../image/card-background.jpg);
           justify-content: center;
 
           .surrender-button {
-            font-family: 'Inter', sans-serif;
+            font-family: "Inter", sans-serif;
             font-size: 1.2rem;
             font-weight: bold;
             padding: 1rem 3rem;
@@ -208,7 +231,7 @@ $card-background-image: url(../image/card-background.jpg);
           background-color: white;
           justify-content: center;
           align-items: center;
-          font-family: 'Inter', sans-serif;
+          font-family: "Inter", sans-serif;
           font-size: 0.8vw;
           width: 100%;
           height: 70%;
@@ -253,24 +276,24 @@ $card-background-image: url(../image/card-background.jpg);
       display: flex;
       justify-content: center;
       align-items: center;
-    
+
       .overlay-content {
         background-color: #fff;
         padding: 30px;
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
         max-width: 80%;
-    
+
         h2 {
           margin-top: 0;
           font-size: 24px;
         }
-    
+
         p {
           font-size: 18px;
           margin-bottom: 20px;
         }
-    
+
         button {
           background-color: #f00;
           color: #fff;
@@ -279,7 +302,7 @@ $card-background-image: url(../image/card-background.jpg);
           border-radius: 5px;
           font-size: 18px;
           cursor: pointer;
-    
+
           &:hover {
             background-color: #d00;
           }
@@ -335,8 +358,6 @@ $card-background-image: url(../image/card-background.jpg);
           height: auto;
           min-width: 80px;
           width: 10vw;
-
-          
         }
         .card-blank {
           border-radius: 8px;
@@ -349,10 +370,10 @@ $card-background-image: url(../image/card-background.jpg);
       }
 
       .player-info {
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 0.8rem;
         font-weight: bold;
-        background: #DAA520;
+        background: #daa520;
         width: 10%;
         height: fit-content;
         padding: 1.5em;
