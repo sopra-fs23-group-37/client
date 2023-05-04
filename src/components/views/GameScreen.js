@@ -312,37 +312,40 @@ const GameScreen = () => {
     <div className="playerHandContainer">
       <div className="selectedCard">
         {selectedCard ? (
-          <Card
-            key={selectedCard.code}
-            code={selectedCard.code}
-            suit={selectedCard.suit}
-            value={selectedCard.value}
-            image={selectedCard.image}
-            fromField={false}
-            onClick={() => unselectCard(selectedCard)}
-          />
+          <div className="card-container-selected">
+            <Card
+              key={selectedCard.code}
+              code={selectedCard.code}
+              suit={selectedCard.suit}
+              value={selectedCard.value}
+              image={selectedCard.image}
+              fromField={false}
+              onClick={() => unselectCard(selectedCard)}
+            />
+          </div>
         ) : (
-          <h1> No card selected </h1>
+            <div className="card-blank">  </div>
+
         )}
-        <h1> Selected </h1>
       </div>
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
-            <Card
-              key={card.code}
-              code={card.code}
-              suit={card.suit}
-              value={card.value}
-              image={card.image}
-              fromField={false}
-              onClick={() => selectCardFromHand(card)}
-            />
+            <div className="card-container-hand"> 
+              <Card
+                key={card.code}
+                code={card.code}
+                suit={card.suit}
+                value={card.value}
+                image={card.image}
+                fromField={false}
+                onClick={() => selectCardFromHand(card)}
+              /> 
+            </div>
           ))
         ) : (
           <h1> Not loaded </h1>
         )}
-        <h1> Your cards </h1>
       </div>
 
       <div className="player-info">
@@ -361,13 +364,10 @@ const GameScreen = () => {
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
-        [...Array(opponentCards)].map((e, i) => (
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-            className="cardback"
-            key={i}
-          />
-        ))
+        [...Array(opponentCards)].map((e, i) => 
+        <div className="card-container-opponent"> 
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg" className="cardback" key={i}/>
+        </div>)
       ) : (
         <h1> not loaded </h1>
       )}
@@ -396,15 +396,17 @@ const GameScreen = () => {
     <div className="cards-on-table">
       {tableCards ? (
         tableCards.map((card) => (
-          <Card
-            key={card.code}
-            code={card.code}
-            suit={card.suit}
-            value={card.value}
-            image={card.image}
-            onClick={() => selectCardFromField(card)}
-            fromField={true}
-          />
+          <div className="card-container-field">
+            <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => selectCardFromField(card)}
+              fromField={true}
+            />
+          </div>
         ))
       ) : (
         <div className="card-blank"> </div>
@@ -417,15 +419,17 @@ const GameScreen = () => {
       <div className="stack">
         {playerDiscards ? (
           playerDiscards.map((card) => (
-            <Card
-              key={card.code}
-              code={card.code}
-              suit={card.suit}
-              value={card.value}
-              image={card.image}
-              onClick={() => {}}
-              fromField={true}
-            />
+            <div className="card-container-discard">
+              <Card
+                key={card.code}
+                code={card.code}
+                suit={card.suit}
+                value={card.value}
+                image={card.image}
+                onClick={() => {}}
+                fromField={true}
+              />
+            </div>
           ))
         ) : (
           <div className="card-blank"> </div>
