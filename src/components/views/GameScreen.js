@@ -6,11 +6,14 @@ import Round from "models/Round";
 import { ButtonGame } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
+import OpponentLeft from "components/views/OpponentLeft";
 import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
+import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
+
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -36,7 +39,8 @@ const GameScreen = () => {
   const [opponentLeft, setOpponentLeft] = useState(false);
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
   const [opponentLeftReason, setOpponentLeftReason] = useState(null);
-
+  // needed for the waiting overlay after the EndOfRound
+  const [waitEndOfRound, setWaitEndOfRound] = useState(false);
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
@@ -80,6 +84,8 @@ const GameScreen = () => {
     ) {
       setOpponentLeft(true);
       setOpponentLeftReason(data.endGameReason);
+      setEndOfRound(false);
+      setWaitEndOfRound(false);
     }
   };
   const updateRound = (data) => {
@@ -91,6 +97,11 @@ const GameScreen = () => {
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
+
+    if (data.roundStatus === "ONGOING") {
+      setWaitEndOfRound(false);
+    }
+
   };
   const makeMove = () => {
     console.log("Show message");
@@ -245,15 +256,23 @@ const GameScreen = () => {
 
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
+    setWaitEndOfRound(false);
+    setEndOfRound(false);
   };
 
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
     sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
+    setWaitEndOfRound(true);
   };
 
   const handleEndGame = () => {
+    history.push("/game");
+  };
+
+  
+  const handleLeaveGame = () => {
     history.push("/game");
   };
 
@@ -479,6 +498,28 @@ const GameScreen = () => {
           />
         </div>
       )}
+
+      { game && opponentLeft && (
+              <div className="opponentLeft">
+                <OpponentLeft
+                  game={game}
+                  playerId={playerId}
+                  onLeaveGame={handleLeaveGame}
+                  opponentLeftReason={opponentLeftReason}
+                />
+              </div>
+      )}
+
+      { game && waitEndOfRound && (
+                    <div className="waitEndOfRound">
+                      <WaitEndOfRound
+                        game={game}
+                        playerId={playerId}
+                        onLeaveGame={surrenderGame}
+                      />
+                    </div>
+            )}
+
     </div>
   );
 };
