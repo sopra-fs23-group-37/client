@@ -101,6 +101,7 @@ const GameScreen = () => {
     if (data.roundStatus === "ONGOING") {
       setWaitEndOfRound(false);
     }
+
   };
   const makeMove = () => {
     console.log("Show message");
@@ -534,26 +535,27 @@ const GameScreen = () => {
         </div>
       )}
 
-      {game && opponentLeft && (
-        <div className="opponentLeft">
-          <OpponentLeft
-            game={game}
-            playerId={playerId}
-            onLeaveGame={handleLeaveGame}
-            opponentLeftReason={opponentLeftReason}
-          />
-        </div>
+      { game && opponentLeft && (
+              <div className="opponentLeft">
+                <OpponentLeft
+                  game={game}
+                  playerId={playerId}
+                  onLeaveGame={handleLeaveGame}
+                  opponentLeftReason={opponentLeftReason}
+                />
+              </div>
       )}
 
-      {game && waitEndOfRound && (
-        <div className="waitEndOfRound">
-          <WaitEndOfRound
-            game={game}
-            playerId={playerId}
-            onLeaveGame={surrenderGame}
-          />
-        </div>
-      )}
+      { game && waitEndOfRound && (
+                    <div className="waitEndOfRound">
+                      <WaitEndOfRound
+                        game={game}
+                        playerId={playerId}
+                        onLeaveGame={surrenderGame}
+                      />
+                    </div>
+            )}
+
     </div>
   );
 };
