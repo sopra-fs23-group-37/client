@@ -44,6 +44,34 @@ class SockClient {
     this._connected = true;
   }
 
+  async connectFromHome(playerId) {
+    // close the existing connection if there already is one
+
+    try {
+      this.sock.close();
+    } catch {}
+
+    // set up new sock to the current domain
+    this.sock = new SockJS(`${getDomain()}/websocket`);
+    this.stompClient = Stomp.over(this.sock);
+
+    // connect and subscribe
+    this.stompClient.connect({}, (frame) => {
+      console.log("Connected: " + frame);
+      this.stompClient.subscribe("/topic/game/home", (response) => {
+        this.handleResponseByChannel(response);
+      });
+      this.stompClient.subscribe(
+        "/queue/user/" + playerId + "/*",
+        (response) => {
+          this.handleResponseByChannel(response);
+        }
+      );
+      this.stompClient.send("/game/home", {}, JSON.stringify({ playerId }));
+    });
+    this._connected = true;
+  }
+
   async reconnect(gameId, playerId) {
     // close the existing connection if there already is one
 
@@ -139,7 +167,6 @@ class SockClient {
       "/game/move/" + gameId,
       {},
       JSON.stringify({ playerId, moveType, cardFromHand, cardsFromField })
-
     );
   }
 
@@ -148,7 +175,6 @@ class SockClient {
       "/game/confirmEOR/" + gameId,
       {},
       JSON.stringify({ playerId })
-
     );
   }
 

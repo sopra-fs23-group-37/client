@@ -7,10 +7,12 @@ import Game from "models/Game";
 import Header from "components/views/Header";
 import User from "models/User";
 import { ButtonHome } from "components/ui/Button";
+import sockClient from "helpers/sockClient";
 
 const Home = () => {
   const history = useHistory();
-  const [waitingGames, setWaitingGames] = useState(0);
+  const [openGames, setOpenGames] = useState(0);
+  const userId = sessionStorage.getItem("userId");
 
   const createGame = async () => {
     try {
@@ -54,73 +56,73 @@ const Home = () => {
 
   // const spectate = () => {};
 
-  useEffect(() => {
-    async function fetchGames() {
-      try {
-        const response = await api.get("/games/");
-        console.log(response);
-        setWaitingGames(response.data);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the lobbies: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the lobbies! See the console for details."
-        );
+  const updateHome = (data) => {
+    setOpenGames(data.numberOpenGames);
+  };
+
+  const connectToWS = () => {
+    console.log("websocket status:", sockClient.isConnected());
+    if (!sockClient.isConnected()) {
+      console.log("Starting connection.");
+      if (sockClient.addOnMessageFunction("home", updateHome)) {
+        sockClient.connectFromHome(userId);
       }
     }
-    fetchGames();
-  }, []);
+  };
 
-  let openGames = 0;
+  useEffect(() => {
+    connectToWS();
 
-  if (waitingGames) {
-    openGames = waitingGames.length;
-  }
+    const unlisten = history.listen(() => {
+      console.log("User is leaving the page");
+      sockClient.disconnect();
+      sockClient.removeMessageFunctions();
+    });
+
+    return () => {
+      console.log("Component is unmounting");
+      unlisten();
+    };
+  });
 
   return (
     <div>
-      <Header/>
-      <BaseContainer style={{"margin-right": "0px"}}>
-      <div className="home form">
-        <div className="row">
-          <ButtonHome
-            className="light">
-            Open Games: <br />
-            {openGames}
-          </ButtonHome>
-          {/* <button2>
+      <Header />
+      <BaseContainer style={{ "margin-right": "0px" }}>
+        <div className="home form">
+          <div className="row">
+            <ButtonHome className="light">
+              Open Games: <br />
+              {openGames}
+            </ButtonHome>
+            {/* <button2>
             <u>Your Statistics:</u>
             <br />
             wins: 0
             <br />
             losses: 0
           </button2> */}
-        </div>
-        <div className="row" style={{"margin-top": "20px"}}>
-          <ButtonHome
-            className="normal with-icon"
-            onClick={() => createGame()}>
-            Create Game
-          </ButtonHome>
-          {/* <button1 class="with-icon" onClick={() => lobbyBrowser()}>
+          </div>
+          <div className="row" style={{ "margin-top": "20px" }}>
+            <ButtonHome
+              className="normal with-icon"
+              onClick={() => createGame()}
+            >
+              Create Game
+            </ButtonHome>
+            {/* <button1 class="with-icon" onClick={() => lobbyBrowser()}>
             Lobby Browser
           </button1> */}
-        </div>
-        <div className="row" style={{"margin-top": "20px"}}>
-          <ButtonHome
-            className="normal with-icon"
-            onClick={() => joinGame()}>
-            Join Game
-          </ButtonHome>
-          {/* <button1 class="with-icon" onClick={() => spectate()}>
+          </div>
+          <div className="row" style={{ "margin-top": "20px" }}>
+            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
+              Join Game
+            </ButtonHome>
+            {/* <button1 class="with-icon" onClick={() => spectate()}>
             Spectate
           </button1> */}
+          </div>
         </div>
-      </div>
       </BaseContainer>
     </div>
   );
