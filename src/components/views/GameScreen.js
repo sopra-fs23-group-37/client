@@ -17,7 +17,6 @@ import { api } from "helpers/api";
 const GameScreen = () => {
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
-
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
@@ -31,7 +30,7 @@ const GameScreen = () => {
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
-  const [opponentDiscard, setOpponentDiscard] = useState(null);
+  const [opponentDiscard, setOpponentDiscard] = useState([]);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
   // true if the opponent has left
@@ -66,6 +65,7 @@ const GameScreen = () => {
     }
     return false;
   };
+
   const updateGame = (data) => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
@@ -93,6 +93,7 @@ const GameScreen = () => {
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
+    setOpponentDiscard(data.oppCardsInDiscard);
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
@@ -210,6 +211,12 @@ const GameScreen = () => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
   };
+
+  const handleError = (error) => {
+    // TODO: do somethind with the error data coming back
+    console.log(error);
+  };
+
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -217,7 +224,8 @@ const GameScreen = () => {
       console.log("websocket is not connected! Attempting reconnect");
       if (
         sockClient.addOnMessageFunction("game", updateGame) &&
-        sockClient.addOnMessageFunction("round", updateRound)
+        sockClient.addOnMessageFunction("round", updateRound) &&
+        sockClient.addOnMessageFunction("error", handleError)
       ) {
         sockClient.reconnect(gameId, playerId);
       }
@@ -244,7 +252,8 @@ const GameScreen = () => {
     console.log("adding subscriptions");
     if (
       sockClient.addOnMessageFunction("game", updateGame) &&
-      sockClient.addOnMessageFunction("round", updateRound)
+      sockClient.addOnMessageFunction("round", updateRound) &&
+      sockClient.addOnMessageFunction("error", handleError)
     ) {
       // start the game
       console.log("starting the game");
@@ -252,25 +261,21 @@ const GameScreen = () => {
       setGameStarted(true);
     }
   };
-
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
     setWaitEndOfRound(false);
     setEndOfRound(false);
   };
-
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
     sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
     setWaitEndOfRound(true);
   };
-
   const handleEndGame = () => {
     history.push("/game");
   };
 
-  
   const handleLeaveGame = () => {
     history.push("/game");
   };
@@ -300,42 +305,43 @@ const GameScreen = () => {
       unlisten();
     };
   });
-
   let playerHandContainer = (
     <div className="playerHandContainer">
       <div className="selectedCard">
         {selectedCard ? (
-          <Card
-            key={selectedCard.code}
-            code={selectedCard.code}
-            suit={selectedCard.suit}
-            value={selectedCard.value}
-            image={selectedCard.image}
-            fromField={false}
-            onClick={() => unselectCard(selectedCard)}
-          />
+          <div className="card-container-selected">
+            <Card
+              key={selectedCard.code}
+              code={selectedCard.code}
+              suit={selectedCard.suit}
+              value={selectedCard.value}
+              image={selectedCard.image}
+              fromField={false}
+              onClick={() => unselectCard(selectedCard)}
+            />
+          </div>
         ) : (
-          <h1> No card selected </h1>
+          <div className="card-blank"> </div>
         )}
-        <h1> Selected </h1>
       </div>
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
-            <Card
-              key={card.code}
-              code={card.code}
-              suit={card.suit}
-              value={card.value}
-              image={card.image}
-              fromField={false}
-              onClick={() => selectCardFromHand(card)}
-            />
+            <div className="card-container-hand">
+              <Card
+                key={card.code}
+                code={card.code}
+                suit={card.suit}
+                value={card.value}
+                image={card.image}
+                fromField={false}
+                onClick={() => selectCardFromHand(card)}
+              />
+            </div>
           ))
         ) : (
           <h1> Not loaded </h1>
         )}
-        <h1> Your cards </h1>
       </div>
 
       <div className="player-info">
@@ -349,20 +355,46 @@ const GameScreen = () => {
       </div>
     </div>
   );
+  const countOppPile = () => {
+    let diff = sessionStorage.getItem("diff");
+    const oldNumber = sessionStorage.getItem("oppCapturedCards");
+    const newNumber = opponentDiscard.length;
+    const thisRound = parseInt(oldNumber) - newNumber;
+    if (round && thisRound < 0) {
+      sessionStorage.setItem("diff", thisRound);
+      diff = thisRound;
+    }
+    sessionStorage.setItem("oppCapturedCards", newNumber);
+    return diff;
+  };
 
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
         [...Array(opponentCards)].map((e, i) => (
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-            className="cardback"
-            key={i}
-          />
+          <div className="card-container-opponent">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+              className="cardback"
+              key={i}
+            />
+          </div>
         ))
       ) : (
         <h1> not loaded </h1>
       )}
+    </div>
+  );
+  let opponentDiscardPile = (
+    <div className="opponent-discards">
+      {opponentDiscard && parseInt(countOppPile()) !== 0 ? (
+        opponentDiscard
+          .slice(countOppPile())
+          .map((e, i) => <img src={e.image} className="cardback" key={i} />)
+      ) : (
+        <h1> No cards were captured </h1>
+      )}
+      <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
 
@@ -388,15 +420,17 @@ const GameScreen = () => {
     <div className="cards-on-table">
       {tableCards ? (
         tableCards.map((card) => (
-          <Card
-            key={card.code}
-            code={card.code}
-            suit={card.suit}
-            value={card.value}
-            image={card.image}
-            onClick={() => selectCardFromField(card)}
-            fromField={true}
-          />
+          <div className="card-container-field">
+            <Card
+              key={card.code}
+              code={card.code}
+              suit={card.suit}
+              value={card.value}
+              image={card.image}
+              onClick={() => selectCardFromField(card)}
+              fromField={true}
+            />
+          </div>
         ))
       ) : (
         <div className="card-blank"> </div>
@@ -409,15 +443,17 @@ const GameScreen = () => {
       <div className="stack">
         {playerDiscards ? (
           playerDiscards.map((card) => (
-            <Card
-              key={card.code}
-              code={card.code}
-              suit={card.suit}
-              value={card.value}
-              image={card.image}
-              onClick={() => {}}
-              fromField={true}
-            />
+            <div className="card-container-discard">
+              <Card
+                key={card.code}
+                code={card.code}
+                suit={card.suit}
+                value={card.value}
+                image={card.image}
+                onClick={() => {}}
+                fromField={true}
+              />
+            </div>
           ))
         ) : (
           <div className="card-blank"> </div>
@@ -438,6 +474,7 @@ const GameScreen = () => {
       <div className="top">
         <div className="left">
           <div className="opponent">
+            {opponentDiscardPile}
             {opponentHand}
             {turnInfo}
           </div>
