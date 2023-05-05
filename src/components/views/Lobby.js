@@ -5,6 +5,7 @@ import "styles/views/Lobby.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import sockClient from "helpers/sockClient";
+import loadingGif from "image/loading.gif";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
@@ -45,6 +46,8 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
+    sessionStorage.setItem("oppCapturedCards", 0);
+    sessionStorage.setItem("diff", 0);
     await delay(1000);
     history.push(`/game/play/${gameId}`);
   };
@@ -84,7 +87,9 @@ const Lobby = () => {
       <div className="lobby container">
         <div className="lobby form">
           <div className="title-container">
-            <h1 className="title"> {game.hostUsername}'s Lobby </h1>
+          {game.guestStatus === "WAITING"
+                  ? <h1 className="title"> {game.hostUsername}'s Lobby </h1>
+                  : <h1 className="title"> Starting the game <img src={loadingGif} alt="Loading..." className="loading-gif" /> </h1>}
           </div>
           <div className="listings-container">
             <div className="subtitle-spectator-container">
@@ -101,6 +106,7 @@ const Lobby = () => {
                   ? game.guestStatus + "..."
                   : game.guestUsername}{" "}
               </h4>
+              {game.guestStatus === "WAITING" ? <img src={loadingGif} alt="Loading..." className="loading-gif" /> : null}
               <h4 className="host">Guest</h4>
             </div>
           </div>

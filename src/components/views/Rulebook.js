@@ -19,14 +19,7 @@ const Rulebook = () => {
   return (
     <BaseContainer>
       <div className="rulebook-container">
-
-
-
         <h1 className="rulebook-title">Rulebook </h1>
-
-
-
-
         <div className="rulebook-tabs">
           <div className="rulebook-section">
             <Button 
@@ -36,8 +29,6 @@ const Rulebook = () => {
             >
               Sheet
             </Button>
-
-
             <Button
               className={activeTab === "player-cards" ? "active" : ""}
               onClick={() => handleTabClick("player-cards")}
@@ -70,10 +61,6 @@ const Rulebook = () => {
             <Button onClick={() => homescreen()} style={{ marginLeft: "300px", color: "white", backgroundColor: "E76F51",marginTop: "20px", width:"150px", height:"55px" }}>
           Back to home
         </Button >
-
-
-
-
           </div>
           <div className="rulenook-box">
             {activeTab === "cheat-sheet" && (
@@ -82,20 +69,13 @@ const Rulebook = () => {
                 <strong>
                   <h3></h3>
                 </strong>
-
-
-
                 <img
                   src={myImage}
                   alt=""
                   style={{ height: "500px", width: "1000px", marginLeft: 0 }}
                 />
-
-
               </div>
             )}
-
-
             {activeTab === "player-cards" && (
               <div className="rulebook-box">
                 <div className="rulebook-titelbox">
@@ -103,13 +83,11 @@ const Rulebook = () => {
                     <h3> Cards</h3>
                   </strong>
                 </div>
-
                 <ul className="rulebook-rules-list">
                   <li>
                     2-and-10 is played with a standard 52-Card deck without
                     jokers.
                   </li>
-
                   <li>
                     For the purpose of capture the cards have values: King = 14,
                     Queen = 13, Jack = 12, Ace = 1 or 11 at the choice of the player,
@@ -150,7 +128,6 @@ const Rulebook = () => {
                     <h3>Play</h3>
                   </strong>
                 </div>
-
                 <ul className="rulebook-rules-list">
                   <li>
                     At your turn you play one card face up on the table. If its
@@ -221,7 +198,6 @@ const Rulebook = () => {
                 </ul>
               </div>
             )}
-
             {activeTab === "scoring" && (
               <div className="rulebook-box">
                 <div className="rulebook-titelbox">
@@ -240,7 +216,6 @@ const Rulebook = () => {
                     <li>10 of diamonds: 1 points</li>
                     <li>2 of clubs: 1 point</li>
                     <li>The player with most clubs: 1 points</li>
-
                   </ul>
                 </div>
               </div>

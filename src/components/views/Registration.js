@@ -74,36 +74,34 @@ const Registration = (props) => {
 
   return (
     <BaseContainer>
-      <div className="registration container">
-        <div className="registration form">
-          <h1 className="registration title">Welcome to 2-10</h1>
-          <h2 className="registration subtitle">Registration</h2>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-            onKeyDown={handleKeyDown}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            type="password"
-            onChange={(n) => setPassword(n)}
-            onKeyDown={handleKeyDown}
-          />
-          <div className="registration button-container">
-            <ButtonLight
-              disabled={!username || !password}
-              width="80%"
-              onClick={() => doRegistration()}
-            >
-              Register
-            </ButtonLight>
-            <div class="hr-sect"> or </div>
-            <Link to="/login">
-              <ButtonLight width="80%">Login</ButtonLight>
-            </Link>
-          </div>
+      <div className="registration form">
+        <h1 className="registration title">Welcome to 2-10</h1>
+        <h2 className="registration subtitle">Registration</h2>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+          onKeyDown={handleKeyDown}
+        />
+        <FormField
+          label="Password"
+          value={password}
+          type="password"
+          onChange={(n) => setPassword(n)}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="registration button-container">
+          <ButtonLight
+            disabled={!username || !password}
+            width="80%"
+            onClick={() => doRegistration()}
+          >
+            Register
+          </ButtonLight>
+          <div class="hr-sect"> or </div>
+          <Link to="/login">
+            <ButtonLight width="80%">Login</ButtonLight>
+          </Link>
         </div>
       </div>
     </BaseContainer>
