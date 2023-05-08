@@ -134,7 +134,7 @@ const Rulebook = () => {
                   </li>
                   <li>
                     The primary goal is to capture more cards than your
-                    opponent. Capturing certain cards yields extra points - the
+                    opponent. Capturing certain cards yields extra points - the{" "}
                     <strong>2 of Clubs</strong>, the{" "}
                     <strong> 10 of Diamond</strong>, and as more Clubs overall
                     than the opponent.
