@@ -71,7 +71,6 @@ const Home = () => {
       }
     }
   };
-
   const fetchUserStatistics = async () => {
     try {
       const userId = sessionStorage.getItem("userId");
@@ -86,6 +85,7 @@ const Home = () => {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
   }
+  
 
   useEffect(() => {
     connectToWS();
