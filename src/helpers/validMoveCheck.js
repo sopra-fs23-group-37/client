@@ -24,7 +24,7 @@ export const checkMove = (playerCard, tableCards, selectedTableCards) => {
     //add up all cards in selected table cards
     for (let i = 0; i < selectedTableCards.length; i++) {
       //check if card from table is a Queen, King, or Jack
-      if (pictureCards.includes(playerCard.value)) {
+      if (pictureCards.includes(selectedTableCards[i].value)) {
         return "Picture Cards don't add up";
       }
       sum += selectedTableCards[i].value;

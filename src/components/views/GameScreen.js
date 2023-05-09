@@ -107,7 +107,7 @@ const GameScreen = () => {
     console.log("Show message");
     console.log(selectedCard);
     console.log(selectedTableCards);
-    console.log(selectPutOnField);
+    console.log(tableCards);
     if (round.myTurn) {
       const move = checkMove(selectedCard, tableCards, selectedTableCards);
       let moveNumber = 0;
@@ -189,13 +189,12 @@ const GameScreen = () => {
       }
       setPlayerCards(filteredArray);
       setSelectedCard(card);
-      console.log("SelectedCard: ", selectedCard);
     }
   };
   const unselectCard = (card) => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
-    console.log("undSelectedCard: ", selectedCard);
+    console.log("UnselectedCard: ", selectedCard);
   };
 
   const handleError = (error) => {
@@ -277,7 +276,9 @@ const GameScreen = () => {
 
     console.log("current game data: ", game);
     console.log("current round data:", round);
-
+    if (selectedCard) {
+      makeMove();
+    }
     // handle user leaving page
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
@@ -293,7 +294,7 @@ const GameScreen = () => {
   });
   let playerHandContainer = (
     <div className="playerHandContainer">
-      {
+      {/*
         <div className="selectedCard">
           {selectedCard ? (
             <div className="card-container-selected">
@@ -311,7 +312,7 @@ const GameScreen = () => {
             <div className="card-blank"> </div>
           )}
         </div>
-      }
+          */}
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
@@ -332,7 +333,7 @@ const GameScreen = () => {
         )}
       </div>
 
-      {
+      {/*
         <div className="player-info">
           <ButtonGame
             width="80%"
@@ -342,7 +343,7 @@ const GameScreen = () => {
             Play Move
           </ButtonGame>
         </div>
-      }
+        */}
     </div>
   );
   const countOppPile = () => {
