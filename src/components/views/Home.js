@@ -56,8 +56,6 @@ const Home = () => {
     }
   };
 
-  // const spectate = () => {};
-
   const updateHome = (data) => {
     setOpenGames(data.numberOpenGames);
   };
@@ -66,31 +64,23 @@ const Home = () => {
     console.log("websocket status:", sockClient.isConnected());
     if (!sockClient.isConnected()) {
       console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("home", updateHome)) {
+      if (
+        sockClient.addOnMessageFunction("home", updateHome) &&
+        sockClient.addOnMessageFunction("statistics", updateUserStatistics)
+      ) {
         sockClient.connectFromHome(userId);
       }
     }
   };
-  const fetchUserStatistics = async () => {
-    try {
-      const userId = sessionStorage.getItem("userId");
-      const response = await api.get("/users/" + userId);
 
-      const user = new User(response.data);
-      console.log("Received user statistics: ", user);
-
-      setUserGamesPlayed(user.gamesPlayed);
-      setUserGamesWon(user.gamesWon);
-    } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
-    }
-  }
-  
+  const updateUserStatistics = (data) => {
+    console.log("Received user statistics: ", data);
+    setUserGamesPlayed(data.gamesPlayed);
+    setUserGamesWon(data.gamesWon);
+  };
 
   useEffect(() => {
     connectToWS();
-    // change this to websocket
-    fetchUserStatistics();
 
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
@@ -114,12 +104,14 @@ const Home = () => {
               Open Games: <br />
               {openGames}
             </ButtonHome>
-            {<ButtonHome className="light">
-              <div className="text-layout"> 
-                Games played: {userGamesPlayed} <br />
-                Games won: {userGamesWon}
-              </div>
-            </ButtonHome>}
+            {
+              <ButtonHome className="light">
+                <div className="text-layout">
+                  Games played: {userGamesPlayed} <br />
+                  Games won: {userGamesWon}
+                </div>
+              </ButtonHome>
+            }
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
             <ButtonHome
