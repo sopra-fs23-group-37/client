@@ -87,7 +87,7 @@ const Home = () => {
 
   useEffect(() => {
     connectToWS();
-
+    showPrompt();
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
       sockClient.disconnect();
@@ -97,7 +97,8 @@ const Home = () => {
     return () => {
       console.log("Component is unmounting");
       unlisten();
-    };
+         };
+    
   });
 
   return (
