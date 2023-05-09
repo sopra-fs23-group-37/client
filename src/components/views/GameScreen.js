@@ -165,10 +165,9 @@ const GameScreen = () => {
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
-      // TODO: implement a way to determine if a card is clicked already
-      if (false) {
+      if (selectedTableCards.includes(card)) {
         const filteredArray = selectedTableCards.filter(
-          (item) => item.code !== card.code
+          (item) => item !== card
         );
         setSelectedTableCards(filteredArray);
       } else {

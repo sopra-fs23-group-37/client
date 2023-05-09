@@ -1,4 +1,8 @@
 export const checkMove = (playerCard, tableCards, selectedTableCards) => {
+  console.log("Check Move");
+  console.log(playerCard.value);
+  console.log(tableCards.length);
+  console.log(selectedTableCards.length);
   const pictureCards = ["QUEEN", "KING", "JACK"];
   // 3: JACK
   if (playerCard.value === "JACK") {
@@ -16,6 +20,8 @@ export const checkMove = (playerCard, tableCards, selectedTableCards) => {
     // 1-1 move doesn't match
     return "Your selected cards don't match";
   } else if (selectedTableCards.length > 1) {
+    console.log(selectedTableCards[0].value);
+    console.log(selectedTableCards[1].value);
     let sum = 0;
     // check if card from hand is a Queen, King, or Jack
     if (pictureCards.includes(playerCard.value)) {
@@ -27,12 +33,17 @@ export const checkMove = (playerCard, tableCards, selectedTableCards) => {
       if (pictureCards.includes(selectedTableCards[i].value)) {
         return "Picture Cards don't add up";
       }
-      sum += selectedTableCards[i].value;
+      if (selectedTableCards[i].value === "ACE") {
+        sum += 1;
+      } else {
+        sum += parseInt(selectedTableCards[i].value);
+      }
     }
-    if (playerCard.value === sum) {
+    if (parseInt(playerCard.value) === sum) {
       // x-1 move
       return "2";
     }
+    console.log("sum: ", sum);
   } else if (selectedTableCards.length === 0) {
     // to field
     return "4";
