@@ -72,24 +72,17 @@ const Home = () => {
     }
   };
 
-  const fetchUserStatistics = async () => {
-    try {
-      const userId = sessionStorage.getItem("userId");
-      const response = await api.get("/users/" + userId);
-
-      const user = new User(response.data);
-      console.log("Received user statistics: ", user);
-
-      setUserGamesPlayed(user.gamesPlayed);
-      setUserGamesWon(user.gamesWon);
-    } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
-    }
-  }
+  
 
   useEffect(() => {
     connectToWS();
-    fetchUserStatistics();
+
+    // sonar fix
+    try {
+      fetchUserStatistics(); 
+    } catch (error) {
+      alert(`Something went wrong while getting the user statistics: \n${handleError(error)}`);
+    }
 
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
