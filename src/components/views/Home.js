@@ -36,6 +36,21 @@ const Home = () => {
 
   // const lobbyBrowser = () => {};
 
+  const showPrompt = () => {
+    const newUser = sessionStorage.getItem("newUser");
+  
+    if (newUser === "true") {
+      const username = sessionStorage.getItem("username");
+      const message = `Hi ${username}, welcome to 2-and-10! Would you like some guidance on how to play this game? You can also access the rulebook from the Home page at any time.`;
+  
+      if (window.confirm(message)) {
+        history.push("/rulebook");
+      }
+  
+      sessionStorage.setItem("newUser", "false");
+    }
+  };
+
   const joinGame = async () => {
     try {
       const userId = sessionStorage.getItem("userId");
