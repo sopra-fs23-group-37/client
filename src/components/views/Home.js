@@ -12,6 +12,8 @@ import sockClient from "helpers/sockClient";
 const Home = () => {
   const history = useHistory();
   const [openGames, setOpenGames] = useState(0);
+  const [userGamesWon, setUserGamesWon] = useState(0);
+  const [userGamesPlayed, setUserGamesPlayed] = useState(0);
   const userId = sessionStorage.getItem("userId");
 
   const createGame = async () => {
@@ -54,8 +56,6 @@ const Home = () => {
     }
   };
 
-  // const spectate = () => {};
-
   const updateHome = (data) => {
     setOpenGames(data.numberOpenGames);
   };
@@ -64,10 +64,19 @@ const Home = () => {
     console.log("websocket status:", sockClient.isConnected());
     if (!sockClient.isConnected()) {
       console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("home", updateHome)) {
+      if (
+        sockClient.addOnMessageFunction("home", updateHome) &&
+        sockClient.addOnMessageFunction("statistics", updateUserStatistics)
+      ) {
         sockClient.connectFromHome(userId);
       }
     }
+  };
+
+  const updateUserStatistics = (data) => {
+    console.log("Received user statistics: ", data);
+    setUserGamesPlayed(data.gamesPlayed);
+    setUserGamesWon(data.gamesWon);
   };
 
   useEffect(() => {
@@ -95,13 +104,14 @@ const Home = () => {
               Open Games: <br />
               {openGames}
             </ButtonHome>
-            {/* <button2>
-            <u>Your Statistics:</u>
-            <br />
-            wins: 0
-            <br />
-            losses: 0
-          </button2> */}
+            {
+              <ButtonHome className="light">
+                <div className="text-layout">
+                  Games played: {userGamesPlayed} <br />
+                  Games won: {userGamesWon}
+                </div>
+              </ButtonHome>
+            }
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
             <ButtonHome
