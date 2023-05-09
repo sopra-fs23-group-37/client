@@ -101,7 +101,6 @@ const GameScreen = () => {
     if (data.roundStatus === "ONGOING") {
       setWaitEndOfRound(false);
     }
-
   };
   const makeMove = () => {
     console.log("Show message");
@@ -205,11 +204,13 @@ const GameScreen = () => {
       }
       setPlayerCards(filteredArray);
       setSelectedCard(card);
+      console.log("SelectedCard: ", selectedCard);
     }
   };
   const unselectCard = (card) => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
+    console.log("undSelectedCard: ", selectedCard);
   };
 
   const handleError = (error) => {
@@ -307,23 +308,25 @@ const GameScreen = () => {
   });
   let playerHandContainer = (
     <div className="playerHandContainer">
-      <div className="selectedCard">
-        {selectedCard ? (
-          <div className="card-container-selected">
-            <Card
-              key={selectedCard.code}
-              code={selectedCard.code}
-              suit={selectedCard.suit}
-              value={selectedCard.value}
-              image={selectedCard.image}
-              fromField={false}
-              onClick={() => unselectCard(selectedCard)}
-            />
-          </div>
-        ) : (
-          <div className="card-blank"> </div>
-        )}
-      </div>
+      {
+        <div className="selectedCard">
+          {selectedCard ? (
+            <div className="card-container-selected">
+              <Card
+                key={selectedCard.code}
+                code={selectedCard.code}
+                suit={selectedCard.suit}
+                value={selectedCard.value}
+                image={selectedCard.image}
+                fromField={false}
+                onClick={() => unselectCard(selectedCard)}
+              />
+            </div>
+          ) : (
+            <div className="card-blank"> </div>
+          )}
+        </div>
+      }
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
@@ -344,7 +347,7 @@ const GameScreen = () => {
         )}
       </div>
 
-      <div className="player-info">
+      {/*<div className="player-info">
         <ButtonGame
           width="80%"
           background="#FFFFFF"
@@ -352,7 +355,7 @@ const GameScreen = () => {
           disable={checkButton()}>
           Play Move
         </ButtonGame>
-      </div>
+        </div>*/}
     </div>
   );
   const countOppPile = () => {
@@ -535,27 +538,26 @@ const GameScreen = () => {
         </div>
       )}
 
-      { game && opponentLeft && (
-              <div className="opponentLeft">
-                <OpponentLeft
-                  game={game}
-                  playerId={playerId}
-                  onLeaveGame={handleLeaveGame}
-                  opponentLeftReason={opponentLeftReason}
-                />
-              </div>
+      {game && opponentLeft && (
+        <div className="opponentLeft">
+          <OpponentLeft
+            game={game}
+            playerId={playerId}
+            onLeaveGame={handleLeaveGame}
+            opponentLeftReason={opponentLeftReason}
+          />
+        </div>
       )}
 
-      { game && waitEndOfRound && (
-                    <div className="waitEndOfRound">
-                      <WaitEndOfRound
-                        game={game}
-                        playerId={playerId}
-                        onLeaveGame={surrenderGame}
-                      />
-                    </div>
-            )}
-
+      {game && waitEndOfRound && (
+        <div className="waitEndOfRound">
+          <WaitEndOfRound
+            game={game}
+            playerId={playerId}
+            onLeaveGame={surrenderGame}
+          />
+        </div>
+      )}
     </div>
   );
 };
