@@ -13,6 +13,7 @@ import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
+import { checkMove } from "helpers/validMoveCheck";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -108,64 +109,48 @@ const GameScreen = () => {
     console.log(selectedTableCards);
     console.log(selectPutOnField);
     if (round.myTurn) {
-      // 3: JACK
-      if (selectedCard.value === "JACK") {
-        console.log("3");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          3,
-          selectedCard,
-          round.cardsOnTable
-        );
-        console.log("3");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          3,
-          selectedCard,
-          round.cardsOnTable
-        );
+      const move = checkMove(selectedCard, tableCards, selectedTableCards);
+      let moveNumber = 0;
+      switch (move) {
+        case "1":
+          moveNumber = 1;
+          break;
+        case "2":
+          moveNumber = 2;
+          break;
+        case "3":
+          moveNumber = 3;
+          break;
+        case "4":
+          moveNumber = 4;
+          break;
+        default:
+          alert("Invalid move: " + move);
+          break;
       }
-      // 2: x-1 move
-      else if (selectedTableCards.length > 1) {
-        console.log("2");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          2,
-          selectedCard,
-          selectedTableCards
-        );
-      }
-      // 1: 1-1 move
-      else if (selectedTableCards.length === 1) {
-        console.log("1");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          1,
-          selectedCard,
-          selectedTableCards
-        );
-      }
-      // 4: to field
-      else {
-        console.log("4");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          4,
-          selectedCard,
-          selectedTableCards
-        );
+      if (moveNumber) {
+        if (moveNumber === 3) {
+          sockClient.sendMove(
+            gameId,
+            playerId,
+            moveNumber,
+            selectedCard,
+            round.cardsOnTable
+          );
+        } else {
+          sockClient.sendMove(
+            gameId,
+            playerId,
+            moveNumber,
+            selectedCard,
+            selectedTableCards
+          );
+        }
       }
       setSelectedTableCards([]);
       setSelectPutOnField(false);
       setSelectedCard(null);
     }
-    // use this function to build move and send via websocket
-    // check type of move
   };
   const checkButton = () => {
     if (!round.myTurn) {
@@ -347,15 +332,17 @@ const GameScreen = () => {
         )}
       </div>
 
-      {/*<div className="player-info">
-        <ButtonGame
-          width="80%"
-          background="#FFFFFF"
-          onClick={() => makeMove()}
-          disable={checkButton()}>
-          Play Move
-        </ButtonGame>
-        </div>*/}
+      {
+        <div className="player-info">
+          <ButtonGame
+            width="80%"
+            background="#FFFFFF"
+            onClick={() => makeMove()}
+            disable={checkButton()}>
+            Play Move
+          </ButtonGame>
+        </div>
+      }
     </div>
   );
   const countOppPile = () => {
