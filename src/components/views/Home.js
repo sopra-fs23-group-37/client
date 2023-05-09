@@ -89,6 +89,7 @@ const Home = () => {
 
   useEffect(() => {
     connectToWS();
+    // change this to websocket
     fetchUserStatistics();
 
     const unlisten = history.listen(() => {
