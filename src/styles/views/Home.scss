@@ -14,7 +14,7 @@
     margin-left: auto;
     margin-right: 9vw;
     margin-top: 10vh;
-    max-width: 30em;
+    max-width: 25em;
     min-width: fit-content;
     min-height: fit-content;
     font-size: 20px;
@@ -36,6 +36,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    min-width: 22em;
     width: 100%;
   }
 }

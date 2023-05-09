@@ -12,6 +12,8 @@ import sockClient from "helpers/sockClient";
 const Home = () => {
   const history = useHistory();
   const [openGames, setOpenGames] = useState(0);
+  const [userGamesWon, setUserGamesWon] = useState(0);
+  const [userGamesPlayed, setUserGamesPlayed] = useState(0);
   const userId = sessionStorage.getItem("userId");
 
   const createGame = async () => {
@@ -70,8 +72,24 @@ const Home = () => {
     }
   };
 
+  const fetchUserStatistics = async () => {
+    try {
+      const userId = sessionStorage.getItem("userId");
+      const response = await api.get("/users/" + userId);
+
+      const user = new User(response.data);
+      console.log("Received user statistics: ", user);
+
+      setUserGamesPlayed(user.gamesPlayed);
+      setUserGamesWon(user.gamesWon);
+    } catch (error) {
+      alert(`Something went wrong during the login: \n${handleError(error)}`);
+    }
+  }
+
   useEffect(() => {
     connectToWS();
+    fetchUserStatistics();
 
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
@@ -95,13 +113,12 @@ const Home = () => {
               Open Games: <br />
               {openGames}
             </ButtonHome>
-            {/* <button2>
-            <u>Your Statistics:</u>
-            <br />
-            wins: 0
-            <br />
-            losses: 0
-          </button2> */}
+            {<ButtonHome className="light">
+              <div className="text-layout"> 
+                Games played: {userGamesPlayed} <br />
+                Games won: {userGamesWon}
+              </div>
+            </ButtonHome>}
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
             <ButtonHome
