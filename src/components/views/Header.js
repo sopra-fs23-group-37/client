@@ -32,17 +32,18 @@ const Header = (props) => {
     <div className="header container" style={{ height: props.height }}>
       <div className="title">  Welcome {sessionStorage.getItem("username")} </div>
       <div className="buttons">
-        <button className="button" onClick={() => logout()}>
-          Logout
-        </button>
         <button
           className="button"
           onClick={() => showRulebook()}>
           Rulebook
         </button>
+        <button className="button" onClick={() => logout()}>
+          Logout
+        </button>
       </div>
     </div>
   );
+  
 };
 
 Header.propTypes = {
