@@ -163,9 +163,7 @@ const Home = () => {
             Spectate
           </button1> */}
           </div>
-      
         </div>
-        
       </BaseContainer>
     </div>
   );
