@@ -13,8 +13,10 @@ import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
+import myImage from "image/Sheet.png";
 
 const GameScreen = () => {
+  const [rulebookVisible, setRulebookVisible] = useState(false);
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
   // these datapoints are set through the websocket
@@ -454,7 +456,7 @@ const GameScreen = () => {
                 suit={card.suit}
                 value={card.value}
                 image={card.image}
-                onClick={() => {}}
+                onClick={() => { }}
                 fromField={true}
               />
             </div>
@@ -494,7 +496,14 @@ const GameScreen = () => {
           </div>
         </div>
         <div className="right">
+
+          
+        
+
+
+
           {game && (
+            
             <div className="statistics">
               <div className="player-names">
                 <span className="guest-name">{game.guestUsername}</span>
@@ -505,11 +514,29 @@ const GameScreen = () => {
                 </span>
                 <span className="host-name">{game.hostUsername}</span>
               </div>
+              
               <div className="surrender-button-container">
                 <button className="surrender-button" onClick={surrenderGame}>
                   Surrender
                 </button>
+
               </div>
+              <div className="rulebook-container">
+                  <button className="round-button" onClick={() => setRulebookVisible(!rulebookVisible)}>
+                    ?
+                  </button>
+                  {rulebookVisible && (
+                    <div className="rulebook-overlay" onClick={() => setRulebookVisible(false)}>
+                      <img
+                        src={myImage}
+                        alt=""
+
+                      />
+                    </div>
+                  )}
+                </div>
+
+              
             </div>
           )}
           {cardsDiscard}
@@ -539,26 +566,26 @@ const GameScreen = () => {
         </div>
       )}
 
-      { game && opponentLeft && (
-              <div className="opponentLeft">
-                <OpponentLeft
-                  game={game}
-                  playerId={playerId}
-                  onLeaveGame={handleLeaveGame}
-                  opponentLeftReason={opponentLeftReason}
-                />
-              </div>
+      {game && opponentLeft && (
+        <div className="opponentLeft">
+          <OpponentLeft
+            game={game}
+            playerId={playerId}
+            onLeaveGame={handleLeaveGame}
+            opponentLeftReason={opponentLeftReason}
+          />
+        </div>
       )}
 
-      { game && waitEndOfRound && (
-                    <div className="waitEndOfRound">
-                      <WaitEndOfRound
-                        game={game}
-                        playerId={playerId}
-                        onLeaveGame={surrenderGame}
-                      />
-                    </div>
-            )}
+      {game && waitEndOfRound && (
+        <div className="waitEndOfRound">
+          <WaitEndOfRound
+            game={game}
+            playerId={playerId}
+            onLeaveGame={surrenderGame}
+          />
+        </div>
+      )}
 
     </div>
   );
