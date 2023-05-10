@@ -8,10 +8,8 @@ const Card = ({ code, image, suit, value, onClick, fromField }) => {
   const handleClick = () => {
     if (fromField) {
       setActive(!active);
-      onClick();
-    } else {
-      onClick();
     }
+      onClick();
   };
 
   return (
