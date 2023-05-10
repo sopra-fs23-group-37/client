@@ -126,6 +126,7 @@ const GameScreen = () => {
           break;
         default:
           alert("Invalid move: " + move);
+          unselectCard(selectedCard);
           break;
       }
       if (moveNumber) {
@@ -177,6 +178,7 @@ const GameScreen = () => {
         ]);
       }
     }
+    console.log("selectedCard: ", selectedCard);
   };
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
@@ -193,14 +195,11 @@ const GameScreen = () => {
   const unselectCard = (card) => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
-    console.log("UnselectedCard: ", selectedCard);
   };
-
   const handleError = (error) => {
     // TODO: do somethind with the error data coming back
     console.log(error);
   };
-
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -220,7 +219,6 @@ const GameScreen = () => {
       setSelectPutOnField((current) => !current);
     }
   };
-
   const startGame = async () => {
     try {
       await PlayGuard();
@@ -259,11 +257,9 @@ const GameScreen = () => {
   const handleEndGame = () => {
     history.push("/game");
   };
-
   const handleLeaveGame = () => {
     history.push("/game");
   };
-
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -275,6 +271,8 @@ const GameScreen = () => {
 
     console.log("current game data: ", game);
     console.log("current round data:", round);
+    console.log("selected card from hand: ", selectedCard);
+    console.log("selected table cards: ", selectedTableCards);
     if (selectedCard) {
       makeMove();
     }
@@ -293,25 +291,6 @@ const GameScreen = () => {
   });
   let playerHandContainer = (
     <div className="playerHandContainer">
-      {/*
-        <div className="selectedCard">
-          {selectedCard ? (
-            <div className="card-container-selected">
-              <Card
-                key={selectedCard.code}
-                code={selectedCard.code}
-                suit={selectedCard.suit}
-                value={selectedCard.value}
-                image={selectedCard.image}
-                fromField={false}
-                onClick={() => unselectCard(selectedCard)}
-              />
-            </div>
-          ) : (
-            <div className="card-blank"> </div>
-          )}
-        </div>
-          */}
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
@@ -331,18 +310,6 @@ const GameScreen = () => {
           <h1> Not loaded </h1>
         )}
       </div>
-
-      {/*
-        <div className="player-info">
-          <ButtonGame
-            width="80%"
-            background="#FFFFFF"
-            onClick={() => makeMove()}
-            disable={checkButton()}>
-            Play Move
-          </ButtonGame>
-        </div>
-        */}
     </div>
   );
   const countOppPile = () => {
@@ -357,7 +324,6 @@ const GameScreen = () => {
     sessionStorage.setItem("oppCapturedCards", newNumber);
     return diff;
   };
-
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
@@ -387,14 +353,12 @@ const GameScreen = () => {
       <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
-
   let deck = (
     <div className="card-container">
       {/* Placeholder for deck */}
       <div className="card back"></div>
     </div>
   );
-
   let turnInfo = (
     <div className="turn-info-container">
       <div className="turn-info-form">
@@ -405,7 +369,6 @@ const GameScreen = () => {
       </div>
     </div>
   );
-
   let cardsOnTableContainer = (
     <div className="cards-on-table">
       {tableCards ? (
@@ -427,7 +390,6 @@ const GameScreen = () => {
       )}
     </div>
   );
-
   let cardsDiscard = (
     <div className="discard-pile">
       <div className="stack">
@@ -458,7 +420,6 @@ const GameScreen = () => {
       </div>
     </div>
   );
-
   return (
     <div className="gamescreen container">
       <div className="top">
