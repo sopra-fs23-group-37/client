@@ -6,6 +6,9 @@ import { api, handleError } from "../../helpers/api";
 import { Spinner } from "../ui/Spinner";
 import { Button } from "../ui/Button";
 import PropTypes from "prop-types";
+import noAvatar from "image/noAvatar.png";
+import UploadAvatar from 'components/firebase comps/uploadAvatar';
+import "styles/views/EditProfile.scss";
 
 const FormField = (props) => {
   return (
@@ -29,12 +32,54 @@ FormField.propTypes = {
   type: PropTypes.string,
 };
 
-const ProfileEdit = () => {
+const EditProfile = () => {
   const history = useHistory();
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
   const profileId = useParams().profileId;
   const [profile, setProfile] = useState(null);
   const [username, setUsername] = useState(sessionStorage.getItem("username"));
   const [birthday, setBirthday] = useState(sessionStorage.getItem("birthday"));
+  const [avatarUrl, setAvatarUrl] = useState(null);
+
+  const types = ['image/png', 'image/jpeg'];
+
+  const saveChanges = async () => {
+
+    try {  
+      console.log("Avatar", avatarUrl);
+        const userId = profileId;
+        const requestBody = JSON.stringify({ username, birthday, userId, avatarUrl });
+        const response = await api.put("/users/" + profileId, requestBody);
+
+        console.log(response);
+  
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("birthday", birthday);
+        sessionStorage.setItem("avatarUrl", avatarUrl);
+
+        history.push(`/game/profile/` + profileId);
+
+    } catch (error) {
+      alert(
+        `Something went wrong when trying to save: \n${handleError(error)}`
+      );
+    }
+  };
+    
+  
+    const handleChange = (e) => {
+      let selected = e.target.files[0]; // to select the first file (in order someone selects more files)
+      console.log(selected); 
+      
+      if (selected && types.includes(selected.type)) {
+        setFile(selected);
+        setError('');
+      } else {
+        setFile(null);
+        setError('Please select an image file (png or jpg)');
+      }
+    };
 
   const logout = async () => {
     try {
@@ -57,25 +102,8 @@ const ProfileEdit = () => {
   const returnToProfile = () => {
     history.push("/game/profile/" + profileId);
   };
-
-  const saveUpdates = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, birthday });
-      const response = await api.put("/users/" + profileId, requestBody);
-
-      console.log(response);
-
-      sessionStorage.setItem("username", username);
-      sessionStorage.setItem("birthday", birthday);
-      // Registration successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game/profile/` + profileId);
-    } catch (error) {
-      alert(
-        `Something went wrong when trying to save: \n${handleError(error)}`
-      );
-    }
-  };
-
+    
+      
   useEffect(() => {
     async function fetchProfile(profileId) {
       try {
@@ -98,6 +126,8 @@ const ProfileEdit = () => {
     fetchProfile(profileId);
   }, [profileId]);
 
+
+
   let content = <Spinner />;
 
   if (profileId !== sessionStorage.getItem("userId")) {
@@ -119,8 +149,23 @@ const ProfileEdit = () => {
     console.log("user ID: ", sessionStorage.getItem("userId"));
   } else if (profile) {
     content = (
-      <div className="profile">
-        <div>Profile id: {profileId}</div>
+      <div className="editProfile">
+        <div className="editProfile container">
+          <div className="editProfile form">
+          <div>Click on the avatar below to upload a new avatar image.</div>
+              <div class="image-upload">
+          
+                <label for="file-input">
+                  {avatarUrl && <img alt="Avatar" src={avatarUrl}></img>}
+                  {profile.avatarUrl && !avatarUrl && <img alt="Avatar" src={profile.avatarUrl}></img>}
+                  {!profile.avatarUrl && !avatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                  
+
+                </label>
+                <input id="file-input" type="file" onChange={handleChange}/>
+            </div>
+            { error && <div className="uploadAvatar output"><div className="error">{ error }</div></div>}
+            { file && <div className="uploadAvatar output"><UploadAvatar file={file} setFile={setFile} avatarUrl={avatarUrl} setAvatarUrl={setAvatarUrl} /> </div>}
         <FormField
           label="New Username:"
           value={username}
@@ -135,7 +180,7 @@ const ProfileEdit = () => {
           type="date"
           placeholder={profile.birthday}
         />
-        <Button width="100%" onClick={() => saveUpdates()}>
+        <Button width="100%" onClick={() => saveChanges()}>
           Save
         </Button>
         <Button width="100%" onClick={() => returnToProfile()}>
@@ -144,6 +189,8 @@ const ProfileEdit = () => {
         <Button width="100%" onClick={() => logout()}>
           Logout
         </Button>
+        </div>
+        </div>
       </div>
     );
   }
@@ -156,4 +203,4 @@ const ProfileEdit = () => {
   );
 };
 
-export default ProfileEdit;
+export default EditProfile;

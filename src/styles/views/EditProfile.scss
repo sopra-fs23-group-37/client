@@ -1,0 +1,118 @@
+@import 'styles/theme';
+
+.editProfile {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &.container {
+    position: absolute;
+    background-color: white;
+    width: 40%;
+    height: auto;
+    left: 30%;
+    top: 20%;
+    border-radius: $borderRadius;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+  &.form {
+    background-color: white;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    gap: 15px;
+    margin-bottom: 10px;
+    
+  }
+  &.list-item {
+    height: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: white;
+
+    &.text {
+      padding-top: 10px;
+    }
+    }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.input {
+    height: 35px;
+    padding-left: 15px;
+    margin-left: -4px;
+    border: none;
+    border-radius: 0.75em;
+    margin-bottom: 20px;
+    background: transparentize(white, 0.85);
+    color: $textColor;
+  }
+  &.label {
+    color: $textColor;
+    margin-bottom: 10px;
+    text-transform: lowercase;
+    font-weight: 300;
+  }
+  &.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+  }
+
+  .image-upload {
+    height: 170px;
+    width: 170px;
+    border-radius: 50%;
+    box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px, rgb(0, 0, 0 / 23%) 0px 3px 6px;
+    margin: 0px auto 0px auto;
+    
+    &.addIcon {
+      width: 50x;
+      top: 200px;
+      left: 100px;
+    }
+    img {
+      width:100%;
+      height:100%;
+      border-radius: 50%;
+      cursor: pointer;	
+      
+    }
+    
+}
+
+
+.image-upload > input
+{
+    display: none;
+}
+
+.uploadAvatar {
+  margin-block-end: 20px;
+
+  &.output {
+    padding: 10px;
+    min-height: 20px;
+    overflow: hidden;
+    color:white;
+    background: red;
+    border-color: black;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+  }
+  img {
+    width:100%;
+    height:100%;
+  }
+}
+
+
+}

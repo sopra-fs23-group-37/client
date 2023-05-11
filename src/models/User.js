@@ -12,6 +12,7 @@ class User {
     this.birthday = null;
     this.creation_date = null;
     this.userId = null;
+    this.avatarUrl = null;
     Object.assign(this, data);
   }
 }

@@ -2,7 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import Home from "components/views/Home";
 import PropTypes from "prop-types";
 import Profile from "../../views/Profile";
-import ProfileEdit from "../../views/ProfileEdit";
+import ProfileEdit from "../../views/EditProfile";
 import CreateGame from "components/views/CreateGame";
 import Lobby from "components/views/Lobby";
 import GameScreen from "components/views/GameScreen";

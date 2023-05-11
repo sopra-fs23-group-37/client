@@ -1,0 +1,68 @@
+@import 'styles/theme';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* The '&' is a shorthand for the containing element,
+  so for example a '&.user-list' inside .game will compile to
+  .game.user-list
+
+  for more information visit https://sass-lang.com/guide
+ */
+
+ .profile {
+
+    &.container {
+      position: absolute;
+      background-color: white;
+      width: 40%;
+      height: auto;
+      left: 30%;
+      top: 20%;
+      border-radius: $borderRadius;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+    &.form {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background-color: white;
+      text-align: center;
+      height: auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    &.list-item {
+      height: 35px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background-color: white;
+  
+      &.text {
+        padding-top: 10px;
+      }
+  
+    }
+
+}
+
+.avatar {
+  height: 170px;
+  width: 170px;
+  border-radius: 50%;
+  box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px, rgb(0, 0, 0 / 23%) 0px 3px 6px;
+  margin: 0px auto 0px auto;
+
+  img {
+    width:100%;
+    height:100%;
+    border-radius: 50%;	
+    
+  }
+}
+  

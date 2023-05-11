@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import { Spinner } from "../ui/Spinner";
 import { Button } from "../ui/Button";
+import noAvatar from "image/noAvatar.png";
+import Header from "components/views/Header";
+import "styles/views/Profile.scss";
 
 const Profile = () => {
   const history = useHistory();
@@ -71,30 +74,37 @@ const Profile = () => {
       cday = profile.creation_date.split("T")[0];
     }
     content = (
-      <div className="profile overview">
-        <div>Profile id: {profileId}</div>
-        <div>Username: {profile.username}</div>
-        <div>Status: {profile.status}</div>
-        <div>Created on: {cday}</div>
-        <div>Birthday: {bday}</div>
-        <Button width="100%" onClick={() => editProfile()}>
-          Edit Profile
-        </Button>
-        <Button width="100%" onClick={() => goToOverview()}>
-          Return to Overview
-        </Button>
-        <Button width="100%" onClick={() => logout()}>
-          Logout
-        </Button>
+      <div className="profile" >
+      <div className="profile container">
+            <div className="profile form">
+              <div className = "avatar">
+                { profile.avatarUrl && (<img alt="Avatar" src={profile.avatarUrl}></img>)}
+                { !profile.avatarUrl && (<img alt="Avatar" src={noAvatar}></img>)}
+              </div>
+                  {profile.username && <h1>Username: {profile.username}</h1>}
+                  {<h1>Birthday: {bday}</h1>}
+                  <Button width="100%" onClick={() => editProfile()}>
+                    Edit Profile
+                  </Button>
+                  <Button width="100%" onClick={() => goToOverview()}>
+                    Return to Overview
+                  </Button>
+                  <Button width="100%" onClick={() => logout()}>
+                    Logout
+                  </Button>
+            </div>
+            
+
+
+            </div>
       </div>
     );
   }
 
   return (
-    <BaseContainer className="Home container">
-      <h2>Profile Overview</h2>
+    <div>
       {content}
-    </BaseContainer>
+    </div>
   );
 };
 
