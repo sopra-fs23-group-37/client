@@ -57,6 +57,8 @@ const Registration = (props) => {
         sessionStorage.getItem("token")
       );
 
+      sessionStorage.setItem("newUser", "true");
+
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
     } catch (error) {

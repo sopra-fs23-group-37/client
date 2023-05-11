@@ -180,9 +180,7 @@ const GameScreen = () => {
   };
   const selectCardFromField = (card) => {
     if (round.myTurn) {
-      // if card is already clicked
-      // TODO: implement a way to determine if a card is clicked already
-      if (false) {
+      if (selectedTableCards.some(element => card.code === element.code)) {
         const filteredArray = selectedTableCards.filter(
           (item) => item.code !== card.code
         );
@@ -418,6 +416,12 @@ const GameScreen = () => {
 
   let cardsOnTableContainer = (
     <div className="cards-on-table">
+      <div className="card-container-field">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+          className="cardback"
+        />
+      </div>
       {tableCards ? (
         tableCards.map((card) => (
           <div className="card-container-field">
