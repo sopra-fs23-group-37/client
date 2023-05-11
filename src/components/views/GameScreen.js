@@ -13,6 +13,7 @@ import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
+import { checkMove } from "helpers/validMoveCheck";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -101,72 +102,56 @@ const GameScreen = () => {
     if (data.roundStatus === "ONGOING") {
       setWaitEndOfRound(false);
     }
-
   };
   const makeMove = () => {
     console.log("Show message");
     console.log(selectedCard);
     console.log(selectedTableCards);
-    console.log(selectPutOnField);
+    console.log(tableCards);
     if (round.myTurn) {
-      // 3: JACK
-      if (selectedCard.value === "JACK") {
-        console.log("3");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          3,
-          selectedCard,
-          round.cardsOnTable
-        );
-        console.log("3");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          3,
-          selectedCard,
-          round.cardsOnTable
-        );
+      const move = checkMove(selectedCard, tableCards, selectedTableCards);
+      let moveNumber = 0;
+      switch (move) {
+        case "1":
+          moveNumber = 1;
+          break;
+        case "2":
+          moveNumber = 2;
+          break;
+        case "3":
+          moveNumber = 3;
+          break;
+        case "4":
+          moveNumber = 4;
+          break;
+        default:
+          alert("Invalid move: " + move);
+          unselectCard(selectedCard);
+          break;
       }
-      // 2: x-1 move
-      else if (selectedTableCards.length > 1) {
-        console.log("2");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          2,
-          selectedCard,
-          selectedTableCards
-        );
-      }
-      // 1: 1-1 move
-      else if (selectedTableCards.length === 1) {
-        console.log("1");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          1,
-          selectedCard,
-          selectedTableCards
-        );
-      }
-      // 4: to field
-      else {
-        console.log("4");
-        sockClient.sendMove(
-          gameId,
-          playerId,
-          4,
-          selectedCard,
-          selectedTableCards
-        );
+      if (moveNumber) {
+        if (moveNumber === 3) {
+          sockClient.sendMove(
+            gameId,
+            playerId,
+            moveNumber,
+            selectedCard,
+            round.cardsOnTable
+          );
+        } else {
+          sockClient.sendMove(
+            gameId,
+            playerId,
+            moveNumber,
+            selectedCard,
+            selectedTableCards
+          );
+        }
       }
       setSelectedTableCards([]);
       setSelectPutOnField(false);
       setSelectedCard(null);
     }
-    // use this function to build move and send via websocket
-    // check type of move
   };
   const checkButton = () => {
     if (!round.myTurn) {
@@ -180,9 +165,10 @@ const GameScreen = () => {
   };
   const selectCardFromField = (card) => {
     if (round.myTurn) {
-      if (selectedTableCards.some(element => card.code === element.code)) {
+      // if card is already clicked
+      if (selectedTableCards.includes(card)) {
         const filteredArray = selectedTableCards.filter(
-          (item) => item.code !== card.code
+          (item) => item !== card
         );
         setSelectedTableCards(filteredArray);
       } else {
@@ -192,6 +178,7 @@ const GameScreen = () => {
         ]);
       }
     }
+    console.log("selectedCard: ", selectedCard);
   };
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
@@ -209,12 +196,10 @@ const GameScreen = () => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
   };
-
   const handleError = (error) => {
     // TODO: do somethind with the error data coming back
     console.log(error);
   };
-
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -234,7 +219,6 @@ const GameScreen = () => {
       setSelectPutOnField((current) => !current);
     }
   };
-
   const startGame = async () => {
     try {
       await PlayGuard();
@@ -273,11 +257,9 @@ const GameScreen = () => {
   const handleEndGame = () => {
     history.push("/game");
   };
-
   const handleLeaveGame = () => {
     history.push("/game");
   };
-
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -289,7 +271,11 @@ const GameScreen = () => {
 
     console.log("current game data: ", game);
     console.log("current round data:", round);
-
+    console.log("selected card from hand: ", selectedCard);
+    console.log("selected table cards: ", selectedTableCards);
+    if (selectedCard) {
+      makeMove();
+    }
     // handle user leaving page
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
@@ -305,23 +291,6 @@ const GameScreen = () => {
   });
   let playerHandContainer = (
     <div className="playerHandContainer">
-      <div className="selectedCard">
-        {selectedCard ? (
-          <div className="card-container-selected">
-            <Card
-              key={selectedCard.code}
-              code={selectedCard.code}
-              suit={selectedCard.suit}
-              value={selectedCard.value}
-              image={selectedCard.image}
-              fromField={false}
-              onClick={() => unselectCard(selectedCard)}
-            />
-          </div>
-        ) : (
-          <div className="card-blank"> </div>
-        )}
-      </div>
       <div className="playerHand">
         {playerCards ? (
           playerCards.map((card) => (
@@ -341,16 +310,6 @@ const GameScreen = () => {
           <h1> Not loaded </h1>
         )}
       </div>
-
-      <div className="player-info">
-        <ButtonGame
-          width="80%"
-          background="#FFFFFF"
-          onClick={() => makeMove()}
-          disable={checkButton()}>
-          Play Move
-        </ButtonGame>
-      </div>
     </div>
   );
   const countOppPile = () => {
@@ -365,7 +324,6 @@ const GameScreen = () => {
     sessionStorage.setItem("oppCapturedCards", newNumber);
     return diff;
   };
-
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
@@ -395,14 +353,12 @@ const GameScreen = () => {
       <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
-
   let deck = (
     <div className="card-container">
       {/* Placeholder for deck */}
       <div className="card back"></div>
     </div>
   );
-
   let turnInfo = (
     <div className="turn-info-container">
       <div className="turn-info-form">
@@ -413,7 +369,6 @@ const GameScreen = () => {
       </div>
     </div>
   );
-
   let cardsOnTableContainer = (
     <div className="cards-on-table">
       <div className="card-container-field">
@@ -441,7 +396,6 @@ const GameScreen = () => {
       )}
     </div>
   );
-
   let cardsDiscard = (
     <div className="discard-pile">
       <div className="stack">
@@ -472,7 +426,6 @@ const GameScreen = () => {
       </div>
     </div>
   );
-
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -539,27 +492,26 @@ const GameScreen = () => {
         </div>
       )}
 
-      { game && opponentLeft && (
-              <div className="opponentLeft">
-                <OpponentLeft
-                  game={game}
-                  playerId={playerId}
-                  onLeaveGame={handleLeaveGame}
-                  opponentLeftReason={opponentLeftReason}
-                />
-              </div>
+      {game && opponentLeft && (
+        <div className="opponentLeft">
+          <OpponentLeft
+            game={game}
+            playerId={playerId}
+            onLeaveGame={handleLeaveGame}
+            opponentLeftReason={opponentLeftReason}
+          />
+        </div>
       )}
 
-      { game && waitEndOfRound && (
-                    <div className="waitEndOfRound">
-                      <WaitEndOfRound
-                        game={game}
-                        playerId={playerId}
-                        onLeaveGame={surrenderGame}
-                      />
-                    </div>
-            )}
-
+      {game && waitEndOfRound && (
+        <div className="waitEndOfRound">
+          <WaitEndOfRound
+            game={game}
+            playerId={playerId}
+            onLeaveGame={surrenderGame}
+          />
+        </div>
+      )}
     </div>
   );
 };
