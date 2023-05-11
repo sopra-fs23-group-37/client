@@ -17,6 +17,7 @@ const Home = () => {
   const userId = sessionStorage.getItem("userId");
   const [showModal, setShowModal] = useState(false);
   const username = sessionStorage.getItem("username");
+ 
 
   const createGame = async () => {
     try {
@@ -80,7 +81,7 @@ const Home = () => {
     try {
       const userId = sessionStorage.getItem("userId");
       const gameCode = sessionStorage.getItem("gameCode");
-      const response = await api.put("/games/join/" + gameCode + userId);
+      const response = await api.put("/games/" + gameCode  + "join/"  + userId);
       console.log(response);
 
       const game = new Game(response.data);
