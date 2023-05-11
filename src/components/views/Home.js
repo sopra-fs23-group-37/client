@@ -76,6 +76,25 @@ const Home = () => {
     }
   };
 
+  const joinPrivateGame = async () => {
+    try {
+      const userId = sessionStorage.getItem("userId");
+      const gameCode = sessionStorage.getItem("gameCode");
+      const response = await api.put("/games/join/" + gameCode + userId);
+      console.log(response);
+
+      const game = new Game(response.data);
+      console.log("gameId is: ", game.gameId);
+      history.push("/game/lobby/" + game.gameId);
+    } catch (error) {
+      alert(
+        `Something went wrong when trying to join a game: \n${handleError(
+          error
+        )}`
+      );
+    }
+  };
+
   const updateHome = (data) => {
     setOpenGames(data.numberOpenGames);
   };
@@ -158,11 +177,15 @@ const Home = () => {
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
             <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
-              Join Game
+              Join Public Game
             </ButtonHome>
             {/* <button1 class="with-icon" onClick={() => spectate()}>
             Spectate
           </button1> */}
+
+<ButtonHome className="normal with-icon" onClick={() => joinPrivateGame()}>
+              Join Private Game
+            </ButtonHome>
           </div>
         </div>
         
