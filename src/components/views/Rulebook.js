@@ -202,9 +202,9 @@ const Rulebook = () => {
                           {" "}
                           Matching numerical card values by summing up, e.g.
                           match a 5 and a 2 on the table with a 7 from your
-                          hand. This only works for cards with numbers, and you
-                          can only use one of your cards to match the cards on
-                          the table.
+                          hand. This works for cards with numbers 2-10 and the
+                          Ace as 1, and you can only use one of your cards to
+                          match the cards on the table.
                         </li>
                       </ul>
                     </li>
@@ -214,7 +214,7 @@ const Rulebook = () => {
                       necessary to select all the table cards, the Jack will
                       automatically take them all. If there are no cards on the
                       table, playing the Jack will put it on the table and it
-                      will be "dead"
+                      will be "dead".
                     </li>
                   </ol>
 
@@ -272,7 +272,8 @@ const Rulebook = () => {
                       the Queen.
                     </li>
                     <li>
-                      If you play a <strong>9</strong> you can capture 3+6.
+                      If you play a <strong>9</strong> you can capture 3+6, or
+                      Ace+8.
                     </li>
                     <li>
                       If you play a <strong>10</strong> you can capture 7+3.
