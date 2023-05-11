@@ -152,7 +152,6 @@ const EditProfile = () => {
       <div className="editProfile">
         <div className="editProfile container">
           <div className="editProfile form">
-          <div>Click on the avatar below to upload a new avatar image.</div>
               <div class="image-upload">
           
                 <label for="file-input">

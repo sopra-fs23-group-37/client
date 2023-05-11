@@ -108,8 +108,7 @@ useEffect(() => {
 
   return (
     <div className="header container" style={{ height: props.height }}>
-      <div className="title">  Welcome </div>
-      {profile &&
+        {profile &&
           <div class = "image">
               <div class="image-upload">
                 <label for="file-input">
@@ -126,6 +125,7 @@ useEffect(() => {
             <h1>{sessionStorage.getItem("username")}</h1>
             </div>
         }
+      <div className="title">  Welcome to 2-and-10</div>
       <div className="buttons">
         <button className="button" onClick={() => logout()}>
           Logout
