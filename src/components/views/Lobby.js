@@ -153,6 +153,7 @@ const Lobby = () => {
           <div className="listings-container">
             <div className="subtitle-spectator-container">
               <h2 className="subtitle">Players</h2>
+              <h2 className="game-code"> {game.gameCode ? "Code: " + game.gameCode : ""} </h2>
             </div>
             <div className="row-container">
               <h4 className="name">{game.hostUsername}</h4>
