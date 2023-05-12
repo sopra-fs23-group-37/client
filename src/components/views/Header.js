@@ -73,7 +73,13 @@ const handleChange = (e) => {
     setError('');
   } else {
     setFile(null);
-    setError('Please select an image file (png or jpg)');
+    setError(
+    <div style={{ color: 'red', marginLeft: '20px', marginTop: '22px', fontSize: '10px'}}>
+        Please select an 
+        <p style={{ marginTop: '5px' }}>image file</p>
+        <p style={{ marginTop: '2px' }}>(png or jpg)!</p>
+    </div>
+    );
   }
 };
 
