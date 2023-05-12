@@ -106,11 +106,16 @@ useEffect(() => {
 }, [profileId]);
 
 
+
 useEffect(() => {
   if (avatarUrl) {
-    saveChanges();
+    saveChanges().catch((error) => {
+      console.error(error);
+      // handle the error
+    });
   }
 }, [avatarUrl]);
+
 
   return (
     <div className="header container" style={{ height: props.height }}>

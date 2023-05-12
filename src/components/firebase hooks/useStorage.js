@@ -5,34 +5,17 @@ import { storage, ref, uploadBytes, getDownloadURL, firestore, timestamp, collec
 const useStorage = (file) => {
   const [url, setUrl] = useState(null);
 
-
   useEffect(() => {
     // references
-
     const storageRef = ref(storage, file.name);
-    /*const collectionRef = collection(firestore, 'images');*/
 
-
-    uploadBytes(storageRef, file).then(
-      () =>{
-        getDownloadURL(storageRef).then(function(url){
-        setUrl(url);  
-
-        /*const img = document.getElementById('image');
-        img.src = url
-          
-        const createdAt = timestamp
-        addDoc(collectionRef, {
-          url, 
-          createdAt
-        });*/
-
-      }
-    );
-    });
+    uploadBytes(storageRef, file)
+      .then(() => getDownloadURL(storageRef))
+      .then((url) => setUrl(url))
+      .catch((error) => console.log(error));
   }, [file]);
 
-  return {url};
+  return { url };
 }
 
 export default useStorage;

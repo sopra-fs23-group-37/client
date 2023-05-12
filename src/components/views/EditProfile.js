@@ -108,9 +108,9 @@ const EditProfile = () => {
     async function fetchProfile(profileId) {
       try {
         const response = await api.get("/users/" + profileId);
-
+  
         setProfile(response.data);
-
+  
         console.log("request to:", response.request.responseURL);
         console.log("status code:", response.status);
         console.log("status text:", response.statusText);
@@ -125,6 +125,7 @@ const EditProfile = () => {
     }
     fetchProfile(profileId);
   }, [profileId]);
+  
 
 
 
