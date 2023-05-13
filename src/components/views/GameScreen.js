@@ -13,6 +13,7 @@ import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
+import noAvatar from "image/noAvatar.png";
 import { checkMove } from "helpers/validMoveCheck";
 
 const GameScreen = () => {
@@ -450,6 +451,12 @@ const GameScreen = () => {
           {game && (
             <div className="statistics">
               <div className="player-names">
+                <div class = "image">
+                  <div class="image-upload">
+                      {game && game.guestAvatarUrl && <img alt="Avatar" src={game.guestAvatarUrl}></img>}
+                      {game && !game.guestAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                  </div>
+                </div>
                 <span className="guest-name">{game.guestUsername}</span>
                 <span className="points">
                   <span className="guest-points">{game.guestPoints || 0}</span>
@@ -457,6 +464,12 @@ const GameScreen = () => {
                   <span className="host-points">{game.hostPoints || 0}</span>
                 </span>
                 <span className="host-name">{game.hostUsername}</span>
+                <div class = "image">
+                  <div class="image-upload">
+                      {game && game.hostAvatarUrl && <img alt="Avatar" src={game.hostAvatarUrl}></img>}
+                      {!game.hostAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                  </div>
+                </div>
               </div>
               <div className="surrender-button-container">
                 <button className="surrender-button" onClick={surrenderGame}>
