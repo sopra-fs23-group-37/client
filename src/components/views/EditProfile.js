@@ -104,7 +104,7 @@ const EditProfile = () => {
   };
     
       
-  useEffect(() => {
+  useEffect(async () => {
     async function fetchProfile(profileId) {
       try {
         const response = await api.get("/users/" + profileId);
@@ -123,10 +123,9 @@ const EditProfile = () => {
         );
       }
     }
-    fetchProfile(profileId);
+    await fetchProfile(profileId);
   }, [profileId]);
   
-
 
 
   let content = <Spinner />;

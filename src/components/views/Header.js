@@ -83,7 +83,7 @@ const handleChange = (e) => {
   }
 };
 
-useEffect(() => {
+useEffect(async () => {
   async function fetchProfile(profileId) {
     try {
       const response = await api.get("/users/" + profileId);
@@ -102,7 +102,7 @@ useEffect(() => {
       );
     }
   }
-  fetchProfile(profileId);
+  await fetchProfile(profileId);
 }, [profileId]);
 
 
