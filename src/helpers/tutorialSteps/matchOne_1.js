@@ -5,13 +5,14 @@ import TutorialStep from "models/TutorialStep";
 export const matchOne_1 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
-    guestAvatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/two-and-ten3.appspot.com/o/addAvatar.jpg?alt=media&token=7ca12d3e-ea79-4294-bd86-04c878a68fa3",
-    guestPoints: 0,
-    guestStatus: "CONNECTED",
-    guestUsername: "Opponent",
+    hostAvatarUrl: null,
     hostPoints: 0,
-    hostStatus: "CONNECTED",
+    hostUsername: "Opponent",
+    hostId: "X",
+    guestPoints: 0,
+    guestId: sessionStorage.getItem("userId"),
+    guestUsername: sessionStorage.getItem("username"),
+    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
   });
   let roundInfo = new Round({
     roundStatus: "ONGOING",
@@ -27,15 +28,21 @@ export const matchOne_1 = () => {
     oppTotalPoints: 0,
     myCardsInHand: [
       {
-        code: "AD",
-        image: "https://deckofcardsapi.com/static/img/aceDiamonds.png",
+        code: "AC",
+        image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "DIAMONDS",
+        suit: "Clubs",
       },
       {
         code: "JD",
         image: "https://deckofcardsapi.com/static/img/JD.png",
         value: "JACK",
+        suit: "DIAMONDS",
+      },
+      {
+        code: "QD",
+        image: "https://deckofcardsapi.com/static/img/QD.png",
+        value: "QUEEN",
         suit: "DIAMONDS",
       },
       {
@@ -57,26 +64,20 @@ export const matchOne_1 = () => {
         suit: "CLUBS",
       },
       {
+        code: "6D",
+        image: "https://deckofcardsapi.com/static/img/6D.png",
+        value: "6",
+        suit: "DIAMONDS",
+      },
+      {
         code: "8S",
         image: "https://deckofcardsapi.com/static/img/8S.png",
         value: "8",
         suit: "SPADES",
       },
-      {
-        code: "2D",
-        image: "https://deckofcardsapi.com/static/img/2D.png",
-        value: "2",
-        suit: "DIAMONDS",
-      },
-      {
-        code: "4C",
-        image: "https://deckofcardsapi.com/static/img/4C.png",
-        value: "4",
-        suit: "CLUBS",
-      },
     ],
     myCardsInDiscard: [],
-    oppCards: 7,
+    oppCards: 8,
     oppCardsInDiscard: [],
     cardsOnTable: [
       {
@@ -113,9 +114,9 @@ export const matchOne_1 = () => {
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,
-    prompt: ["First, select the 8 of Clubs from the table."],
+    prompt: ["First, select the Queen of Hearts from the table."],
     selectionRequired: true,
-    selectableCardsTable: ["8C"],
+    selectableCardsTable: ["QH"],
     selectableCardHand: null,
     selectedCardsTable: null,
   });

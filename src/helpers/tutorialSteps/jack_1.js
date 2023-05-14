@@ -2,16 +2,17 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const opponent = () => {
+export const jack_1 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
-    guestAvatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/two-and-ten3.appspot.com/o/addAvatar.jpg?alt=media&token=7ca12d3e-ea79-4294-bd86-04c878a68fa3",
-    guestPoints: 0,
-    guestStatus: "CONNECTED",
-    guestUsername: "Opponent",
+    hostAvatarUrl: null,
     hostPoints: 0,
-    hostStatus: "CONNECTED",
+    hostUsername: "Opponent",
+    hostId: "X",
+    guestPoints: 0,
+    guestId: sessionStorage.getItem("userId"),
+    guestUsername: sessionStorage.getItem("username"),
+    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
   });
   let roundInfo = new Round({
     roundStatus: "ONGOING",
@@ -27,10 +28,10 @@ export const opponent = () => {
     oppTotalPoints: 0,
     myCardsInHand: [
       {
-        code: "AD",
-        image: "https://deckofcardsapi.com/static/img/aceDiamonds.png",
+        code: "AC",
+        image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "DIAMONDS",
+        suit: "Clubs",
       },
       {
         code: "JD",
@@ -50,43 +51,15 @@ export const opponent = () => {
         value: "10",
         suit: "HEARTS",
       },
-      {
-        code: "2C",
-        image: "https://deckofcardsapi.com/static/img/2C.png",
-        value: "2",
-        suit: "CLUBS",
-      },
 
-      {
-        code: "2D",
-        image: "https://deckofcardsapi.com/static/img/2D.png",
-        value: "2",
-        suit: "DIAMONDS",
-      },
-      {
-        code: "4C",
-        image: "https://deckofcardsapi.com/static/img/4C.png",
-        value: "4",
-        suit: "CLUBS",
-      },
-    ],
-    myCardsInDiscard: [
       {
         code: "8S",
         image: "https://deckofcardsapi.com/static/img/8S.png",
         value: "8",
         suit: "SPADES",
       },
-      {
-        code: "8C",
-        image: "https://deckofcardsapi.com/static/img/8C.png",
-        value: "8",
-        suit: "CLUBS",
-      },
     ],
-    oppCards: 7,
-    oppCardsInDiscard: [],
-    cardsOnTable: [
+    myCardsInDiscard: [
       {
         code: "QH",
         image: "https://deckofcardsapi.com/static/img/QH.png",
@@ -94,10 +67,51 @@ export const opponent = () => {
         suit: "HEARTS",
       },
       {
+        code: "QD",
+        image: "https://deckofcardsapi.com/static/img/QD.png",
+        value: "QUEEN",
+        suit: "DIAMONDS",
+      },
+      {
         code: "4D",
         image: "https://deckofcardsapi.com/static/img/4D.png",
         value: "4",
         suit: "DIAMONDS",
+      },
+      {
+        code: "2C",
+        image: "https://deckofcardsapi.com/static/img/2C.png",
+        value: "2",
+        suit: "CLUBS",
+      },
+      {
+        code: "6D",
+        image: "https://deckofcardsapi.com/static/img/6D.png",
+        value: "6",
+        suit: "DIAMONDS",
+      },
+    ],
+    oppCards: 8,
+    oppCardsInDiscard: [],
+    cardsOnTable: [
+      {
+        code: "8C",
+        image: "https://deckofcardsapi.com/static/img/8C.png",
+        value: "8",
+        suit: "CLUBS",
+      },
+
+      {
+        code: "KH",
+        image: "https://deckofcardsapi.com/static/img/KH.png",
+        value: "KING",
+        suit: "HEARTS",
+      },
+      {
+        code: "7S",
+        image: "https://deckofcardsapi.com/static/img/7S.png",
+        value: "7",
+        suit: "SPADES",
       },
     ],
     deckCards: true,
@@ -122,15 +136,10 @@ export const opponent = () => {
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,
-    prompt: [
-      "Your opponent just captured the 6 of Spades with the 6 of Hearts.",
-      "You can see their capture in the top left corner of the screen.",
-      "Going forward, we will skip the opponent's turn to make it easier.",
-      "Did you know that you can capture multiple cards on their table, if their total value matches one of your cards?",
-    ],
-    selectionRequired: false,
+    prompt: ["The Jack is a joker, play it to capture all cards on the table!"],
+    selectionRequired: true,
     selectableCardsTable: null,
-    selectableCardHand: null,
+    selectableCardHand: "JD",
     preSelectedCardsTable: null,
     finished: false,
   });

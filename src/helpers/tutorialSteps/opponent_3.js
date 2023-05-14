@@ -2,7 +2,7 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const matchTwo_1 = () => {
+export const opponent_3 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
     hostAvatarUrl: null,
@@ -53,12 +53,6 @@ export const matchTwo_1 = () => {
       },
 
       {
-        code: "6D",
-        image: "https://deckofcardsapi.com/static/img/6D.png",
-        value: "6",
-        suit: "DIAMONDS",
-      },
-      {
         code: "8S",
         image: "https://deckofcardsapi.com/static/img/8S.png",
         value: "8",
@@ -78,22 +72,11 @@ export const matchTwo_1 = () => {
         value: "QUEEN",
         suit: "DIAMONDS",
       },
-    ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
-    cardsOnTable: [
       {
         code: "4D",
         image: "https://deckofcardsapi.com/static/img/4D.png",
         value: "4",
         suit: "DIAMONDS",
-      },
-
-      {
-        code: "8C",
-        image: "https://deckofcardsapi.com/static/img/8C.png",
-        value: "8",
-        suit: "CLUBS",
       },
       {
         code: "2C",
@@ -102,10 +85,33 @@ export const matchTwo_1 = () => {
         suit: "CLUBS",
       },
       {
+        code: "6D",
+        image: "https://deckofcardsapi.com/static/img/6D.png",
+        value: "6",
+        suit: "DIAMONDS",
+      },
+    ],
+    oppCards: 8,
+    oppCardsInDiscard: [],
+    cardsOnTable: [
+      {
+        code: "8C",
+        image: "https://deckofcardsapi.com/static/img/8C.png",
+        value: "8",
+        suit: "CLUBS",
+      },
+
+      {
         code: "KH",
         image: "https://deckofcardsapi.com/static/img/KH.png",
         value: "KING",
         suit: "HEARTS",
+      },
+      {
+        code: "7S",
+        image: "https://deckofcardsapi.com/static/img/7S.png",
+        value: "7",
+        suit: "SPADES",
       },
     ],
     deckCards: true,
@@ -130,11 +136,9 @@ export const matchTwo_1 = () => {
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,
-    prompt: [
-      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
-    ],
-    selectionRequired: true,
-    selectableCardsTable: ["2C", "4D"],
+    prompt: ["Your opponent set down a 7 of Spades. Your turn again!"],
+    selectionRequired: false,
+    selectableCardsTable: null,
     selectableCardHand: null,
     preSelectedCardsTable: null,
     finished: false,

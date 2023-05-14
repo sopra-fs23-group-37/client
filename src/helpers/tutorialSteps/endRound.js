@@ -123,11 +123,7 @@ export const endRound = () => {
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "Here you can see how many point you and your opponent got.",
-      "You got two points for total cards, because you captured more cards overall.",
-      "Your opponent captured more spades cards than you, so they get an extra point.",
-      "Two special cards also give extra points: the 2 of Spades and the 10 of Diamonds. Hence the name, 2-and-10!",
-      "Normally, you would keep playing rounds now, but let's just skip ahead to the end of the game.",
+      "Here you can see how many point you and your opponent got. You got two points for total cards, because you captured more cards overall. Your opponent captured more spades cards than you, so they get an extra point. Two special cards also give extra points: the 2 of Spades and the 10 of Diamonds. Hence the name, 2-and-10!Normally, you would keep playing rounds now, but let's just skip ahead to the end of the game.",
     ],
     selectionRequired: false,
     selectableCardsTable: null,

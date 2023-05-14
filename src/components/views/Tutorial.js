@@ -163,6 +163,8 @@ const Tutorial = () => {
         }
       }
       console.log("All required table cards have been correctly selected");
+      setSelectedTableCards([]);
+      setSelectedCard(null);
       return true;
     }
 
@@ -173,6 +175,8 @@ const Tutorial = () => {
     }
     if (selectableCardHand === selectedCard.code) {
       console.log("the correct card from the hand has been selected");
+      setSelectedTableCards([]);
+      setSelectedCard(null);
       return true;
     } else {
       console.log(
@@ -241,7 +245,11 @@ const Tutorial = () => {
     console.log("selectedCard: ", selectedCard);
   };
   const selectCardFromHand = (card) => {
-    if (round.myTurn && selectableCardHand != null) {
+    if (
+      round.myTurn &&
+      selectableCardHand != null &&
+      card.code === selectableCardHand
+    ) {
       const filteredArray = playerCards.filter(
         (item) => item.code !== card.code
       );
@@ -265,10 +273,12 @@ const Tutorial = () => {
 
   const handleEndRound = () => {
     setEndOfRound(false);
+    getNextStep(step);
   };
 
   const handleEndGame = () => {
-    history.push("/game");
+    setEndOfGame(false);
+    getNextStep(step);
   };
 
   const handleLeaveGame = () => {

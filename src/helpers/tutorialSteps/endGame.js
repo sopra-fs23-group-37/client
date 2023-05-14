@@ -124,10 +124,7 @@ export const endGame = () => {
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "Your opponent just captured the 6 of Spades with the 6 of Hearts.",
-      "You can see their capture in the top left corner of the screen.",
-      "Going forward, we will skip the opponent's turn to make it easier.",
-      "Did you know that you can capture multiple cards on their table, if their total value matches one of your cards?",
+      "The game finishes when one player has at least 11 points, and at least 2 more points than their opponent. Sorry, it looks like you lost this one. Try playing for real and see if you have better luck!",
     ],
     selectionRequired: false,
     selectableCardsTable: null,

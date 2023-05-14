@@ -2,7 +2,7 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const matchTwo_1 = () => {
+export const setCard_1 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
     hostAvatarUrl: null,
@@ -51,7 +51,12 @@ export const matchTwo_1 = () => {
         value: "10",
         suit: "HEARTS",
       },
-
+      {
+        code: "2C",
+        image: "https://deckofcardsapi.com/static/img/2C.png",
+        value: "2",
+        suit: "CLUBS",
+      },
       {
         code: "6D",
         image: "https://deckofcardsapi.com/static/img/6D.png",
@@ -95,18 +100,6 @@ export const matchTwo_1 = () => {
         value: "8",
         suit: "CLUBS",
       },
-      {
-        code: "2C",
-        image: "https://deckofcardsapi.com/static/img/2C.png",
-        value: "2",
-        suit: "CLUBS",
-      },
-      {
-        code: "KH",
-        image: "https://deckofcardsapi.com/static/img/KH.png",
-        value: "KING",
-        suit: "HEARTS",
-      },
     ],
     deckCards: true,
     myTurn: true,
@@ -131,11 +124,11 @@ export const matchTwo_1 = () => {
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
+      "It's your turn again. When you can't make a match, or want to set up a better one, you can set a card on the table. Select the 2 of Clubs from your hand to set it on the table",
     ],
     selectionRequired: true,
-    selectableCardsTable: ["2C", "4D"],
-    selectableCardHand: null,
+    selectableCardsTable: null,
+    selectableCardHand: "2C",
     preSelectedCardsTable: null,
     finished: false,
   });

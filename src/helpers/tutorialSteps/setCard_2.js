@@ -2,7 +2,7 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const matchTwo_1 = () => {
+export const setCard_2 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
     hostAvatarUrl: null,
@@ -101,15 +101,9 @@ export const matchTwo_1 = () => {
         value: "2",
         suit: "CLUBS",
       },
-      {
-        code: "KH",
-        image: "https://deckofcardsapi.com/static/img/KH.png",
-        value: "KING",
-        suit: "HEARTS",
-      },
     ],
     deckCards: true,
-    myTurn: true,
+    myTurn: false,
     opponentLeft: null,
     opponentLeftReason: null,
     oppLastCapture: [
@@ -131,10 +125,10 @@ export const matchTwo_1 = () => {
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
+      "Your 2 of Clubs is now on the table and it's your opponent's turn",
     ],
-    selectionRequired: true,
-    selectableCardsTable: ["2C", "4D"],
+    selectionRequired: false,
+    selectableCardsTable: null,
     selectableCardHand: null,
     preSelectedCardsTable: null,
     finished: false,
