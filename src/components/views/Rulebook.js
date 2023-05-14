@@ -309,6 +309,10 @@ const Rulebook = () => {
                     <li>10 of Diamonds: 1 points</li>
                     <li>2 of Clubs: 1 point</li>
                   </ul>
+                  <p>
+                    If both players capture the same number of cards, neither
+                    gets the points for highest number of cards.
+                  </p>
                 </div>
               </div>
             )}
