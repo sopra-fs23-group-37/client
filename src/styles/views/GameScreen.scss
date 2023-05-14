@@ -152,11 +152,9 @@ $card-background-image: url(../image/card-background.jpg);
           height: 100%;
           overflow: auto;
           background-color: rgba(0,0,0,0.4);
-        
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 200;
 
           .rulebook-image {
             max-width: 80%;
