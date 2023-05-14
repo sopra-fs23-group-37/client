@@ -2,36 +2,36 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const welcome = () => {
+export const endGame = () => {
   let gameInfo = new Game({
-    gameStatus: "ONGOING",
-    hostAvatarUrl: null,
-    hostPoints: 0,
-    hostUsername: "Opponent",
-    hostId: "X",
-    guestPoints: 0,
-    guestId: sessionStorage.getItem("userId"),
-    guestUsername: sessionStorage.getItem("username"),
-    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
+    gameStatus: "FINISHED",
+    guestAvatarUrl:
+      "https://firebasestorage.googleapis.com/v0/b/two-and-ten3.appspot.com/o/addAvatar.jpg?alt=media&token=7ca12d3e-ea79-4294-bd86-04c878a68fa3",
+    guestPoints: 11,
+    guestStatus: "CONNECTED",
+    guestUsername: "Opponent",
+    hostPoints: 9,
+    hostStatus: "CONNECTED",
+    winnerUsername: "Opponent",
   });
   let roundInfo = new Round({
-    roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
+    roundStatus: "FINISHED",
+    myPointsTotalCards: 2,
     myPointClubs: 0,
     myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
+    myTenOfDiamonds: 1,
     myTotalPoints: 0,
     oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
+    oppPointClubs: 1,
+    oppTwoOfClubs: 1,
     oppTenOfDiamonds: 0,
     oppTotalPoints: 0,
     myCardsInHand: [
       {
-        code: "AC",
-        image: "https://deckofcardsapi.com/static/img/AC.png",
+        code: "AD",
+        image: "https://deckofcardsapi.com/static/img/aceDiamonds.png",
         value: "ACE",
-        suit: "Clubs",
+        suit: "DIAMONDS",
       },
       {
         code: "JD",
@@ -57,12 +57,7 @@ export const welcome = () => {
         value: "2",
         suit: "CLUBS",
       },
-      {
-        code: "8S",
-        image: "https://deckofcardsapi.com/static/img/8S.png",
-        value: "8",
-        suit: "SPADES",
-      },
+
       {
         code: "2D",
         image: "https://deckofcardsapi.com/static/img/2D.png",
@@ -76,7 +71,20 @@ export const welcome = () => {
         suit: "CLUBS",
       },
     ],
-    myCardsInDiscard: [],
+    myCardsInDiscard: [
+      {
+        code: "8S",
+        image: "https://deckofcardsapi.com/static/img/8S.png",
+        value: "8",
+        suit: "SPADES",
+      },
+      {
+        code: "8C",
+        image: "https://deckofcardsapi.com/static/img/8C.png",
+        value: "8",
+        suit: "CLUBS",
+      },
+    ],
     oppCards: 7,
     oppCardsInDiscard: [],
     cardsOnTable: [
@@ -92,6 +100,12 @@ export const welcome = () => {
         value: "4",
         suit: "DIAMONDS",
       },
+    ],
+    deckCards: true,
+    myTurn: true,
+    opponentLeft: null,
+    opponentLeftReason: null,
+    oppLastCapture: [
       {
         code: "6S",
         image: "https://deckofcardsapi.com/static/img/6S.png",
@@ -99,32 +113,27 @@ export const welcome = () => {
         suit: "SPADES",
       },
       {
-        code: "8C",
-        image: "https://deckofcardsapi.com/static/img/8C.png",
-        value: "8",
-        suit: "CLUBS",
+        code: "6H",
+        image: "https://deckofcardsapi.com/static/img/6H.png",
+        value: "6",
+        suit: "HEARTS",
       },
     ],
-    deckCards: true,
-    myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
-    oppLastCapture: [],
   });
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "Welcome to the 2-and-10 Tutorial!",
-      "At the beginning of a round, both you and your opponent receive 8 cards. You can see your cards at the bottom, and the back of your opponent's cards at the top",
-      "The round starts with 4 cards on the table, which is in the middle of the screen",
-      "Your goal will be to capture cards from the table, using the cards in your hands",
-      "Let's try a one to one match now!",
+      "Your opponent just captured the 6 of Spades with the 6 of Hearts.",
+      "You can see their capture in the top left corner of the screen.",
+      "Going forward, we will skip the opponent's turn to make it easier.",
+      "Did you know that you can capture multiple cards on their table, if their total value matches one of your cards?",
     ],
     selectionRequired: false,
     selectableCardsTable: null,
     selectableCardHand: null,
-    selectedCardsTable: null,
+    preSelectedCardsTable: null,
+    finished: false,
   });
   console.log("returning step data: ", stepData);
   return stepData;
