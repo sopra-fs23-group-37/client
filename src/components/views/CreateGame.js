@@ -10,19 +10,35 @@ import { useState } from "react";
 const CreateGame = () => {
   const history = useHistory();
   const [gameModus, setGameModus] = useState("Private");
-  const [mode, setMode] = useState("Normal");
-
   const createGame = async () => {
     try {
       const userId = sessionStorage.getItem("userId");
       const host = new User();
       host.userId = userId;
-      const requestBody = JSON.stringify({ host });
+      const isPrivate = true;
+
+      if (gameModus === "Private") {
+      const requestBody = JSON.stringify({ host, isPrivate });
       const response = await api.post("/games", requestBody);
       console.log(response);
       const game = new Game(response.data);
+
       console.log(game.gameId);
       history.push("/game/lobby/" + game.gameId);
+      } 
+      
+      if (gameModus === "Public") {
+        const isPrivate = false;
+        const requestBody = JSON.stringify({ host, isPrivate });
+        const response = await api.post("/games", requestBody);
+        console.log(response);
+        const game = new Game(response.data);
+  
+        console.log(game.gameId);
+        history.push("/game/lobby/" + game.gameId);
+      }
+
+      
     } catch (error) {
       alert(
         `Something went wrong when trying to create a game: \n${handleError(
@@ -32,6 +48,8 @@ const CreateGame = () => {
     }
   };
 
+  
+
   const homescreen = () => {
     history.push("/game/dashboard");
   };
@@ -39,36 +57,25 @@ const CreateGame = () => {
   const handleGameModusChange = (e) => {
     setGameModus(e.target.value);
   };
-  const handleModeChange = (e) => {
-    setMode(e.target.value);
-  };
+ 
 
   return (
     <BaseContainer>
       <div className="createGame container">
         <div className="createGame title-container">
-          <h1 className="createGame title-lobby">Game Settings</h1>
+          <h1 className="createGame title-lobby">    Game Settings</h1>
+        
         </div>
         <div className="createGame modus-container">
           <h4>Game: </h4>
           <select value={gameModus} onChange={handleGameModusChange}>
             <option value="Public">Public</option>
-            {
-              //<option value="Private">Private</option>
-            }
+            <option value="Private">Private</option>
           </select>
-          Private Games will be available in the future
+        
         </div>
-        <div className="createGame modus-container">
-          <h4>Mode: </h4>
-          <select value={mode} onChange={handleModeChange}>
-            <option value="Normal">Normal</option>
-            {
-              //<option value="Speed">Speed</option>
-            }
-          </select>
-          Speed Mode will be available in the future
-        </div>
+      
+
         <div className="createGame button-container">
           <Button width="100%" onClick={() => homescreen()}>
             Back
