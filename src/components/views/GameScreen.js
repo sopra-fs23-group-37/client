@@ -316,17 +316,6 @@ const GameScreen = () => {
           <h1> Not loaded </h1>
         )}
       </div>
-
-      <div className="player-info">
-        <ButtonGame
-          width="80%"
-          background="#FFFFFF"
-          onClick={() => makeMove()}
-          disable={checkButton()}
-        >
-          Play Move
-        </ButtonGame>
-      </div>
     </div>
   );
 
