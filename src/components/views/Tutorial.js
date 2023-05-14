@@ -29,8 +29,6 @@ const Tutorial = () => {
   const [time, setTime] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
 
-
-  const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
   const username = sessionStorage.getItem("username");
   const avatarUrl = sessionStorage.getItem("avatarUrl");
@@ -97,7 +95,7 @@ const Tutorial = () => {
     return true;
   };
 
-  useEffect (() => {
+  useEffect(() => {
     let interval;
     if (timerRunning) {
       interval = setInterval(() => {
@@ -111,7 +109,6 @@ const Tutorial = () => {
     console.log("tutorial starting");
     getNextStep(0);
   };
-
 
   const checkStepComplete = () => {
     console.log("Checking if the tutorial step has been completed");
@@ -190,26 +187,25 @@ const Tutorial = () => {
   };
 
   const updateGame = (data) => {
-
     if (!endOfTutorial) {
-        // take the game update data and set it in here
-        console.log("game data received: ", data);
-        setGame(new Game(data));
-        if (data.gameStatus === "FINISHED") {
-          console.log("the game has ended!");
-          setEndOfGame(true);
-        }
-        if (
-          data.gameStatus === "DISCONNECTED" ||
-          data.gameStatus === "SURRENDERED"
-        ) {
-          setOpponentLeft(true);
-          setOpponentLeftReason(data.endGameReason);
-          setEndOfRound(false);
-          setWaitEndOfRound(false);
-        }
-      };
+      // take the game update data and set it in here
+      console.log("game data received: ", data);
+      setGame(new Game(data));
+      if (data.gameStatus === "FINISHED") {
+        console.log("the game has ended!");
+        setEndOfGame(true);
+      }
+      if (
+        data.gameStatus === "DISCONNECTED" ||
+        data.gameStatus === "SURRENDERED"
+      ) {
+        setOpponentLeft(true);
+        setOpponentLeftReason(data.endGameReason);
+        setEndOfRound(false);
+        setWaitEndOfRound(false);
+      }
     }
+  };
 
   const updateRound = (data) => {
     console.log("round update received:", data);
@@ -287,22 +283,22 @@ const Tutorial = () => {
 
   useEffect(() => {
     if (!endOfTutorial) {
-    console.log("Use Effect started");
-    console.log("current game data: ", game);
-    console.log("current round data:", round);
+      console.log("Use Effect started");
+      console.log("current game data: ", game);
+      console.log("current round data:", round);
 
-    if (!step) {
-      console.log("No step set yet, starting tutorial");
-      startTutorial();
-    }
+      if (!step) {
+        console.log("No step set yet, starting tutorial");
+        startTutorial();
+      }
 
-    if (checkStepComplete()) {
-      console.log("Step completed: ", step);
-      let completed = getNextStep(step);
-      console.log(
-        completed ? "The new step has been successfully loaded." : ""
-      );
-    }
+      if (checkStepComplete()) {
+        console.log("Step completed: ", step);
+        let completed = getNextStep(step);
+        console.log(
+          completed ? "The new step has been successfully loaded." : ""
+        );
+      }
     }
   });
 
@@ -457,7 +453,6 @@ const Tutorial = () => {
     }
   };
 
-
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -599,10 +594,7 @@ const Tutorial = () => {
 
       {endOfTutorial && (
         <div className="endOfRound">
-          <EndOfTutorial
-            time={time}
-            onEndTutorial={exitTutorial}
-          />
+          <EndOfTutorial time={time} onEndTutorial={exitTutorial} />
         </div>
       )}
     </div>
