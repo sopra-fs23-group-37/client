@@ -1,30 +1,38 @@
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-import { ButtonGame } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import OpponentLeft from "components/views/OpponentLeft";
-import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
-import { api } from "helpers/api";
 import myImage from "image/Sheet.png";
 import noAvatar from "image/noAvatar.png";
-import { checkMove } from "helpers/validMoveCheck";
+import { tutorialStepData } from "helpers/tutorialStepData";
+import EndOfTutorial from "components/views/EndOfTutorial";
 
+const Tutorial = () => {
+  // data points for tutorial
+  const [step, setStep] = useState(null);
+  const [promptText, setPromptText] = useState(null);
+  const [selectableCardsTable, setSelectableCardsTable] = useState(null);
+  const [selectableCardHand, setSelectableCardHand] = useState(null);
+  const [selectionRequired, setSelectionRequired] = useState(null);
+  const [promptIndex, setPromptIndex] = useState(0);
 
-const GameScreen = () => {
   const [rulebookVisible, setRulebookVisible] = useState(false);
-  const gameId = useParams().gameId;
+  const [endOfTutorial, setEndOfTutorial] = useState(false);
+
   const playerId = parseInt(sessionStorage.getItem("userId"));
+  const username = sessionStorage.getItem("username");
+  const avatarUrl = sessionStorage.getItem("avatarUrl");
+
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
-  const [gameStarted, setGameStarted] = useState(false);
   const [round, setRound] = useState(new Round());
   // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(false);
@@ -35,7 +43,7 @@ const GameScreen = () => {
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
-  const [opponentDiscard, setOpponentDiscard] = useState([]);
+
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
   // true if the opponent has left
@@ -52,54 +60,147 @@ const GameScreen = () => {
 
   const history = useHistory();
 
-  const PlayGuard = async () => {
-    try {
-      const response = await api.get("games/" + gameId);
-      if (
-        response.data.host.userId === playerId ||
-        response.data.guest.userId === playerId
-      ) {
-        return true;
-      } else {
-        alert("You tried to join a lobby you're not part of!");
-        history.push("/game");
-        return false;
-      }
-    } catch (error) {
-      window.location.reload();
-      console.log("There was an error: ", error.message);
+  const getNextStep = (currentStep) => {
+    setStep(step + 1);
+    console.log("Getting data for step ", currentStep + 1);
+    let stepData = tutorialStepData(
+      currentStep + 1,
+      username,
+      playerId,
+      avatarUrl
+    );
+    if (stepData.finished) {
+      setEndOfTutorial(stepData.finished);
+      return;
     }
-    return false;
+    updateGame(stepData.game);
+    updateRound(stepData.round);
+    setPromptText(stepData.prompt);
+    console.log(
+      "Current and new selecatable cards from table: ",
+      selectableCardsTable,
+      stepData.selectableCardsTable
+    );
+    setSelectionRequired(stepData.selectionRequired);
+    setSelectableCardsTable(stepData.selectableCardsTable);
+    console.log(
+      "Current and new selecatable cards from hand: ",
+      selectableCardHand,
+      stepData.selectableCardHand
+    );
+    setSelectableCardHand(stepData.selectableCardHand);
+    return true;
+  };
+
+
+  const startTutorial = () => {
+    console.log("tutorial starting");
+    getNextStep(0);
+  };
+
+  const checkStepComplete = () => {
+    console.log("Checking if the tutorial step has been completed");
+
+    console.log("Selectable card from hand: ", selectableCardHand);
+    console.log("Selected card from hand: ", selectedCard);
+    console.log("Selectable cards from Table: ", selectableCardsTable);
+    console.log("Selected cards from Table: ", selectedTableCards);
+
+    let selectedCardCodes = [];
+
+    // step is not just text and check if the selectable cards have been set
+    if (
+      !selectionRequired ||
+      (selectableCardHand == null && selectableCardsTable == null)
+    ) {
+      console.log("No required cards set for this step.");
+      return false;
+    }
+    // if cards from the table need to be selected and none have been selected yet, return false
+    else if (selectableCardsTable != null && selectedTableCards.length === 0) {
+      console.log("Table cards need to be selected");
+      return false;
+    }
+
+    // if cards from the table need to be selected, check them
+    if (selectableCardsTable != null) {
+      console.log("checking selection from table");
+      for (let i = 0; i < selectedTableCards.length; i++) {
+        let code = selectedTableCards[i].code;
+        selectedCardCodes.push(code);
+        if (!selectableCardsTable.includes(code)) {
+          // return false if a card has been selected that was not supposed to be selected
+          console.log("A wrong card has been selected from the table");
+          return false;
+        }
+      }
+      console.log("No wrong cards have been selected");
+      console.log("Selected Card codes include: ", selectedCardCodes);
+
+      for (let i = 0; i < selectableCardsTable.length; i++) {
+        if (!selectedCardCodes.includes(selectableCardsTable[i])) {
+          // return false if not all cards that should be selected have been selected
+          console.log(
+            "Not all required cards have been selected from the table yet. Missing card: ",
+            selectableCardsTable[i]
+          );
+          return false;
+        }
+      }
+      console.log("All required table cards have been correctly selected");
+      setSelectedTableCards([]);
+      setSelectedCard(null);
+      return true;
+    }
+
+    // check selection from the hand
+    if (selectedCard == null) {
+      console.log("no card has been selected from the hand yet");
+      return false;
+    }
+    if (selectableCardHand === selectedCard.code) {
+      console.log("the correct card from the hand has been selected");
+      setSelectedTableCards([]);
+      setSelectedCard(null);
+      return true;
+    } else {
+      console.log(
+        "the right card from the hand has not yet been selected. The selected cards code is ",
+        selectedCard.code,
+        "and the expected code is ",
+        selectableCardHand
+      );
+      return false;
+    }
   };
 
   const updateGame = (data) => {
-    // take the game update data and set it in here
-    console.log("game data received: ", data);
-    setGame(new Game(data));
-    if (data.gameSatus === "ONGOING") {
-      setGameStarted(true);
-    }
-    if (data.gameStatus === "FINISHED") {
-      console.log("the game has ended!");
-      setEndOfGame(true);
-    }
-    if (
-      data.gameStatus === "DISCONNECTED" ||
-      data.gameStatus === "SURRENDERED"
-    ) {
-      setOpponentLeft(true);
-      setOpponentLeftReason(data.endGameReason);
-      setEndOfRound(false);
-      setWaitEndOfRound(false);
+    if (!endOfTutorial) {
+      // take the game update data and set it in here
+      console.log("game data received: ", data);
+      setGame(new Game(data));
+      if (data.gameStatus === "FINISHED") {
+        console.log("the game has ended!");
+        setEndOfGame(true);
+      }
+      if (
+        data.gameStatus === "DISCONNECTED" ||
+        data.gameStatus === "SURRENDERED"
+      ) {
+        setOpponentLeft(true);
+        setOpponentLeftReason(data.endGameReason);
+        setEndOfRound(false);
+        setWaitEndOfRound(false);
+      }
     }
   };
+
   const updateRound = (data) => {
     console.log("round update received:", data);
     setRound(new Round(data));
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
-    setOpponentDiscard(data.oppCardsInDiscard);
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
@@ -109,66 +210,7 @@ const GameScreen = () => {
       setWaitEndOfRound(false);
     }
   };
-  const makeMove = () => {
-    console.log("Show message");
-    console.log(selectedCard);
-    console.log(selectedTableCards);
-    console.log(tableCards);
-    if (round.myTurn) {
-      const move = checkMove(selectedCard, tableCards, selectedTableCards);
-      let moveNumber = 0;
-      switch (move) {
-        case "1":
-          moveNumber = 1;
-          break;
-        case "2":
-          moveNumber = 2;
-          break;
-        case "3":
-          moveNumber = 3;
-          break;
-        case "4":
-          moveNumber = 4;
-          break;
-        default:
-          alert("Invalid move: " + move);
-          unselectCard(selectedCard);
-          break;
-      }
-      if (moveNumber) {
-        if (moveNumber === 3) {
-          sockClient.sendMove(
-            gameId,
-            playerId,
-            moveNumber,
-            selectedCard,
-            round.cardsOnTable
-          );
-        } else {
-          sockClient.sendMove(
-            gameId,
-            playerId,
-            moveNumber,
-            selectedCard,
-            selectedTableCards
-          );
-        }
-      }
-      setSelectedTableCards([]);
-      setSelectPutOnField(false);
-      setSelectedCard(null);
-    }
-  };
-  const checkButton = () => {
-    if (!round.myTurn) {
-      return false;
-    } else if (selectedCard) {
-      return false;
-    } else if (selectedTableCards.length > 0 && selectPutOnField) {
-      return false;
-    }
-    return true;
-  };
+
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
@@ -187,7 +229,11 @@ const GameScreen = () => {
     console.log("selectedCard: ", selectedCard);
   };
   const selectCardFromHand = (card) => {
-    if (round.myTurn) {
+    if (
+      round.myTurn &&
+      selectableCardHand != null &&
+      card.code === selectableCardHand
+    ) {
       const filteredArray = playerCards.filter(
         (item) => item.code !== card.code
       );
@@ -198,103 +244,52 @@ const GameScreen = () => {
       setSelectedCard(card);
     }
   };
-  const unselectCard = (card) => {
-    setPlayerCards((playerCards) => [...playerCards, card]);
-    setSelectedCard(null);
-  };
-  const handleError = (error) => {
-    // TODO: do somethind with the error data coming back
-    console.log(error);
-  };
-  const checkWebsocket = () => {
-    // check that the websocket remains connected and add the updateGame function
-    console.log("websocket status:", sockClient.isConnected());
-    if (!sockClient.isConnected()) {
-      console.log("websocket is not connected! Attempting reconnect");
-      if (
-        sockClient.addOnMessageFunction("game", updateGame) &&
-        sockClient.addOnMessageFunction("round", updateRound) &&
-        sockClient.addOnMessageFunction("error", handleError)
-      ) {
-        sockClient.reconnect(gameId, playerId);
-      }
-    }
-  };
+
   const toggleSelectPutOnField = () => {
     if (round.myTurn) {
       setSelectPutOnField((current) => !current);
     }
   };
-  const startGame = async () => {
-    try {
-      await PlayGuard();
-    } catch (error) {
-      console.log(error.message);
-    }
-    // check that the websocket is still connected
-    if (!sockClient.isConnected()) {
-      console.log("can't start game until the websocket is connected!");
-      return;
-    }
-    // add subscriptions
-    console.log("adding subscriptions");
-    if (
-      sockClient.addOnMessageFunction("game", updateGame) &&
-      sockClient.addOnMessageFunction("round", updateRound) &&
-      sockClient.addOnMessageFunction("error", handleError)
-    ) {
-      // start the game
-      console.log("starting the game");
-      sockClient.startGame(gameId, playerId);
-      setGameStarted(true);
-    }
-  };
-  const surrenderGame = () => {
-    sockClient.surrender(gameId, playerId);
-    setWaitEndOfRound(false);
-    setEndOfRound(false);
-  };
-  const handleEndRound = () => {
-    console.log("user is confirming that the round ended");
-    sockClient.confirmEndOfRound(gameId, playerId);
-    setEndOfRound(false);
-    setWaitEndOfRound(true);
-  };
-  const handleEndGame = () => {
+
+  const exitTutorial = () => {
     history.push("/game");
   };
+
+  const handleEndRound = () => {
+    setEndOfRound(false);
+    getNextStep(step);
+  };
+
+  const handleEndGame = () => {
+    setEndOfGame(false);
+    getNextStep(step);
+  };
+
   const handleLeaveGame = () => {
     history.push("/game");
   };
+
   useEffect(() => {
-    console.log("Use Effect started");
-    checkWebsocket();
+    if (!endOfTutorial) {
+      console.log("Use Effect started");
+      console.log("current game data: ", game);
+      console.log("current round data:", round);
 
-    // if the game has not started yet, start the game
-    if (!gameStarted) {
-      startGame();
+      if (!step) {
+        console.log("No step set yet, starting tutorial");
+        startTutorial();
+      }
+
+      if (checkStepComplete()) {
+        console.log("Step completed: ", step);
+        let completed = getNextStep(step);
+        console.log(
+          completed ? "The new step has been successfully loaded." : ""
+        );
+      }
     }
-
-    console.log("current game data: ", game);
-    console.log("current round data:", round);
-    console.log("selected card from hand: ", selectedCard);
-    console.log("selected table cards: ", selectedTableCards);
-    if (selectedCard) {
-      makeMove();
-    }
-    // handle user leaving page
-    const unlisten = history.listen(() => {
-      console.log("User is leaving the page");
-      sockClient.disconnect();
-      sockClient.removeMessageFunctions();
-      sockClient.removeMessageFunctions();
-    });
-
-    return () => {
-      console.log("Component is unmounting");
-      unlisten();
-    };
   });
+
   let playerHandContainer = (
     <div className="playerHandContainer">
       <div className="playerHand">
@@ -316,6 +311,23 @@ const GameScreen = () => {
           <h1> Not loaded </h1>
         )}
       </div>
+
+      <div className="exit-button-container">
+        <button className="exit-button" onClick={exitTutorial}>
+          Exit Tutorial
+        </button>
+      </div>
+
+      {/* <div className="player-info">
+        <ButtonGame
+          width="80%"
+          background="#FFFFFF"
+          onClick={() => makeMove()}
+          disable={checkButton()}
+        >
+          Play Move
+        </ButtonGame>
+      </div> */}
     </div>
   );
 
@@ -341,7 +353,7 @@ const GameScreen = () => {
     <div className="opponent-discards">
       {oppLastCapture !== null ? (
         oppLastCapture.map((e, i) => (
-          <img src={e.image} className="cardback" key={i} alt="e.code"/>
+          <img src={e.image} className="cardback" key={i} alt="e.code" />
         ))
       ) : (
         <h1> No cards were captured </h1>
@@ -349,12 +361,7 @@ const GameScreen = () => {
       <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
-  let deck = (
-    <div className="card-container">
-      {/* Placeholder for deck */}
-      <div className="card back"></div>
-    </div>
-  );
+
   let turnInfo = (
     <div className="turn-info-container">
       <div className="turn-info-form">
@@ -371,6 +378,7 @@ const GameScreen = () => {
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
           className="cardback"
+          alt="Back of Card"
         />
       </div>
       {tableCards ? (
@@ -404,7 +412,7 @@ const GameScreen = () => {
                 suit={card.suit}
                 value={card.value}
                 image={card.image}
-                onClick={() => { }}
+                onClick={() => {}}
                 fromField={true}
               />
             </div>
@@ -422,6 +430,17 @@ const GameScreen = () => {
       </div>
     </div>
   );
+
+  const nextPrompt = () => {
+    console.log(promptText, promptText.length);
+    if (promptIndex + 1 === promptText.length) {
+      setPromptIndex(0);
+      getNextStep(step);
+    } else {
+      setPromptIndex(promptIndex + 1);
+    }
+  };
+
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -443,14 +462,31 @@ const GameScreen = () => {
           </div>
         </div>
         <div className="right">
-
           {game && (
             <div className="statistics">
+              <div className="prompt-container">
+                <div className="prompt-form">
+                  {promptText ? (
+                    <h1>{promptText[promptIndex]}</h1>
+                  ) : (
+                    <h1> "No Prompt" </h1>
+                  )}
+                  {!selectionRequired ? (
+                    <button onClick={nextPrompt}>Continue</button>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              </div>
               <div className="player-names">
-                <div class = "image">
-                  <div class="image-upload">
-                      {game && game.guestAvatarUrl && <img alt="Avatar" src={game.guestAvatarUrl}></img>}
-                      {game && !game.guestAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                <div className="image">
+                  <div className="image-upload">
+                    {game && game.guestAvatarUrl && (
+                      <img alt="Avatar" src={game.guestAvatarUrl}></img>
+                    )}
+                    {game && !game.guestAvatarUrl && (
+                      <img alt="Avatar" src={noAvatar}></img>
+                    )}
                   </div>
                 </div>
                 <span className="guest-name">{game.guestUsername}</span>
@@ -460,38 +496,48 @@ const GameScreen = () => {
                   <span className="host-points">{game.hostPoints || 0}</span>
                 </span>
                 <span className="host-name">{game.hostUsername}</span>
-                <div class = "image">
-                  <div class="image-upload">
-                      {game && game.hostAvatarUrl && <img alt="Avatar" src={game.hostAvatarUrl}></img>}
-                      {!game.hostAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                <div className="image">
+                  <div className="image-upload">
+                    {game && game.hostAvatarUrl && (
+                      <img alt="Avatar" src={game.hostAvatarUrl}></img>
+                    )}
+                    {!game.hostAvatarUrl && (
+                      <img alt="Avatar" src={noAvatar}></img>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="surrender-button-container">
-                <button className="surrender-button" onClick={surrenderGame}>
-                  Surrender
+
+              {/* <div className="surrender-button-container">
+                <button className="surrender-button" onClick={exitTutorial}>
+                  Exit Tutorial
                 </button>
+              </div> */}
+
+              <div className="rulebook-container">
+                <button
+                  className="round-button"
+                  onClick={() => setRulebookVisible(!rulebookVisible)}
+                >
+                  ?
+                </button>
+                {rulebookVisible && (
+                  <div
+                    className="rulebook-overlay"
+                    onClick={() => setRulebookVisible(false)}
+                  >
+                    <img src={myImage} alt="" />
+                  </div>
+                )}
               </div>
-              <div className="rulebook-container-gs">
-                  <button className="round-button" onClick={() => setRulebookVisible(!rulebookVisible)}>
-                    ?
-                  </button>
-                  {rulebookVisible && (
-                    <div className="rulebook-overlay" onClick={() => setRulebookVisible(false)}>
-                      <img
-                        className="rulebook-image"
-                        src={myImage}
-                        alt=""
-                      />
-                    </div>
-                  )}
-                </div>
             </div>
           )}
           {cardsDiscard}
         </div>
       </div>
+
       {playerHandContainer}
+
       {game && round && endOfRound && (
         <div className="endOfRound">
           <EndOfRound
@@ -502,6 +548,7 @@ const GameScreen = () => {
           />
         </div>
       )}
+
       {game && endOfGame && (
         <div className="endOfRound">
           <EndOfGame
@@ -511,6 +558,7 @@ const GameScreen = () => {
           />
         </div>
       )}
+
       {game && opponentLeft && (
         <div className="opponentLeft">
           <OpponentLeft
@@ -521,17 +569,24 @@ const GameScreen = () => {
           />
         </div>
       )}
+
       {game && waitEndOfRound && (
         <div className="waitEndOfRound">
           <WaitEndOfRound
             game={game}
             playerId={playerId}
-            onLeaveGame={surrenderGame}
+            onLeaveGame={exitTutorial}
           />
+        </div>
+      )}
+
+      {endOfTutorial && (
+        <div className="endOfRound">
+          <EndOfTutorial onEndTutorial={exitTutorial} />
         </div>
       )}
     </div>
   );
 };
 
-export default GameScreen;
+export default Tutorial;
