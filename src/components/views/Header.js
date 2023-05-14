@@ -138,17 +138,18 @@ useEffect(() => {
         }
       <div className="title">  Welcome to 2-and-10</div>
       <div className="buttons">
-        <button className="button" onClick={() => logout()}>
-          Logout
-        </button>
         <button
           className="button"
           onClick={() => showRulebook()}>
           Rulebook
         </button>
+        <button className="button" onClick={() => logout()}>
+          Logout
+        </button>
       </div>
     </div>
   );
+  
 };
 
 Header.propTypes = {

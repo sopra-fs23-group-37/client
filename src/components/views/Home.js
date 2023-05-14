@@ -155,9 +155,8 @@ const Home = () => {
             {/* <button1 class="with-icon" onClick={() => lobbyBrowser()}>
             Lobby Browser
           </button1> */}
-          </div>
-          <div className="row" style={{ "margin-top": "20px" }}>
-            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
+
+<ButtonHome className="normal with-icon" onClick={() => joinGame()}>
               Join Game
             </ButtonHome>
             {/* <button1 class="with-icon" onClick={() => spectate()}>
@@ -165,7 +164,6 @@ const Home = () => {
           </button1> */}
           </div>
         </div>
-        
       </BaseContainer>
     </div>
   );

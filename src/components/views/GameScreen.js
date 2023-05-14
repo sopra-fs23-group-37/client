@@ -13,10 +13,13 @@ import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
 import { api } from "helpers/api";
+import myImage from "image/Sheet.png";
 import noAvatar from "image/noAvatar.png";
 import { checkMove } from "helpers/validMoveCheck";
 
+
 const GameScreen = () => {
+  const [rulebookVisible, setRulebookVisible] = useState(false);
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
   // these datapoints are set through the websocket
@@ -409,7 +412,7 @@ const GameScreen = () => {
                 suit={card.suit}
                 value={card.value}
                 image={card.image}
-                onClick={() => {}}
+                onClick={() => { }}
                 fromField={true}
               />
             </div>
@@ -448,7 +451,14 @@ const GameScreen = () => {
           </div>
         </div>
         <div className="right">
+
+          
+        
+
+
+
           {game && (
+            
             <div className="statistics">
               <div className="player-names">
                 <div class = "image">
@@ -471,11 +481,29 @@ const GameScreen = () => {
                   </div>
                 </div>
               </div>
+              
               <div className="surrender-button-container">
                 <button className="surrender-button" onClick={surrenderGame}>
                   Surrender
                 </button>
+
               </div>
+              <div className="rulebook-container">
+                  <button className="round-button" onClick={() => setRulebookVisible(!rulebookVisible)}>
+                    ?
+                  </button>
+                  {rulebookVisible && (
+                    <div className="rulebook-overlay" onClick={() => setRulebookVisible(false)}>
+                      <img
+                        src={myImage}
+                        alt=""
+
+                      />
+                    </div>
+                  )}
+                </div>
+
+              
             </div>
           )}
           {cardsDiscard}
