@@ -5,13 +5,14 @@ import TutorialStep from "models/TutorialStep";
 export const endRound = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
-    guestAvatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/two-and-ten3.appspot.com/o/addAvatar.jpg?alt=media&token=7ca12d3e-ea79-4294-bd86-04c878a68fa3",
-    guestPoints: 2,
-    guestStatus: "CONNECTED",
-    guestUsername: "Opponent",
-    hostPoints: 3,
-    hostStatus: "CONNECTED",
+    hostAvatarUrl: null,
+    hostPoints: 0,
+    hostUsername: "Opponent",
+    hostId: "X",
+    guestPoints: 0,
+    guestId: sessionStorage.getItem("userId"),
+    guestUsername: sessionStorage.getItem("username"),
+    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
   });
   let roundInfo = new Round({
     roundStatus: "FINISHED",
