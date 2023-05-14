@@ -225,7 +225,6 @@ const Home = () => {
           </button1> */}
           </div>
         </div>
-        
       </BaseContainer>
     </div>
   );
