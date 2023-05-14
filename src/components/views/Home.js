@@ -5,7 +5,6 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Home.scss";
 import Game from "models/Game";
 import Header from "components/views/Header";
-import User from "models/User";
 import { ButtonHome, ButtonLight } from "components/ui/Button";
 import sockClient from "helpers/sockClient";
 import PropTypes from "prop-types";
@@ -38,7 +37,6 @@ const Home = () => {
 
   const createGame = () => {
     history.push("/game/createGame");
-
   };
 
   // const lobbyBrowser = () => {};
@@ -119,11 +117,15 @@ const Home = () => {
     setUserGamesWon(data.gamesWon);
   };
 
-  const showCodeInputToggle = event => {
+  const showCodeInputToggle = (event) => {
     if (event.target === event.currentTarget) {
       setShowCodeInput(false);
     }
-  }
+  };
+
+  const startTutorial = () => {
+    history.push("/game/tutorial");
+  };
 
   useEffect(() => {
     connectToWS();
@@ -138,7 +140,6 @@ const Home = () => {
       console.log("Component is unmounting");
       unlisten();
     };
-
   });
 
   return (
@@ -151,7 +152,10 @@ const Home = () => {
               <div className="modal-content">
                 <h1 className="modal-title">Welcome {username} to 2-and-10!</h1>
                 <p>Would you like some guidance on how to play this game?</p>
-                <p>You can also access the rulebook from the Home page at any time.</p>
+                <p>
+                  You can also access the rulebook from the Home page at any
+                  time.
+                </p>
                 <button onClick={handleConfirm}>Yes</button>
                 <button onClick={handleCancel}>No</button>
               </div>
@@ -160,12 +164,15 @@ const Home = () => {
           {showCodeInput && (
             <div className="code-input" onClick={showCodeInputToggle}>
               <div className="code-input-form">
-                <FormField className="code-input-form-field"
-                  onChange={(n) => setGameCode(n)}>
-                </FormField>
-                <ButtonLight className="code-input-button"
-                  disabled={gameCode.length != 6}
-                  onClick={() => joinGameByCode()}>
+                <FormField
+                  className="code-input-form-field"
+                  onChange={(n) => setGameCode(n)}
+                ></FormField>
+                <ButtonLight
+                  className="code-input-button"
+                  disabled={gameCode.length !== 6}
+                  onClick={() => joinGameByCode()}
+                >
                   Enter
                 </ButtonLight>
               </div>
@@ -186,38 +193,32 @@ const Home = () => {
             }
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
-          <ButtonHome
-                className="normal with-icon"
-              
-              >
-                Tutorial
-              </ButtonHome>
-            
             <ButtonHome
               className="normal with-icon"
               onClick={() => createGame()}
             >
               Create Game
             </ButtonHome>
-     
 
-            </div>
-
-            <div className="row" style={{ "margin-top": "20px" }}>
-              <ButtonHome
-                className="normal with-icon"
-                onClick={() => setShowCodeInput(true)}
-              >
-                Join Private Game
-              </ButtonHome>
-              
-              
-            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
-              Join Public Game
+            <ButtonHome
+              className="normal with-icon"
+              onClick={() => startTutorial()}
+            >
+              Play Tutorial
             </ButtonHome>
-            
-            </div>
-  
+          </div>
+
+          <div className="row" style={{ "margin-top": "20px" }}>
+            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
+              Join any Game
+            </ButtonHome>
+            <ButtonHome
+              className="normal with-icon"
+              onClick={() => setShowCodeInput(true)}
+            >
+              Join with Code
+            </ButtonHome>
+          </div>
         </div>
       </BaseContainer>
     </div>
