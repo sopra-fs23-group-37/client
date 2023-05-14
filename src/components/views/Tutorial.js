@@ -22,6 +22,7 @@ const Tutorial = () => {
   const [selectableCardsTable, setSelectableCardsTable] = useState(null);
   const [selectableCardHand, setSelectableCardHand] = useState(null);
   const [selectionRequired, setSelectionRequired] = useState(null);
+  const [promptIndex, setPromptIndex] = useState(0);
 
   const [rulebookVisible, setRulebookVisible] = useState(false);
   const gameId = useParams().gameId;
@@ -412,7 +413,13 @@ const Tutorial = () => {
   );
 
   const nextPrompt = () => {
-    getNextStep(step);
+    console.log(promptText, promptText.length);
+    if (promptIndex + 1 === promptText.length) {
+      setPromptIndex(0);
+      getNextStep(step);
+    } else {
+      setPromptIndex(promptIndex + 1);
+    }
   };
 
   return (
@@ -440,7 +447,11 @@ const Tutorial = () => {
             <div className="statistics">
               <div className="prompt-container">
                 <div className="prompt-form">
-                  {promptText ? <h1>{promptText}</h1> : <h1> "No Prompt" </h1>}
+                  {promptText ? (
+                    <h1>{promptText[promptIndex]}</h1>
+                  ) : (
+                    <h1> "No Prompt" </h1>
+                  )}
                   {!selectionRequired ? (
                     <button onClick={nextPrompt}>Continue</button>
                   ) : (
