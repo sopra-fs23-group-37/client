@@ -2,7 +2,7 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const matchTwo_1 = () => {
+export const jack_2 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
     hostAvatarUrl: null,
@@ -33,12 +33,7 @@ export const matchTwo_1 = () => {
         value: "ACE",
         suit: "Clubs",
       },
-      {
-        code: "JD",
-        image: "https://deckofcardsapi.com/static/img/JD.png",
-        value: "JACK",
-        suit: "DIAMONDS",
-      },
+
       {
         code: "7D",
         image: "https://deckofcardsapi.com/static/img/7D.png",
@@ -52,12 +47,6 @@ export const matchTwo_1 = () => {
         suit: "HEARTS",
       },
 
-      {
-        code: "6D",
-        image: "https://deckofcardsapi.com/static/img/6D.png",
-        value: "6",
-        suit: "DIAMONDS",
-      },
       {
         code: "8S",
         image: "https://deckofcardsapi.com/static/img/8S.png",
@@ -78,22 +67,11 @@ export const matchTwo_1 = () => {
         value: "QUEEN",
         suit: "DIAMONDS",
       },
-    ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
-    cardsOnTable: [
       {
         code: "4D",
         image: "https://deckofcardsapi.com/static/img/4D.png",
         value: "4",
         suit: "DIAMONDS",
-      },
-
-      {
-        code: "8C",
-        image: "https://deckofcardsapi.com/static/img/8C.png",
-        value: "8",
-        suit: "CLUBS",
       },
       {
         code: "2C",
@@ -102,12 +80,40 @@ export const matchTwo_1 = () => {
         suit: "CLUBS",
       },
       {
+        code: "6D",
+        image: "https://deckofcardsapi.com/static/img/6D.png",
+        value: "6",
+        suit: "DIAMONDS",
+      },
+      {
+        code: "8C",
+        image: "https://deckofcardsapi.com/static/img/8C.png",
+        value: "8",
+        suit: "CLUBS",
+      },
+
+      {
         code: "KH",
         image: "https://deckofcardsapi.com/static/img/KH.png",
         value: "KING",
         suit: "HEARTS",
       },
+      {
+        code: "7S",
+        image: "https://deckofcardsapi.com/static/img/7S.png",
+        value: "7",
+        suit: "SPADES",
+      },
+      {
+        code: "JD",
+        image: "https://deckofcardsapi.com/static/img/JD.png",
+        value: "JACK",
+        suit: "DIAMONDS",
+      },
     ],
+    oppCards: 8,
+    oppCardsInDiscard: [],
+    cardsOnTable: [],
     deckCards: true,
     myTurn: true,
     opponentLeft: null,
@@ -131,10 +137,12 @@ export const matchTwo_1 = () => {
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
+      "Wohoo, so many captured cards! ",
+      "Once you and your opponent have played through your 8 cards, you get a refill from the deck. When the deck is empty, the round ends, and the last player who captured any cards at all sweeps up anything left on the table.",
+      "Let's skip ahead to the end of the round to look at points.",
     ],
-    selectionRequired: true,
-    selectableCardsTable: ["2C", "4D"],
+    selectionRequired: false,
+    selectableCardsTable: null,
     selectableCardHand: null,
     preSelectedCardsTable: null,
     finished: false,

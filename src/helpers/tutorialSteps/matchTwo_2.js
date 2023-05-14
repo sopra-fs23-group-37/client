@@ -2,7 +2,7 @@ import Round from "models/Round";
 import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
-export const matchTwo_1 = () => {
+export const matchTwo_2 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
     hostAvatarUrl: null,
@@ -130,12 +130,10 @@ export const matchTwo_1 = () => {
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,
-    prompt: [
-      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
-    ],
+    prompt: ["Now select the 6 of Diamonds to capture the 2+4"],
     selectionRequired: true,
-    selectableCardsTable: ["2C", "4D"],
-    selectableCardHand: null,
+    selectableCardsTable: null,
+    selectableCardHand: "6D",
     preSelectedCardsTable: null,
     finished: false,
   });
