@@ -207,7 +207,7 @@ $card-background-image: url(../image/card-background.jpg);
 
           .guest-name {
             font-size: 1.2rem;
-            margin-right: 4rem;
+            margin-right: 2rem;
           }
 
           .points {
@@ -234,7 +234,38 @@ $card-background-image: url(../image/card-background.jpg);
 
           .host-name {
             font-size: 1.2rem;
-            margin-left: 4rem;
+            margin-left: 2rem;
+          }
+
+          .image {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 10px;
+          
+            h1 {
+              font-family: 'Inter', sans-serif;
+              font-size: 2rem;
+              font-weight: bold;
+              margin-left: 20px;
+            }
+          
+            .image-upload {
+              position: relative; // add this to make the overlay image absolute
+              height: 50px;
+              width: 50px;
+              border-radius: 50%;
+              box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px, rgb(0, 0, 0 / 23%) 0px 3px 6px;
+              margin: 0px auto 0px auto;
+          
+              img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+              }
+          
+            }
+            
           }
         }
 
