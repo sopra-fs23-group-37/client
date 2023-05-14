@@ -78,7 +78,10 @@ const Lobby = () => {
     console.log("websocket status:", sockClient.isConnected());
     if (!sockClient.isConnected()) {
       console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("lobby", updateLobby)) {
+      if (
+        sockClient.addOnMessageFunction("lobby", updateLobby) &&
+        sockClient.addOnMessageFunction("error", handleError)
+      ) {
         sockClient.connectAndJoin(gameId, playerId);
       }
     }
@@ -93,6 +96,14 @@ const Lobby = () => {
   const goToGame = async () => {
     await delay(1000);
     history.push(`/game/play/${gameId}`);
+  };
+
+  const handleError = (error) => {
+    console.log(error);
+    alert("There was an issue: " + error.message);
+    if (error.type === "INVALIDGAME") {
+      history.push("/game");
+    }
   };
 
   useEffect(() => {
