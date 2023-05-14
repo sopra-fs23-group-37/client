@@ -49,8 +49,14 @@ const Home = () => {
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirmRuleBook = () => {
     history.push("/rulebook");
+    sessionStorage.setItem("newUser", "false");
+    setShowModal(false);
+  };
+
+  const handleConfirmTutorial = () => {
+    history.push("/tutorial");
     sessionStorage.setItem("newUser", "false");
     setShowModal(false);
   };
@@ -153,11 +159,14 @@ const Home = () => {
                 <h1 className="modal-title">Welcome {username} to 2-and-10!</h1>
                 <p>Would you like some guidance on how to play this game?</p>
                 <p>
-                  You can also access the rulebook from the Home page at any
-                  time.
+                  You can also access the rulebook and tutorial from the Home
+                  page at any time.
                 </p>
-                <button onClick={handleConfirm}>Yes</button>
-                <button onClick={handleCancel}>No</button>
+                <button onClick={handleCancel}>No, thanks</button>
+                <button onClick={handleConfirmRuleBook}>
+                  Read the Rulebook
+                </button>
+                <button onClick={handleConfirmTutorial}>Play Tutorial</button>
               </div>
             </div>
           )}

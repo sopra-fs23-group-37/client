@@ -51,26 +51,6 @@ const GameScreen = () => {
 
   const history = useHistory();
 
-  const PlayGuard = async () => {
-    try {
-      const response = await api.get("games/" + gameId);
-      if (
-        response.data.host.userId === playerId ||
-        response.data.guest.userId === playerId
-      ) {
-        return true;
-      } else {
-        alert("You tried to join a lobby you're not part of!");
-        history.push("/game");
-        return false;
-      }
-    } catch (error) {
-      window.location.reload();
-      console.log("There was an error: ", error.message);
-    }
-    return false;
-  };
-
   const updateGame = (data) => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
@@ -203,8 +183,8 @@ const GameScreen = () => {
   };
   const handleError = (error) => {
     console.log(error);
-    alert("There was an issue: ", error.message);
-    if (error.type === "INVALIDGAME") {
+    alert("There was an issue: " + error.message);
+    if (error.type === "INVALIDGAME" || error.type === "INVALIDUSER") {
       history.push("/game");
     }
   };
@@ -229,11 +209,6 @@ const GameScreen = () => {
     }
   };
   const startGame = async () => {
-    try {
-      await PlayGuard();
-    } catch (error) {
-      console.log(error.message);
-    }
     // check that the websocket is still connected
     if (!sockClient.isConnected()) {
       console.log("can't start game until the websocket is connected!");
@@ -316,7 +291,7 @@ const GameScreen = () => {
             </div>
           ))
         ) : (
-          <h1> Not loaded </h1>
+          <h1> - </h1>
         )}
       </div>
     </div>
@@ -336,7 +311,7 @@ const GameScreen = () => {
           </div>
         ))
       ) : (
-        <h1> not loaded </h1>
+        <h1> - </h1>
       )}
     </div>
   );
@@ -347,7 +322,7 @@ const GameScreen = () => {
           <img src={e.image} className="cardback" key={i} alt="e.code" />
         ))
       ) : (
-        <h1> No cards were captured </h1>
+        <h1> - </h1>
       )}
       <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
@@ -374,6 +349,7 @@ const GameScreen = () => {
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
           className="cardback"
+          alt="Back of Card"
         />
       </div>
       {tableCards ? (

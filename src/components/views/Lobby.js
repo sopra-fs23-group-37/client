@@ -97,7 +97,7 @@ const Lobby = () => {
 
   const handleError = (error) => {
     console.log(error);
-    alert("There was an issue: ", error.message);
+    alert("There was an issue: " + error.message);
     if (error.type === "INVALIDGAME") {
       history.push("/game");
     }
