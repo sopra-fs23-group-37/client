@@ -17,7 +17,6 @@ import myImage from "image/Sheet.png";
 import noAvatar from "image/noAvatar.png";
 import { checkMove } from "helpers/validMoveCheck";
 
-
 const GameScreen = () => {
   const [rulebookVisible, setRulebookVisible] = useState(false);
   const gameId = useParams().gameId;
@@ -203,9 +202,13 @@ const GameScreen = () => {
     setSelectedCard(null);
   };
   const handleError = (error) => {
-    // TODO: do somethind with the error data coming back
     console.log(error);
+    alert("There was an issue: ", error.message);
+    if (error.type === "INVALIDGAME") {
+      history.push("/game");
+    }
   };
+
   const checkWebsocket = () => {
     // check that the websocket remains connected and add the updateGame function
     console.log("websocket status:", sockClient.isConnected());
@@ -341,7 +344,7 @@ const GameScreen = () => {
     <div className="opponent-discards">
       {oppLastCapture !== null ? (
         oppLastCapture.map((e, i) => (
-          <img src={e.image} className="cardback" key={i} alt="e.code"/>
+          <img src={e.image} className="cardback" key={i} alt="e.code" />
         ))
       ) : (
         <h1> No cards were captured </h1>
@@ -404,7 +407,7 @@ const GameScreen = () => {
                 suit={card.suit}
                 value={card.value}
                 image={card.image}
-                onClick={() => { }}
+                onClick={() => {}}
                 fromField={true}
               />
             </div>
@@ -446,10 +449,14 @@ const GameScreen = () => {
           {game && (
             <div className="statistics">
               <div className="player-names">
-                <div class = "image">
+                <div class="image">
                   <div class="image-upload">
-                      {game && game.guestAvatarUrl && <img alt="Avatar" src={game.guestAvatarUrl}></img>}
-                      {game && !game.guestAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                    {game && game.guestAvatarUrl && (
+                      <img alt="Avatar" src={game.guestAvatarUrl}></img>
+                    )}
+                    {game && !game.guestAvatarUrl && (
+                      <img alt="Avatar" src={noAvatar}></img>
+                    )}
                   </div>
                 </div>
                 <span className="guest-name">{game.guestUsername}</span>
@@ -459,10 +466,14 @@ const GameScreen = () => {
                   <span className="host-points">{game.hostPoints || 0}</span>
                 </span>
                 <span className="host-name">{game.hostUsername}</span>
-                <div class = "image">
+                <div class="image">
                   <div class="image-upload">
-                      {game && game.hostAvatarUrl && <img alt="Avatar" src={game.hostAvatarUrl}></img>}
-                      {!game.hostAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+                    {game && game.hostAvatarUrl && (
+                      <img alt="Avatar" src={game.hostAvatarUrl}></img>
+                    )}
+                    {!game.hostAvatarUrl && (
+                      <img alt="Avatar" src={noAvatar}></img>
+                    )}
                   </div>
                 </div>
               </div>
@@ -472,19 +483,21 @@ const GameScreen = () => {
                 </button>
               </div>
               <div className="rulebook-container-gs">
-                  <button className="round-button" onClick={() => setRulebookVisible(!rulebookVisible)}>
-                    ?
-                  </button>
-                  {rulebookVisible && (
-                    <div className="rulebook-overlay" onClick={() => setRulebookVisible(false)}>
-                      <img
-                        className="rulebook-image"
-                        src={myImage}
-                        alt=""
-                      />
-                    </div>
-                  )}
-                </div>
+                <button
+                  className="round-button"
+                  onClick={() => setRulebookVisible(!rulebookVisible)}
+                >
+                  ?
+                </button>
+                {rulebookVisible && (
+                  <div
+                    className="rulebook-overlay"
+                    onClick={() => setRulebookVisible(false)}
+                  >
+                    <img className="rulebook-image" src={myImage} alt="" />
+                  </div>
+                )}
+              </div>
             </div>
           )}
           {cardsDiscard}
