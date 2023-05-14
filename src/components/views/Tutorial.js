@@ -1,4 +1,4 @@
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
@@ -6,7 +6,6 @@ import Round from "models/Round";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import OpponentLeft from "components/views/OpponentLeft";
-import sockClient from "helpers/sockClient";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
@@ -33,6 +32,9 @@ const Tutorial = () => {
 
   const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
+  const username = sessionStorage.getItem("username");
+  const avatarUrl = sessionStorage.getItem("avatarUrl");
+
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
   const [round, setRound] = useState(new Round());
@@ -65,13 +67,12 @@ const Tutorial = () => {
   const getNextStep = (currentStep) => {
     setStep(step + 1);
     console.log("Getting data for step ", currentStep + 1);
-    let stepData = tutorialStepData(currentStep + 1);
-
-    if(currentStep == 0) {
-      setTime(0);
-      setTimerRunning(true);
-    } 
-
+    let stepData = tutorialStepData(
+      currentStep + 1,
+      username,
+      playerId,
+      avatarUrl
+    );
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
       setTimerRunning(false);
@@ -263,10 +264,7 @@ const Tutorial = () => {
   };
 
   const handleEndRound = () => {
-    console.log("user is confirming that the round ended");
-    sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
-    setWaitEndOfRound(true);
   };
 
   const handleEndGame = () => {
