@@ -131,53 +131,54 @@ $card-background-image: url(../image/card-background.jpg);
       grid-template-columns: 1fr;
       display: grid;
 
-      .rulebook-container {
+      .rulebook-container-gs {
         position: absolute;
+        top: 0;
+        right: 0;
         background-color: transparent;
         display: flex;
         justify-content: right;
         overflow: hidden;
+        width: fit-content;
+        height: fit-content;
         // Hier schieben wir den Container nach rechts
-   
-       
             
         .rulebook-overlay {
-          position: absolute;
+          position: fixed;
+          z-index: 100;
+          left: 0;
           top: 0;
-          right:0 ;
           width: 100%;
           height: 100%;
-          background-color: rgba(0, 0, 0, 0.7);
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
           display: flex;
-          justify-content: center;
           align-items: center;
-          z-index: 100;
+          justify-content: center;
 
           .rulebook-image {
-            max-width: 50%;
-            max-height: 50%;
-            object-fit: contain;
-            z-index: 200;
+            max-width: 80%;
+            height: 80%;
           }
         }
 
         .round-button {
-          font-family: "Inter", sans-serif;
+          padding: 0;
           font-size: 2rem;
           font-weight: bold;
-          padding: 1rem 2rem;
           background-color: darkred;
           color: #ffffff;
           border: 1px solid white;
           border-radius: 50%;
           cursor: pointer;
           width: 80px;
-          height: 70px;
-          text-align: left;
-          margin-left: 40px;
+          height: 80px;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 80px;
           overflow: hidden;
           display: flex;
-          justify-content: right;
+          justify-content: center;
 
           &:hover {
             background-color: #fff;
@@ -269,15 +270,9 @@ $card-background-image: url(../image/card-background.jpg);
           }
         }
 
-        
-  
-
         .surrender-button-container {
           display: flex;
           justify-content: center;
-
-          
-    
 
           .surrender-button {
             font-family: "Inter", sans-serif;
@@ -431,7 +426,7 @@ $card-background-image: url(../image/card-background.jpg);
 
       .playerHand {
         display: flex;
-        width: 65%;
+        width: 85%;
         justify-content: center;
 
         .card-container-hand {

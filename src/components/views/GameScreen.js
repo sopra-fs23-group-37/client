@@ -316,17 +316,6 @@ const GameScreen = () => {
           <h1> Not loaded </h1>
         )}
       </div>
-
-      <div className="player-info">
-        <ButtonGame
-          width="80%"
-          background="#FFFFFF"
-          onClick={() => makeMove()}
-          disable={checkButton()}
-        >
-          Play Move
-        </ButtonGame>
-      </div>
     </div>
   );
 
@@ -454,14 +443,7 @@ const GameScreen = () => {
           </div>
         </div>
         <div className="right">
-
-          
-        
-
-
-
           {game && (
-            
             <div className="statistics">
               <div className="player-names">
                 <div class = "image">
@@ -484,37 +466,31 @@ const GameScreen = () => {
                   </div>
                 </div>
               </div>
-              
               <div className="surrender-button-container">
                 <button className="surrender-button" onClick={surrenderGame}>
                   Surrender
                 </button>
-
               </div>
-              <div className="rulebook-container">
+              <div className="rulebook-container-gs">
                   <button className="round-button" onClick={() => setRulebookVisible(!rulebookVisible)}>
                     ?
                   </button>
                   {rulebookVisible && (
                     <div className="rulebook-overlay" onClick={() => setRulebookVisible(false)}>
                       <img
+                        className="rulebook-image"
                         src={myImage}
                         alt=""
-
                       />
                     </div>
                   )}
                 </div>
-
-              
             </div>
           )}
           {cardsDiscard}
         </div>
       </div>
-
       {playerHandContainer}
-
       {game && round && endOfRound && (
         <div className="endOfRound">
           <EndOfRound
@@ -525,7 +501,6 @@ const GameScreen = () => {
           />
         </div>
       )}
-
       {game && endOfGame && (
         <div className="endOfRound">
           <EndOfGame
@@ -535,7 +510,6 @@ const GameScreen = () => {
           />
         </div>
       )}
-
       {game && opponentLeft && (
         <div className="opponentLeft">
           <OpponentLeft
@@ -546,7 +520,6 @@ const GameScreen = () => {
           />
         </div>
       )}
-
       {game && waitEndOfRound && (
         <div className="waitEndOfRound">
           <WaitEndOfRound
