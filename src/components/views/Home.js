@@ -36,25 +36,9 @@ const Home = () => {
   const [gameCode, setGameCode] = useState("");
   const [showCodeInput, setShowCodeInput] = useState(false);
 
-  const createGame = async () => {
-    try {
-      const userId = sessionStorage.getItem("userId");
-      const host = new User();
-      host.userId = userId;
-      const isPrivate = true;
-      const requestBody = JSON.stringify({ host, isPrivate });
-      const response = await api.post("/games", requestBody);
-      console.log(response);
-      const game = new Game(response.data);
-      console.log(game.gameId);
-      history.push("/game/lobby/" + game.gameId);
-    } catch (error) {
-      alert(
-        `Something went wrong when trying to create a game: \n${handleError(
-          error
-        )}`
-      );
-    }
+  const createGame = () => {
+    history.push("/game/createGame");
+     
   };
 
   // const lobbyBrowser = () => {};
@@ -82,7 +66,6 @@ const Home = () => {
       const userId = sessionStorage.getItem("userId");
       const response = await api.put("/games/join/" + userId);
       console.log(response);
-
       const game = new Game(response.data);
       console.log("gameId is: ", game.gameId);
       history.push("/game/lobby/" + game.gameId);
