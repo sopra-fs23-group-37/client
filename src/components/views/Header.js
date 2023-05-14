@@ -138,10 +138,7 @@ useEffect(() => {
         }
       <div className="title"> Welcome to 2-and-10</div>
       <div className="buttons">
-         <button
-          className="button">
-          Tutorial
-        </button>
+      
         <button
           className="button"
           onClick={() => showRulebook()}>

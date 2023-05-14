@@ -12,12 +12,12 @@ import PropTypes from "prop-types";
 
 const FormField = (props) => {
   return (
-      <input
-        className="home input"
-        placeholder="enter code..."
-        maxLength="6"
-        onChange={(e) => props.onChange(e.target.value)}
-      />
+    <input
+      className="home input"
+      placeholder="enter code..."
+      maxLength="6"
+      onChange={(e) => props.onChange(e.target.value)}
+    />
   );
 };
 
@@ -38,7 +38,7 @@ const Home = () => {
 
   const createGame = () => {
     history.push("/game/createGame");
-     
+
   };
 
   // const lobbyBrowser = () => {};
@@ -137,8 +137,8 @@ const Home = () => {
     return () => {
       console.log("Component is unmounting");
       unlisten();
-         };
-    
+    };
+
   });
 
   return (
@@ -149,28 +149,28 @@ const Home = () => {
           {showModal && (
             <div className="modal">
               <div className="modal-content">
-              <h1 className="modal-title">Welcome {username} to 2-and-10!</h1>
-              <p>Would you like some guidance on how to play this game?</p>
-              <p>You can also access the rulebook from the Home page at any time.</p>
-              <button onClick={handleConfirm}>Yes</button>
-              <button onClick={handleCancel}>No</button>
+                <h1 className="modal-title">Welcome {username} to 2-and-10!</h1>
+                <p>Would you like some guidance on how to play this game?</p>
+                <p>You can also access the rulebook from the Home page at any time.</p>
+                <button onClick={handleConfirm}>Yes</button>
+                <button onClick={handleCancel}>No</button>
+              </div>
             </div>
-          </div>
-        )}
-        {showCodeInput && (
-          <div className="code-input" onClick={showCodeInputToggle}>
-            <div className="code-input-form">
-              <FormField className="code-input-form-field"
-                onChange={(n) => setGameCode(n)}>
-              </FormField>
-              <ButtonLight className="code-input-button"
-                disabled={gameCode.length != 6}
-                onClick={() => joinGameByCode()}>
-                Enter
-              </ButtonLight>
+          )}
+          {showCodeInput && (
+            <div className="code-input" onClick={showCodeInputToggle}>
+              <div className="code-input-form">
+                <FormField className="code-input-form-field"
+                  onChange={(n) => setGameCode(n)}>
+                </FormField>
+                <ButtonLight className="code-input-button"
+                  disabled={gameCode.length != 6}
+                  onClick={() => joinGameByCode()}>
+                  Enter
+                </ButtonLight>
+              </div>
             </div>
-          </div>
-        )}
+          )}
           <div className="row">
             <ButtonHome className="light">
               Open Games: <br />
@@ -186,27 +186,38 @@ const Home = () => {
             }
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
+          <ButtonHome
+                className="normal with-icon"
+              
+              >
+                Tutorial
+              </ButtonHome>
+            
             <ButtonHome
               className="normal with-icon"
               onClick={() => createGame()}
             >
               Create Game
             </ButtonHome>
-            <ButtonHome
-              className="normal with-icon"
-              onClick={() => setShowCodeInput(true)}
-            >
-              Join Private Game
-            </ButtonHome>
+     
 
+            </div>
+
+            <div className="row" style={{ "margin-top": "20px" }}>
+              <ButtonHome
+                className="normal with-icon"
+                onClick={() => setShowCodeInput(true)}
+              >
+                Join Private Game
+              </ButtonHome>
+              
+              
             <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
               Join Public Game
             </ButtonHome>
-          </div>
-          <div className="row" style={{ "margin-top": "20px" }}>
-           
-           
-          </div>
+            
+            </div>
+  
         </div>
       </BaseContainer>
     </div>
