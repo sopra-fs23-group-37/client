@@ -457,9 +457,6 @@ const GameScreen = () => {
 
           
         
-
-
-
           {game && (
             
             <div className="statistics">

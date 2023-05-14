@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
@@ -13,6 +13,7 @@ import WaitEndOfRound from "./WaitEndOfRound";
 import myImage from "image/Sheet.png";
 import noAvatar from "image/noAvatar.png";
 import { tutorialStepData } from "helpers/tutorialStepData";
+import EndOfTutorial from "components/views/EndOfTutorial";
 
 const Tutorial = () => {
   // data points for tutorial
@@ -24,6 +25,12 @@ const Tutorial = () => {
   const [promptIndex, setPromptIndex] = useState(0);
 
   const [rulebookVisible, setRulebookVisible] = useState(false);
+  const [endOfTutorial, setEndOfTutorial] = useState(false);
+  const [time, setTime] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+
+
+  const gameId = useParams().gameId;
   const playerId = parseInt(sessionStorage.getItem("userId"));
   const username = sessionStorage.getItem("username");
   const avatarUrl = sessionStorage.getItem("avatarUrl");
@@ -67,9 +74,8 @@ const Tutorial = () => {
       avatarUrl
     );
     if (stepData.finished) {
-      console.log("The tutorial has been finished.");
-      alert("Congratulations! You have finished the tutorial");
-      history.push("/game");
+      setEndOfTutorial(stepData.finished);
+      setTimerRunning(false);
       return;
     }
     updateGame(stepData.game);
@@ -91,10 +97,21 @@ const Tutorial = () => {
     return true;
   };
 
+  useEffect (() => {
+    let interval;
+    if (timerRunning) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerRunning]);
+
   const startTutorial = () => {
     console.log("tutorial starting");
     getNextStep(0);
   };
+
 
   const checkStepComplete = () => {
     console.log("Checking if the tutorial step has been completed");
@@ -169,23 +186,26 @@ const Tutorial = () => {
   };
 
   const updateGame = (data) => {
-    // take the game update data and set it in here
-    console.log("game data received: ", data);
-    setGame(new Game(data));
-    if (data.gameStatus === "FINISHED") {
-      console.log("the game has ended!");
-      setEndOfGame(true);
+
+    if (!endOfTutorial) {
+        // take the game update data and set it in here
+        console.log("game data received: ", data);
+        setGame(new Game(data));
+        if (data.gameStatus === "FINISHED") {
+          console.log("the game has ended!");
+          setEndOfGame(true);
+        }
+        if (
+          data.gameStatus === "DISCONNECTED" ||
+          data.gameStatus === "SURRENDERED"
+        ) {
+          setOpponentLeft(true);
+          setOpponentLeftReason(data.endGameReason);
+          setEndOfRound(false);
+          setWaitEndOfRound(false);
+        }
+      };
     }
-    if (
-      data.gameStatus === "DISCONNECTED" ||
-      data.gameStatus === "SURRENDERED"
-    ) {
-      setOpponentLeft(true);
-      setOpponentLeftReason(data.endGameReason);
-      setEndOfRound(false);
-      setWaitEndOfRound(false);
-    }
-  };
 
   const updateRound = (data) => {
     console.log("round update received:", data);
@@ -256,6 +276,7 @@ const Tutorial = () => {
   };
 
   useEffect(() => {
+    if (!endOfTutorial) {
     console.log("Use Effect started");
     console.log("current game data: ", game);
     console.log("current round data:", round);
@@ -271,6 +292,7 @@ const Tutorial = () => {
       console.log(
         completed ? "The new step has been successfully loaded." : ""
       );
+    }
     }
   });
 
@@ -425,6 +447,7 @@ const Tutorial = () => {
     }
   };
 
+
   return (
     <div className="gamescreen container">
       <div className="top">
@@ -560,6 +583,15 @@ const Tutorial = () => {
             game={game}
             playerId={playerId}
             onLeaveGame={exitTutorial}
+          />
+        </div>
+      )}
+
+      {endOfTutorial && (
+        <div className="endOfRound">
+          <EndOfTutorial
+            time={time}
+            onEndTutorial={exitTutorial}
           />
         </div>
       )}
