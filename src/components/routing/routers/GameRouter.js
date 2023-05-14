@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import CreateGame from "components/views/CreateGame";
 import Lobby from "components/views/Lobby";
 import GameScreen from "components/views/GameScreen";
+import Tutorial from "components/views/Tutorial";
 
 const GameRouter = (props) => {
   /**
@@ -25,6 +26,9 @@ const GameRouter = (props) => {
       </Route>
       <Route path={`${props.base}/play/:gameId`}>
         <GameScreen />
+      </Route>
+      <Route path={`${props.base}/tutorial`}>
+        <Tutorial />
       </Route>
     </div>
   );

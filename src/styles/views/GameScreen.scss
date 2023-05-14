@@ -61,7 +61,7 @@ $card-background-image: url(../image/card-background.jpg);
             margin-top: 1.5em;
             overflow: hidden;
             text-align: center;
-            
+
             .cardback {
               width: 80px;
               height: auto;
@@ -133,18 +133,20 @@ $card-background-image: url(../image/card-background.jpg);
 
       .rulebook-container {
         position: absolute;
+        top: 0;
+        right: 0;
         background-color: transparent;
         display: flex;
         justify-content: right;
         overflow: hidden;
+        width: fit-content;
+        height: fit-content;
         // Hier schieben wir den Container nach rechts
-   
-       
-            
+
         .rulebook-overlay {
           position: absolute;
           top: 0;
-          right:0 ;
+          right: 0;
           width: 100%;
           height: 100%;
           background-color: rgba(0, 0, 0, 0.7);
@@ -184,7 +186,6 @@ $card-background-image: url(../image/card-background.jpg);
             color: #f00;
             border: 2px solid #f00;
           }
-
         }
       }
       .statistics {
@@ -195,6 +196,29 @@ $card-background-image: url(../image/card-background.jpg);
         font-family: "Inter", sans-serif;
         font-size: 2rem;
         font-weight: bold;
+
+        .prompt-container {
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+          margin-bottom: 20px;
+
+          .prompt-form {
+            flex-direction: row;
+            background: yellowgreen;
+            font-family: "Inter", sans-serif;
+            font-size: 0.8vw;
+            font-weight: bold;
+            width: 80%;
+            min-width: fit-content;
+            margin: auto;
+            padding: 0.5rem;
+            border: 2px solid black;
+            border-radius: 15px;
+          }
+        }
 
         .player-names {
           background-color: white;
@@ -242,42 +266,35 @@ $card-background-image: url(../image/card-background.jpg);
             flex-direction: row;
             align-items: center;
             margin: 10px;
-          
+
             h1 {
-              font-family: 'Inter', sans-serif;
+              font-family: "Inter", sans-serif;
               font-size: 2rem;
               font-weight: bold;
               margin-left: 20px;
             }
-          
+
             .image-upload {
               position: relative; // add this to make the overlay image absolute
               height: 50px;
               width: 50px;
               border-radius: 50%;
-              box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px, rgb(0, 0, 0 / 23%) 0px 3px 6px;
+              box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px,
+                rgb(0, 0, 0 / 23%) 0px 3px 6px;
               margin: 0px auto 0px auto;
-          
+
               img {
                 width: 100%;
                 height: 100%;
                 border-radius: 50%;
               }
-          
             }
-            
           }
         }
-
-        
-  
 
         .surrender-button-container {
           display: flex;
           justify-content: center;
-
-          
-    
 
           .surrender-button {
             font-family: "Inter", sans-serif;
@@ -477,6 +494,27 @@ $card-background-image: url(../image/card-background.jpg);
         float: left;
         border: 2px solid white;
         border-radius: 25px;
+      }
+
+      .exit-button-container {
+        float: left;
+        .exit-button {
+          font-family: "Inter", sans-serif;
+          font-size: 1.2rem;
+          font-weight: bold;
+          padding: 1rem 3rem;
+          background-color: darkred;
+          color: #ffffff;
+          border: 1px solid white;
+          border-radius: 10px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #fff;
+            color: #f00;
+            border: 2px solid #f00;
+          }
+        }
       }
     }
   }
