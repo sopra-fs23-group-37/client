@@ -272,15 +272,9 @@ $card-background-image: url(../image/card-background.jpg);
           }
         }
 
-        
-  
-
         .surrender-button-container {
           display: flex;
           justify-content: center;
-
-          
-    
 
           .surrender-button {
             font-family: "Inter", sans-serif;
@@ -434,7 +428,7 @@ $card-background-image: url(../image/card-background.jpg);
 
       .playerHand {
         display: flex;
-        width: 65%;
+        width: 85%;
         justify-content: center;
 
         .card-container-hand {
