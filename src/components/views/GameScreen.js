@@ -48,6 +48,7 @@ const GameScreen = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
+  const [oppLastCapture, setOppLastCapture] = useState(null);
 
   const history = useHistory();
 
@@ -102,6 +103,7 @@ const GameScreen = () => {
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
+    setOppLastCapture(data.oppLastCapture);
 
     if (data.roundStatus === "ONGOING") {
       setWaitEndOfRound(false);
@@ -314,20 +316,20 @@ const GameScreen = () => {
           <h1> Not loaded </h1>
         )}
       </div>
+
+      <div className="player-info">
+        <ButtonGame
+          width="80%"
+          background="#FFFFFF"
+          onClick={() => makeMove()}
+          disable={checkButton()}
+        >
+          Play Move
+        </ButtonGame>
+      </div>
     </div>
   );
-  const countOppPile = () => {
-    let diff = sessionStorage.getItem("diff");
-    const oldNumber = sessionStorage.getItem("oppCapturedCards");
-    const newNumber = opponentDiscard.length;
-    const thisRound = parseInt(oldNumber) - newNumber;
-    if (round && thisRound < 0) {
-      sessionStorage.setItem("diff", thisRound);
-      diff = thisRound;
-    }
-    sessionStorage.setItem("oppCapturedCards", newNumber);
-    return diff;
-  };
+
   let opponentHand = (
     <div className="opponent-cards">
       {opponentCards ? (
@@ -337,6 +339,7 @@ const GameScreen = () => {
               src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
               className="cardback"
               key={i}
+              alt="Back of Card"
             />
           </div>
         ))
@@ -347,10 +350,10 @@ const GameScreen = () => {
   );
   let opponentDiscardPile = (
     <div className="opponent-discards">
-      {opponentDiscard && parseInt(countOppPile()) !== 0 ? (
-        opponentDiscard
-          .slice(countOppPile())
-          .map((e, i) => <img src={e.image} className="cardback" key={i} />)
+      {oppLastCapture !== null ? (
+        oppLastCapture.map((e, i) => (
+          <img src={e.image} className="cardback" key={i} alt="e.code"/>
+        ))
       ) : (
         <h1> No cards were captured </h1>
       )}
