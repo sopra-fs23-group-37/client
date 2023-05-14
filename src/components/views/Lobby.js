@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Game from "models/Game";
 import sockClient from "helpers/sockClient";
 import loadingGif from "image/loading.gif";
+import { Button } from "components/ui/Button";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
@@ -51,6 +52,10 @@ const Lobby = () => {
     }
   };
 
+  const homescreen = () => {
+    history.push("/game/dashboard");
+  };
+
   // check if the player is the host or the guest. If not, alert them that they are in the wrong lobby.
   const invalidPlayerAlert = () => {
     if (
@@ -86,8 +91,6 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
-    sessionStorage.setItem("oppCapturedCards", 0);
-    sessionStorage.setItem("diff", 0);
     await delay(1000);
     history.push(`/game/play/${gameId}`);
   };
@@ -153,7 +156,10 @@ const Lobby = () => {
           <div className="listings-container">
             <div className="subtitle-spectator-container">
               <h2 className="subtitle">Players</h2>
-              <h2 className="game-code"> {game.gameCode ? "Code: " + game.gameCode : ""} </h2>
+              <h2 className="game-code">
+                {" "}
+                {game.gameCode ? "Code: " + game.gameCode : ""}{" "}
+              </h2>
             </div>
             <div className="row-container">
               <h4 className="name">{game.hostUsername}</h4>
@@ -187,6 +193,13 @@ const Lobby = () => {
             <div className="row-container">
               <h4 className="name">Game Status</h4>
               <h4 className="host">{game.gameStatus}</h4>
+            </div>
+
+            <div className="row-container"></div>
+            <div className="row-container">
+              <Button width="100%" onClick={() => homescreen()}>
+                Cancel Game
+              </Button>
             </div>
           </div>
         </div>
