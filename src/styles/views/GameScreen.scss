@@ -15,7 +15,7 @@ $card-background-image: url(../image/card-background.jpg);
 .gamescreen {
   width: 100vw;
   height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
   background: $card-background-image;
   background-size: cover;
 
@@ -28,6 +28,7 @@ $card-background-image: url(../image/card-background.jpg);
       grid-template-rows: 1fr;
       grid-template-columns: 75% 25%;
       display: grid;
+
 
       .left {
         grid-template-rows: 30% 70%;
@@ -82,8 +83,7 @@ $card-background-image: url(../image/card-background.jpg);
               border-radius: 25px;
             }
           }
-          .turnInfo {
-          }
+
         }
         .turn-info-container {
           text-align: center;
@@ -191,10 +191,6 @@ $card-background-image: url(../image/card-background.jpg);
       }
       .statistics {
         
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         font-family: "Inter", sans-serif;
         font-size: 2rem;
         font-weight: bold;
@@ -224,7 +220,7 @@ $card-background-image: url(../image/card-background.jpg);
             
             @keyframes blink {
               50% {
-                opacity: 0.5;
+                opacity: 0.6;
               }
             }
             

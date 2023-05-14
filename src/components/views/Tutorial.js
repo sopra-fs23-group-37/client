@@ -26,8 +26,6 @@ const Tutorial = () => {
 
   const [rulebookVisible, setRulebookVisible] = useState(false);
   const [endOfTutorial, setEndOfTutorial] = useState(false);
-  const [time, setTime] = useState(0);
-  const [timerRunning, setTimerRunning] = useState(false);
 
   const playerId = parseInt(sessionStorage.getItem("userId"));
   const username = sessionStorage.getItem("username");
@@ -73,7 +71,6 @@ const Tutorial = () => {
     );
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
-      setTimerRunning(false);
       return;
     }
     updateGame(stepData.game);
@@ -95,15 +92,6 @@ const Tutorial = () => {
     return true;
   };
 
-  useEffect(() => {
-    let interval;
-    if (timerRunning) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [timerRunning]);
 
   const startTutorial = () => {
     console.log("tutorial starting");
@@ -594,7 +582,7 @@ const Tutorial = () => {
 
       {endOfTutorial && (
         <div className="endOfRound">
-          <EndOfTutorial time={time} onEndTutorial={exitTutorial} />
+          <EndOfTutorial onEndTutorial={exitTutorial} />
         </div>
       )}
     </div>
