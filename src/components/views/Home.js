@@ -196,16 +196,16 @@ const Home = () => {
               className="normal with-icon"
               onClick={() => setShowCodeInput(true)}
             >
-              Enter Code
+              Join Private Game
+            </ButtonHome>
+
+            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
+              Join Public Game
             </ButtonHome>
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
-            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
-              Join Game
-            </ButtonHome>
-            {/* <button1 class="with-icon" onClick={() => spectate()}>
-            Spectate
-          </button1> */}
+           
+           
           </div>
         </div>
       </BaseContainer>
