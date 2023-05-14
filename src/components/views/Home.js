@@ -12,7 +12,11 @@ import sockClient from "helpers/sockClient";
 const Home = () => {
   const history = useHistory();
   const [openGames, setOpenGames] = useState(0);
+  const [userGamesWon, setUserGamesWon] = useState(0);
+  const [userGamesPlayed, setUserGamesPlayed] = useState(0);
   const userId = sessionStorage.getItem("userId");
+  const [showModal, setShowModal] = useState(false);
+  const username = sessionStorage.getItem("username");
 
   const createGame = async () => {
     try {
@@ -36,6 +40,24 @@ const Home = () => {
 
   // const lobbyBrowser = () => {};
 
+  const showPrompt = () => {
+    const newUser = sessionStorage.getItem("newUser");
+
+    if (newUser === "true") {
+      setShowModal(true);
+    }
+  };
+
+  const handleConfirm = () => {
+    history.push("/rulebook");
+    sessionStorage.setItem("newUser", "false");
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    sessionStorage.setItem("newUser", "false");
+    setShowModal(false);
+  };
   const joinGame = async () => {
     try {
       const userId = sessionStorage.getItem("userId");
@@ -54,8 +76,6 @@ const Home = () => {
     }
   };
 
-  // const spectate = () => {};
-
   const updateHome = (data) => {
     setOpenGames(data.numberOpenGames);
   };
@@ -64,15 +84,24 @@ const Home = () => {
     console.log("websocket status:", sockClient.isConnected());
     if (!sockClient.isConnected()) {
       console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("home", updateHome)) {
+      if (
+        sockClient.addOnMessageFunction("home", updateHome) &&
+        sockClient.addOnMessageFunction("statistics", updateUserStatistics)
+      ) {
         sockClient.connectFromHome(userId);
       }
     }
   };
 
+  const updateUserStatistics = (data) => {
+    console.log("Received user statistics: ", data);
+    setUserGamesPlayed(data.gamesPlayed);
+    setUserGamesWon(data.gamesWon);
+  };
+
   useEffect(() => {
     connectToWS();
-
+    showPrompt();
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
       sockClient.disconnect();
@@ -82,7 +111,8 @@ const Home = () => {
     return () => {
       console.log("Component is unmounting");
       unlisten();
-    };
+         };
+    
   });
 
   return (
@@ -90,18 +120,30 @@ const Home = () => {
       <Header />
       <BaseContainer style={{ "margin-right": "0px" }}>
         <div className="home form">
+        {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+          <h1 className="modal-title">Welcome {username} to 2-and-10!</h1>
+          <p>Would you like some guidance on how to play this game?</p>
+          <p>You can also access the rulebook from the Home page at any time.</p>
+          <button onClick={handleConfirm}>Yes</button>
+          <button onClick={handleCancel}>No</button>
+        </div>
+        </div>
+      )}
           <div className="row">
             <ButtonHome className="light">
               Open Games: <br />
               {openGames}
             </ButtonHome>
-            {/* <button2>
-            <u>Your Statistics:</u>
-            <br />
-            wins: 0
-            <br />
-            losses: 0
-          </button2> */}
+            {
+              <ButtonHome className="light">
+                <div className="text-layout">
+                  Games played: {userGamesPlayed} <br />
+                  Games won: {userGamesWon}
+                </div>
+              </ButtonHome>
+            }
           </div>
           <div className="row" style={{ "margin-top": "20px" }}>
             <ButtonHome
@@ -113,9 +155,8 @@ const Home = () => {
             {/* <button1 class="with-icon" onClick={() => lobbyBrowser()}>
             Lobby Browser
           </button1> */}
-          </div>
-          <div className="row" style={{ "margin-top": "20px" }}>
-            <ButtonHome className="normal with-icon" onClick={() => joinGame()}>
+
+<ButtonHome className="normal with-icon" onClick={() => joinGame()}>
               Join Game
             </ButtonHome>
             {/* <button1 class="with-icon" onClick={() => spectate()}>

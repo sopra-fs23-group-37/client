@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "styles/views/Card.scss";
 
-const Card = ({ code, image, suit, value, onClick, fromField}) => {
+const Card = ({ code, image, suit, value, onClick, fromField }) => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
     if (fromField) {
       setActive(!active);
-      onClick();
-    } else {
-      onClick();
     }
+      onClick();
   };
 
-  return (<img
-    src={image}
-    alt={`${value} of ${suit}`}
-    className={"card"}
-    onClick={handleClick}
-    active={active}
-    style={{borderColor: active ? "red" : "black", borderStyle: active ? "dotted" : "none"}}
-  />)
+  return (
+    <img
+      src={image}
+      alt={`${value} of ${suit}`}
+      className={"card"}
+      onClick={handleClick}
+      active={active}
+      style={{ transform: active ? "scale(1.1)" : "scale(1)" }}
+    />
+  );
 };
 
 Card.propTypes = {
