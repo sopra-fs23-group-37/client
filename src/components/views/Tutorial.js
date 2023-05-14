@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
