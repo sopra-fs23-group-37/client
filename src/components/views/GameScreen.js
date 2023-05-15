@@ -23,11 +23,9 @@ const GameScreen = () => {
   const [game, setGame] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
   const [round, setRound] = useState(new Round());
-  // end of round contains points for the round and total points
   const [endOfRound, setEndOfRound] = useState(false);
-  // end of game contains total points and winner
   const [endOfGame, setEndOfGame] = useState(false);
-  // contains all cards from the player and on the discard
+  // contains all cards from the player and on the capture
   const [playerCards, setPlayerCards] = useState(null);
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
@@ -337,6 +335,7 @@ const GameScreen = () => {
       </div>
     </div>
   );
+
   let cardsOnTableContainer = (
     <div className="cards-on-table">
       <div className="card-container-field">
@@ -365,6 +364,7 @@ const GameScreen = () => {
       )}
     </div>
   );
+
   let cardsDiscard = (
     <div className="discard-pile">
       <div className="stack">
@@ -395,6 +395,7 @@ const GameScreen = () => {
       </div>
     </div>
   );
+
   return (
     <div className="gamescreen container">
       <div className="top">
