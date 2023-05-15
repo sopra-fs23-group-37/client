@@ -66,7 +66,7 @@ const Header = (props) => {
   };
 
   useEffect(() => {
-    async function fetchProfile(profileId) {
+    const fetchProfile = async (profileId) => {
       try {
         const response = await api.get("/users/" + profileId);
 
@@ -83,7 +83,7 @@ const Header = (props) => {
           )}`
         );
       }
-    }
+    };
     fetchProfile(userId);
   }, [userId]);
 
