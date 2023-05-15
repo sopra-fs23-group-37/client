@@ -3,7 +3,6 @@ import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-import { ButtonGame } from "components/ui/Button";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
 import OpponentLeft from "components/views/OpponentLeft";
@@ -12,7 +11,6 @@ import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "./WaitEndOfRound";
-import { api } from "helpers/api";
 import myImage from "image/Sheet.png";
 import noAvatar from "image/noAvatar.png";
 import { checkMove } from "helpers/validMoveCheck";
@@ -34,7 +32,6 @@ const GameScreen = () => {
   const [playerDiscards, setPlayerDiscardCards] = useState(null);
   // contains number of cards of the opponent
   const [opponentCards, setOpponentCards] = useState(null);
-  const [opponentDiscard, setOpponentDiscard] = useState([]);
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
   // true if the opponent has left
@@ -72,13 +69,13 @@ const GameScreen = () => {
       setWaitEndOfRound(false);
     }
   };
+
   const updateRound = (data) => {
     console.log("round update received:", data);
     setRound(new Round(data));
     setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
-    setOpponentDiscard(data.oppCardsInDiscard);
     setPlayerDiscardCards(data.myCardsInDiscard);
     console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
@@ -88,6 +85,7 @@ const GameScreen = () => {
       setWaitEndOfRound(false);
     }
   };
+
   const makeMove = () => {
     console.log("Show message");
     console.log(selectedCard);
@@ -138,16 +136,7 @@ const GameScreen = () => {
       setSelectedCard(null);
     }
   };
-  const checkButton = () => {
-    if (!round.myTurn) {
-      return false;
-    } else if (selectedCard) {
-      return false;
-    } else if (selectedTableCards.length > 0 && selectPutOnField) {
-      return false;
-    }
-    return true;
-  };
+
   const selectCardFromField = (card) => {
     if (round.myTurn) {
       // if card is already clicked
@@ -165,6 +154,7 @@ const GameScreen = () => {
     }
     console.log("selectedCard: ", selectedCard);
   };
+
   const selectCardFromHand = (card) => {
     if (round.myTurn) {
       const filteredArray = playerCards.filter(
@@ -181,6 +171,7 @@ const GameScreen = () => {
     setPlayerCards((playerCards) => [...playerCards, card]);
     setSelectedCard(null);
   };
+
   const handleError = (error) => {
     console.log(error);
     alert("There was an issue: " + error.message);
@@ -208,6 +199,7 @@ const GameScreen = () => {
       setSelectPutOnField((current) => !current);
     }
   };
+
   const startGame = async () => {
     // check that the websocket is still connected
     if (!sockClient.isConnected()) {
@@ -227,23 +219,28 @@ const GameScreen = () => {
       setGameStarted(true);
     }
   };
+
   const surrenderGame = () => {
     sockClient.surrender(gameId, playerId);
     setWaitEndOfRound(false);
     setEndOfRound(false);
   };
+
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
     sockClient.confirmEndOfRound(gameId, playerId);
     setEndOfRound(false);
     setWaitEndOfRound(true);
   };
+
   const handleEndGame = () => {
     history.push("/game");
   };
+
   const handleLeaveGame = () => {
     history.push("/game");
   };
+
   useEffect(() => {
     console.log("Use Effect started");
     checkWebsocket();
@@ -273,6 +270,7 @@ const GameScreen = () => {
       unlisten();
     };
   });
+
   let playerHandContainer = (
     <div className="playerHandContainer">
       <div className="playerHand">
@@ -327,12 +325,7 @@ const GameScreen = () => {
       <h2 className="container-title"> Opponent's last Capture </h2>
     </div>
   );
-  let deck = (
-    <div className="card-container">
-      {/* Placeholder for deck */}
-      <div className="card back"></div>
-    </div>
-  );
+
   let turnInfo = (
     <div className="turn-info-container">
       <div className="turn-info-form">
@@ -422,7 +415,6 @@ const GameScreen = () => {
           </div>
         </div>
         <div className="right">
-
           {game && (
             <div className="statistics">
               <div className="player-names">

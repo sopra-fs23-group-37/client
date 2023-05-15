@@ -6,10 +6,10 @@ export const endGame = () => {
   let gameInfo = new Game({
     gameStatus: "FINISHED",
     hostAvatarUrl: null,
-    hostPoints: 0,
+    hostPoints: 11,
     hostUsername: "Opponent",
     hostId: "X",
-    guestPoints: 0,
+    guestPoints: 9,
     guestId: sessionStorage.getItem("userId"),
     guestUsername: sessionStorage.getItem("username"),
     guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
