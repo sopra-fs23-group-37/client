@@ -319,11 +319,12 @@ const Tutorial = () => {
         cards={round?.myCardsInHand}
         handleClick={selectCardFromHand}
       />
-
-      <div className="exit-button-container">
-        <button className="exit-button" onClick={exitTutorial}>
-          Exit Tutorial
-        </button>
+      <div className="playerHandContainer">
+        <div className="exit-button-container">
+          <button className="exit-button" onClick={exitTutorial}>
+            Exit Tutorial
+          </button>
+        </div>
       </div>
 
       {game && round && endOfRound && (
