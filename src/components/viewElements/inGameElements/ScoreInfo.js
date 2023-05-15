@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import noAvatar from "image/noAvatar.png";
+import { getAvatar } from "helpers/getAvatar";
 import "styles/viewElements/inGameElements/ScoreInfo.scss";
 
 const ScoreInfo = (props) => {
@@ -8,10 +8,7 @@ const ScoreInfo = (props) => {
       <div className="player-names">
         <div className="image">
           <div className="image-upload">
-            {props.guestAvatarUrl && (
-              <img alt="Avatar" src={props.guestAvatarUrl}></img>
-            )}
-            {!props.guestAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+            <img alt="Avatar" src={getAvatar(props.guestUsername)}></img>
           </div>
         </div>
         <span className="guest-name">{props.guestUsername}</span>
@@ -23,10 +20,7 @@ const ScoreInfo = (props) => {
         <span className="host-name">{props.hostUsername}</span>
         <div className="image">
           <div className="image-upload">
-            {props.hostAvatarUrl && (
-              <img alt="Avatar" src={props.hostAvatarUrl}></img>
-            )}
-            {!props.hostAvatarUrl && <img alt="Avatar" src={noAvatar}></img>}
+            <img alt="Avatar" src={getAvatar(props.hostUsername)}></img>
           </div>
         </div>
       </div>
