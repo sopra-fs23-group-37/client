@@ -1,5 +1,5 @@
 import React from "react";
-import "styles/views/EndOfRound.scss";
+import "styles/viewElements/endElements/EndOfRound.scss";
 
 const EndOfRound = ({ game, round, playerId, onEndRound }) => {
   let myUsername,

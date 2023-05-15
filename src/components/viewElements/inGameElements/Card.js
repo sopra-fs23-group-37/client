@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "styles/views/Card.scss";
+import "styles/viewElements/inGameElements/Card.scss";
 
 const Card = ({ code, image, suit, value, onClick, fromField }) => {
   const [active, setActive] = useState(false);
@@ -9,7 +9,7 @@ const Card = ({ code, image, suit, value, onClick, fromField }) => {
     if (fromField) {
       setActive(!active);
     }
-      onClick();
+    onClick();
   };
 
   return (

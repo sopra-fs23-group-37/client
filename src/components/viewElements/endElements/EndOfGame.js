@@ -1,5 +1,5 @@
 import React from "react";
-import "styles/views/EndOfGame.scss";
+import "styles/viewElements/endElements/EndOfGame.scss";
 
 const EndOfGame = ({ game, playerId, onEndGame }) => {
   let myUsername,
@@ -19,6 +19,7 @@ const EndOfGame = ({ game, playerId, onEndGame }) => {
       oppScore = game.hostPoints;
     }
   }
+
   let winnerElement = null;
   if (game?.winnerUsername != null) {
     winnerElement = (

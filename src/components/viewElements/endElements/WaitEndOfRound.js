@@ -1,5 +1,5 @@
 import React from "react";
-import "styles/views/WaitEndOfRound.scss";
+import "styles/viewElements/endElements/WaitEndOfRound.scss";
 import loadingGif from "image/loading.gif";
 
 const WaitEndOfRound = ({ game, playerId, onLeaveGame }) => {

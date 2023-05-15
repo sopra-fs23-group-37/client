@@ -1,5 +1,5 @@
 import React from "react";
-import "styles/views/OpponentLeft.scss";
+import "styles/viewElements/endElements/OpponentLeft.scss";
 
 const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason }) => {
   const leftReason = opponentLeftReason

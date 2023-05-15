@@ -9,6 +9,7 @@ import OpponentLeft from "components/viewElements/endElements/OpponentLeft";
 import sockClient from "helpers/sockClient";
 import Card from "components/viewElements/inGameElements/Card.js";
 import CardDisplay from "../viewElements/inGameElements/CardDisplay";
+import PlayerHand from "components/viewElements/inGameElements/PlayerHand";
 import loadingGif from "image/loading.gif";
 import WaitEndOfRound from "../viewElements/endElements/WaitEndOfRound";
 import myImage from "image/Sheet.png";
@@ -269,28 +270,10 @@ const GameScreen = () => {
     };
   });
 
-  let playerHandContainer = (
-    <div className="playerHandContainer">
-      <div className="playerHand">
-        {playerCards ? (
-          playerCards.map((card) => (
-            <div className="card-container-hand">
-              <Card
-                key={card.code}
-                code={card.code}
-                suit={card.suit}
-                value={card.value}
-                image={card.image}
-                fromField={false}
-                onClick={() => selectCardFromHand(card)}
-              />
-            </div>
-          ))
-        ) : (
-          <h1> - </h1>
-        )}
-      </div>
-    </div>
+  let playerHandContainer = round.myCardsInHand ? (
+    <PlayerHand cards={round.myCardsInHand} handleClick={selectCardFromHand} />
+  ) : (
+    <div></div>
   );
 
   let opponentHand = (
@@ -474,6 +457,7 @@ const GameScreen = () => {
           {cardsDiscard}
         </div>
       </div>
+
       {playerHandContainer}
       {game && round && endOfRound && (
         <div className="endOfRound">
