@@ -313,6 +313,7 @@ const GameScreen = () => {
       )}
     </div>
   );
+
   let opponentDiscardPile = (
     <div className="opponent-discards">
       {oppLastCapture !== null ? (
