@@ -1,6 +1,10 @@
-import { addDoc } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
-import { storage, ref, uploadBytes, getDownloadURL, firestore, timestamp, collection} from '../../firebase/config';
+import { useState, useEffect } from "react";
+import {
+  storage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "../../firebase/config";
 
 const useStorage = (file) => {
   const [url, setUrl] = useState(null);
@@ -16,6 +20,6 @@ const useStorage = (file) => {
   }, [file]);
 
   return { url };
-}
+};
 
 export default useStorage;

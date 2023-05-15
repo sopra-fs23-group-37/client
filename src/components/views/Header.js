@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "styles/views/Home.scss";
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
@@ -9,31 +9,14 @@ import "styles/views/Header.scss";
 
 const Header = (props) => {
   const history = useHistory();
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
-  const profileId = sessionStorage.getItem("userId");
-  const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState(sessionStorage.getItem("username"));
-  const [avatarUrl, setAvatarUrl] = useState(null);
-
+  const userId = sessionStorage.getItem("userId");
+  const username = sessionStorage.getItem("username");
   const types = ["image/png", "image/jpeg"];
 
-  const saveChanges = async () => {
-    try {
-      const userId = profileId;
-      const requestBody = JSON.stringify({ username, userId, avatarUrl });
-      const response = await api.put("/users/" + profileId, requestBody);
-
-      console.log(response);
-
-      sessionStorage.setItem("username", username);
-      sessionStorage.setItem("avatarUrl", avatarUrl);
-    } catch (error) {
-      alert(
-        `Something went wrong when trying to save: \n${handleError(error)}`
-      );
-    }
-  };
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   const logout = async () => {
     try {
@@ -54,11 +37,6 @@ const Header = (props) => {
 
   const showRulebook = () => {
     history.push("/rulebook");
-  };
-
-  const showProfile = () => {
-    const userId = sessionStorage.getItem("userId");
-    history.push(`/game/profile/` + userId);
   };
 
   const handleChange = (e) => {
@@ -87,7 +65,7 @@ const Header = (props) => {
     }
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     async function fetchProfile(profileId) {
       try {
         const response = await api.get("/users/" + profileId);
@@ -106,17 +84,30 @@ const Header = (props) => {
         );
       }
     }
-    await fetchProfile(profileId);
-  }, [profileId]);
+    fetchProfile(userId);
+  }, [userId]);
 
   useEffect(() => {
+    const saveChanges = async () => {
+      try {
+        const requestBody = JSON.stringify({ userId, avatarUrl });
+        const response = await api.put("/users/" + userId, requestBody);
+
+        console.log(response);
+        sessionStorage.setItem("avatarUrl", avatarUrl);
+      } catch (error) {
+        alert(
+          `Something went wrong when trying to save: \n${handleError(error)}`
+        );
+      }
+    };
     if (avatarUrl) {
       saveChanges().catch((error) => {
         console.error(error);
         // handle the error
       });
     }
-  }, [avatarUrl]);
+  }, [avatarUrl, userId, username]);
 
   return (
     <div className="header container" style={{ height: props.height }}>
