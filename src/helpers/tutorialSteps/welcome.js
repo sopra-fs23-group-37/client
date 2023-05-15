@@ -67,7 +67,6 @@ export const welcome = () => {
     ],
     myCardsInDiscard: [],
     oppCards: 8,
-    oppCardsInDiscard: [],
     cardsOnTable: [
       {
         code: "QH",

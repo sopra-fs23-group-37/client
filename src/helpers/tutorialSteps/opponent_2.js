@@ -1,31 +1,8 @@
 import Round from "models/Round";
-import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
 export const opponent_2 = () => {
-  let gameInfo = new Game({
-    gameStatus: "ONGOING",
-    hostAvatarUrl: null,
-    hostPoints: 0,
-    hostUsername: "Opponent",
-    hostId: "X",
-    guestPoints: 0,
-    guestId: sessionStorage.getItem("userId"),
-    guestUsername: sessionStorage.getItem("username"),
-    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
-  });
   let roundInfo = new Round({
-    roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
-    myPointClubs: 0,
-    myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
-    myTotalPoints: 0,
-    oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
-    oppTenOfDiamonds: 0,
-    oppTotalPoints: 0,
     myCardsInHand: [
       {
         code: "AC",
@@ -79,8 +56,7 @@ export const opponent_2 = () => {
         suit: "DIAMONDS",
       },
     ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
+    oppCards: 6,
     cardsOnTable: [
       {
         code: "4D",
@@ -108,10 +84,7 @@ export const opponent_2 = () => {
         suit: "HEARTS",
       },
     ],
-    deckCards: true,
     myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
     oppLastCapture: [
       {
         code: "6S",
@@ -128,16 +101,11 @@ export const opponent_2 = () => {
     ],
   });
   let stepData = new TutorialStep({
-    game: gameInfo,
     round: roundInfo,
     prompt: [
       "Your opponent has also set a card on the table, the Kind of Hearts.",
     ],
     selectionRequired: false,
-    selectableCardsTable: null,
-    selectableCardHand: null,
-    preSelectedCardsTable: null,
-    finished: false,
   });
   console.log("returning step data: ", stepData);
   return stepData;

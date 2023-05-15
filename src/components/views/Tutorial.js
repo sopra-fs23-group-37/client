@@ -57,7 +57,9 @@ const Tutorial = () => {
       setEndOfTutorial(stepData.finished);
       return;
     }
-    updateGame(stepData.game);
+    if (stepData.game) {
+      updateGame(stepData.game);
+    }
     updateRound(stepData.round);
     setPromptText(stepData.prompt);
     console.log(

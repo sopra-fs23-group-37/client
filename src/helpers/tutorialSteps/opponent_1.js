@@ -84,8 +84,7 @@ export const opponent_1 = () => {
         suit: "DIAMONDS",
       },
     ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
+    oppCards: 7,
     cardsOnTable: [
       {
         code: "4D",

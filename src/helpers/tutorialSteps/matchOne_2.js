@@ -1,31 +1,8 @@
 import Round from "models/Round";
-import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
 export const matchOne_2 = () => {
-  let gameInfo = new Game({
-    gameStatus: "ONGOING",
-    hostAvatarUrl: null,
-    hostPoints: 0,
-    hostUsername: "Opponent",
-    hostId: "X",
-    guestPoints: 0,
-    guestId: sessionStorage.getItem("userId"),
-    guestUsername: sessionStorage.getItem("username"),
-    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
-  });
   let roundInfo = new Round({
-    roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
-    myPointClubs: 0,
-    myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
-    myTotalPoints: 0,
-    oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
-    oppTenOfDiamonds: 0,
-    oppTotalPoints: 0,
     myCardsInHand: [
       {
         code: "AC",
@@ -78,7 +55,6 @@ export const matchOne_2 = () => {
     ],
     myCardsInDiscard: [],
     oppCards: 8,
-    oppCardsInDiscard: [],
     cardsOnTable: [
       {
         code: "QH",
@@ -105,20 +81,15 @@ export const matchOne_2 = () => {
         suit: "CLUBS",
       },
     ],
-    deckCards: true,
     myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
     oppLastCapture: [],
   });
   let stepData = new TutorialStep({
-    game: gameInfo,
     round: roundInfo,
     prompt: ["Now, select the Queen of Diamonds from your hand to match it"],
     selectionRequired: true,
     selectableCardsTable: null,
     selectableCardHand: "QD",
-    finished: false,
   });
   console.log("returning step data: ", stepData);
   return stepData;
