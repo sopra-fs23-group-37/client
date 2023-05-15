@@ -421,7 +421,7 @@ const GameScreen = () => {
               <div className="player-names">
                 <div class="image">
                   <div class="image-upload">
-                    {game && game.guestAvatarUrl && (
+                    {game?.guestAvatarUrl && (
                       <img alt="Avatar" src={game.guestAvatarUrl}></img>
                     )}
                     {game && !game.guestAvatarUrl && (
@@ -438,7 +438,7 @@ const GameScreen = () => {
                 <span className="host-name">{game.hostUsername}</span>
                 <div class="image">
                   <div class="image-upload">
-                    {game && game.hostAvatarUrl && (
+                    {game?.hostAvatarUrl && (
                       <img alt="Avatar" src={game.hostAvatarUrl}></img>
                     )}
                     {!game.hostAvatarUrl && (

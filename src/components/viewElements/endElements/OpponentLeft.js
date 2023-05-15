@@ -10,7 +10,7 @@ const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason }) => {
     oppUsername,
     myScore,
     oppScore = 0;
-  if (game && game.hostId && game.guestId != null) {
+  if (game?.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
       myScore = game.hostPoints;

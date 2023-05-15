@@ -4,7 +4,7 @@ import "styles/views/EndOfRound.scss";
 const EndOfRound = ({ game, round, playerId, onEndRound }) => {
   let myUsername,
     oppUsername = 0;
-  if (game && game.hostId && game.guestId != null) {
+  if (game?.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
       oppUsername = game.guestUsername;

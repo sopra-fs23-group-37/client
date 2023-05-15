@@ -452,7 +452,7 @@ const Tutorial = () => {
               <div className="player-names">
                 <div className="image">
                   <div className="image-upload">
-                    {game && game.guestAvatarUrl && (
+                    {game?.guestAvatarUrl && (
                       <img alt="Avatar" src={game.guestAvatarUrl}></img>
                     )}
                     {game && !game.guestAvatarUrl && (
@@ -469,7 +469,7 @@ const Tutorial = () => {
                 <span className="host-name">{game.hostUsername}</span>
                 <div className="image">
                   <div className="image-upload">
-                    {game && game.hostAvatarUrl && (
+                    {game?.hostAvatarUrl && (
                       <img alt="Avatar" src={game.hostAvatarUrl}></img>
                     )}
                     {!game.hostAvatarUrl && (

@@ -6,7 +6,7 @@ const EndOfGame = ({ game, playerId, onEndGame }) => {
     oppUsername,
     myScore,
     oppScore = 0;
-  if (game && game.hostId && game.guestId != null) {
+  if (game?.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
       myScore = game.hostPoints;
@@ -20,7 +20,7 @@ const EndOfGame = ({ game, playerId, onEndGame }) => {
     }
   }
   let winnerElement = null;
-  if (game && game.winnerUsername != null) {
+  if (game?.winnerUsername != null) {
     winnerElement = (
       <div className="winner">
         <h2>{game.winnerUsername} is the winner!</h2>

@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
 import "styles/views/WaitEndOfRound.scss";
 import loadingGif from "image/loading.gif";
 
-const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
-
-  let myUsername, oppUsername, myScore, oppScore = 0;
-  if (game && game.hostId && game.guestId != null) {
+const WaitEndOfRound = ({ game, playerId, onLeaveGame }) => {
+  let myUsername,
+    oppUsername,
+    myScore,
+    oppScore = 0;
+  if (game?.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
       myScore = game.hostPoints;
@@ -16,7 +18,7 @@ const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
       myScore = game.guestPoints;
       oppUsername = game.hostUsername;
       oppScore = game.hostPoints;
-    } 
+    }
   }
 
   return (
@@ -33,7 +35,7 @@ const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
           <p>Score: {oppScore}</p>
         </div>
       </div>
-        <div className="leave-button-container">
+      <div className="leave-button-container">
         <button className="leave-button" onClick={onLeaveGame}>
           Leave game
         </button>
