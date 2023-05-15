@@ -100,7 +100,7 @@ const Registration = (props) => {
           >
             Register
           </ButtonLight>
-          <div class="hr-sect"> or </div>
+          <div className="hr-sect"> or </div>
           <Link to="/login">
             <ButtonLight width="80%">Login</ButtonLight>
           </Link>

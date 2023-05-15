@@ -8,7 +8,7 @@ export const jack_1 = () => {
         code: "AC",
         image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "Clubs",
+        suit: "CLUBS",
       },
       {
         code: "JD",

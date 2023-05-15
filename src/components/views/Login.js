@@ -90,10 +90,11 @@ const Login = (props) => {
           <ButtonLight
             disabled={!username || !password}
             width="80%"
-            onClick={() => doLogin()}>
+            onClick={() => doLogin()}
+          >
             Login
           </ButtonLight>
-          <div class="hr-sect"> or </div>
+          <div className="hr-sect"> or </div>
           <Link to="/registration">
             <ButtonLight width="80%">Register</ButtonLight>
           </Link>

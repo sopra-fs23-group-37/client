@@ -3,14 +3,11 @@ import PropTypes from "prop-types";
 import "styles/viewElements/inGameElements/PlayerHand.scss";
 
 const PlayerHand = (props) => {
-  let playerCards = props.cards;
-  console.log("Player cards are: ", props.cards);
-
   return (
     <div className="playerHandContainer">
       <div className="playerHand">
-        {playerCards ? (
-          playerCards.map((card) => (
+        {props.cards ? (
+          props.cards.map((card) => (
             <div className="card-container-hand">
               <Card
                 key={card.code}
@@ -32,7 +29,7 @@ const PlayerHand = (props) => {
 };
 
 PlayerHand.propTypes = {
-  playerCards: PropTypes.any,
+  cards: PropTypes.any,
   handleClick: PropTypes.func,
 };
 

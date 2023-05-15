@@ -117,8 +117,8 @@ const Header = (props) => {
   return (
     <div className="header container" style={{ height: props.height }}>
       {user && (
-        <div class="image">
-          <div class="image-upload">
+        <div className="image">
+          <div className="image-upload">
             <label for="file-input">
               {avatarUrl && <img alt="Avatar" src={avatarUrl}></img>}
               {user.avatarUrl && !avatarUrl && (

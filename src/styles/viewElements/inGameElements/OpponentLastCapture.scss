@@ -1,0 +1,26 @@
+@import "styles/theme";
+
+.opponent-discards {
+  margin-top: 1.5em;
+  overflow: hidden;
+  text-align: center;
+
+  .cardback {
+    width: 80px;
+    height: auto;
+    margin-right: -30px;
+  }
+  .container-title {
+    margin: 0;
+    text-align: center;
+    flex-direction: row;
+    background: white;
+    font-family: "Inter", sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    width: 80%;
+    padding: 0.5rem;
+    border: 2px solid black;
+    border-radius: 25px;
+  }
+}

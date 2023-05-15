@@ -5,12 +5,16 @@ import Game from "models/Game";
 import Round from "models/Round";
 import EndOfRound from "components/viewElements/endElements/EndOfRound";
 import EndOfGame from "components/viewElements/endElements/EndOfGame";
-import Card from "components/viewElements/inGameElements/Card.js";
-import CardDisplay from "../viewElements/inGameElements/CardDisplay";
-import loadingGif from "image/loading.gif";
-import noAvatar from "image/noAvatar.png";
+import PlayerHand from "components/viewElements/inGameElements/PlayerHand";
+import OpponentHand from "components/viewElements/inGameElements/OpponentHand";
+import OpponentLastCapture from "components/viewElements/inGameElements/OpponentLastCapture";
+import TurnInfo from "components/viewElements/inGameElements/TurnInfo";
+import ScoreInfo from "components/viewElements/inGameElements/ScoreInfo";
+import CardTable from "components/viewElements/inGameElements/CardTable";
+import CapturePile from "components/viewElements/inGameElements/CapturePile";
 import { tutorialStepData } from "helpers/tutorialStepData";
 import EndOfTutorial from "components/viewElements/endElements/EndOfTutorial";
+import TutorialPrompt from "components/viewElements/inGameElements/TutorialPrompt";
 
 const Tutorial = () => {
   // data points for tutorial
@@ -22,7 +26,6 @@ const Tutorial = () => {
   const [promptIndex, setPromptIndex] = useState(0);
 
   const [endOfTutorial, setEndOfTutorial] = useState(false);
-
   const playerId = parseInt(sessionStorage.getItem("userId"));
 
   // these datapoints are set through the websocket
@@ -32,11 +35,6 @@ const Tutorial = () => {
   const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
   const [endOfGame, setEndOfGame] = useState(false);
-  // contains all cards from the player and on the discard
-  const [playerCards, setPlayerCards] = useState(null);
-  const [playerDiscards, setPlayerDiscardCards] = useState(null);
-  // contains number of cards of the opponent
-  const [opponentCards, setOpponentCards] = useState(null);
 
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
@@ -45,7 +43,6 @@ const Tutorial = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
-  const [oppLastCapture, setOppLastCapture] = useState(null);
 
   const history = useHistory();
 
@@ -174,12 +171,8 @@ const Tutorial = () => {
   const updateRound = (data) => {
     console.log("round update received:", data);
     setRound(new Round(data));
-    setPlayerCards(data.myCardsInHand);
     setTableCards(data.cardsOnTable);
-    setOpponentCards(data.oppCards);
-    setPlayerDiscardCards(data.myCardsInDiscard);
     setEndOfRound(data.roundStatus === "FINISHED");
-    setOppLastCapture(data.oppLastCapture);
   };
 
   const selectCardFromField = (card) => {
@@ -206,13 +199,12 @@ const Tutorial = () => {
       selectableCardHand != null &&
       card.code === selectableCardHand
     ) {
-      const filteredArray = playerCards.filter(
+      const filteredArray = round.myCardsInHand.filter(
         (item) => item.code !== card.code
       );
       if (selectedCard) {
         filteredArray.push(selectedCard);
       }
-      setPlayerCards(filteredArray);
       setSelectedCard(card);
     }
   };
@@ -258,150 +250,6 @@ const Tutorial = () => {
     }
   });
 
-  let playerHandContainer = (
-    <div className="playerHandContainer">
-      <div className="playerHand">
-        {playerCards ? (
-          playerCards.map((card) => (
-            <div className="card-container-hand">
-              <Card
-                key={card.code}
-                code={card.code}
-                suit={card.suit}
-                value={card.value}
-                image={card.image}
-                fromField={false}
-                onClick={() => selectCardFromHand(card)}
-              />
-            </div>
-          ))
-        ) : (
-          <h1> Not loaded </h1>
-        )}
-      </div>
-
-      <div className="exit-button-container">
-        <button className="exit-button" onClick={exitTutorial}>
-          Exit Tutorial
-        </button>
-      </div>
-
-      {/* <div className="player-info">
-        <ButtonGame
-          width="80%"
-          background="#FFFFFF"
-          onClick={() => makeMove()}
-          disable={checkButton()}
-        >
-          Play Move
-        </ButtonGame>
-      </div> */}
-    </div>
-  );
-
-  let opponentHand = (
-    <div className="opponent-cards">
-      {opponentCards ? (
-        [...Array(opponentCards)].map((e, i) => (
-          <div className="card-container-opponent">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-              className="cardback"
-              key={i}
-              alt="Back of Card"
-            />
-          </div>
-        ))
-      ) : (
-        <h1> not loaded </h1>
-      )}
-    </div>
-  );
-
-  let opponentDiscardPile = (
-    <div className="opponent-discards">
-      {oppLastCapture !== null ? (
-        oppLastCapture.map((e, i) => (
-          <img src={e.image} className="cardback" key={i} alt="e.code" />
-        ))
-      ) : (
-        <h1> No cards were captured </h1>
-      )}
-      <h2 className="container-title"> Opponent's last Capture </h2>
-    </div>
-  );
-
-  let turnInfo = (
-    <div className="turn-info-container">
-      <div className="turn-info-form">
-        <h1>{round && round.myTurn ? "Your turn" : "Opponent's turn"}</h1>
-        {!round.myTurn && (
-          <img src={loadingGif} alt="Loading..." className="loading-gif" />
-        )}
-      </div>
-    </div>
-  );
-
-  let cardsOnTableContainer = (
-    <div className="cards-on-table">
-      <div className="card-container-field">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-          className="cardback"
-          alt="Back of Card"
-        />
-      </div>
-      {tableCards ? (
-        tableCards.map((card) => (
-          <div className="card-container-field">
-            <Card
-              key={card.code}
-              code={card.code}
-              suit={card.suit}
-              value={card.value}
-              image={card.image}
-              onClick={() => selectCardFromField(card)}
-              fromField={true}
-            />
-          </div>
-        ))
-      ) : (
-        <div className="card-blank"> </div>
-      )}
-    </div>
-  );
-
-  let cardsDiscard = (
-    <div className="discard-pile">
-      <div className="stack">
-        {playerDiscards ? (
-          playerDiscards.map((card) => (
-            <div className="card-container-discard">
-              <Card
-                key={card.code}
-                code={card.code}
-                suit={card.suit}
-                value={card.value}
-                image={card.image}
-                onClick={() => {}}
-                fromField={true}
-              />
-            </div>
-          ))
-        ) : (
-          <div className="card-blank"> </div>
-        )}
-      </div>
-      <div className="stackHeight">
-        {playerDiscards ? (
-          <h1> Captured cards: {playerDiscards.length} </h1>
-        ) : (
-          <h1> Captured cards: 0 </h1>
-        )}
-      </div>
-    </div>
-  );
-
   const nextPrompt = () => {
     console.log(promptText, promptText.length);
     if (promptIndex + 1 === promptText.length) {
@@ -417,74 +265,66 @@ const Tutorial = () => {
       <div className="top">
         <div className="left">
           <div className="opponent">
-            {opponentDiscardPile}
-            {opponentHand}
-            {turnInfo}
+            {<OpponentLastCapture cards={round?.oppLastCapture} />}
+            {<OpponentHand cards={round.oppCards} />}
+            {<TurnInfo myTurn={round?.myTurn} />}
           </div>
-          <div className="table">
-            <div className="inner-table">
-              <CardDisplay
-                // if it works it works
-                cards={cardsOnTableContainer}
-                onClickSpace={() => toggleSelectPutOnField()}
-                selectPutOnField={selectPutOnField}
-              />
-            </div>
-          </div>
+          {round ? (
+            <CardTable
+              toggleSelectPutOnField={toggleSelectPutOnField}
+              selectPutOnField={selectPutOnField}
+              selectCardFromField={selectCardFromField}
+              cards={tableCards}
+            />
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className="right">
-          {game && (
-            <div className="statistics">
-              <div className="prompt-container">
-                <div className="prompt-form">
-                  {promptText ? (
-                    <h1>{promptText[promptIndex]}</h1>
-                  ) : (
-                    <h1> "No Prompt" </h1>
-                  )}
-                  {!selectionRequired ? (
-                    <button onClick={nextPrompt}>Continue</button>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-              </div>
-              <div className="player-names">
-                <div className="image">
-                  <div className="image-upload">
-                    {game?.guestAvatarUrl && (
-                      <img alt="Avatar" src={game.guestAvatarUrl}></img>
-                    )}
-                    {game && !game.guestAvatarUrl && (
-                      <img alt="Avatar" src={noAvatar}></img>
-                    )}
-                  </div>
-                </div>
-                <span className="guest-name">{game.guestUsername}</span>
-                <span className="points">
-                  <span className="guest-points">{game.guestPoints || 0}</span>
-                  <span className="points-divider">:</span>
-                  <span className="host-points">{game.hostPoints || 0}</span>
-                </span>
-                <span className="host-name">{game.hostUsername}</span>
-                <div className="image">
-                  <div className="image-upload">
-                    {game?.hostAvatarUrl && (
-                      <img alt="Avatar" src={game.hostAvatarUrl}></img>
-                    )}
-                    {!game.hostAvatarUrl && (
-                      <img alt="Avatar" src={noAvatar}></img>
-                    )}
-                  </div>
-                </div>
-              </div>
+          <TutorialPrompt
+            text={promptText}
+            index={promptIndex}
+            selectionRequired={selectionRequired}
+            nextPrompt={nextPrompt}
+          />
+          {/* <div className="prompt-container">
+            <div className="prompt-form">
+              {promptText ? (
+                <h1>{promptText[promptIndex]}</h1>
+              ) : (
+                <h1> "No Prompt" </h1>
+              )}
+              {!selectionRequired ? (
+                <button onClick={nextPrompt}>Continue</button>
+              ) : (
+                <div></div>
+              )}
             </div>
+          </div> */}
+          {game && (
+            <ScoreInfo
+              hostAvatarUrl={game.hostAvatarUrl}
+              hostPoints={game.hostPoints}
+              hostUsername={game.hostUsername}
+              guestAvatarUrl={game.guestAvatarUrl}
+              guestPoints={game.guestPoints}
+              guestUsername={game.guestUsername}
+            />
           )}
-          {cardsDiscard}
+          <CapturePile cards={round?.myCardsInDiscard} />
         </div>
       </div>
 
-      {playerHandContainer}
+      <PlayerHand
+        cards={round?.myCardsInHand}
+        handleClick={selectCardFromHand}
+      />
+
+      <div className="exit-button-container">
+        <button className="exit-button" onClick={exitTutorial}>
+          Exit Tutorial
+        </button>
+      </div>
 
       {game && round && endOfRound && (
         <div className="endOfRound">
