@@ -1,12 +1,15 @@
-import React from 'react';
+import React from "react";
 import "styles/views/OpponentLeft.scss";
 
-const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason}) => {
+const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason }) => {
+  const leftReason = opponentLeftReason
+    ? opponentLeftReason
+    : "One of the players left the game";
 
-    const leftReason = opponentLeftReason ? 
-    opponentLeftReason : "One of the players left the game";
-
-  let myUsername, oppUsername, myScore, oppScore = 0;
+  let myUsername,
+    oppUsername,
+    myScore,
+    oppScore = 0;
   if (game && game.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
@@ -18,7 +21,7 @@ const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason}) => {
       myScore = game.guestPoints;
       oppUsername = game.hostUsername;
       oppScore = game.hostPoints;
-    } 
+    }
   }
 
   return (
@@ -34,7 +37,7 @@ const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason}) => {
           <p>Score: {oppScore}</p>
         </div>
       </div>
-        <div className="opponentLeft-button-container">
+      <div className="opponentLeft-button-container">
         <button className="opponentLeft-button" onClick={onLeaveGame}>
           Leave game
         </button>

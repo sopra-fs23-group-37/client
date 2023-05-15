@@ -3,14 +3,14 @@ import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-import EndOfRound from "components/views/EndOfRound";
-import EndOfGame from "components/views/EndOfGame";
-import Card from "components/views/Card.js";
-import CardDisplay from "./CardDisplay";
+import EndOfRound from "components/viewElements/endElements/EndOfRound";
+import EndOfGame from "components/viewElements/endElements/EndOfGame";
+import Card from "components/viewElements/inGameElements/Card.js";
+import CardDisplay from "../viewElements/inGameElements/CardDisplay";
 import loadingGif from "image/loading.gif";
 import noAvatar from "image/noAvatar.png";
 import { tutorialStepData } from "helpers/tutorialStepData";
-import EndOfTutorial from "components/views/EndOfTutorial";
+import EndOfTutorial from "components/viewElements/endElements/EndOfTutorial";
 
 const Tutorial = () => {
   // data points for tutorial
@@ -178,10 +178,6 @@ const Tutorial = () => {
     setPlayerDiscardCards(data.myCardsInDiscard);
     setEndOfRound(data.roundStatus === "FINISHED");
     setOppLastCapture(data.oppLastCapture);
-
-    // if (data.roundStatus === "ONGOING") {
-    //   setWaitEndOfRound(false);
-    // }
   };
 
   const selectCardFromField = (card) => {

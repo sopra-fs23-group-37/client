@@ -4,7 +4,6 @@ import TutorialStep from "models/TutorialStep";
 
 export const welcome = () => {
   let gameInfo = new Game({
-    gameStatus: "ONGOING",
     hostAvatarUrl: null,
     hostPoints: 0,
     hostUsername: "Opponent",
@@ -16,7 +15,6 @@ export const welcome = () => {
   });
 
   let roundInfo = new Round({
-    roundStatus: "ONGOING",
     myCardsInHand: [
       {
         code: "AC",
@@ -96,7 +94,6 @@ export const welcome = () => {
         suit: "CLUBS",
       },
     ],
-    deckCards: true,
     myTurn: true,
     oppLastCapture: [],
   });
@@ -113,7 +110,6 @@ export const welcome = () => {
     selectionRequired: false,
     selectableCardsTable: null,
     selectableCardHand: null,
-    selectedCardsTable: null,
   });
   console.log("returning step data: ", stepData);
   return stepData;

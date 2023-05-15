@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 import "styles/views/EndOfGame.scss";
 
 const EndOfGame = ({ game, playerId, onEndGame }) => {
-
-  let myUsername, oppUsername, myScore, oppScore = 0;
+  let myUsername,
+    oppUsername,
+    myScore,
+    oppScore = 0;
   if (game && game.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
@@ -15,7 +17,7 @@ const EndOfGame = ({ game, playerId, onEndGame }) => {
       myScore = game.guestPoints;
       oppUsername = game.hostUsername;
       oppScore = game.hostPoints;
-    } 
+    }
   }
   let winnerElement = null;
   if (game && game.winnerUsername != null) {
@@ -26,9 +28,9 @@ const EndOfGame = ({ game, playerId, onEndGame }) => {
     );
   } else {
     winnerElement = (
-    <div className="winner">
-    <h2>Nobody is the winner!</h2>
-    </div> 
+      <div className="winner">
+        <h2>Nobody is the winner!</h2>
+      </div>
     );
   }
 
@@ -45,8 +47,8 @@ const EndOfGame = ({ game, playerId, onEndGame }) => {
           <p>Score: {oppScore}</p>
         </div>
       </div>
-        {winnerElement}
-        <div className="endGame-button-container">
+      {winnerElement}
+      <div className="endGame-button-container">
         <button className="endGame-button" onClick={onEndGame}>
           Leave game
         </button>
