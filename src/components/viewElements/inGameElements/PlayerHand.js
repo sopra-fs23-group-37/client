@@ -8,7 +8,7 @@ const PlayerHand = (props) => {
       <div className="playerHand">
         {props.cards ? (
           props.cards.map((card) => (
-            <div className="card-container-hand">
+            <div className="card-container-hand" key={card.code}>
               <Card
                 key={card.code}
                 code={card.code}

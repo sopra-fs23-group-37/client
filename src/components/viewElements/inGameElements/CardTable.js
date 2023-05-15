@@ -23,7 +23,7 @@ const CardTable = ({
       </div>
       {cards ? (
         cards.map((card) => (
-          <div className="card-container-field">
+          <div className="card-container-field" key={card.code}>
             <Card
               key={card.code}
               code={card.code}
