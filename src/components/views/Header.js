@@ -94,7 +94,7 @@ const Header = (props) => {
   useEffect(() => {
     const saveChanges = async () => {
       try {
-        const requestBody = JSON.stringify({ userId, avatarUrl });
+        const requestBody = JSON.stringify({ userId, username, avatarUrl });
         const response = await api.put("/users/" + userId, requestBody);
 
         console.log(response);
