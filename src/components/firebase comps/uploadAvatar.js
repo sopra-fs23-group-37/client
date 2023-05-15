@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import useStorage from '../firebase hooks/useStorage';
-import deleteFile from '../firebase comps/deleteFile';
-import {api, handleError} from "../../helpers/api";
+import { useEffect } from "react";
+import useStorage from "../firebase hooks/useStorage";
+import deleteFile from "../firebase comps/deleteFile";
 
-const UploadAvatar = ({ file, setFile, avatarUrl, setAvatarUrl}) => {
-  const {url} = useStorage(file);
+const UploadAvatar = ({ file, setFile, avatarUrl, setAvatarUrl }) => {
+  const { url } = useStorage(file);
   console.log(url);
 
   useEffect(() => {
@@ -12,9 +11,9 @@ const UploadAvatar = ({ file, setFile, avatarUrl, setAvatarUrl}) => {
       deleteFile(avatarUrl);
       setAvatarUrl(url);
     }
-  }, [url, setFile, setAvatarUrl]);
+  });
 
   return null;
-} 
+};
 
 export default UploadAvatar;

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Home.scss";
 import Game from "models/Game";
-import Header from "components/viewElements/Header";
+import Header from "components/views/Header";
 import { ButtonHome, ButtonLight } from "components/ui/Button";
 import sockClient from "helpers/sockClient";
 import PropTypes from "prop-types";
