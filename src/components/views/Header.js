@@ -85,7 +85,9 @@ const Header = (props) => {
   useEffect(() => {
     // fetch the user at the beginning
     if (!user) {
-      fetchUser();
+      fetchUser().catch((error) => {
+        console.error(error);
+      });
     }
   });
 
@@ -108,7 +110,6 @@ const Header = (props) => {
     if (avatarUrl) {
       saveChanges().catch((error) => {
         console.error(error);
-        // handle the error
       });
     }
   }, [avatarUrl, userId, username]);
