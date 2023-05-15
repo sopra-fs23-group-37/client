@@ -1,16 +1,13 @@
-import { useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
 import EndOfRound from "components/views/EndOfRound";
 import EndOfGame from "components/views/EndOfGame";
-import OpponentLeft from "components/views/OpponentLeft";
 import Card from "components/views/Card.js";
 import CardDisplay from "./CardDisplay";
 import loadingGif from "image/loading.gif";
-import WaitEndOfRound from "./WaitEndOfRound";
-import myImage from "image/Sheet.png";
 import noAvatar from "image/noAvatar.png";
 import { tutorialStepData } from "helpers/tutorialStepData";
 import EndOfTutorial from "components/views/EndOfTutorial";
@@ -24,12 +21,9 @@ const Tutorial = () => {
   const [selectionRequired, setSelectionRequired] = useState(null);
   const [promptIndex, setPromptIndex] = useState(0);
 
-  const [rulebookVisible, setRulebookVisible] = useState(false);
   const [endOfTutorial, setEndOfTutorial] = useState(false);
 
   const playerId = parseInt(sessionStorage.getItem("userId"));
-  const username = sessionStorage.getItem("username");
-  const avatarUrl = sessionStorage.getItem("avatarUrl");
 
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
@@ -46,12 +40,7 @@ const Tutorial = () => {
 
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
-  // true if the opponent has left
-  const [opponentLeft, setOpponentLeft] = useState(false);
-  // set reason for why the player has left (e.g. unexpected disconnect, surrender)
-  const [opponentLeftReason, setOpponentLeftReason] = useState(null);
-  // needed for the waiting overlay after the EndOfRound
-  const [waitEndOfRound, setWaitEndOfRound] = useState(false);
+
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
@@ -63,12 +52,7 @@ const Tutorial = () => {
   const getNextStep = (currentStep) => {
     setStep(step + 1);
     console.log("Getting data for step ", currentStep + 1);
-    let stepData = tutorialStepData(
-      currentStep + 1,
-      username,
-      playerId,
-      avatarUrl
-    );
+    let stepData = tutorialStepData(currentStep + 1);
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
       return;
@@ -91,7 +75,6 @@ const Tutorial = () => {
     setSelectableCardHand(stepData.selectableCardHand);
     return true;
   };
-
 
   const startTutorial = () => {
     console.log("tutorial starting");
@@ -183,15 +166,6 @@ const Tutorial = () => {
         console.log("the game has ended!");
         setEndOfGame(true);
       }
-      if (
-        data.gameStatus === "DISCONNECTED" ||
-        data.gameStatus === "SURRENDERED"
-      ) {
-        setOpponentLeft(true);
-        setOpponentLeftReason(data.endGameReason);
-        setEndOfRound(false);
-        setWaitEndOfRound(false);
-      }
     }
   };
 
@@ -202,13 +176,12 @@ const Tutorial = () => {
     setTableCards(data.cardsOnTable);
     setOpponentCards(data.oppCards);
     setPlayerDiscardCards(data.myCardsInDiscard);
-    console.log();
     setEndOfRound(data.roundStatus === "FINISHED");
     setOppLastCapture(data.oppLastCapture);
 
-    if (data.roundStatus === "ONGOING") {
-      setWaitEndOfRound(false);
-    }
+    // if (data.roundStatus === "ONGOING") {
+    //   setWaitEndOfRound(false);
+    // }
   };
 
   const selectCardFromField = (card) => {
@@ -228,6 +201,7 @@ const Tutorial = () => {
     }
     console.log("selectedCard: ", selectedCard);
   };
+
   const selectCardFromHand = (card) => {
     if (
       round.myTurn &&
@@ -263,10 +237,6 @@ const Tutorial = () => {
   const handleEndGame = () => {
     setEndOfGame(false);
     getNextStep(step);
-  };
-
-  const handleLeaveGame = () => {
-    history.push("/game");
   };
 
   useEffect(() => {
@@ -349,6 +319,7 @@ const Tutorial = () => {
       )}
     </div>
   );
+
   let opponentDiscardPile = (
     <div className="opponent-discards">
       {oppLastCapture !== null ? (
@@ -372,6 +343,7 @@ const Tutorial = () => {
       </div>
     </div>
   );
+
   let cardsOnTableContainer = (
     <div className="cards-on-table">
       <div className="card-container-field">
@@ -400,6 +372,7 @@ const Tutorial = () => {
       )}
     </div>
   );
+
   let cardsDiscard = (
     <div className="discard-pile">
       <div className="stack">
@@ -507,29 +480,6 @@ const Tutorial = () => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="surrender-button-container">
-                <button className="surrender-button" onClick={exitTutorial}>
-                  Exit Tutorial
-                </button>
-              </div> */}
-
-              <div className="rulebook-container">
-                <button
-                  className="round-button"
-                  onClick={() => setRulebookVisible(!rulebookVisible)}
-                >
-                  ?
-                </button>
-                {rulebookVisible && (
-                  <div
-                    className="rulebook-overlay"
-                    onClick={() => setRulebookVisible(false)}
-                  >
-                    <img src={myImage} alt="" />
-                  </div>
-                )}
-              </div>
             </div>
           )}
           {cardsDiscard}
@@ -555,27 +505,6 @@ const Tutorial = () => {
             game={game}
             playerId={playerId}
             onEndGame={handleEndGame}
-          />
-        </div>
-      )}
-
-      {game && opponentLeft && (
-        <div className="opponentLeft">
-          <OpponentLeft
-            game={game}
-            playerId={playerId}
-            onLeaveGame={handleLeaveGame}
-            opponentLeftReason={opponentLeftReason}
-          />
-        </div>
-      )}
-
-      {game && waitEndOfRound && (
-        <div className="waitEndOfRound">
-          <WaitEndOfRound
-            game={game}
-            playerId={playerId}
-            onLeaveGame={exitTutorial}
           />
         </div>
       )}

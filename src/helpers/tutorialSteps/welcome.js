@@ -14,18 +14,9 @@ export const welcome = () => {
     guestUsername: sessionStorage.getItem("username"),
     guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
   });
+
   let roundInfo = new Round({
     roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
-    myPointClubs: 0,
-    myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
-    myTotalPoints: 0,
-    oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
-    oppTenOfDiamonds: 0,
-    oppTotalPoints: 0,
     myCardsInHand: [
       {
         code: "AC",
@@ -77,7 +68,7 @@ export const welcome = () => {
       },
     ],
     myCardsInDiscard: [],
-    oppCards: 7,
+    oppCards: 8,
     oppCardsInDiscard: [],
     cardsOnTable: [
       {
@@ -107,10 +98,9 @@ export const welcome = () => {
     ],
     deckCards: true,
     myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
     oppLastCapture: [],
   });
+
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,

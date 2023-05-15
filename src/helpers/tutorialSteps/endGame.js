@@ -13,6 +13,7 @@ export const endGame = () => {
     guestId: sessionStorage.getItem("userId"),
     guestUsername: sessionStorage.getItem("username"),
     guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
+    winnerUsername: "Opponent",
   });
   let roundInfo = new Round({
     roundStatus: "FINISHED",
