@@ -15,7 +15,7 @@ const Header = (props) => {
 
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
-  const [profile, setProfile] = useState(null);
+  const [user, setUser] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
 
   const logout = async () => {
@@ -65,27 +65,29 @@ const Header = (props) => {
     }
   };
 
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("/users/" + userId);
+
+      setUser(response.data);
+
+      console.log("request to:", response.request.responseURL);
+      console.log("status code:", response.status);
+      console.log("status text:", response.statusText);
+      console.log("requested data:", response.data);
+    } catch (error) {
+      alert(
+        `Something went wrong while fetching the User: \n${handleError(error)}`
+      );
+    }
+  };
+
   useEffect(() => {
-    const fetchProfile = async (profileId) => {
-      try {
-        const response = await api.get("/users/" + profileId);
-
-        setProfile(response.data);
-
-        console.log("request to:", response.request.responseURL);
-        console.log("status code:", response.status);
-        console.log("status text:", response.statusText);
-        console.log("requested data:", response.data);
-      } catch (error) {
-        alert(
-          `Something went wrong while fetching the Profile: \n${handleError(
-            error
-          )}`
-        );
-      }
-    };
-    fetchProfile(userId);
-  }, [userId]);
+    // fetch the user at the beginning
+    if (!user) {
+      fetchUser();
+    }
+  });
 
   useEffect(() => {
     const saveChanges = async () => {
@@ -101,6 +103,8 @@ const Header = (props) => {
         );
       }
     };
+
+    // if a new avatar has been set, make sure to save the changes
     if (avatarUrl) {
       saveChanges().catch((error) => {
         console.error(error);
@@ -111,15 +115,15 @@ const Header = (props) => {
 
   return (
     <div className="header container" style={{ height: props.height }}>
-      {profile && (
+      {user && (
         <div class="image">
           <div class="image-upload">
             <label for="file-input">
               {avatarUrl && <img alt="Avatar" src={avatarUrl}></img>}
-              {profile.avatarUrl && !avatarUrl && (
-                <img alt="Avatar" src={profile.avatarUrl}></img>
+              {user.avatarUrl && !avatarUrl && (
+                <img alt="Avatar" src={user.avatarUrl}></img>
               )}
-              {!profile.avatarUrl && !avatarUrl && (
+              {!user.avatarUrl && !avatarUrl && (
                 <img alt="Avatar" src={noAvatar}></img>
               )}
             </label>
