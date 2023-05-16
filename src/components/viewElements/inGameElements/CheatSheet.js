@@ -5,11 +5,12 @@ import cheatSheet from "image/Sheet.png";
 
 const CheatSheet = () => {
   const [rulebookVisible, setRulebookVisible] = useState(false);
+
   return (
     <div className="rulebook-container-gs">
       <button
         className="round-button"
-        onClick={() => setRulebookVisible(!rulebookVisible)}
+        onClick={() => setRulebookVisible(true)}
       >
         ?
       </button>
