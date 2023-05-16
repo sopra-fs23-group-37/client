@@ -46,10 +46,18 @@ const Tutorial = () => {
 
   const history = useHistory();
 
-  const getNextStep = (currentStep) => {
-    setStep(step + 1);
-    console.log("Getting data for step ", currentStep + 1);
-    let stepData = tutorialStepData(currentStep + 1);
+  const getNextStep = (currentStep, backwards) => {
+    let nextstep = currentStep;
+    if (backwards) {
+      nextstep--;
+    } else {
+      nextstep++;
+    }
+
+    setStep(nextstep);
+
+    console.log("Getting data for step ", nextstep);
+    let stepData = tutorialStepData(nextstep);
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
       return;
@@ -59,6 +67,9 @@ const Tutorial = () => {
     }
     updateRound(stepData.round, stepData.selectableCardsTable);
     setPromptText(stepData.prompt);
+    if (backwards) {
+      setPromptIndex(stepData.prompt.length - 1);
+    }
     console.log(
       "Current and new selecatable cards from table: ",
       selectableCardsTable,
@@ -260,12 +271,20 @@ const Tutorial = () => {
   });
 
   const nextPrompt = () => {
-    console.log(promptText, promptText.length);
     if (promptIndex + 1 === promptText.length) {
       setPromptIndex(0);
       getNextStep(step);
     } else {
       setPromptIndex(promptIndex + 1);
+    }
+  };
+
+  const previousPrompt = () => {
+    console.log(promptText, promptText.length);
+    if (promptIndex === 0) {
+      getNextStep(step, true);
+    } else {
+      setPromptIndex(promptIndex - 1);
     }
   };
 
@@ -296,6 +315,8 @@ const Tutorial = () => {
             index={promptIndex}
             selectionRequired={selectionRequired}
             nextPrompt={nextPrompt}
+            previousPrompt={previousPrompt}
+            step={step}
           />
           {game && (
             <ScoreInfo
