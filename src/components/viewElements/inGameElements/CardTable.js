@@ -11,6 +11,7 @@ const CardTable = ({
   toggleSelectPutOnField,
   selectPutOnField,
   selectCardFromField,
+  myTurn,
 }) => {
   let cardsOnTableContainer = (
     <div className="cards-on-table">
@@ -30,6 +31,7 @@ const CardTable = ({
               suit={card.suit}
               value={card.value}
               image={card.image}
+              blocked={!myTurn || card.blocked}
               onClick={() => selectCardFromField(card)}
               fromField={true}
             />

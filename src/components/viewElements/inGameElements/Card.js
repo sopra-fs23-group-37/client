@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "styles/viewElements/inGameElements/Card.scss";
 
-const Card = ({ code, image, suit, value, onClick, fromField }) => {
+const Card = ({ code, image, suit, value, onClick, fromField, blocked }) => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
-    if (fromField) {
-      setActive(!active);
+    if (!blocked) {
+      if (fromField) {
+        setActive(!active);
+      }
+      onClick();
     }
-    onClick();
   };
 
   return (
@@ -34,6 +36,7 @@ Card.propTypes = {
   ]).isRequired,
   onClick: PropTypes.func,
   fromField: PropTypes.bool,
+  blocked: PropTypes.bool,
 };
 
 export default Card;

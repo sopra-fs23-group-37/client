@@ -284,6 +284,7 @@ const GameScreen = () => {
               selectPutOnField={selectPutOnField}
               selectCardFromField={selectCardFromField}
               cards={tableCards}
+              myTurn={round?.myTurn}
             />
           ) : (
             <div></div>

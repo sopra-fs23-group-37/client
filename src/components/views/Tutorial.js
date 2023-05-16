@@ -57,7 +57,7 @@ const Tutorial = () => {
     if (stepData.game) {
       updateGame(stepData.game);
     }
-    updateRound(stepData.round);
+    updateRound(stepData.round, stepData.selectableCardsTable);
     setPromptText(stepData.prompt);
     console.log(
       "Current and new selecatable cards from table: ",
@@ -72,6 +72,7 @@ const Tutorial = () => {
       stepData.selectableCardHand
     );
     setSelectableCardHand(stepData.selectableCardHand);
+
     return true;
   };
 
@@ -168,9 +169,17 @@ const Tutorial = () => {
     }
   };
 
-  const updateRound = (data) => {
+  const updateRound = (data, selectableCardsTable) => {
     console.log("round update received:", data);
     setRound(new Round(data));
+    for (let i = 0; i < data.cardsOnTable.length; i++) {
+      if (selectableCardsTable?.includes(data.cardsOnTable[i].code)) {
+        data.cardsOnTable[i].blocked = false;
+      } else {
+        data.cardsOnTable[i].blocked = true;
+      }
+    }
+    console.log("Cards on table after blocking: ", data.cardsOnTable);
     setTableCards(data.cardsOnTable);
     setEndOfRound(data.roundStatus === "FINISHED");
   };
@@ -275,6 +284,7 @@ const Tutorial = () => {
               selectPutOnField={selectPutOnField}
               selectCardFromField={selectCardFromField}
               cards={tableCards}
+              myTurn={round?.myTurn}
             />
           ) : (
             <div></div>
