@@ -6,7 +6,7 @@ const OpponentLastCapture = (props) => {
     <div className="opponent-discards">
       {props.cards ? (
         props.cards.map((e, i) => (
-          <img src={e.image} className="cardback" key={i} alt="e.code" />
+          <img src={e.image} className="cardback" key={e.code} alt="e.code" />
         ))
       ) : (
         <h1> - </h1>

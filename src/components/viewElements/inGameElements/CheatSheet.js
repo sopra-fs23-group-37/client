@@ -1,7 +1,6 @@
 import "styles/viewElements/inGameElements/CheatSheet.scss";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import React from "react";
 import cheatSheet from "image/Sheet.png";
 
 const CheatSheet = () => {

@@ -172,11 +172,11 @@ const Tutorial = () => {
   const updateRound = (data, selectableCardsTable) => {
     console.log("round update received:", data);
     setRound(new Round(data));
-    for (let i = 0; i < data.cardsOnTable.length; i++) {
-      if (selectableCardsTable?.includes(data.cardsOnTable[i].code)) {
-        data.cardsOnTable[i].blocked = false;
+    for (let card of data.cardsOnTable) {
+      if (selectableCardsTable?.includes(card.code)) {
+        card.blocked = false;
       } else {
-        data.cardsOnTable[i].blocked = true;
+        card.blocked = true;
       }
     }
     console.log("Cards on table after blocking: ", data.cardsOnTable);

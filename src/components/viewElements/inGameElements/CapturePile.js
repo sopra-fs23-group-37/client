@@ -9,7 +9,7 @@ const CapturePile = ({ cards }) => {
       <div className="stack">
         {cards ? (
           cards.map((card) => (
-            <div className="card-container-discard">
+            <div className="card-container-discard" key={card.code}>
               <Card
                 key={card.code}
                 code={card.code}

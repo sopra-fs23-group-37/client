@@ -6,7 +6,7 @@ const OpponentHand = (props) => {
     <div className="opponent-cards">
       {props.cards ? (
         [...Array(props.cards)].map((e, i) => (
-          <div className="card-container-opponent" >
+          <div className="card-container-opponent" key={i}>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
               className="cardback"
