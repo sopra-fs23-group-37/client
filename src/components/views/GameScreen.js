@@ -16,7 +16,6 @@ import CheatSheet from "components/viewElements/inGameElements/CheatSheet";
 import { checkMove } from "helpers/validMoveCheck";
 import ScoreInfo from "components/viewElements/inGameElements/ScoreInfo";
 import CardTable from "components/viewElements/inGameElements/CardTable";
-import CapturePile from "components/viewElements/inGameElements/CapturePile";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -271,12 +270,10 @@ const GameScreen = () => {
 
   return (
     <div className="gamescreen container">
-      <CheatSheet />
       <div className="top">
         <div className="opponent">
           {<OpponentLastCapture cards={round?.oppLastCapture} />}
           {<OpponentHand cards={round?.oppCards} />}
-          {<TurnInfo myTurn={round?.myTurn} />}
         </div>
         {game && (
             <ScoreInfo
@@ -288,11 +285,6 @@ const GameScreen = () => {
               guestUsername={game.guestUsername}
             />
           )}
-          {/* <div className="surrender-button-container">
-            <button className="surrender-button" onClick={surrenderGame}>
-              Surrender
-            </button>
-        </div>*/}
       </div>
       <div className="bottom"> 
         {round ? (
@@ -306,11 +298,20 @@ const GameScreen = () => {
         ) : (
           <div></div>
         )}
-        <CapturePile cards={round?.myCardsInDiscard} />
+        <div className="menu-container">
+        {<TurnInfo myTurn={round?.myTurn} />}
+        <div className="button-container">
+          <button className="surrender-button" onClick={surrenderGame}>
+            Surrender
+          </button>
+          <CheatSheet />
+        </div>
+        </div>
       </div>
       {
         <PlayerHand
           cards={round?.myCardsInHand}
+          discardCards={round?.myCardsInDiscard}
           handleClick={selectCardFromHand}
         />
       }

@@ -1,6 +1,7 @@
 @import "styles/theme";
 
 .card-display {
+  width: 100%;
   
   .cards-on-table {
     margin-right: 15px;
@@ -12,9 +13,9 @@
 
     .card-container-field {
       width: 12%;
-      min-width: 50px;
+      min-width: 60px;
       height: auto;
-      margin-right: 10px;
+      margin-right: 1vw;
 
       .cardback {
         width: 100%;

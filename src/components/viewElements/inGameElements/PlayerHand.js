@@ -1,6 +1,7 @@
 import Card from "./Card";
 import PropTypes from "prop-types";
 import "styles/viewElements/inGameElements/PlayerHand.scss";
+import CapturePile from "components/viewElements/inGameElements/CapturePile";
 
 const PlayerHand = (props) => {
   return (
@@ -24,12 +25,14 @@ const PlayerHand = (props) => {
           <h1> - </h1>
         )}
       </div>
+      <CapturePile cards={props.discardCards} />
     </div>
   );
 };
 
 PlayerHand.propTypes = {
   cards: PropTypes.any,
+  discardCards: PropTypes.any,
   handleClick: PropTypes.func,
 };
 
