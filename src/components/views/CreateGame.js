@@ -18,27 +18,25 @@ const CreateGame = () => {
       const isPrivate = true;
 
       if (gameModus === "Private") {
-      const requestBody = JSON.stringify({ host, isPrivate });
-      const response = await api.post("/games", requestBody);
-      console.log(response);
-      const game = new Game(response.data);
+        const requestBody = JSON.stringify({ host, isPrivate });
+        const response = await api.post("/games", requestBody);
+        console.log(response);
+        const game = new Game(response.data);
 
-      console.log(game.gameId);
-      history.push("/game/lobby/" + game.gameId);
-      } 
-      
+        console.log(game.gameId);
+        history.push("/game/lobby/" + game.gameId);
+      }
+
       if (gameModus === "Public") {
         const isPrivate = false;
         const requestBody = JSON.stringify({ host, isPrivate });
         const response = await api.post("/games", requestBody);
         console.log(response);
         const game = new Game(response.data);
-  
+
         console.log(game.gameId);
         history.push("/game/lobby/" + game.gameId);
       }
-
-      
     } catch (error) {
       alert(
         `Something went wrong when trying to create a game: \n${handleError(
@@ -48,8 +46,6 @@ const CreateGame = () => {
     }
   };
 
-  
-
   const homescreen = () => {
     history.push("/game/dashboard");
   };
@@ -57,14 +53,12 @@ const CreateGame = () => {
   const handleGameModusChange = (e) => {
     setGameModus(e.target.value);
   };
- 
 
   return (
     <BaseContainer>
       <div className="createGame container">
         <div className="createGame title-container">
-          <h1 className="createGame title-lobby">    Game Settings</h1>
-        
+          <h1 className="createGame title-lobby"> Game Settings</h1>
         </div>
         <div className="createGame modus-container">
           <h4>Game: </h4>
@@ -72,9 +66,7 @@ const CreateGame = () => {
             <option value="Public">Public</option>
             <option value="Private">Private</option>
           </select>
-        
         </div>
-      
 
         <div className="createGame button-container">
           <Button width="100%" onClick={() => homescreen()}>

@@ -4,10 +4,11 @@ import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Home.scss";
 import Game from "models/Game";
-import Header from "components/views/Header";
+import Header from "components/viewElements/Header";
 import { ButtonHome, ButtonLight } from "components/ui/Button";
 import sockClient from "helpers/sockClient";
 import PropTypes from "prop-types";
+import { createGame } from "helpers/createGame";
 
 const FormField = (props) => {
   return (
@@ -24,6 +25,26 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
+const GameModeField = (props) => {
+  return (
+    <select
+      className="home select"
+      value={props.gameMode}
+      onChange={(e) => props.onChange(e.target.value)}
+    >
+      <option className="home placeholder" value="" disabled selected>
+        Select Mode...
+      </option>
+      <option value="Public">Public</option>
+      <option value="Private">Private</option>
+    </select>
+  );
+};
+
+GameModeField.propTypes = {
+  onChange: PropTypes.func,
+};
+
 const Home = () => {
   const history = useHistory();
   const [openGames, setOpenGames] = useState(0);
@@ -34,12 +55,17 @@ const Home = () => {
   const username = sessionStorage.getItem("username");
   const [gameCode, setGameCode] = useState("");
   const [showCodeInput, setShowCodeInput] = useState(false);
+  const [gameMode, setGameMode] = useState(null);
+  const [showModeInput, setShowModeInput] = useState(false);
 
-  const createGame = () => {
-    history.push("/game/createGame");
+  const createAndOpenGame = async () => {
+    console.log("gameMode currently at ", gameMode);
+    let gameId = await createGame(gameMode).catch((error) =>
+      console.log(error)
+    );
+    console.log("GameId :", gameId);
+    history.push("/game/lobby/" + gameId);
   };
-
-  // const lobbyBrowser = () => {};
 
   const showPrompt = () => {
     const newUser = sessionStorage.getItem("newUser");
@@ -65,6 +91,7 @@ const Home = () => {
     sessionStorage.setItem("newUser", "false");
     setShowModal(false);
   };
+
   const joinGame = async () => {
     try {
       const userId = sessionStorage.getItem("userId");
@@ -129,6 +156,13 @@ const Home = () => {
     }
   };
 
+  const showModeInputToggle = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowModeInput(false);
+      setGameMode(null);
+    }
+  };
+
   const startTutorial = () => {
     history.push("/game/tutorial");
   };
@@ -187,6 +221,24 @@ const Home = () => {
               </div>
             </div>
           )}
+          {showModeInput && (
+            <div className="mode-input" onClick={showModeInputToggle}>
+              <div className="mode-input-form">
+                <GameModeField
+                  className="mode-input-form-field"
+                  gameMode={gameMode}
+                  onChange={(n) => setGameMode(n)}
+                />
+                <ButtonLight
+                  className="mode-input-button"
+                  disabled={!gameMode}
+                  onClick={() => createAndOpenGame(gameMode)}
+                >
+                  Create Game
+                </ButtonLight>
+              </div>
+            </div>
+          )}
           <div className="row">
             <ButtonHome className="light">
               Open Games: <br />
@@ -204,7 +256,7 @@ const Home = () => {
           <div className="row" style={{ "margin-top": "20px" }}>
             <ButtonHome
               className="normal with-icon"
-              onClick={() => createGame()}
+              onClick={() => setShowModeInput(true)}
             >
               Create Game
             </ButtonHome>
