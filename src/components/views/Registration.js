@@ -70,7 +70,9 @@ const Registration = (props) => {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && password && username) {
-      doRegistration();
+      doRegistration().catch((error) => {
+        console.error(error);
+      });
     }
   };
 

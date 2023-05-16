@@ -121,7 +121,9 @@ const Lobby = () => {
     // once the game has reached the right status, go to the game
     checkGoToGame();
     if (goingToGame) {
-      goToGame();
+      goToGame().catch((error) => {
+        console.error(error);
+      });
     }
 
     // handle disconnects
