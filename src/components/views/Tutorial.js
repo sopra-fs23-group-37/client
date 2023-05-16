@@ -1,19 +1,20 @@
-import { useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "styles/views/GameScreen.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import Round from "models/Round";
-import EndOfRound from "components/views/EndOfRound";
-import EndOfGame from "components/views/EndOfGame";
-import OpponentLeft from "components/views/OpponentLeft";
-import Card from "components/views/Card.js";
-import CardDisplay from "./CardDisplay";
-import loadingGif from "image/loading.gif";
-import WaitEndOfRound from "./WaitEndOfRound";
-import myImage from "image/Sheet.png";
-import noAvatar from "image/noAvatar.png";
+import EndOfRound from "components/viewElements/endElements/EndOfRound";
+import EndOfGame from "components/viewElements/endElements/EndOfGame";
+import PlayerHand from "components/viewElements/inGameElements/PlayerHand";
+import OpponentHand from "components/viewElements/inGameElements/OpponentHand";
+import OpponentLastCapture from "components/viewElements/inGameElements/OpponentLastCapture";
+import TurnInfo from "components/viewElements/inGameElements/TurnInfo";
+import ScoreInfo from "components/viewElements/inGameElements/ScoreInfo";
+import CardTable from "components/viewElements/inGameElements/CardTable";
+import CapturePile from "components/viewElements/inGameElements/CapturePile";
 import { tutorialStepData } from "helpers/tutorialStepData";
-import EndOfTutorial from "components/views/EndOfTutorial";
+import EndOfTutorial from "components/viewElements/endElements/EndOfTutorial";
+import TutorialPrompt from "components/viewElements/inGameElements/TutorialPrompt";
 
 const Tutorial = () => {
   // data points for tutorial
@@ -24,12 +25,8 @@ const Tutorial = () => {
   const [selectionRequired, setSelectionRequired] = useState(null);
   const [promptIndex, setPromptIndex] = useState(0);
 
-  const [rulebookVisible, setRulebookVisible] = useState(false);
   const [endOfTutorial, setEndOfTutorial] = useState(false);
-
   const playerId = parseInt(sessionStorage.getItem("userId"));
-  const username = sessionStorage.getItem("username");
-  const avatarUrl = sessionStorage.getItem("avatarUrl");
 
   // these datapoints are set through the websocket
   const [game, setGame] = useState(null);
@@ -38,43 +35,29 @@ const Tutorial = () => {
   const [endOfRound, setEndOfRound] = useState(false);
   // end of game contains total points and winner
   const [endOfGame, setEndOfGame] = useState(false);
-  // contains all cards from the player and on the discard
-  const [playerCards, setPlayerCards] = useState(null);
-  const [playerDiscards, setPlayerDiscardCards] = useState(null);
-  // contains number of cards of the opponent
-  const [opponentCards, setOpponentCards] = useState(null);
 
   // contains the cards on the table as array
   const [tableCards, setTableCards] = useState(null);
-  // true if the opponent has left
-  const [opponentLeft, setOpponentLeft] = useState(false);
-  // set reason for why the player has left (e.g. unexpected disconnect, surrender)
-  const [opponentLeftReason, setOpponentLeftReason] = useState(null);
-  // needed for the waiting overlay after the EndOfRound
-  const [waitEndOfRound, setWaitEndOfRound] = useState(false);
+
   //these datapoints are set by the player when playing to form the move
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
-  const [oppLastCapture, setOppLastCapture] = useState(null);
 
   const history = useHistory();
 
   const getNextStep = (currentStep) => {
     setStep(step + 1);
     console.log("Getting data for step ", currentStep + 1);
-    let stepData = tutorialStepData(
-      currentStep + 1,
-      username,
-      playerId,
-      avatarUrl
-    );
+    let stepData = tutorialStepData(currentStep + 1);
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
       return;
     }
-    updateGame(stepData.game);
-    updateRound(stepData.round);
+    if (stepData.game) {
+      updateGame(stepData.game);
+    }
+    updateRound(stepData.round, stepData.selectableCardsTable);
     setPromptText(stepData.prompt);
     console.log(
       "Current and new selecatable cards from table: ",
@@ -89,9 +72,9 @@ const Tutorial = () => {
       stepData.selectableCardHand
     );
     setSelectableCardHand(stepData.selectableCardHand);
+
     return true;
   };
-
 
   const startTutorial = () => {
     console.log("tutorial starting");
@@ -183,32 +166,22 @@ const Tutorial = () => {
         console.log("the game has ended!");
         setEndOfGame(true);
       }
-      if (
-        data.gameStatus === "DISCONNECTED" ||
-        data.gameStatus === "SURRENDERED"
-      ) {
-        setOpponentLeft(true);
-        setOpponentLeftReason(data.endGameReason);
-        setEndOfRound(false);
-        setWaitEndOfRound(false);
-      }
     }
   };
 
-  const updateRound = (data) => {
+  const updateRound = (data, selectableCardsTable) => {
     console.log("round update received:", data);
     setRound(new Round(data));
-    setPlayerCards(data.myCardsInHand);
-    setTableCards(data.cardsOnTable);
-    setOpponentCards(data.oppCards);
-    setPlayerDiscardCards(data.myCardsInDiscard);
-    console.log();
-    setEndOfRound(data.roundStatus === "FINISHED");
-    setOppLastCapture(data.oppLastCapture);
-
-    if (data.roundStatus === "ONGOING") {
-      setWaitEndOfRound(false);
+    for (let card of data.cardsOnTable) {
+      if (selectableCardsTable?.includes(card.code)) {
+        card.blocked = false;
+      } else {
+        card.blocked = true;
+      }
     }
+    console.log("Cards on table after blocking: ", data.cardsOnTable);
+    setTableCards(data.cardsOnTable);
+    setEndOfRound(data.roundStatus === "FINISHED");
   };
 
   const selectCardFromField = (card) => {
@@ -228,19 +201,19 @@ const Tutorial = () => {
     }
     console.log("selectedCard: ", selectedCard);
   };
+
   const selectCardFromHand = (card) => {
     if (
       round.myTurn &&
       selectableCardHand != null &&
       card.code === selectableCardHand
     ) {
-      const filteredArray = playerCards.filter(
+      const filteredArray = round.myCardsInHand.filter(
         (item) => item.code !== card.code
       );
       if (selectedCard) {
         filteredArray.push(selectedCard);
       }
-      setPlayerCards(filteredArray);
       setSelectedCard(card);
     }
   };
@@ -265,10 +238,6 @@ const Tutorial = () => {
     getNextStep(step);
   };
 
-  const handleLeaveGame = () => {
-    history.push("/game");
-  };
-
   useEffect(() => {
     if (!endOfTutorial) {
       console.log("Use Effect started");
@@ -290,147 +259,6 @@ const Tutorial = () => {
     }
   });
 
-  let playerHandContainer = (
-    <div className="playerHandContainer">
-      <div className="playerHand">
-        {playerCards ? (
-          playerCards.map((card) => (
-            <div className="card-container-hand">
-              <Card
-                key={card.code}
-                code={card.code}
-                suit={card.suit}
-                value={card.value}
-                image={card.image}
-                fromField={false}
-                onClick={() => selectCardFromHand(card)}
-              />
-            </div>
-          ))
-        ) : (
-          <h1> Not loaded </h1>
-        )}
-      </div>
-
-      <div className="exit-button-container">
-        <button className="exit-button" onClick={exitTutorial}>
-          Exit Tutorial
-        </button>
-      </div>
-
-      {/* <div className="player-info">
-        <ButtonGame
-          width="80%"
-          background="#FFFFFF"
-          onClick={() => makeMove()}
-          disable={checkButton()}
-        >
-          Play Move
-        </ButtonGame>
-      </div> */}
-    </div>
-  );
-
-  let opponentHand = (
-    <div className="opponent-cards">
-      {opponentCards ? (
-        [...Array(opponentCards)].map((e, i) => (
-          <div className="card-container-opponent">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-              className="cardback"
-              key={i}
-              alt="Back of Card"
-            />
-          </div>
-        ))
-      ) : (
-        <h1> not loaded </h1>
-      )}
-    </div>
-  );
-  let opponentDiscardPile = (
-    <div className="opponent-discards">
-      {oppLastCapture !== null ? (
-        oppLastCapture.map((e, i) => (
-          <img src={e.image} className="cardback" key={i} alt="e.code" />
-        ))
-      ) : (
-        <h1> No cards were captured </h1>
-      )}
-      <h2 className="container-title"> Opponent's last Capture </h2>
-    </div>
-  );
-
-  let turnInfo = (
-    <div className="turn-info-container">
-      <div className="turn-info-form">
-        <h1>{round && round.myTurn ? "Your turn" : "Opponent's turn"}</h1>
-        {!round.myTurn && (
-          <img src={loadingGif} alt="Loading..." className="loading-gif" />
-        )}
-      </div>
-    </div>
-  );
-  let cardsOnTableContainer = (
-    <div className="cards-on-table">
-      <div className="card-container-field">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-          className="cardback"
-          alt="Back of Card"
-        />
-      </div>
-      {tableCards ? (
-        tableCards.map((card) => (
-          <div className="card-container-field">
-            <Card
-              key={card.code}
-              code={card.code}
-              suit={card.suit}
-              value={card.value}
-              image={card.image}
-              onClick={() => selectCardFromField(card)}
-              fromField={true}
-            />
-          </div>
-        ))
-      ) : (
-        <div className="card-blank"> </div>
-      )}
-    </div>
-  );
-  let cardsDiscard = (
-    <div className="discard-pile">
-      <div className="stack">
-        {playerDiscards ? (
-          playerDiscards.map((card) => (
-            <div className="card-container-discard">
-              <Card
-                key={card.code}
-                code={card.code}
-                suit={card.suit}
-                value={card.value}
-                image={card.image}
-                onClick={() => {}}
-                fromField={true}
-              />
-            </div>
-          ))
-        ) : (
-          <div className="card-blank"> </div>
-        )}
-      </div>
-      <div className="stackHeight">
-        {playerDiscards ? (
-          <h1> Captured cards: {playerDiscards.length} </h1>
-        ) : (
-          <h1> Captured cards: 0 </h1>
-        )}
-      </div>
-    </div>
-  );
-
   const nextPrompt = () => {
     console.log(promptText, promptText.length);
     if (promptIndex + 1 === promptText.length) {
@@ -446,97 +274,53 @@ const Tutorial = () => {
       <div className="top">
         <div className="left">
           <div className="opponent">
-            {opponentDiscardPile}
-            {opponentHand}
-            {turnInfo}
+            {<OpponentLastCapture cards={round?.oppLastCapture} />}
+            {<OpponentHand cards={round.oppCards} />}
+            {<TurnInfo myTurn={round?.myTurn} />}
           </div>
-          <div className="table">
-            <div className="inner-table">
-              <CardDisplay
-                // if it works it works
-                cards={cardsOnTableContainer}
-                onClickSpace={() => toggleSelectPutOnField()}
-                selectPutOnField={selectPutOnField}
-              />
-            </div>
-          </div>
+          {round ? (
+            <CardTable
+              toggleSelectPutOnField={toggleSelectPutOnField}
+              selectPutOnField={selectPutOnField}
+              selectCardFromField={selectCardFromField}
+              cards={tableCards}
+              myTurn={round?.myTurn}
+            />
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className="right">
+          <TutorialPrompt
+            text={promptText}
+            index={promptIndex}
+            selectionRequired={selectionRequired}
+            nextPrompt={nextPrompt}
+          />
           {game && (
-            <div className="statistics">
-              <div className="prompt-container">
-                <div className="prompt-form">
-                  {promptText ? (
-                    <h1>{promptText[promptIndex]}</h1>
-                  ) : (
-                    <h1> "No Prompt" </h1>
-                  )}
-                  {!selectionRequired ? (
-                    <button onClick={nextPrompt}>Continue</button>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-              </div>
-              <div className="player-names">
-                <div className="image">
-                  <div className="image-upload">
-                    {game && game.guestAvatarUrl && (
-                      <img alt="Avatar" src={game.guestAvatarUrl}></img>
-                    )}
-                    {game && !game.guestAvatarUrl && (
-                      <img alt="Avatar" src={noAvatar}></img>
-                    )}
-                  </div>
-                </div>
-                <span className="guest-name">{game.guestUsername}</span>
-                <span className="points">
-                  <span className="guest-points">{game.guestPoints || 0}</span>
-                  <span className="points-divider">:</span>
-                  <span className="host-points">{game.hostPoints || 0}</span>
-                </span>
-                <span className="host-name">{game.hostUsername}</span>
-                <div className="image">
-                  <div className="image-upload">
-                    {game && game.hostAvatarUrl && (
-                      <img alt="Avatar" src={game.hostAvatarUrl}></img>
-                    )}
-                    {!game.hostAvatarUrl && (
-                      <img alt="Avatar" src={noAvatar}></img>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* <div className="surrender-button-container">
-                <button className="surrender-button" onClick={exitTutorial}>
-                  Exit Tutorial
-                </button>
-              </div> */}
-
-              <div className="rulebook-container">
-                <button
-                  className="round-button"
-                  onClick={() => setRulebookVisible(!rulebookVisible)}
-                >
-                  ?
-                </button>
-                {rulebookVisible && (
-                  <div
-                    className="rulebook-overlay"
-                    onClick={() => setRulebookVisible(false)}
-                  >
-                    <img src={myImage} alt="" />
-                  </div>
-                )}
-              </div>
-            </div>
+            <ScoreInfo
+              hostAvatarUrl={game.hostAvatarUrl}
+              hostPoints={game.hostPoints}
+              hostUsername={game.hostUsername}
+              guestAvatarUrl={game.guestAvatarUrl}
+              guestPoints={game.guestPoints}
+              guestUsername={game.guestUsername}
+            />
           )}
-          {cardsDiscard}
+          <CapturePile cards={round?.myCardsInDiscard} />
         </div>
       </div>
 
-      {playerHandContainer}
+      <PlayerHand
+        cards={round?.myCardsInHand}
+        handleClick={selectCardFromHand}
+      />
+
+      <div className="exit-button-container">
+        <button className="exit-button" onClick={exitTutorial}>
+          Exit Tutorial
+        </button>
+      </div>
 
       {game && round && endOfRound && (
         <div className="endOfRound">
@@ -555,27 +339,6 @@ const Tutorial = () => {
             game={game}
             playerId={playerId}
             onEndGame={handleEndGame}
-          />
-        </div>
-      )}
-
-      {game && opponentLeft && (
-        <div className="opponentLeft">
-          <OpponentLeft
-            game={game}
-            playerId={playerId}
-            onLeaveGame={handleLeaveGame}
-            opponentLeftReason={opponentLeftReason}
-          />
-        </div>
-      )}
-
-      {game && waitEndOfRound && (
-        <div className="waitEndOfRound">
-          <WaitEndOfRound
-            game={game}
-            playerId={playerId}
-            onLeaveGame={exitTutorial}
           />
         </div>
       )}

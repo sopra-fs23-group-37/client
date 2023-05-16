@@ -1,0 +1,27 @@
+@import "styles/theme";
+
+.turn-info-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+
+  .turn-info-form {
+    flex-direction: row;
+    background: white;
+    font-family: "Inter", sans-serif;
+    font-size: 0.8vw;
+    font-weight: bold;
+    width: 80%;
+    min-width: fit-content;
+    margin: auto;
+    padding: 0.5rem;
+    border: 2px solid black;
+    border-radius: 15px;
+  }
+  .loading-gif {
+    width: 25%;
+    height: 25%;
+  }
+}

@@ -1,37 +1,14 @@
 import Round from "models/Round";
-import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
 export const opponent_3 = () => {
-  let gameInfo = new Game({
-    gameStatus: "ONGOING",
-    hostAvatarUrl: null,
-    hostPoints: 0,
-    hostUsername: "Opponent",
-    hostId: "X",
-    guestPoints: 0,
-    guestId: sessionStorage.getItem("userId"),
-    guestUsername: sessionStorage.getItem("username"),
-    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
-  });
   let roundInfo = new Round({
-    roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
-    myPointClubs: 0,
-    myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
-    myTotalPoints: 0,
-    oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
-    oppTenOfDiamonds: 0,
-    oppTotalPoints: 0,
     myCardsInHand: [
       {
         code: "AC",
         image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "Clubs",
+        suit: "CLUBS",
       },
       {
         code: "JD",
@@ -91,8 +68,7 @@ export const opponent_3 = () => {
         suit: "DIAMONDS",
       },
     ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
+    oppCards: 5,
     cardsOnTable: [
       {
         code: "8C",
@@ -114,10 +90,7 @@ export const opponent_3 = () => {
         suit: "SPADES",
       },
     ],
-    deckCards: true,
     myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
     oppLastCapture: [
       {
         code: "6S",
@@ -134,14 +107,9 @@ export const opponent_3 = () => {
     ],
   });
   let stepData = new TutorialStep({
-    game: gameInfo,
     round: roundInfo,
     prompt: ["Your opponent set down a 7 of Spades. Your turn again!"],
     selectionRequired: false,
-    selectableCardsTable: null,
-    selectableCardHand: null,
-    preSelectedCardsTable: null,
-    finished: false,
   });
   console.log("returning step data: ", stepData);
   return stepData;

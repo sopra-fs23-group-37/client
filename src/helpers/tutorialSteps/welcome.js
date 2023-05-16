@@ -4,7 +4,6 @@ import TutorialStep from "models/TutorialStep";
 
 export const welcome = () => {
   let gameInfo = new Game({
-    gameStatus: "ONGOING",
     hostAvatarUrl: null,
     hostPoints: 0,
     hostUsername: "Opponent",
@@ -14,24 +13,14 @@ export const welcome = () => {
     guestUsername: sessionStorage.getItem("username"),
     guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
   });
+
   let roundInfo = new Round({
-    roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
-    myPointClubs: 0,
-    myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
-    myTotalPoints: 0,
-    oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
-    oppTenOfDiamonds: 0,
-    oppTotalPoints: 0,
     myCardsInHand: [
       {
         code: "AC",
         image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "Clubs",
+        suit: "CLUBS",
       },
       {
         code: "JD",
@@ -77,8 +66,7 @@ export const welcome = () => {
       },
     ],
     myCardsInDiscard: [],
-    oppCards: 7,
-    oppCardsInDiscard: [],
+    oppCards: 8,
     cardsOnTable: [
       {
         code: "QH",
@@ -105,12 +93,10 @@ export const welcome = () => {
         suit: "CLUBS",
       },
     ],
-    deckCards: true,
     myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
     oppLastCapture: [],
   });
+
   let stepData = new TutorialStep({
     game: gameInfo,
     round: roundInfo,
@@ -123,7 +109,6 @@ export const welcome = () => {
     selectionRequired: false,
     selectableCardsTable: null,
     selectableCardHand: null,
-    selectedCardsTable: null,
   });
   console.log("returning step data: ", stepData);
   return stepData;

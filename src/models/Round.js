@@ -18,7 +18,7 @@ class Round {
     this.oppTotalPoints = null;
 
     // cards
-    this.myCardsInHand = null;
+    this.myCardsInHand = [];
     this.myCardsInDiscard = null;
     this.oppCards = null;
     this.oppCardsInDiscard = null;
@@ -31,7 +31,6 @@ class Round {
     // manage player leaving
     this.opponentLeft = null;
     this.opponentLeftReason = null;
-    
 
     Object.assign(this, data);
   }

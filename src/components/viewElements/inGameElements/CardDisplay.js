@@ -1,13 +1,9 @@
-import "styles/views/CardDisplay.scss";
+import "styles/viewElements/inGameElements/CardDisplay.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
 const CardDisplay = ({ cards, onClickSpace, selectPutOnField }) => {
-  return (
-      <div className="card-display">
-          {cards}
-      </div>
-  );
+  return <div className="card-display">{cards}</div>;
 };
 
 CardDisplay.propTypes = {

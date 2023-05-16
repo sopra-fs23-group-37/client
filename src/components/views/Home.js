@@ -56,7 +56,7 @@ const Home = () => {
   };
 
   const handleConfirmTutorial = () => {
-    history.push("/tutorial");
+    history.push("/game/tutorial");
     sessionStorage.setItem("newUser", "false");
     setShowModal(false);
   };

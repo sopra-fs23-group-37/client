@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@dicebear/collection": "^6.0.3",
+    "@dicebear/core": "^6.0.3",
     "@stomp/stompjs": "^7.0.0",
     "axios": "^0.24.0",
-    "firebase": "^9.21.0",
+    "dicebear": "^6.0.3",
     "net": "^1.0.2",
     "node-gyp": "^8.4.1",
     "node-sass": "^8.0.0",

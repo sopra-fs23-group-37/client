@@ -1,42 +1,14 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "styles/views/Home.scss";
-import React, { useEffect, useState } from "react";
-import { api, handleError } from "../../helpers/api";
+import React, { useEffect } from "react";
+import { api } from "../../helpers/api";
 import PropTypes from "prop-types";
-import noAvatar from "image/noAvatar.png";
-import UploadAvatar from 'components/firebase comps/uploadAvatar';
 import "styles/views/Header.scss";
+import { getAvatar } from "helpers/getAvatar";
 
 const Header = (props) => {
   const history = useHistory();
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
-  const profileId = sessionStorage.getItem("userId");
-  const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState(sessionStorage.getItem("username"));
-  const [avatarUrl, setAvatarUrl] = useState(null);
-
-  const types = ['image/png', 'image/jpeg'];
-
-  const saveChanges = async () => {
-
-    try {  
-        const userId = profileId;
-        const requestBody = JSON.stringify({ username, userId, avatarUrl });
-        const response = await api.put("/users/" + profileId, requestBody);
-
-        console.log(response);
-
-        sessionStorage.setItem("username", username);
-        sessionStorage.setItem("avatarUrl", avatarUrl);
-
-    } catch (error) {
-      alert(
-        `Something went wrong when trying to save: \n${handleError(error)}`
-      );
-    }
-  };
-
+  const username = sessionStorage.getItem("username");
 
   const logout = async () => {
     try {
@@ -59,89 +31,21 @@ const Header = (props) => {
     history.push("/rulebook");
   };
 
-  const showProfile = () => {
-    const userId = sessionStorage.getItem("userId");
-    history.push(`/game/profile/` + userId);
-}
-
-const handleChange = (e) => {
-  let selected = e.target.files[0]; // to select the first file (in order someone selects more files)
-  console.log(selected); 
-  
-  if (selected && types.includes(selected.type)) {
-    setFile(selected);
-    setError('');
-  } else {
-    setFile(null);
-    setError(
-    <div style={{ color: 'red', marginLeft: '20px', marginTop: '22px', fontSize: '10px'}}>
-        Please select an 
-        <p style={{ marginTop: '5px' }}>image file</p>
-        <p style={{ marginTop: '2px' }}>(png or jpg)!</p>
-    </div>
-    );
-  }
-};
-
-useEffect(async () => {
-  async function fetchProfile(profileId) {
-    try {
-      const response = await api.get("/users/" + profileId);
-
-      setProfile(response.data);
-
-      console.log("request to:", response.request.responseURL);
-      console.log("status code:", response.status);
-      console.log("status text:", response.statusText);
-      console.log("requested data:", response.data);
-    } catch (error) {
-      alert(
-        `Something went wrong while fetching the Profile: \n${handleError(
-          error
-        )}`
-      );
-    }
-  }
-  await fetchProfile(profileId);
-}, [profileId]);
-
-
-
-useEffect(() => {
-  if (avatarUrl) {
-    saveChanges().catch((error) => {
-      console.error(error);
-      // handle the error
-    });
-  }
-}, [avatarUrl]);
-
+  useEffect(() => {});
 
   return (
     <div className="header container" style={{ height: props.height }}>
-        {profile &&
-          <div class = "image">
-              <div class="image-upload">
-                <label for="file-input">
-                  {avatarUrl && <img alt="Avatar" src={avatarUrl}></img>}
-                  {profile.avatarUrl && !avatarUrl && <img alt="Avatar" src={profile.avatarUrl}></img>}
-                  {!profile.avatarUrl && !avatarUrl && <img alt="Avatar" src={noAvatar}></img>}
-                  
-
-                </label>
-                <input id="file-input" type="file" onChange={handleChange}/>
-            </div>
-            { error && <div className="uploadAvatar output"><div className="error">{ error }</div></div>}
-            { file && <div className="uploadAvatar output"><UploadAvatar file={file} setFile={setFile} avatarUrl={avatarUrl} setAvatarUrl={setAvatarUrl} /> </div>}
-            <h1>{sessionStorage.getItem("username")}</h1>
-            </div>
-        }
+      {username && (
+        <div className="image">
+          <div className="image-upload">
+            <img alt="Avatar" src={getAvatar(username)}></img>
+          </div>
+          <h1>{sessionStorage.getItem("username")}</h1>
+        </div>
+      )}
       <div className="title"> Welcome to 2-and-10</div>
       <div className="buttons">
-      
-        <button
-          className="button"
-          onClick={() => showRulebook()}>
+        <button className="button" onClick={() => showRulebook()}>
           Rulebook
         </button>
         <button className="button" onClick={() => logout()}>
@@ -150,7 +54,6 @@ useEffect(() => {
       </div>
     </div>
   );
-  
 };
 
 Header.propTypes = {

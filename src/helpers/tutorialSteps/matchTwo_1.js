@@ -1,37 +1,15 @@
 import Round from "models/Round";
-import Game from "models/Game";
 import TutorialStep from "models/TutorialStep";
 
 export const matchTwo_1 = () => {
-  let gameInfo = new Game({
-    gameStatus: "ONGOING",
-    hostAvatarUrl: null,
-    hostPoints: 0,
-    hostUsername: "Opponent",
-    hostId: "X",
-    guestPoints: 0,
-    guestId: sessionStorage.getItem("userId"),
-    guestUsername: sessionStorage.getItem("username"),
-    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
-  });
   let roundInfo = new Round({
     roundStatus: "ONGOING",
-    myPointsTotalCards: 0,
-    myPointClubs: 0,
-    myTwoOfClubs: 0,
-    myTenOfDiamonds: 0,
-    myTotalPoints: 0,
-    oppPointsTotalCards: 0,
-    oppPointClubs: 0,
-    oppTwoOfClubs: 0,
-    oppTenOfDiamonds: 0,
-    oppTotalPoints: 0,
     myCardsInHand: [
       {
         code: "AC",
         image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "Clubs",
+        suit: "CLUBS",
       },
       {
         code: "JD",
@@ -79,8 +57,7 @@ export const matchTwo_1 = () => {
         suit: "DIAMONDS",
       },
     ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
+    oppCards: 6,
     cardsOnTable: [
       {
         code: "4D",
@@ -108,10 +85,7 @@ export const matchTwo_1 = () => {
         suit: "HEARTS",
       },
     ],
-    deckCards: true,
     myTurn: true,
-    opponentLeft: null,
-    opponentLeftReason: null,
     oppLastCapture: [
       {
         code: "6S",
@@ -128,7 +102,6 @@ export const matchTwo_1 = () => {
     ],
   });
   let stepData = new TutorialStep({
-    game: gameInfo,
     round: roundInfo,
     prompt: [
       "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
@@ -136,8 +109,6 @@ export const matchTwo_1 = () => {
     selectionRequired: true,
     selectableCardsTable: ["2C", "4D"],
     selectableCardHand: null,
-    preSelectedCardsTable: null,
-    finished: false,
   });
   console.log("returning step data: ", stepData);
   return stepData;

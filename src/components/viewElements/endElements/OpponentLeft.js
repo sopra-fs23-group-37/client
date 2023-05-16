@@ -1,11 +1,16 @@
-import React from 'react';
-import "styles/views/WaitEndOfRound.scss";
-import loadingGif from "image/loading.gif";
+import React from "react";
+import "styles/viewElements/endElements/OpponentLeft.scss";
 
-const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
+const OpponentLeft = ({ game, playerId, onLeaveGame, opponentLeftReason }) => {
+  const leftReason = opponentLeftReason
+    ? opponentLeftReason
+    : "One of the players left the game";
 
-  let myUsername, oppUsername, myScore, oppScore = 0;
-  if (game && game.hostId && game.guestId != null) {
+  let myUsername,
+    oppUsername,
+    myScore,
+    oppScore = 0;
+  if (game?.hostId && game.guestId != null) {
     if (playerId === game.hostId) {
       myUsername = game.hostUsername;
       myScore = game.hostPoints;
@@ -16,13 +21,12 @@ const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
       myScore = game.guestPoints;
       oppUsername = game.hostUsername;
       oppScore = game.hostPoints;
-    } 
+    }
   }
 
   return (
-    <div className="wait-end-of-round">
-      <h1>Waiting for {oppUsername}</h1>
-      <img src={loadingGif} alt="Loading..." className="loading-gif" />
+    <div className="opponent-left">
+      <h1>{leftReason}</h1>
       <div className="scoreboard">
         <div className="player1-score">
           <h2>{myUsername}</h2>
@@ -33,8 +37,8 @@ const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
           <p>Score: {oppScore}</p>
         </div>
       </div>
-        <div className="leave-button-container">
-        <button className="leave-button" onClick={onLeaveGame}>
+      <div className="opponentLeft-button-container">
+        <button className="opponentLeft-button" onClick={onLeaveGame}>
           Leave game
         </button>
       </div>
@@ -42,4 +46,4 @@ const WaitEndOfRound = ({ game, playerId, onLeaveGame}) => {
   );
 };
 
-export default WaitEndOfRound;
+export default OpponentLeft;

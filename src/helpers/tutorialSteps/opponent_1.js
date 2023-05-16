@@ -31,7 +31,7 @@ export const opponent_1 = () => {
         code: "AC",
         image: "https://deckofcardsapi.com/static/img/AC.png",
         value: "ACE",
-        suit: "Clubs",
+        suit: "CLUBS",
       },
       {
         code: "JD",
@@ -84,8 +84,7 @@ export const opponent_1 = () => {
         suit: "DIAMONDS",
       },
     ],
-    oppCards: 8,
-    oppCardsInDiscard: [],
+    oppCards: 7,
     cardsOnTable: [
       {
         code: "4D",
