@@ -64,7 +64,9 @@ const Login = (props) => {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && password && username) {
-      doLogin();
+      doLogin().catch((error) => {
+        console.error(error);
+      });
     }
   };
 
