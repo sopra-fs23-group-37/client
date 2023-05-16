@@ -29,11 +29,12 @@
 
   .round-button {
     font-family: "Inter", sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.3vw;
     font-weight: bold;
-    height: 50px;
+    height: fit-content;
+    padding: 10px 5px;
     width: 100%;
-    min-width: 50px;
+    min-width: fit-content;
     background-color: darkred;
     color: #ffffff;
     border: 1px solid rgb(0, 0, 0);
