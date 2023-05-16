@@ -1,7 +1,7 @@
 import Round from "models/Round";
 import TutorialStep from "models/TutorialStep";
 
-export const opponent_2 = () => {
+export const deadJack_2 = () => {
   let roundInfo = new Round({
     myCardsInHand: [
       {
@@ -10,12 +10,7 @@ export const opponent_2 = () => {
         value: "ACE",
         suit: "CLUBS",
       },
-      {
-        code: "JD",
-        image: "https://deckofcardsapi.com/static/img/JD.png",
-        value: "JACK",
-        suit: "DIAMONDS",
-      },
+
       {
         code: "7D",
         image: "https://deckofcardsapi.com/static/img/7D.png",
@@ -29,12 +24,6 @@ export const opponent_2 = () => {
         suit: "HEARTS",
       },
 
-      {
-        code: "6D",
-        image: "https://deckofcardsapi.com/static/img/6D.png",
-        value: "6",
-        suit: "DIAMONDS",
-      },
       {
         code: "8S",
         image: "https://deckofcardsapi.com/static/img/8S.png",
@@ -55,21 +44,11 @@ export const opponent_2 = () => {
         value: "QUEEN",
         suit: "DIAMONDS",
       },
-    ],
-    oppCards: 6,
-    cardsOnTable: [
       {
         code: "4D",
         image: "https://deckofcardsapi.com/static/img/4D.png",
         value: "4",
         suit: "DIAMONDS",
-      },
-
-      {
-        code: "8C",
-        image: "https://deckofcardsapi.com/static/img/8C.png",
-        value: "8",
-        suit: "CLUBS",
       },
       {
         code: "2C",
@@ -78,9 +57,43 @@ export const opponent_2 = () => {
         suit: "CLUBS",
       },
       {
+        code: "6D",
+        image: "https://deckofcardsapi.com/static/img/6D.png",
+        value: "6",
+        suit: "DIAMONDS",
+      },
+      {
+        code: "8C",
+        image: "https://deckofcardsapi.com/static/img/8C.png",
+        value: "8",
+        suit: "CLUBS",
+      },
+
+      {
         code: "KH",
         image: "https://deckofcardsapi.com/static/img/KH.png",
         value: "KING",
+        suit: "HEARTS",
+      },
+      {
+        code: "7S",
+        image: "https://deckofcardsapi.com/static/img/7S.png",
+        value: "7",
+        suit: "SPADES",
+      },
+      {
+        code: "JD",
+        image: "https://deckofcardsapi.com/static/img/JD.png",
+        value: "JACK",
+        suit: "DIAMONDS",
+      },
+    ],
+    oppCards: 4,
+    cardsOnTable: [
+      {
+        code: "JH",
+        image: "https://deckofcardsapi.com/static/img/JH.png",
+        value: "JACK",
         suit: "HEARTS",
       },
     ],
@@ -103,7 +116,7 @@ export const opponent_2 = () => {
   let stepData = new TutorialStep({
     round: roundInfo,
     prompt: [
-      "Your opponent has also set a card on the table, the King of Hearts.",
+      "Your opponent played the Jack, while there were no cards on the table. What a waste of Jack's talent",
     ],
     selectionRequired: false,
   });
