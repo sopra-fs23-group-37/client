@@ -37,10 +37,14 @@ const EndOfTutorial = ({ onEndTutorial }) => {
       </table>
       <h2>You get points after every round based on the cards you captured</h2>
       <ul className="scoring-list">
-        <li className="score-item">For higher number of cards: 2 points</li>
-        <li className="score-item">For higher number of Clubs: 1 points</li>
-        <li className="score-item">10 of Diamonds: 1 points</li>
-        <li className="score-item">2 of Clubs: 1 point</li>
+        <li className="score-item">
+          For higher number of captured cards: 2 points
+        </li>
+        <li className="score-item">
+          For higher number of captured Clubs: 1 point
+        </li>
+        <li className="score-item">Captured 2 of Clubs: 1 point</li>
+        <li className="score-item">Captured 10 of Diamonds: 1 point</li>
       </ul>
 
       <h2>
