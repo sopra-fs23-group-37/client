@@ -287,20 +287,6 @@ const Tutorial = () => {
             selectionRequired={selectionRequired}
             nextPrompt={nextPrompt}
           />
-          {/* <div className="prompt-container">
-            <div className="prompt-form">
-              {promptText ? (
-                <h1>{promptText[promptIndex]}</h1>
-              ) : (
-                <h1> "No Prompt" </h1>
-              )}
-              {!selectionRequired ? (
-                <button onClick={nextPrompt}>Continue</button>
-              ) : (
-                <div></div>
-              )}
-            </div>
-          </div> */}
           {game && (
             <ScoreInfo
               hostAvatarUrl={game.hostAvatarUrl}
@@ -319,12 +305,11 @@ const Tutorial = () => {
         cards={round?.myCardsInHand}
         handleClick={selectCardFromHand}
       />
-      <div className="playerHandContainer">
-        <div className="exit-button-container">
-          <button className="exit-button" onClick={exitTutorial}>
-            Exit Tutorial
-          </button>
-        </div>
+
+      <div className="exit-button-container">
+        <button className="exit-button" onClick={exitTutorial}>
+          Exit Tutorial
+        </button>
       </div>
 
       {game && round && endOfRound && (

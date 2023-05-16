@@ -154,25 +154,23 @@ $card-background-image: url(../image/card-background.jpg);
       align-items: center;
     }
 
-    .playerHandContainer {
-      .exit-button-container {
-        float: left;
-        .exit-button {
-          font-family: "Inter", sans-serif;
-          font-size: 1.2rem;
-          font-weight: bold;
-          padding: 1rem 3rem;
-          background-color: darkred;
-          color: #ffffff;
-          border: 1px solid white;
-          border-radius: 10px;
-          cursor: pointer;
+    .exit-button-container {
+      float: right;
+      .exit-button {
+        font-family: "Inter", sans-serif;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 1rem 3rem;
+        background-color: darkred;
+        color: #ffffff;
+        border: 1px solid white;
+        border-radius: 10px;
+        cursor: pointer;
 
-          &:hover {
-            background-color: #fff;
-            color: #f00;
-            border: 2px solid #f00;
-          }
+        &:hover {
+          background-color: #fff;
+          color: #f00;
+          border: 2px solid #f00;
         }
       }
     }
