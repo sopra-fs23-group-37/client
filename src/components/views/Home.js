@@ -25,26 +25,6 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
-const GameModeField = (props) => {
-  return (
-    <select
-      className="home select"
-      value={props.gameMode}
-      onChange={(e) => props.onChange(e.target.value)}
-    >
-      <option className="home placeholder" value="" disabled selected>
-        Select Mode...
-      </option>
-      <option value="Public">Public</option>
-      <option value="Private">Private</option>
-    </select>
-  );
-};
-
-GameModeField.propTypes = {
-  onChange: PropTypes.func,
-};
-
 const Home = () => {
   const history = useHistory();
   const [openGames, setOpenGames] = useState(0);
@@ -55,10 +35,9 @@ const Home = () => {
   const username = sessionStorage.getItem("username");
   const [gameCode, setGameCode] = useState("");
   const [showCodeInput, setShowCodeInput] = useState(false);
-  const [gameMode, setGameMode] = useState(null);
   const [showModeInput, setShowModeInput] = useState(false);
 
-  const createAndOpenGame = async () => {
+  const createAndOpenGame = async (gameMode) => {
     console.log("gameMode currently at ", gameMode);
     let gameId = await createGame(gameMode).catch((error) =>
       console.log(error)
@@ -159,7 +138,6 @@ const Home = () => {
   const showModeInputToggle = (event) => {
     if (event.target === event.currentTarget) {
       setShowModeInput(false);
-      setGameMode(null);
     }
   };
 
@@ -224,17 +202,17 @@ const Home = () => {
           {showModeInput && (
             <div className="mode-input" onClick={showModeInputToggle}>
               <div className="mode-input-form">
-                <GameModeField
-                  className="mode-input-form-field"
-                  gameMode={gameMode}
-                  onChange={(n) => setGameMode(n)}
-                />
                 <ButtonLight
                   className="mode-input-button"
-                  disabled={!gameMode}
-                  onClick={() => createAndOpenGame(gameMode)}
+                  onClick={() => createAndOpenGame("Public")}
                 >
-                  Create Game
+                  Public Game
+                </ButtonLight>
+                <ButtonLight
+                  className="mode-input-button"
+                  onClick={() => createAndOpenGame("Private")}
+                >
+                  Private Game
                 </ButtonLight>
               </div>
             </div>
