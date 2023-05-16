@@ -13,8 +13,8 @@ import { matchTwo_3 } from "./tutorialSteps/matchTwo_3";
 import { opponent_3 } from "./tutorialSteps/opponent_3";
 import { jack_1 } from "./tutorialSteps/jack_1";
 import { jack_2 } from "./tutorialSteps/jack_2";
-import { endRound } from "./tutorialSteps/endRound";
-import { endGame } from "./tutorialSteps/endGame";
+// import { endRound } from "./tutorialSteps/endRound";
+// import { endGame } from "./tutorialSteps/endGame";
 
 export const tutorialStepData = (step) => {
   console.log("step to create data for: ", step);
@@ -61,11 +61,11 @@ export const tutorialStepData = (step) => {
     case 14:
       return jack_2();
 
-    case 15:
-      return endRound();
+    // case 15:
+    //   return endRound();
 
-    case 16:
-      return endGame();
+    // case 16:
+    //   return endGame();
 
     default:
       console.log("The end of the tutorial has been reached.");
