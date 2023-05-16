@@ -3,25 +3,52 @@
 .turn-info-container {
   text-align: center;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-right: 10px;
+  max-width: fit-content;
 
-  .turn-info-form {
-    flex-direction: row;
+  .turn-info-form-myTurn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: white;
-    font-family: "Inter", sans-serif;
-    font-size: 0.8vw;
-    font-weight: bold;
-    width: 80%;
-    min-width: fit-content;
-    margin: auto;
-    padding: 0.5rem;
-    border: 2px solid black;
-    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    white-space: nowrap;
+    max-width: min-content;
+
+    .description {
+      font-family: "Inter", sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
   }
-  .loading-gif {
-    width: 25%;
-    height: 25%;
+
+  .turn-info-form-oppTurn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    white-space: nowrap;
+    max-width: min-content;
+
+    .description {
+      font-family: "Inter", sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .loading-gif {
+      width: 25%;
+      height: 25%;
+    }
   }
+  
 }

@@ -1,25 +1,17 @@
 @import "styles/theme";
 
 .card-display {
-  display: flex;
-  height: 90%;
-  min-height: 25vh;
-  width: 100%;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-
+  
   .cards-on-table {
     margin-right: 15px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 5px;
     justify-content: left;
     align-items: center;
 
     .card-container-field {
-      width: 18%;
+      width: 12%;
       min-width: 50px;
       height: auto;
       margin-right: 10px;

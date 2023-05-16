@@ -5,12 +5,17 @@ import "styles/viewElements/inGameElements/TurnInfo.scss";
 const TurnInfo = (props) => {
   return (
     <div className="turn-info-container">
-      <div className="turn-info-form">
-        <h1>{props.myTurn ? "Your turn" : "Opponent's turn"}</h1>
-        {!props.myTurn && (
+      {props.myTurn && (
+        <div className="turn-info-form-myTurn">
+          <div className="description"> Your turn </div>
+        </div>
+      )}
+      {!props.myTurn && (
+        <div className="turn-info-form-oppTurn">
+          <div className="description"> Opponent's turn </div>
           <img src={loadingGif} alt="Loading..." className="loading-gif" />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

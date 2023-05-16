@@ -271,27 +271,14 @@ const GameScreen = () => {
 
   return (
     <div className="gamescreen container">
+      <CheatSheet />
       <div className="top">
-        <div className="left">
-          <div className="opponent">
-            {<OpponentLastCapture cards={round?.oppLastCapture} />}
-            {<OpponentHand cards={round?.oppCards} />}
-            {<TurnInfo myTurn={round?.myTurn} />}
-          </div>
-          {round ? (
-            <CardTable
-              toggleSelectPutOnField={toggleSelectPutOnField}
-              selectPutOnField={selectPutOnField}
-              selectCardFromField={selectCardFromField}
-              cards={tableCards}
-              myTurn={round?.myTurn}
-            />
-          ) : (
-            <div></div>
-          )}
+        <div className="opponent">
+          {<OpponentLastCapture cards={round?.oppLastCapture} />}
+          {<OpponentHand cards={round?.oppCards} />}
+          {<TurnInfo myTurn={round?.myTurn} />}
         </div>
-        <div className="right">
-          {game && (
+        {game && (
             <ScoreInfo
               hostAvatarUrl={game.hostAvatarUrl}
               hostPoints={game.hostPoints}
@@ -301,18 +288,26 @@ const GameScreen = () => {
               guestUsername={game.guestUsername}
             />
           )}
-          <div className="statistics">
-            <div className="surrender-button-container">
-              <button className="surrender-button" onClick={surrenderGame}>
-                Surrender
-              </button>
-            </div>
-            <CheatSheet />
-          </div>
-          <CapturePile cards={round?.myCardsInDiscard} />
-        </div>
+          {/* <div className="surrender-button-container">
+            <button className="surrender-button" onClick={surrenderGame}>
+              Surrender
+            </button>
+        </div>*/}
       </div>
-
+      <div className="bottom"> 
+        {round ? (
+          <CardTable
+            toggleSelectPutOnField={toggleSelectPutOnField}
+            selectPutOnField={selectPutOnField}
+            selectCardFromField={selectCardFromField}
+            cards={tableCards}
+            myTurn={round?.myTurn}
+          />
+        ) : (
+          <div></div>
+        )}
+        <CapturePile cards={round?.myCardsInDiscard} />
+      </div>
       {
         <PlayerHand
           cards={round?.myCardsInHand}

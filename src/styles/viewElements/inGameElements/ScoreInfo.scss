@@ -4,17 +4,19 @@
   font-family: "Inter", sans-serif;
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 2rem;
-  margin-right: auto;
+  display: flex;
+  margin-right: 1em;
+  margin-left: 1em;
+  align-items: center;
 
   .player-names {
+    max-height: fit-content;
     background-color: white;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 20px;
     display: flex;
     align-items: center;
-    margin-bottom: 2rem;
 
     .guest-name {
       font-size: 1.2rem;
