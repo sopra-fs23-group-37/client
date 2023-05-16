@@ -9,7 +9,8 @@ import { useState } from "react";
 
 const CreateGame = () => {
   const history = useHistory();
-  const [gameModus, setGameModus] = useState("Private");
+  const [privateGame, setPrivateGame] = useState(false);
+
   const createGame = async () => {
     try {
       const userId = sessionStorage.getItem("userId");
@@ -17,7 +18,7 @@ const CreateGame = () => {
       host.userId = userId;
       const isPrivate = true;
 
-      if (gameModus === "Private") {
+      if (privateGame) {
       const requestBody = JSON.stringify({ host, isPrivate });
       const response = await api.post("/games", requestBody);
       console.log(response);
@@ -25,9 +26,7 @@ const CreateGame = () => {
 
       console.log(game.gameId);
       history.push("/game/lobby/" + game.gameId);
-      } 
-      
-      if (gameModus === "Public") {
+      } else {
         const isPrivate = false;
         const requestBody = JSON.stringify({ host, isPrivate });
         const response = await api.post("/games", requestBody);
@@ -37,7 +36,6 @@ const CreateGame = () => {
         console.log(game.gameId);
         history.push("/game/lobby/" + game.gameId);
       }
-
       
     } catch (error) {
       alert(
@@ -54,35 +52,35 @@ const CreateGame = () => {
     history.push("/game/dashboard");
   };
 
-  const handleGameModusChange = (e) => {
-    setGameModus(e.target.value);
+  const togglePrivateGame = () => {
+    console.log("Log: ", privateGame);
+    setPrivateGame(!privateGame);
   };
  
 
   return (
     <BaseContainer>
       <div className="createGame container">
-        <div className="createGame title-container">
-          <h1 className="createGame title-lobby">    Game Settings</h1>
-        
-        </div>
-        <div className="createGame modus-container">
-          <h4>Game: </h4>
-          <select value={gameModus} onChange={handleGameModusChange}>
-            <option value="Public">Public</option>
-            <option value="Private">Private</option>
-          </select>
-        
-        </div>
-      
-
-        <div className="createGame button-container">
-          <Button width="100%" onClick={() => homescreen()}>
-            Back
-          </Button>
-          <Button width="100%" onClick={() => createGame()}>
-            Create Game
-          </Button>
+        <div className="createGame form">
+          <div className="title-container">
+            <h1 className="title"> Game Settings </h1>
+          
+          </div>
+          <div className="modus-container">
+            <div className="description"> Game Visibility: </div>
+            <div className="switch-button">
+              <input className="switch-button-checkbox" type="checkbox" onClick={() => togglePrivateGame()}></input>
+              <label className="switch-button-label" for=""><span class="switch-button-label-span">Public</span></label>
+            </div>
+          </div>
+          <div className="button-container">
+            <Button width="100%" onClick={() => homescreen()}>
+              Back
+            </Button>
+            <Button width="100%" onClick={() => createGame()}>
+              Create Game
+            </Button>
+          </div>
         </div>
       </div>
     </BaseContainer>

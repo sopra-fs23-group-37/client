@@ -2,132 +2,129 @@
 
 .createGame {
   &.container {
-    background: $background;
-    display: block;
     flex-direction: column;
-    margin-top: calc(100vh / 4);
+    margin-top: 8vh;
     margin-left: calc(100vw / 4);
     margin-right: auto;
     margin-bottom: auto;
+    @include center;
+  }
+
+  &.form {
+    background: $background;
+    display: block;
+    padding: 1em;
     font-family: $fontDefault;
     box-shadow: $dropShadow;
+    height: auto;
     width: calc(100vw / 3);
+    min-width: fit-content;
+    max-width: 40em;
+    border-radius: 0.75em;
 
     .title-container {
       display: flex;
       align-items: center;
-      margin-bottom: 1em;
+      margin-top: 1em;
+      margin-bottom: 3em;
+      max-height: 10em;
+
       .title {
         margin-left: 0.5em;
         margin-right: 1em;
-        font-family: $fontDefault;
         font-style: normal;
+        font-size: 35px;
         color: black;
         margin-top: 0;
-        margin-bottom: 1em;
-      }
-
-      .lobby-code {
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-        margin-left: auto;
-        margin-right: 0.5em;
-      }
-    }
-
-    // Subtitle and Spectators
-    .subtitle-spectator-container {
-      h4 {
         margin-bottom: 0;
-      }
-      h2 {
-        margin-bottom: 0;
-      }
-      display: flex;
-      height: min-content;
-      align-items: baseline;
-      margin-bottom: 0.2em;
-      .subtitle {
-        margin-left: 0.5em;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: bold;
-        color: #e76f51;
-        margin-top: 0.5em;
-        margin-bottom: 0.2em;
-      }
-
-      .spectators {
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-        margin-left: auto;
-        margin-right: 0.5em;
-      }
-      .spectators-number {
-        margin-left: 0.5em;
-      }
-    }
-
-    //Player list
-    .player-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      border-bottom: 0.1px solid #8f8f8f;
-      border-top: 0.1px solid #8f8f8f;
-
-      h4 {
-        display: inline-block;
-        margin: 0;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-      }
-
-      .name {
-        margin: 0.5em;
-      }
-
-      .host {
-        margin: 0.5em;
-        margin-left: auto;
-      }
-
-      .kick-player {
-        background-color: white;
-        border: 0.1px solid #8f8f8f;
-        color: red;
-        margin: 0;
-        height: auto;
-        box-shadow: $dropShadow;
-        font-family: $fontDefault;
-        font-style: normal;
-        font-size: 11px;
       }
     }
 
     //Game modus
     .modus-container {
-      margin-top: 1em;
       margin-left: 0.5em;
-      h4 {
-        margin: 0;
-        margin-bottom: 0.5em;
-        font-family: $fontDefault;
-        font-style: normal;
+      display: flex;
+      flex-direction: row;
+      min-width: fit-content;
+      height: fit-content;
+
+      .description {
+        font-size: 25px;
         font-weight: 100;
-        display: inline-block;
-        margin-right: 0.5em;
+        margin-right: 1.5em;
+        white-space: nowrap;
+        line-height: 50px;
       }
-      select {
-        font-family: $fontDefault;
-        font-style: normal;
-        font-weight: 100;
-        margin-right: 0.5em;
+
+      .switch-button {
+        background: rgba(255, 255, 255, 0.56);
+        border-radius: 30px;
+        overflow: hidden;
+        width: 200px;
+        text-align: center;
+        font-size: 17px;
+        letter-spacing: 1px;
+        color: #000000;
+        position: relative;
+        padding-right: 100px;
+        position: relative;
+      
+        &:before {
+          content: "Private";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 3;
+          pointer-events: none;
+        }
+      
+        &-checkbox {
+          margin: 0;
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          z-index: 2;
+      
+          &:checked + .switch-button-label:before {
+            transform: translateX(100px);
+            transition: transform 300ms linear;
+          }
+      
+          & + .switch-button-label {
+            position: relative;
+            padding: 15px 0;
+            display: block;
+            user-select: none;
+            pointer-events: none;
+      
+            &:before {
+              content: "";
+              background: #F4A261;
+              height: 100%;
+              width: 100%;
+              position: absolute;
+              left: 0;
+              top: 0;
+              border-radius: 30px;
+              transform: translateX(0);
+              transition: transform 300ms;
+            }
+      
+            .switch-button-label-span {
+              position: relative;
+            }
+          }
+        }
       }
     }
 
@@ -138,11 +135,13 @@
       position: relative;
       justify-content: space-between;
       margin-top: 5em;
-      margin-bottom: 2em;
+      min-width: fit-content;
 
       button {
         background-color: #e9c46a;
         margin: 0.5em;
+        min-width: fit-content;
+        white-space: nowrap;
       }
     }
   }
