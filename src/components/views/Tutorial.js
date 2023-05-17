@@ -320,17 +320,17 @@ const Tutorial = () => {
           {<OpponentHand cards={round?.oppCards} />}
         </div>
         {game && (
-            <ScoreInfo
-              hostAvatarUrl={game.hostAvatarUrl}
-              hostPoints={game.hostPoints}
-              hostUsername={game.hostUsername}
-              guestAvatarUrl={game.guestAvatarUrl}
-              guestPoints={game.guestPoints}
-              guestUsername={game.guestUsername}
-            />
-          )}
+          <ScoreInfo
+            hostAvatarUrl={game.hostAvatarUrl}
+            hostPoints={game.hostPoints}
+            hostUsername={game.hostUsername}
+            guestAvatarUrl={game.guestAvatarUrl}
+            guestPoints={game.guestPoints}
+            guestUsername={game.guestUsername}
+          />
+        )}
       </div>
-      <div className="bottom"> 
+      <div className="bottom">
         {round ? (
           <CardTable
             toggleSelectPutOnField={toggleSelectPutOnField}
@@ -342,15 +342,27 @@ const Tutorial = () => {
         ) : (
           <div></div>
         )}
-        <div className="menu-container">
-        {<TurnInfo myTurn={round?.myTurn} />}
-        <div className="button-container">
-          {/* change this to exit */}
-          <button className="surrender-button" onClick={console.log("exit")}>
-            Exit
-          </button>
-          <CheatSheet />
-        </div>
+        <div className="bottom-right">
+          {!endOfTutorial && (
+            <TutorialPrompt
+              text={promptText}
+              index={promptIndex}
+              selectionRequired={selectionRequired}
+              nextPrompt={nextPrompt}
+              previousPrompt={previousPrompt}
+              step={step}
+            />
+          )}
+          <div className="menu-container">
+            {<TurnInfo myTurn={round?.myTurn} />}
+            <div className="button-container">
+              {/* change this to exit */}
+              <button className="surrender-button" onClick={exitTutorial}>
+                Exit Tutorial
+              </button>
+              <CheatSheet />
+            </div>
+          </div>
         </div>
       </div>
       {

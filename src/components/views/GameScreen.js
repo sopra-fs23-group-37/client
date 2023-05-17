@@ -276,17 +276,17 @@ const GameScreen = () => {
           {<OpponentHand cards={round?.oppCards} />}
         </div>
         {game && (
-            <ScoreInfo
-              hostAvatarUrl={game.hostAvatarUrl}
-              hostPoints={game.hostPoints}
-              hostUsername={game.hostUsername}
-              guestAvatarUrl={game.guestAvatarUrl}
-              guestPoints={game.guestPoints}
-              guestUsername={game.guestUsername}
-            />
-          )}
+          <ScoreInfo
+            hostAvatarUrl={game.hostAvatarUrl}
+            hostPoints={game.hostPoints}
+            hostUsername={game.hostUsername}
+            guestAvatarUrl={game.guestAvatarUrl}
+            guestPoints={game.guestPoints}
+            guestUsername={game.guestUsername}
+          />
+        )}
       </div>
-      <div className="bottom"> 
+      <div className="bottom">
         {round ? (
           <CardTable
             toggleSelectPutOnField={toggleSelectPutOnField}
@@ -298,14 +298,16 @@ const GameScreen = () => {
         ) : (
           <div></div>
         )}
-        <div className="menu-container">
-        {<TurnInfo myTurn={round?.myTurn} />}
-        <div className="button-container">
-          <button className="surrender-button" onClick={surrenderGame}>
-            Surrender
-          </button>
-          <CheatSheet />
-        </div>
+        <div className="bottom-right">
+          <div className="menu-container">
+            {<TurnInfo myTurn={round?.myTurn} />}
+            <div className="button-container">
+              <button className="surrender-button" onClick={surrenderGame}>
+                Surrender
+              </button>
+              <CheatSheet />
+            </div>
+          </div>
         </div>
       </div>
       {

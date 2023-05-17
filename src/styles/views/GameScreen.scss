@@ -44,21 +44,29 @@ $card-background-image: url(../image/card-background.jpg);
       justify-content: space-between;
       align-items: center;
 
-      .menu-container {
-        background: white;
-        border: 1px solid black;
-        border-radius: 10px;
-        padding: 10px;
+      .bottom-right {
         display: flex;
-        width: fit-content;
-        min-width: 8em;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        overflow: visible;
-        justify-content: space-between;
-        margin-right: 2em;
-        margin-bottom: auto;
+        max-width: 25%;
+
+        .menu-container {
+          background: white;
+          border: 1px solid black;
+          border-radius: 10px;
+          padding: 10px;
+          display: flex;
+          width: fit-content;
+          min-width: 8em;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          overflow: visible;
+          justify-content: space-between;
+          margin-right: 2em;
+          margin-bottom: auto;
+          align-self: right;
+          margin-left: auto;
+        }
       }
     }
 
