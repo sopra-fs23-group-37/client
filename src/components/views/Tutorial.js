@@ -369,6 +369,7 @@ const Tutorial = () => {
         <PlayerHand
           cards={round?.myCardsInHand}
           discardCards={round?.myCardsInDiscard}
+          lastCapCards={round?.myLastCapture}
           handleClick={selectCardFromHand}
         />
       }

@@ -9,8 +9,9 @@ const CapturePile = (props) => {
 
   return (
     <div className="player-discards">
-      <div className="player-discards-cards">
-        {props.lastCapCards ? (<div className="card-container-discard"> 
+      {props.lastCapCards ? (
+        <div className="player-discards-cards">
+        {(props.lastCapCards.length !== 0 && props.lastCapCards.length !== props.discardCards.length) ? (<div className="card-container-discard"> 
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
               className="cardback"
@@ -20,7 +21,7 @@ const CapturePile = (props) => {
           </div> ) : (
             <h1> </h1>
           ) }
-        {props.lastCapCards ? (
+        {props.lastCapCards.length !== 0 ? (
           props.lastCapCards.map((card) => (
             <div className="card-container-discard" key={card.code}>
               <Card
@@ -63,6 +64,9 @@ const CapturePile = (props) => {
         </div>
       )}
       </div>
+      ) : (
+        <div> </div>
+      )}
     </div>
   );
 };
