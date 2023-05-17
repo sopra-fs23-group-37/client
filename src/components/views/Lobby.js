@@ -215,13 +215,11 @@ const Lobby = () => {
                   (game.isSingleRound ? "Single Round" : "Full Length")}
               </h4>
             </div>
-
-            <div className="row-container"></div>
-            <div className="row-container">
-              <Button width="100%" onClick={() => homescreen()}>
-                Cancel Game
-              </Button>
-            </div>
+          </div>
+          <div className="button-container">
+            <Button width="100%" onClick={() => homescreen()}>
+              Cancel Game
+            </Button>
           </div>
         </div>
       </div>
