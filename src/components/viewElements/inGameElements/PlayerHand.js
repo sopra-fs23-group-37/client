@@ -25,7 +25,7 @@ const PlayerHand = (props) => {
           <h1> - </h1>
         )}
       </div>
-      <CapturePile cards={props.discardCards} />
+      <CapturePile discardCards={props.discardCards} lastCapCards={props.lastCapCards} />
     </div>
   );
 };
@@ -33,6 +33,7 @@ const PlayerHand = (props) => {
 PlayerHand.propTypes = {
   cards: PropTypes.any,
   discardCards: PropTypes.any,
+  lastCapCards: PropTypes.any,
   handleClick: PropTypes.func,
 };
 
