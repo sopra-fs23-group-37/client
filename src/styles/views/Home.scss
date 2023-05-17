@@ -99,6 +99,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: fit-content;
   
     .modal-content {
       background-color: #ffffff;
@@ -106,31 +107,37 @@
       padding: 20px;
       border: 2px solid rgb(0, 0, 0);
       width: 40%; 
+      min-width: fit-content;
     }
 
     .modal-title {
       color: #F4A261;
       font-size: 24px;
       margin-bottom: 15px;
+      white-space: nowrap;
+      min-width: fit-content;
     }
   
     p {
       color: rgb(0, 0, 0);
       margin-bottom: 20px;
     }
-  
-    button {
-      display: inline-block;
-      margin: 0 10px;
-      padding: 10px 20px;
-      border: none;
-      background: #F4A261;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-  
-      &:hover {
-        background-color: #b35f00;
+    .modal-button-container {
+      display: flex;
+      button {
+        margin-top: 5px;
+        display: inline-block;
+        margin: 0 10px;
+        padding: 10px 20px;
+        border: none;
+        background: #F4A261;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    
+        &:hover {
+          background-color: #b35f00;
+        }
       }
     }
   }

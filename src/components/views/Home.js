@@ -162,11 +162,13 @@ const Home = () => {
                   You can also access the rulebook and tutorial from the Home
                   page at any time.
                 </p>
-                <button onClick={handleCancel}>No, thanks</button>
-                <button onClick={handleConfirmRuleBook}>
-                  Read the Rulebook
-                </button>
-                <button onClick={handleConfirmTutorial}>Play Tutorial</button>
+                <div className="modal-button-container"> 
+                  <button onClick={handleCancel}>No, thanks</button>
+                  <button onClick={handleConfirmRuleBook}>
+                    Read the Rulebook
+                  </button>
+                  <button onClick={handleConfirmTutorial}>Play Tutorial</button>
+                  </div>
               </div>
             </div>
           )}
