@@ -13,6 +13,8 @@ import { matchTwo_3 } from "./tutorialSteps/matchTwo_3";
 import { opponent_3 } from "./tutorialSteps/opponent_3";
 import { jack_1 } from "./tutorialSteps/jack_1";
 import { jack_2 } from "./tutorialSteps/jack_2";
+import { deadJack_1 } from "./tutorialSteps/deadJack_1";
+import { deadJack_2 } from "./tutorialSteps/deadJack_2";
 
 export const tutorialStepData = (step) => {
   console.log("step to create data for: ", step);
@@ -57,6 +59,12 @@ export const tutorialStepData = (step) => {
       return jack_1();
 
     case 14:
+      return deadJack_1();
+
+    case 15:
+      return deadJack_2();
+
+    case 16:
       return jack_2();
 
     default:
