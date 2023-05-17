@@ -58,7 +58,7 @@ const GameScreen = () => {
     }
     if (data.gameStatus === "FINISHED") {
       console.log("the game has ended!");
-      setEndOfGame(true);
+      // setEndOfGame(true);
     }
     if (
       data.gameStatus === "DISCONNECTED" ||
@@ -226,9 +226,13 @@ const GameScreen = () => {
 
   const handleEndRound = () => {
     console.log("user is confirming that the round ended");
-    sockClient.confirmEndOfRound(gameId, playerId);
-    setEndOfRound(false);
-    setWaitEndOfRound(true);
+    if (game.gameStatus === "FINISHED") {
+      setEndOfGame(true);
+    } else {
+      sockClient.confirmEndOfRound(gameId, playerId);
+      setEndOfRound(false);
+      setWaitEndOfRound(true);
+    }
   };
 
   const handleEndGame = () => {
