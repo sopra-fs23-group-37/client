@@ -89,7 +89,7 @@ export const matchOne_3 = () => {
     round: roundInfo,
     prompt: [
       "Congratulations! You have captured two cards.",
-      "You can see your capture pile with the top card and how many cards you have captured on the right side of the screen.",
+      "You can see your capture pile at the bottom right.",
       "Now, it's your opponent's turn.",
     ],
     selectionRequired: false,

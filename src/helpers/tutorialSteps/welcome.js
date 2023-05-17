@@ -102,9 +102,8 @@ export const welcome = () => {
     round: roundInfo,
     prompt: [
       "Welcome to the 2-and-10 Tutorial!",
-      "At the beginning of a round, you and your opponent receive 8 cards each. You cards are at the bottom of the screen",
-      "The round starts with 4 cards on the table in the middle",
-      "Your goal will be to capture cards from the table, using the cards in your hands. Let's try a one to one match now!",
+      "The goal in this game is to capture cards from the table (middle), using the cards in your hand (bottom).",
+      "Let's try a one-to-one match now!",
     ],
     selectionRequired: false,
     selectableCardsTable: null,

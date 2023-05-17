@@ -197,7 +197,7 @@ const GameScreen = () => {
     }
   };
 
-  const startGame = async () => {
+  const startGame = () => {
     // check that the websocket is still connected
     if (!sockClient.isConnected()) {
       console.log("can't start game until the websocket is connected!");

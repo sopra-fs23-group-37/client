@@ -44,15 +44,26 @@ const Tutorial = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
+  const [scoreBoardVisbible, setScoreBoardVisbible] = useState(false);
 
   const history = useHistory();
 
-  const getNextStep = (currentStep) => {
-    setStep(step + 1);
-    console.log("Getting data for step ", currentStep + 1);
-    let stepData = tutorialStepData(currentStep + 1);
+  const getNextStep = (currentStep, backwards) => {
+    let nextstep = currentStep;
+    if (backwards) {
+      nextstep--;
+    } else {
+      nextstep++;
+    }
+
+    setStep(nextstep);
+
+    console.log("Getting data for step ", nextstep);
+    let stepData = tutorialStepData(nextstep);
+
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
+      setScoreBoardVisbible(true);
       return;
     }
     if (stepData.game) {
@@ -60,6 +71,9 @@ const Tutorial = () => {
     }
     updateRound(stepData.round, stepData.selectableCardsTable);
     setPromptText(stepData.prompt);
+    if (backwards) {
+      setPromptIndex(stepData.prompt.length - 1);
+    }
     console.log(
       "Current and new selecatable cards from table: ",
       selectableCardsTable,
@@ -77,6 +91,18 @@ const Tutorial = () => {
     return true;
   };
 
+  const handleKeyDown = (event) => {
+    if (
+      (event.key === "Enter" || event.key === "ArrowRight") &&
+      !scoreBoardVisbible &&
+      !selectionRequired
+    ) {
+      nextPrompt();
+    }
+    if (event.key === "ArrowLeft" && !scoreBoardVisbible) {
+      previousPrompt();
+    }
+  };
   const startTutorial = () => {
     console.log("tutorial starting");
     getNextStep(0);
@@ -240,6 +266,8 @@ const Tutorial = () => {
   };
 
   useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
     if (!endOfTutorial) {
       console.log("Use Effect started");
       console.log("current game data: ", game);
@@ -258,15 +286,29 @@ const Tutorial = () => {
         );
       }
     }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   });
 
   const nextPrompt = () => {
-    console.log(promptText, promptText.length);
     if (promptIndex + 1 === promptText.length) {
       setPromptIndex(0);
       getNextStep(step);
     } else {
       setPromptIndex(promptIndex + 1);
+    }
+  };
+
+  const previousPrompt = () => {
+    console.log(promptText, promptText.length);
+    if (promptIndex === 0 && step <= 1) {
+      return;
+    } else if (promptIndex === 0) {
+      getNextStep(step, true);
+    } else {
+      setPromptIndex(promptIndex - 1);
     }
   };
 

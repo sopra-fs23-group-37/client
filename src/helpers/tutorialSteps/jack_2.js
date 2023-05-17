@@ -109,7 +109,6 @@ export const jack_2 = () => {
   let stepData = new TutorialStep({
     round: roundInfo,
     prompt: [
-      "Wohoo, so many captured cards! ",
       "Once you and your opponent have played through your 8 cards, you get a refill from the deck. When the deck is empty, the round ends, and the last player who captured any cards at all sweeps up anything left on the table.",
       "Let's skip ahead to the end of the round to look at points.",
     ],
