@@ -207,6 +207,14 @@ const Lobby = () => {
               <h4 className="name">Game Status</h4>
               <h4 className="host">{game.gameStatus}</h4>
             </div>
+            <div className="row-container">
+              <h4 className="name">Game Mode</h4>
+              <h4 className="host">
+                {(game.isPrivate ? "Private" : "Public") +
+                  ", " +
+                  (game.isSingleRound ? "Single Round" : "Full Length")}
+              </h4>
+            </div>
 
             <div className="row-container"></div>
             <div className="row-container">

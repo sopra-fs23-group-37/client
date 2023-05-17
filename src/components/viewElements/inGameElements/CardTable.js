@@ -15,13 +15,18 @@ const CardTable = ({
 }) => {
   let cardsOnTableContainer = (
     <div className="cards-on-table">
-      <div className="card-container-field">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
-          className="cardback"
-          alt="Back of Card"
-        />
-      </div>
+      {deck ? (
+        <div className="card-container-field">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+            className="cardback"
+            alt="Back of Card"
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
+
       {cards ? (
         cards.map((card) => (
           <div className="card-container-field" key={card.code}>
