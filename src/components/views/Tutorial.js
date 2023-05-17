@@ -43,8 +43,15 @@ const Tutorial = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
+  const[scoreBoardVisbible, setScoreBoardVisbible] = useState(false);
 
   const history = useHistory();
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter'  && !scoreBoardVisbible && !selectionRequired) {
+      nextPrompt();
+    }
+  };
 
   const getNextStep = (currentStep) => {
     setStep(step + 1);
@@ -52,6 +59,7 @@ const Tutorial = () => {
     let stepData = tutorialStepData(currentStep + 1);
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
+      setScoreBoardVisbible(true);
       return;
     }
     if (stepData.game) {
@@ -239,6 +247,9 @@ const Tutorial = () => {
   };
 
   useEffect(() => {
+
+    window.addEventListener('keydown', handleKeyDown);
+    
     if (!endOfTutorial) {
       console.log("Use Effect started");
       console.log("current game data: ", game);
@@ -257,6 +268,10 @@ const Tutorial = () => {
         );
       }
     }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   });
 
   const nextPrompt = () => {
@@ -322,7 +337,7 @@ const Tutorial = () => {
         </button>
       </div>
 
-      {game && round && endOfRound && (
+      {game && round && endOfRound &&  (
         <div className="endOfRound">
           <EndOfRound
             game={game}
