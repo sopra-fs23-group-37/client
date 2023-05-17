@@ -43,10 +43,9 @@ const Tutorial = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedTableCards, setSelectedTableCards] = useState([]);
   const [selectPutOnField, setSelectPutOnField] = useState(false);
-  const[scoreBoardVisbible, setScoreBoardVisbible] = useState(false);
+  const [scoreBoardVisbible, setScoreBoardVisbible] = useState(false);
 
   const history = useHistory();
-
 
   const getNextStep = (currentStep, backwards) => {
     let nextstep = currentStep;
@@ -60,13 +59,6 @@ const Tutorial = () => {
 
     console.log("Getting data for step ", nextstep);
     let stepData = tutorialStepData(nextstep);
-    
-    
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter'  && !scoreBoardVisbible && !selectionRequired) {
-      nextPrompt();
-    }
-  };
 
     if (stepData.finished) {
       setEndOfTutorial(stepData.finished);
@@ -98,6 +90,18 @@ const Tutorial = () => {
     return true;
   };
 
+  const handleKeyDown = (event) => {
+    if (
+      (event.key === "Enter" || event.key === "ArrowRight") &&
+      !scoreBoardVisbible &&
+      !selectionRequired
+    ) {
+      nextPrompt();
+    }
+    if (event.key === "ArrowLeft" && !scoreBoardVisbible) {
+      previousPrompt();
+    }
+  };
   const startTutorial = () => {
     console.log("tutorial starting");
     getNextStep(0);
@@ -261,9 +265,8 @@ const Tutorial = () => {
   };
 
   useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
 
-    window.addEventListener('keydown', handleKeyDown);
-    
     if (!endOfTutorial) {
       console.log("Use Effect started");
       console.log("current game data: ", game);
@@ -284,7 +287,7 @@ const Tutorial = () => {
     }
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   });
 
@@ -299,7 +302,9 @@ const Tutorial = () => {
 
   const previousPrompt = () => {
     console.log(promptText, promptText.length);
-    if (promptIndex === 0) {
+    if (promptIndex === 0 && step <= 1) {
+      return;
+    } else if (promptIndex === 0) {
       getNextStep(step, true);
     } else {
       setPromptIndex(promptIndex - 1);
@@ -328,14 +333,17 @@ const Tutorial = () => {
           )}
         </div>
         <div className="right">
-          <TutorialPrompt
-            text={promptText}
-            index={promptIndex}
-            selectionRequired={selectionRequired}
-            nextPrompt={nextPrompt}
-            previousPrompt={previousPrompt}
-            step={step}
-          />
+          {!endOfTutorial && (
+            <TutorialPrompt
+              text={promptText}
+              index={promptIndex}
+              selectionRequired={selectionRequired}
+              nextPrompt={nextPrompt}
+              previousPrompt={previousPrompt}
+              step={step}
+            />
+          )}
+
           {game && (
             <ScoreInfo
               hostAvatarUrl={game.hostAvatarUrl}
@@ -361,7 +369,7 @@ const Tutorial = () => {
         </button>
       </div>
 
-      {game && round && endOfRound &&  (
+      {game && round && endOfRound && (
         <div className="endOfRound">
           <EndOfRound
             game={game}

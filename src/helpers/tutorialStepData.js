@@ -70,6 +70,7 @@ export const tutorialStepData = (step) => {
     default:
       console.log("The end of the tutorial has been reached.");
       let stepData = new TutorialStep({
+        prompt: ["End of tutorial"],
         finished: true,
       });
       return stepData;

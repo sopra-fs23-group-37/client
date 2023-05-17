@@ -116,7 +116,7 @@ export const deadJack_2 = () => {
   let stepData = new TutorialStep({
     round: roundInfo,
     prompt: [
-      "Your opponent played the Jack, while there were no cards on the table. What a waste of Jack's talent",
+      "Your opponent played the Jack, while there were no cards on the table. What a waste of Jack's talent.",
     ],
     selectionRequired: false,
   });
