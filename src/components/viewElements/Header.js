@@ -3,7 +3,7 @@ import "styles/views/Home.scss";
 import React, { useEffect } from "react";
 import { api } from "../../helpers/api";
 import PropTypes from "prop-types";
-import "styles/views/Header.scss";
+import "styles/viewElements/Header.scss";
 import { getAvatar } from "helpers/getAvatar";
 
 const Header = (props) => {
