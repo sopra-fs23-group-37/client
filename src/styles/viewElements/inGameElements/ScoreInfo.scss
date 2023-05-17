@@ -14,13 +14,14 @@
     background-color: white;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 20px;
+    padding: 1vw;
     display: flex;
     align-items: center;
 
     .guest-name {
-      font-size: 1.2rem;
-      margin-right: 2rem;
+      font-size: 1.8vw;
+      margin-right: 2.5vw;
+      max-width: 150px;
     }
 
     .points {
@@ -28,33 +29,37 @@
       align-items: center;
 
       .guest-points {
-        font-size: 2rem;
+        font-size: 2.8vw;
         color: #f00;
         margin-right: 0.5rem;
       }
 
       .points-divider {
-        font-size: 2rem;
+        font-size: 2.8vw;
         color: #000;
       }
 
       .host-points {
-        font-size: 2rem;
+        font-size: 2.8vw;
         color: #00f;
         margin-left: 0.5rem;
       }
     }
 
     .host-name {
-      font-size: 1.2rem;
-      margin-left: 2rem;
+      font-size: 1.8vw;
+      margin-left: 2.5vw;
     }
 
-    .image {
+    .image-container {
       display: flex;
       flex-direction: row;
       align-items: center;
       margin: 10px;
+      width: 5vw;
+      height: 5vw;
+      min-width: 30px;
+      min-height: 30px;
 
       h1 {
         font-family: "Inter", sans-serif;
@@ -65,8 +70,8 @@
 
       .image-upload {
         position: relative; // add this to make the overlay image absolute
-        height: 50px;
-        width: 50px;
+        height: 100%;
+        width: 100%;
         border-radius: 50%;
         box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px,
           rgb(0, 0, 0 / 23%) 0px 3px 6px;

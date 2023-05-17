@@ -6,7 +6,7 @@ const ScoreInfo = (props) => {
   return (
     <div className="score-info">
       <div className="player-names">
-        <div className="image">
+        <div className="image-container">
           <div className="image-upload">
             <img alt="Avatar" src={getAvatar(props.guestUsername)}></img>
           </div>
@@ -18,7 +18,7 @@ const ScoreInfo = (props) => {
           <span className="host-points">{props.hostPoints || 0}</span>
         </span>
         <span className="host-name">{props.hostUsername}</span>
-        <div className="image">
+        <div className="image-container">
           <div className="image-upload">
             <img alt="Avatar" src={getAvatar(props.hostUsername)}></img>
           </div>

@@ -51,6 +51,7 @@ $card-background-image: url(../image/card-background.jpg);
         padding: 10px;
         display: flex;
         width: fit-content;
+        min-width: 8em;
         flex-direction: column;
         justify-content: center;
         align-items: center;
