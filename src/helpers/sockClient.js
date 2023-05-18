@@ -30,7 +30,7 @@ class SockClient {
         this.handleResponseByChannel(response);
       });
       this.stompClient.subscribe(
-        "/queue/user/" + playerId + "/*",
+        "/queue/user/" + playerId + "/" + gameId + "/*",
         (response) => {
           this.handleResponseByChannel(response);
         }
@@ -90,7 +90,7 @@ class SockClient {
         this.handleResponseByChannel(response);
       });
       this.stompClient.subscribe(
-        "/queue/user/" + playerId + "/*",
+        "/queue/user/" + playerId + "/" + gameId + "/*",
         (response) => {
           this.handleResponseByChannel(response);
         }
