@@ -11,7 +11,6 @@ import OpponentLastCapture from "components/viewElements/inGameElements/Opponent
 import TurnInfo from "components/viewElements/inGameElements/TurnInfo";
 import ScoreInfo from "components/viewElements/inGameElements/ScoreInfo";
 import CardTable from "components/viewElements/inGameElements/CardTable";
-import CapturePile from "components/viewElements/inGameElements/CapturePile";
 import CheatSheet from "components/viewElements/inGameElements/CheatSheet";
 import { tutorialStepData } from "helpers/tutorialStepData";
 import EndOfTutorial from "components/viewElements/endElements/EndOfTutorial";

@@ -88,6 +88,33 @@ export const jack_2 = () => {
         suit: "DIAMONDS",
       },
     ],
+    myLastCapture: [
+      {
+        code: "8C",
+        image: "https://deckofcardsapi.com/static/img/8C.png",
+        value: "8",
+        suit: "CLUBS",
+      },
+
+      {
+        code: "KH",
+        image: "https://deckofcardsapi.com/static/img/KH.png",
+        value: "KING",
+        suit: "HEARTS",
+      },
+      {
+        code: "7S",
+        image: "https://deckofcardsapi.com/static/img/7S.png",
+        value: "7",
+        suit: "SPADES",
+      },
+      {
+        code: "JD",
+        image: "https://deckofcardsapi.com/static/img/JD.png",
+        value: "JACK",
+        suit: "DIAMONDS",
+      },
+    ],
     oppCards: 5,
     cardsOnTable: [],
     myTurn: true,

@@ -19,7 +19,7 @@
     align-items: center;
 
     .guest-name {
-      font-size: 1.8vw;
+      font-size: 1.5vw;
       margin-right: 2.5vw;
       max-width: 150px;
     }
@@ -29,25 +29,25 @@
       align-items: center;
 
       .guest-points {
-        font-size: 2.8vw;
+        font-size: 2vw;
         color: #f00;
         margin-right: 0.5rem;
       }
 
       .points-divider {
-        font-size: 2.8vw;
+        font-size: 2vw;
         color: #000;
       }
 
       .host-points {
-        font-size: 2.8vw;
+        font-size: 2vw;
         color: #00f;
         margin-left: 0.5rem;
       }
     }
 
     .host-name {
-      font-size: 1.8vw;
+      font-size: 1.5vw;
       margin-left: 2.5vw;
     }
 
@@ -56,8 +56,8 @@
       flex-direction: row;
       align-items: center;
       margin: 10px;
-      width: 5vw;
-      height: 5vw;
+      width: 4vw;
+      height: 4vw;
       min-width: 30px;
       min-height: 30px;
 

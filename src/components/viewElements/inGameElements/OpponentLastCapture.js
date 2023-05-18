@@ -4,7 +4,7 @@ import "styles/viewElements/inGameElements/OpponentLastCapture.scss";
 const OpponentLastCapture = (props) => {
   return (
     <div className="opponent-discards">
-      <div className="cards"> 
+      <div className="cards">
         {props.cards ? (
           props.cards.map((e, i) => (
             <div className="card-container-opponent-discard" key={e.code}>
@@ -15,7 +15,11 @@ const OpponentLastCapture = (props) => {
           <h1> - </h1>
         )}
       </div>
-      <h2 className="container-title"> Opponent's last capture </h2>
+      {props.cards?.length > 0 ? (
+        <h2 className="container-title"> Opponent's last capture </h2>
+      ) : (
+        <h1> - </h1>
+      )}
     </div>
   );
 };

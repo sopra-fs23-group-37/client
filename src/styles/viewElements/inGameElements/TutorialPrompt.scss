@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 2em;
+  margin-right: 3em;
   margin-bottom: 2em;
 
   .prompt-form {
@@ -21,6 +21,7 @@
     padding: 0.5rem;
     border: 2px dotted white;
     border-radius: 15px;
+    margin-right: 3em;
 
     animation: blink 1.5s infinite;
 
