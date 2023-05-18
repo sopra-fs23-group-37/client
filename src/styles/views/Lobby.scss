@@ -54,7 +54,7 @@
       }
     }
     .listings-container {
-      margin-bottom: 3em;
+      margin-bottom: 2.5em;
       // Subtitle and Spectators
       .subtitle-spectator-container {
         h4 {
@@ -147,6 +147,10 @@
           font-size: 11px;
         }
       }
+    }
+
+    .button-container {
+      margin-bottom: 1em;
     }
   }
 }

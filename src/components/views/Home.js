@@ -36,10 +36,13 @@ const Home = () => {
   const [gameCode, setGameCode] = useState("");
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [showModeInput, setShowModeInput] = useState(false);
+  const [showSingleRoundInput, setShowSingleRoundInput] = useState(false);
+  const [privateGame, setPrivateGame] = useState(false);
 
-  const createAndOpenGame = async (gameMode) => {
-    console.log("gameMode currently at ", gameMode);
-    let gameId = await createGame(gameMode).catch((error) =>
+  const createAndOpenGame = async (singleRound) => {
+    console.log("privateGame currently at ", privateGame);
+    console.log("singleRound currently at: ", singleRound);
+    let gameId = await createGame(privateGame, singleRound).catch((error) =>
       console.log(error)
     );
     console.log("GameId :", gameId);
@@ -141,6 +144,18 @@ const Home = () => {
     }
   };
 
+  const showSingleRoundInputToggle = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowSingleRoundInput(false);
+    }
+  };
+
+  const setPrivate = (isPrivate) => {
+    setPrivateGame(isPrivate);
+    setShowModeInput(false);
+    setShowSingleRoundInput(true);
+  };
+
   const startTutorial = () => {
     history.push("/game/tutorial");
   };
@@ -206,15 +221,33 @@ const Home = () => {
               <div className="mode-input-form">
                 <ButtonLight
                   className="mode-input-button"
-                  onClick={() => createAndOpenGame("Public")}
+                  onClick={() => setPrivate(false)}
                 >
                   Public Game
                 </ButtonLight>
                 <ButtonLight
                   className="mode-input-button"
-                  onClick={() => createAndOpenGame("Private")}
+                  onClick={() => setPrivate(true)}
                 >
                   Private Game
+                </ButtonLight>
+              </div>
+            </div>
+          )}
+          {showSingleRoundInput && (
+            <div className="mode-input" onClick={showSingleRoundInputToggle}>
+              <div className="mode-input-form">
+                <ButtonLight
+                  className="mode-input-button"
+                  onClick={() => createAndOpenGame(false)}
+                >
+                  Full Game
+                </ButtonLight>
+                <ButtonLight
+                  className="mode-input-button"
+                  onClick={() => createAndOpenGame(true)}
+                >
+                  Single Round
                 </ButtonLight>
               </div>
             </div>

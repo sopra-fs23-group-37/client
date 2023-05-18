@@ -41,10 +41,11 @@ const Rulebook = () => {
                 marginRight: "10px",
                 marginTop: "20px",
                 width: "120px",
+                padding: 0,
                 height: "55px",
               }} // Hier wird der Abstand erhöht
             >
-              Setup
+              Round Setup
             </Button>
             <Button
               className={activeTab === "play" ? "active" : ""}
@@ -94,7 +95,18 @@ const Rulebook = () => {
             >
               Cheat Sheet
             </Button>
-
+            <Button
+              className={activeTab === "game-modes" ? "active" : ""}
+              onClick={() => handleTabClick("game-modes")}
+              style={{
+                marginRight: "10px",
+                marginTop: "20px",
+                width: "220px",
+                height: "55px",
+              }} // Hier wird der Abstand erhöht
+            >
+              Game Modes
+            </Button>
             <Button
               onClick={() => homescreen()}
               style={{
@@ -153,7 +165,7 @@ const Rulebook = () => {
               <div className="rulebook-box">
                 <div className="rulebook-titelbox">
                   <strong>
-                    <h3>Setup</h3>
+                    <h3>Round Setup</h3>
                   </strong>
                 </div>
 
@@ -308,6 +320,38 @@ const Rulebook = () => {
                     <li>For higher number of captured Clubs: 1 point</li>
                     <li>Captured 2 of Clubs: 1 point</li>
                     <li>Captured 10 of Diamonds: 1 point</li>
+                  </ul>
+                  <p>
+                    If both players capture the same number of cards, neither
+                    gets the points for highest number of cards.
+                  </p>
+                </div>
+              </div>
+            )}
+            {activeTab === "game-modes" && (
+              <div className="rulebook-box">
+                <div className="rulebook-titelbox">
+                  <strong>
+                    <h3>Game Modes</h3>
+                  </strong>
+                </div>
+
+                <div className="rulebook-rules-list">
+                  <p>You can play the game in different modes:</p>
+                  <ul>
+                    <li>
+                      Public Mode: Your game will be open to any player to join.
+                    </li>
+                    <li>
+                      Private Mode: You will get a game code to share with a
+                      friend so they can join.
+                    </li>
+                    <li>
+                      Full Length: The game will be played over multiple rounds
+                      until one player reaches 11 points and 2 more than their
+                      opponent (see scoring).
+                    </li>
+                    <li>Single Round: You will only play a single round.</li>
                   </ul>
                   <p>
                     If both players capture the same number of cards, neither

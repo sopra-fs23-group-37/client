@@ -49,7 +49,7 @@ const EndOfRound = ({ game, round, playerId, onEndRound }) => {
       </table>
       <div className="nextRound-button-container">
         <button className="nextRound-button" onClick={onEndRound}>
-          Continue with the game
+          {game.gameStatus === "FINISHED" ? "OK" : "Continue with the game"}
         </button>
       </div>
     </div>

@@ -14,6 +14,8 @@ class Game {
     this.hostAvatarUrl = null;
     this.winnerId = null;
     this.winnerUsername = null;
+    this.isPrivate = null;
+    this.isSingleRound = null;
     Object.assign(this, data);
   }
 }
