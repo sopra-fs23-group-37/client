@@ -54,6 +54,7 @@ export const matchOne_2 = () => {
       },
     ],
     myCardsInDiscard: [],
+    myLastCapture: [],
     oppCards: 8,
     cardsOnTable: [
       {

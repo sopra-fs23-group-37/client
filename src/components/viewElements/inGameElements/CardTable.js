@@ -45,14 +45,12 @@ const CardTable = ({
 
   return (
     <div className="table">
-      <div className="inner-table">
-        <CardDisplay
-          // if it works it works
-          cards={cardsOnTableContainer}
-          onClickSpace={() => toggleSelectPutOnField()}
-          selectPutOnField={selectPutOnField}
-        />
-      </div>
+      <CardDisplay
+        // if it works it works
+        cards={cardsOnTableContainer}
+        onClickSpace={() => toggleSelectPutOnField()}
+        selectPutOnField={selectPutOnField}
+      />
     </div>
   );
 };

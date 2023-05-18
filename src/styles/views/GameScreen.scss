@@ -14,76 +14,87 @@ $card-background-image: url(../image/card-background.jpg);
 .gamescreen {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  padding: 2em;
   background: $card-background-image;
   background-size: cover;
 
   &.container {
-    display: grid;
-    grid-template-rows: 70% 25% 5%;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
 
     .top {
-      grid-template-rows: 1fr;
-      grid-template-columns: 75% 25%;
-      display: grid;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
 
-      .left {
-        grid-template-rows: 30% 70%;
-        grid-template-columns: 1fr;
-        display: grid;
-
-        .opponent {
-          grid-template-rows: 1fr;
-          grid-template-columns: 30% 50% 20%;
-          display: grid;
-          height: fit-content;
-        }
-      }
-    }
-    .right {
-      grid-template-rows: 60% 40%;
-      grid-template-columns: 1fr;
-      display: grid;
-
-      .statistics {
-        font-family: "Inter", sans-serif;
-        font-size: 2rem;
-        font-weight: bold;
-
-        .surrender-button-container {
-          display: flex;
-          justify-content: center;
-
-          .surrender-button {
-            font-family: "Inter", sans-serif;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 1rem 3rem;
-            background-color: darkred;
-            color: #ffffff;
-            border: 1px solid white;
-            border-radius: 10px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: #fff;
-              color: #f00;
-              border: 2px solid #f00;
-            }
-          }
-        }
+      .opponent {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: fit-content;
+        width: 80%;
       }
     }
 
     .bottom {
+      padding-top: 30px;
       display: flex;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      font-family: "Inter", sans-serif;
-      font-size: 1.5rem;
-      font-weight: bold;
-      padding: 1rem;
+
+      .bottom-right {
+        display: flex;
+        flex-direction: column;
+        max-width: 25%;
+
+        .menu-container {
+          background: white;
+          border: 1px solid black;
+          border-radius: 10px;
+          padding: 10px;
+          display: flex;
+          width: fit-content;
+          min-width: 8em;
+          flex-direction: column;
+          align-items: center;
+          overflow: visible;
+          justify-content: space-between;
+          margin-right: 2em;
+          margin-bottom: auto;
+          align-self: right;
+          margin-left: auto;
+        }
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .surrender-button {
+        font-family: "Inter", sans-serif;
+        font-size: 1.3vw;
+        font-weight: bold;
+        height: fit-content;
+        padding: 10px 10px;
+        width: 100%;
+        min-width: fit-content;
+        background-color: darkred;
+        color: #ffffff;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 10px;
+        cursor: pointer;
+        margin-right: 5px;
+
+        &:hover {
+          background-color: #fff;
+          color: #f00;
+          border: 1px solid #f00;
+        }
+      }
     }
 
     .endOfRound {
@@ -152,27 +163,6 @@ $card-background-image: url(../image/card-background.jpg);
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    .exit-button-container {
-      float: right;
-      .exit-button {
-        font-family: "Inter", sans-serif;
-        font-size: 1.2rem;
-        font-weight: bold;
-        padding: 1rem 3rem;
-        background-color: darkred;
-        color: #ffffff;
-        border: 1px solid white;
-        border-radius: 10px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #fff;
-          color: #f00;
-          border: 2px solid #f00;
-        }
-      }
     }
   }
 }

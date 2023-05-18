@@ -11,7 +11,7 @@ import OpponentLastCapture from "components/viewElements/inGameElements/Opponent
 import TurnInfo from "components/viewElements/inGameElements/TurnInfo";
 import ScoreInfo from "components/viewElements/inGameElements/ScoreInfo";
 import CardTable from "components/viewElements/inGameElements/CardTable";
-import CapturePile from "components/viewElements/inGameElements/CapturePile";
+import CheatSheet from "components/viewElements/inGameElements/CheatSheet";
 import { tutorialStepData } from "helpers/tutorialStepData";
 import EndOfTutorial from "components/viewElements/endElements/EndOfTutorial";
 import TutorialPrompt from "components/viewElements/inGameElements/TutorialPrompt";
@@ -314,25 +314,34 @@ const Tutorial = () => {
   return (
     <div className="gamescreen container">
       <div className="top">
-        <div className="left">
-          <div className="opponent">
-            {<OpponentLastCapture cards={round?.oppLastCapture} />}
-            {<OpponentHand cards={round.oppCards} />}
-            {<TurnInfo myTurn={round?.myTurn} />}
-          </div>
-          {round ? (
-            <CardTable
-              toggleSelectPutOnField={toggleSelectPutOnField}
-              selectPutOnField={selectPutOnField}
-              selectCardFromField={selectCardFromField}
-              cards={tableCards}
-              myTurn={round?.myTurn}
-            />
-          ) : (
-            <div></div>
-          )}
+        <div className="opponent">
+          {<OpponentLastCapture cards={round?.oppLastCapture} />}
+          {<OpponentHand cards={round?.oppCards} />}
         </div>
-        <div className="right">
+        {game && (
+          <ScoreInfo
+            hostAvatarUrl={game.hostAvatarUrl}
+            hostPoints={game.hostPoints}
+            hostUsername={game.hostUsername}
+            guestAvatarUrl={game.guestAvatarUrl}
+            guestPoints={game.guestPoints}
+            guestUsername={game.guestUsername}
+          />
+        )}
+      </div>
+      <div className="bottom">
+        {round ? (
+          <CardTable
+            toggleSelectPutOnField={toggleSelectPutOnField}
+            selectPutOnField={selectPutOnField}
+            selectCardFromField={selectCardFromField}
+            cards={tableCards}
+            myTurn={round?.myTurn}
+          />
+        ) : (
+          <div></div>
+        )}
+        <div className="bottom-right">
           {!endOfTutorial && (
             <TutorialPrompt
               text={promptText}
@@ -343,31 +352,26 @@ const Tutorial = () => {
               step={step}
             />
           )}
-
-          {game && (
-            <ScoreInfo
-              hostAvatarUrl={game.hostAvatarUrl}
-              hostPoints={game.hostPoints}
-              hostUsername={game.hostUsername}
-              guestAvatarUrl={game.guestAvatarUrl}
-              guestPoints={game.guestPoints}
-              guestUsername={game.guestUsername}
-            />
-          )}
-          <CapturePile cards={round?.myCardsInDiscard} />
+          <div className="menu-container">
+            {<TurnInfo myTurn={round?.myTurn} />}
+            <div className="button-container">
+              {/* change this to exit */}
+              <button className="surrender-button" onClick={exitTutorial}>
+                Exit Tutorial
+              </button>
+              <CheatSheet />
+            </div>
+          </div>
         </div>
       </div>
-
-      <PlayerHand
-        cards={round?.myCardsInHand}
-        handleClick={selectCardFromHand}
-      />
-
-      <div className="exit-button-container">
-        <button className="exit-button" onClick={exitTutorial}>
-          Exit Tutorial
-        </button>
-      </div>
+      {
+        <PlayerHand
+          cards={round?.myCardsInHand}
+          discardCards={round?.myCardsInDiscard}
+          lastCapCards={round?.myLastCapture}
+          handleClick={selectCardFromHand}
+        />
+      }
 
       {game && round && endOfRound && (
         <div className="endOfRound">
@@ -379,7 +383,6 @@ const Tutorial = () => {
           />
         </div>
       )}
-
       {game && endOfGame && (
         <div className="endOfRound">
           <EndOfGame
@@ -389,7 +392,6 @@ const Tutorial = () => {
           />
         </div>
       )}
-
       {endOfTutorial && (
         <div className="endOfRound">
           <EndOfTutorial onEndTutorial={exitTutorial} />

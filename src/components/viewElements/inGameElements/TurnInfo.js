@@ -6,7 +6,7 @@ const TurnInfo = (props) => {
   return (
     <div className="turn-info-container">
       <div className="turn-info-form">
-        <h1>{props.myTurn ? "Your turn" : "Opponent's turn"}</h1>
+        <div className="description"> {props.myTurn ? "Your turn" : "Opponent's turn"} </div>
         {!props.myTurn && (
           <img src={loadingGif} alt="Loading..." className="loading-gif" />
         )}

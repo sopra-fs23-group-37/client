@@ -5,21 +5,22 @@
   flex-direction: row;
   flex-wrap: nowrap;
   height: 30%;
-  width: 100%;
+  width: 95%;
   min-width: fit-content;
   position: absolute;
   bottom: 0px;
-  overflow: hidden;
   padding-top: 20px;
+  overflow: hidden;
 
   .playerHand {
+    margin-right: 20%;
     display: flex;
-    width: 85%;
+    width: 75%;
     justify-content: center;
 
     .card-container-hand {
       height: auto;
-      min-width: 80px;
+      min-width: 90px;
       width: 10vw;
       margin-right: -50px;
     }

@@ -68,6 +68,26 @@ export const matchTwo_3 = () => {
         suit: "DIAMONDS",
       },
     ],
+    myLastCapture: [
+      {
+        code: "4D",
+        image: "https://deckofcardsapi.com/static/img/4D.png",
+        value: "4",
+        suit: "DIAMONDS",
+      },
+      {
+        code: "2C",
+        image: "https://deckofcardsapi.com/static/img/2C.png",
+        value: "2",
+        suit: "CLUBS",
+      },
+      {
+        code: "6D",
+        image: "https://deckofcardsapi.com/static/img/6D.png",
+        value: "6",
+        suit: "DIAMONDS",
+      },
+    ],
     oppCards: 6,
     cardsOnTable: [
       {
@@ -102,7 +122,10 @@ export const matchTwo_3 = () => {
   });
   let stepData = new TutorialStep({
     round: roundInfo,
-    prompt: ["You captured both card! It's your opponent's turn again"],
+    prompt: [
+      "You captured both cards! See all your captured cards by clicking on them.",
+      "Now it's your opponent's turn again",
+    ],
     selectionRequired: false,
   });
   console.log("returning step data: ", stepData);

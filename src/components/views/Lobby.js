@@ -207,14 +207,10 @@ const Lobby = () => {
               <h4 className="name">Game Status</h4>
               <h4 className="host">{game.gameStatus}</h4>
             </div>
-
-            <div className="row-container"></div>
-            <div className="row-container">
-              <Button width="100%" onClick={() => homescreen()}>
-                Cancel Game
-              </Button>
-            </div>
           </div>
+          <Button width="50%" onClick={() => homescreen()}>
+            Cancel Game
+          </Button>
         </div>
       </div>
     </BaseContainer>

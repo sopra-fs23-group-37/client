@@ -1,14 +1,28 @@
 import "styles/viewElements/inGameElements/CapturePile.scss";
 import Card from "./Card";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import React from "react";
 
-const CapturePile = ({ cards }) => {
+const CapturePile = (props) => {
+  const [discardPileVisible, setDiscardPileVisible] = useState(false);
+
   return (
-    <div className="discard-pile">
-      <div className="stack">
-        {cards ? (
-          cards.map((card) => (
+    <div className="player-discards">
+      {props.lastCapCards ? (
+        <div className="player-discards-cards">
+        {(props.lastCapCards.length !== 0 && props.lastCapCards.length !== props.discardCards.length) ? (<div className="card-container-discard"> 
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+              className="cardback"
+              alt="Back of Card"
+              onClick={() => setDiscardPileVisible(true)}
+            />
+          </div> ) : (
+            <h1> </h1>
+          ) }
+        {props.lastCapCards.length !== 0 ? (
+          props.lastCapCards.map((card) => (
             <div className="card-container-discard" key={card.code}>
               <Card
                 key={card.code}
@@ -16,28 +30,50 @@ const CapturePile = ({ cards }) => {
                 suit={card.suit}
                 value={card.value}
                 image={card.image}
-                onClick={() => {}}
-                fromField={true}
+                fromField={false}
+                onClick={() => setDiscardPileVisible(true)}
               />
             </div>
           ))
         ) : (
-          <div className="card-blank"> </div>
+          <h1> </h1>
         )}
+        {discardPileVisible && (
+        <div
+          className="discard-overlay"
+          onClick={() => setDiscardPileVisible(false)}
+        >
+          <div className="cards-container-discard-overlay">
+            {props.discardCards ? (
+              props.discardCards.map((card) => (
+              <div className="card-container-discard-overlay" key={card.code}>
+                <Card
+                  key={card.code}
+                  code={card.code}
+                  suit={card.suit}
+                  value={card.value}
+                  image={card.image}
+                  blocked={true}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="card-blank"> </div>
+          )}
+          </div>
+        </div>
+      )}
       </div>
-      <div className="stackHeight">
-        {cards ? (
-          <h1> Captured cards: {cards.length} </h1>
-        ) : (
-          <h1> Captured cards: 0 </h1>
-        )}
-      </div>
+      ) : (
+        <div> </div>
+      )}
     </div>
   );
 };
 
 CapturePile.propTypes = {
-  cards: PropTypes.any,
+  discardCards: PropTypes.any,
+  lastCapCards: PropTypes.any,
 };
 
 export default CapturePile;
