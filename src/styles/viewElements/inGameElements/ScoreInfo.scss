@@ -4,21 +4,24 @@
   font-family: "Inter", sans-serif;
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 2rem;
-  margin-right: auto;
+  display: flex;
+  margin-right: 1em;
+  margin-left: 1em;
+  align-items: center;
 
   .player-names {
+    max-height: fit-content;
     background-color: white;
     border: 1px solid black;
-    border-radius: 25px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 1vw;
     display: flex;
     align-items: center;
-    margin-bottom: 2rem;
 
     .guest-name {
-      font-size: 1.2rem;
-      margin-right: 2rem;
+      font-size: 1.5vw;
+      margin-right: 2.5vw;
+      max-width: 150px;
     }
 
     .points {
@@ -26,33 +29,37 @@
       align-items: center;
 
       .guest-points {
-        font-size: 2rem;
+        font-size: 2vw;
         color: #f00;
         margin-right: 0.5rem;
       }
 
       .points-divider {
-        font-size: 2rem;
+        font-size: 2vw;
         color: #000;
       }
 
       .host-points {
-        font-size: 2rem;
+        font-size: 2vw;
         color: #00f;
         margin-left: 0.5rem;
       }
     }
 
     .host-name {
-      font-size: 1.2rem;
-      margin-left: 2rem;
+      font-size: 1.5vw;
+      margin-left: 2.5vw;
     }
 
-    .image {
+    .image-container {
       display: flex;
       flex-direction: row;
       align-items: center;
       margin: 10px;
+      width: 4vw;
+      height: 4vw;
+      min-width: 30px;
+      min-height: 30px;
 
       h1 {
         font-family: "Inter", sans-serif;
@@ -63,8 +70,8 @@
 
       .image-upload {
         position: relative; // add this to make the overlay image absolute
-        height: 50px;
-        width: 50px;
+        height: 100%;
+        width: 100%;
         border-radius: 50%;
         box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px,
           rgb(0, 0, 0 / 23%) 0px 3px 6px;

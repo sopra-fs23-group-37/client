@@ -61,6 +61,20 @@ export const setCard_1 = () => {
         suit: "DIAMONDS",
       },
     ],
+    myLastCapture: [
+      {
+        code: "QH",
+        image: "https://deckofcardsapi.com/static/img/QH.png",
+        value: "QUEEN",
+        suit: "HEARTS",
+      },
+      {
+        code: "QD",
+        image: "https://deckofcardsapi.com/static/img/QD.png",
+        value: "QUEEN",
+        suit: "DIAMONDS",
+      },
+    ],
     oppCards: 7,
 
     cardsOnTable: [

@@ -66,6 +66,7 @@ export const welcome = () => {
       },
     ],
     myCardsInDiscard: [],
+    myLastCapture: [],
     oppCards: 8,
     cardsOnTable: [
       {

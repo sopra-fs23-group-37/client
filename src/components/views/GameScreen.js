@@ -16,7 +16,6 @@ import CheatSheet from "components/viewElements/inGameElements/CheatSheet";
 import { checkMove } from "helpers/validMoveCheck";
 import ScoreInfo from "components/viewElements/inGameElements/ScoreInfo";
 import CardTable from "components/viewElements/inGameElements/CardTable";
-import CapturePile from "components/viewElements/inGameElements/CapturePile";
 
 const GameScreen = () => {
   const gameId = useParams().gameId;
@@ -276,51 +275,50 @@ const GameScreen = () => {
   return (
     <div className="gamescreen container">
       <div className="top">
-        <div className="left">
-          <div className="opponent">
-            {<OpponentLastCapture cards={round?.oppLastCapture} />}
-            {<OpponentHand cards={round?.oppCards} />}
-            {<TurnInfo myTurn={round?.myTurn} />}
-          </div>
-          {round ? (
-            <CardTable
-              toggleSelectPutOnField={toggleSelectPutOnField}
-              selectPutOnField={selectPutOnField}
-              selectCardFromField={selectCardFromField}
-              cards={tableCards}
-              myTurn={round?.myTurn}
-              deck={round?.deckCards}
-            />
-          ) : (
-            <div></div>
-          )}
+        <div className="opponent">
+          {<OpponentLastCapture cards={round?.oppLastCapture} />}
+          {<OpponentHand cards={round?.oppCards} />}
         </div>
-        <div className="right">
-          {game && (
-            <ScoreInfo
-              hostAvatarUrl={game.hostAvatarUrl}
-              hostPoints={game.hostPoints}
-              hostUsername={game.hostUsername}
-              guestAvatarUrl={game.guestAvatarUrl}
-              guestPoints={game.guestPoints}
-              guestUsername={game.guestUsername}
-            />
-          )}
-          <div className="statistics">
-            <div className="surrender-button-container">
+        {game && (
+          <ScoreInfo
+            hostAvatarUrl={game.hostAvatarUrl}
+            hostPoints={game.hostPoints}
+            hostUsername={game.hostUsername}
+            guestAvatarUrl={game.guestAvatarUrl}
+            guestPoints={game.guestPoints}
+            guestUsername={game.guestUsername}
+          />
+        )}
+      </div>
+      <div className="bottom">
+        {round ? (
+          <CardTable
+            toggleSelectPutOnField={toggleSelectPutOnField}
+            selectPutOnField={selectPutOnField}
+            selectCardFromField={selectCardFromField}
+            cards={tableCards}
+            myTurn={round?.myTurn}
+          />
+        ) : (
+          <div></div>
+        )}
+        <div className="bottom-right">
+          <div className="menu-container">
+            {<TurnInfo myTurn={round?.myTurn} />}
+            <div className="button-container">
               <button className="surrender-button" onClick={surrenderGame}>
                 Surrender
               </button>
+              <CheatSheet />
             </div>
-            <CheatSheet />
           </div>
-          <CapturePile cards={round?.myCardsInDiscard} />
         </div>
       </div>
-
       {
         <PlayerHand
           cards={round?.myCardsInHand}
+          discardCards={round?.myCardsInDiscard}
+          lastCapCards={round?.myLastCapture}
           handleClick={selectCardFromHand}
         />
       }

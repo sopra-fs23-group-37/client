@@ -16,7 +16,7 @@ const FormField = (props) => {
         placeholder="enter here.."
         value={props.value}
         type={props.type}
-        maxLength={20}
+        maxLength={12}
         onChange={(e) => props.onChange(e.target.value)}
         onKeyDown={(e) => {
           props.onKeyDown(e);

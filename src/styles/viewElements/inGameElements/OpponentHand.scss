@@ -1,15 +1,17 @@
 @import "styles/theme";
 
 .opponent-cards {
-  padding: 1em;
   height: fit-content;
   display: flex;
+  margin-right: 5px;
+  width: 60%;
+  margin-left: 0;
 
   .card-container-opponent {
     height: auto;
     min-width: 60px;
     width: 7vw;
-    max-width: 25%;
+    max-width: 30%;
     margin-right: -50px;
 
     .cardback {
