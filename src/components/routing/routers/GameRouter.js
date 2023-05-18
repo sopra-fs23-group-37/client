@@ -1,11 +1,9 @@
 import { Redirect, Route } from "react-router-dom";
 import Home from "components/views/Home";
 import PropTypes from "prop-types";
-import Profile from "../../views/Profile";
-import ProfileEdit from "../../views/ProfileEdit";
-import CreateGame from "components/views/CreateGame";
 import Lobby from "components/views/Lobby";
 import GameScreen from "components/views/GameScreen";
+import Tutorial from "components/views/Tutorial";
 
 const GameRouter = (props) => {
   /**
@@ -19,20 +17,14 @@ const GameRouter = (props) => {
       <Route exact path={`${props.base}`}>
         <Redirect to={`${props.base}/dashboard`} />
       </Route>
-      <Route path={`${props.base}/profile/:profileId`}>
-        <Profile />
-      </Route>
-      <Route path={`${props.base}/profile-edit/:profileId`}>
-        <ProfileEdit />
-      </Route>
-      <Route path={`${props.base}/creategame`}>
-        <CreateGame />
-      </Route>
       <Route path={`${props.base}/lobby/:gameId`}>
         <Lobby />
       </Route>
       <Route path={`${props.base}/play/:gameId`}>
         <GameScreen />
+      </Route>
+      <Route path={`${props.base}/tutorial`}>
+        <Tutorial />
       </Route>
     </div>
   );

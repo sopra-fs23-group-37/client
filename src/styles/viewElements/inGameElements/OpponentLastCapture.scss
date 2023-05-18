@@ -1,0 +1,42 @@
+@import "styles/theme";
+
+.opponent-discards {
+  text-align: center;
+  margin-right: 25px;
+  width: 30%;
+
+  .cards {
+    height: fit-content;
+    display: flex;
+    margin-bottom: 5px;
+
+    .card-container-opponent-discard {
+      height: auto;
+      min-width: 45px;
+      width: 7vw;
+      max-width: 25%;
+      margin-right: -42px;
+  
+      .cardo {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .container-title {
+    margin: 0;
+    text-align: center;
+    flex-direction: row;
+    background: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1.1vw;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 60%;
+    min-width: fit-content;
+    padding: 0.5rem;
+    border: 2px solid black;
+    border-radius: 8px;
+  }
+}

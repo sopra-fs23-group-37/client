@@ -1,0 +1,111 @@
+@import "styles/theme";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+$add-avatar-image: url(../image/addAvatar.png);
+
+.header {
+  &.container {
+    @include center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: $fontDefault;
+    background-color: white;
+    max-width: 80%;
+    min-width: fit-content;
+    height: 90px;
+    margin: 0 auto;
+    box-shadow: $dropShadow;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    .title {
+      font-family: "Inter", sans-serif;
+      font-size: 2rem;
+      font-weight: bold;
+      color: rgb(0, 0, 0);
+      text-align: left;
+      margin-left: auto;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    // TODO: fix that buttons div encapsulates all buttons
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      margin-left: auto;
+      margin-right: 1em;
+      width: fit-content;
+    }
+
+    .button {
+      background-color: $accentDark;
+      color: $textColor;
+      border-radius: $borderRadiusSmallButtons;
+      font-size: 1.5em;
+      padding-top: 3%;
+      padding-bottom: 3%;
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-right: 10px;
+      min-width: fit-content;
+      transition: background-color 0.2s ease-in-out;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+      &:hover {
+        background: $accentDark;
+        transform: translateY(-1px);
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+      }
+    }
+    .image {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 20px;
+
+      h1 {
+        font-family: "Inter", sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-left: 20px;
+      }
+
+      .image-upload {
+        position: relative; // add this to make the overlay image absolute
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        box-shadow: rgb(0, 0, 0 / 16%) 0px 3px 6px,
+          rgb(0, 0, 0 / 23%) 0px 3px 6px;
+        margin: 0px auto 0px auto;
+
+        &.addIcon {
+          width: 50px;
+          top: 200px;
+          left: 100px;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+
+      .image-upload > input {
+        display: none;
+      }
+
+      .uploadAvatar {
+        margin-block-end: 20px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}

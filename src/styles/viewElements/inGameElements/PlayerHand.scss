@@ -1,0 +1,28 @@
+@import "styles/theme";
+
+.playerHandContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 30%;
+  width: 95%;
+  min-width: fit-content;
+  position: absolute;
+  bottom: 0px;
+  padding-top: 20px;
+  overflow: hidden;
+
+  .playerHand {
+    margin-right: 20%;
+    display: flex;
+    width: 75%;
+    justify-content: center;
+
+    .card-container-hand {
+      height: auto;
+      min-width: 90px;
+      width: 10vw;
+      margin-right: -50px;
+    }
+  }
+}

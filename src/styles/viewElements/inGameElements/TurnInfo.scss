@@ -1,0 +1,31 @@
+@import "styles/theme";
+
+.turn-info-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  max-width: fit-content;
+
+  .turn-info-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    max-width: min-content;
+    margin-bottom: 10px;
+
+    .description {
+      font-family: "Inter", sans-serif;
+      font-size: 1.3vw;
+      font-weight: bold;
+    }
+
+    .loading-gif {
+      width: 2vw;
+      height: 2vw;
+      margin-left: 5px;
+    }
+  }
+  
+}

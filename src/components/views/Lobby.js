@@ -1,10 +1,11 @@
 import { useParams, useHistory } from "react-router-dom";
-import { ButtonLight } from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Lobby.scss";
 import { useEffect, useState } from "react";
 import Game from "models/Game";
 import sockClient from "helpers/sockClient";
+import loadingGif from "image/loading.gif";
+import { Button } from "components/ui/Button";
 
 const Lobby = () => {
   const gameId = useParams().gameId;
@@ -16,6 +17,8 @@ const Lobby = () => {
   const [opponentLeft, setOpponentLeft] = useState(false);
   // set reason for why the player has left (e.g. unexpected disconnect, surrender)
   const [opponentLeftReason, setOpponentLeftReason] = useState(null);
+  // true if the game is finished
+  const [isGameFinished, setIsGameFinished] = useState(false);
 
   const updateLobby = (data) => {
     setGame(new Game(data));
@@ -23,8 +26,51 @@ const Lobby = () => {
       data.gameStatus === "DISCONNECTED" ||
       data.gameStatus === "SURRENDERED"
     ) {
-      setOpponentLeft(true);
       setOpponentLeftReason(data.endGameReason);
+      setOpponentLeft(true);
+    }
+
+    if (data.gameStatus === "FINISHED") {
+      setIsGameFinished(true);
+    }
+  };
+
+  // check if the game is finished already. If it is, display a message accordinlgy
+  const gameOverAlert = () => {
+    if (isGameFinished) {
+      alert(
+        "The game has finished, you cannot join it anymore. Please create a new game or join an existing one using the buttons on the home screen. "
+      );
+      history.push("/game");
+    }
+    if (opponentLeft) {
+      alert(
+        "This game can no longer be played. " +
+          (opponentLeftReason != null ? opponentLeftReason : "")
+      );
+      history.push("/game");
+    }
+  };
+
+  const homescreen = () => {
+    history.push("/game/dashboard");
+  };
+
+  // check if the player is the host or the guest. If not, alert them that they are in the wrong lobby.
+  const invalidPlayerAlert = () => {
+    if (
+      sockClient.isConnected() &&
+      game.gameId != null &&
+      !(
+        playerId === parseInt(game.guestId) ||
+        playerId === parseInt(game.hostId)
+      )
+    ) {
+      alert(
+        "You cannot join this game. Please create a new game or join an existing one using the buttons on the home screen."
+      );
+      history.push("/game");
+      window.location.reload();
     }
   };
 
@@ -32,7 +78,10 @@ const Lobby = () => {
     console.log("websocket status:", sockClient.isConnected());
     if (!sockClient.isConnected()) {
       console.log("Starting connection.");
-      if (sockClient.addOnMessageFunction("lobby", updateLobby)) {
+      if (
+        sockClient.addOnMessageFunction("lobby", updateLobby) &&
+        sockClient.addOnMessageFunction("error", handleError)
+      ) {
         sockClient.connectAndJoin(gameId, playerId);
       }
     }
@@ -49,18 +98,35 @@ const Lobby = () => {
     history.push(`/game/play/${gameId}`);
   };
 
+  const handleError = (error) => {
+    console.log(error);
+    alert("There was an issue: " + error.message);
+    if (error.type === "INVALIDGAME") {
+      history.push("/game");
+    }
+  };
+
   useEffect(() => {
     console.log("Use Effect started");
+    // start by connecting to the websocket (if not already connected)
     connectAndJoin();
 
+    // log to console for debugging support
     console.log("Current Lobby data: ", game);
 
-    checkGoToGame();
+    // check if the player should be there and the game is in the right status
+    invalidPlayerAlert();
+    gameOverAlert();
 
+    // once the game has reached the right status, go to the game
+    checkGoToGame();
     if (goingToGame) {
-      goToGame();
+      goToGame().catch((error) => {
+        console.error(error);
+      });
     }
 
+    // handle disconnects
     const unlisten = history.listen(() => {
       console.log("is the user going to the game? ", goingToGame);
       if (!goingToGame) {
@@ -71,12 +137,14 @@ const Lobby = () => {
       }
     });
 
+    // handle disconnects
     return () => {
       console.log("Component is unmounting");
       unlisten();
     };
   });
 
+  // delay, so that the user sees the page loading
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   return (
@@ -84,11 +152,27 @@ const Lobby = () => {
       <div className="lobby container">
         <div className="lobby form">
           <div className="title-container">
-            <h1 className="title"> {game.hostUsername}'s Lobby </h1>
+            {game.guestStatus === "WAITING" ? (
+              <h1 className="title"> {game.hostUsername}'s Lobby </h1>
+            ) : (
+              <h1 className="title">
+                {" "}
+                Starting the game{" "}
+                <img
+                  src={loadingGif}
+                  alt="Loading..."
+                  className="loading-gif"
+                />{" "}
+              </h1>
+            )}
           </div>
           <div className="listings-container">
             <div className="subtitle-spectator-container">
               <h2 className="subtitle">Players</h2>
+              <h2 className="game-code">
+                {" "}
+                {game.gameCode ? "Code: " + game.gameCode : ""}{" "}
+              </h2>
             </div>
             <div className="row-container">
               <h4 className="name">{game.hostUsername}</h4>
@@ -101,6 +185,13 @@ const Lobby = () => {
                   ? game.guestStatus + "..."
                   : game.guestUsername}{" "}
               </h4>
+              {game.guestStatus === "WAITING" ? (
+                <img
+                  src={loadingGif}
+                  alt="Loading..."
+                  className="loading-gif"
+                />
+              ) : null}
               <h4 className="host">Guest</h4>
             </div>
           </div>
@@ -117,6 +208,9 @@ const Lobby = () => {
               <h4 className="host">{game.gameStatus}</h4>
             </div>
           </div>
+          <Button width="50%" onClick={() => homescreen()}>
+            Cancel Game
+          </Button>
         </div>
       </div>
     </BaseContainer>

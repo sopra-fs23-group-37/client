@@ -4,7 +4,6 @@
 
 $card-background-image: url(../image/card-background.jpg);
 
-
 /* The '&' is a shorthand for the containing element,
   so for example a '&.user-list' inside .game will compile to
   .game.user-list
@@ -15,216 +14,87 @@ $card-background-image: url(../image/card-background.jpg);
 .gamescreen {
   width: 100vw;
   height: 100vh;
-  overflow-y: auto;
+  padding: 2em;
   background: $card-background-image;
   background-size: cover;
 
   &.container {
-    display: grid;
-    grid-template-rows: 70% 25% 5%;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
 
     .top {
-      grid-template-rows: 1fr;
-      grid-template-columns: 75% 25%;
-      display: grid;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
 
-      .left {
-        grid-template-rows: 30% 70%;
-        grid-template-columns: 1fr;
-        display: grid;
-
-        .opponent {
-          grid-template-rows: 1fr;
-          grid-template-columns: 75% 25%;
-          display: grid;
-
-          .opponent-card {
-          }
-          .turnInfo {
-          }
-        }
-        .turn-info-container {
-          text-align: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          
-          .turn-info-form {
-            flex-direction: row;
-            background: white;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: bold;
-            width: 80%;
-            margin: auto;
-            padding: 0.5rem;
-            border: 2px solid black;
-            border-radius: 25px;
-          }
-          .loading-gif {
-            width: 50px;
-            height: 50px;
-          }
-          
-        }
-      }
-      .table {
+      .opponent {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 20px;
-        overflow: hidden;
-      }
-      
-      .inner-table {
-        background-color: #8B0000;
-        width: 60%;
-        height: 70%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 2px solid white;
-        border-radius: 25px;
-        transition: border-style 1s ease-in-out;
-        overflow: hidden;
-      }
-      
-      .inner-table:hover {
-        border-style: dashed;
-        border-color: goldenrod;
-
-      }
-      
-      @keyframes border-disappear {
-        from {
-          border-width: 5px;
-        }
-        to {
-          border-width: 0px;
-        }
-      }
-    }
-    .right {
-      grid-template-rows: 60% 40%;
-      grid-template-columns: 1fr;
-      display: grid;
-      .statistics {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Inter', sans-serif;
-        font-size: 2rem;
-        font-weight: bold;
-
-        .player-names {
-          background-color: white;
-          border: 1px solid black;
-          border-radius: 25px;
-          padding: 20px;
-          display: flex;
-          align-items: center;
-          margin-bottom: 2rem;
-
-          .guest-name {
-            font-size: 1.2rem;
-            margin-right: 4rem;
-          }
-
-          .points {
-            display: flex;
-            align-items: center;
-
-            .guest-points {
-              font-size: 2rem;
-              color: #f00;
-              margin-right: 0.5rem;
-            }
-
-            .points-divider {
-              font-size: 2rem;
-              color: #000;
-            }
-
-            .host-points {
-              font-size: 2rem;
-              color: #00f;
-              margin-left: 0.5rem;
-            }
-          }
-
-          .host-name {
-            font-size: 1.2rem;
-            margin-left: 4rem;
-          }
-        }
-
-        .surrender-button-container {
-          display: flex;
-          justify-content: center;
-
-          .surrender-button {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 1rem 3rem;
-            background-color: darkred;
-            color: #ffffff;
-            border: 1px solid white;
-            border-radius: 10px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: #fff;
-              color: #f00;
-              border: 2px solid #f00;
-            }
-          }
-        }
-      }
-      .discard-pile {
-        
-        grid-template-rows: 60% 40%;
-        grid-template-columns: 1fr;
-        display: grid;
-        .stack {
-          position: relative;
-          text-align: center;
-          margin-left: 35%;
-          margin-top: 20px;
-        }
-        .stack .card {
-          position: absolute;
-          top: 0;
-          left: 0;
-          border: 1px solid black;
-        }
-        .stackHeight {
-          background-color: white;
-          justify-content: center;
-          align-items: center;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.8rem;
-          width: 100%;
-          height: 70%;
-          border: 2px solid white;
-          border-radius: 25px;
-          border-color: #000;
-          font-weight: bold;
-          text-align: center;
-        }
+        flex-direction: row;
+        justify-content: space-between;
+        height: fit-content;
+        width: 80%;
       }
     }
 
     .bottom {
+      padding-top: 30px;
       display: flex;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      font-family: "Inter", sans-serif;
-      font-size: 1.5rem;
-      font-weight: bold;
-      padding: 1rem;
+
+      .bottom-right {
+        display: flex;
+        flex-direction: column;
+        max-width: 25%;
+
+        .menu-container {
+          background: white;
+          border: 1px solid black;
+          border-radius: 10px;
+          padding: 10px;
+          display: flex;
+          width: fit-content;
+          min-width: 8em;
+          flex-direction: column;
+          align-items: center;
+          overflow: visible;
+          justify-content: space-between;
+          margin-right: 2em;
+          margin-bottom: auto;
+          align-self: right;
+          margin-left: auto;
+        }
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .surrender-button {
+        font-family: "Inter", sans-serif;
+        font-size: 1.3vw;
+        font-weight: bold;
+        height: fit-content;
+        padding: 10px 10px;
+        width: 100%;
+        min-width: fit-content;
+        background-color: darkred;
+        color: #ffffff;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 10px;
+        cursor: pointer;
+        margin-right: 5px;
+
+        &:hover {
+          background-color: #fff;
+          color: #f00;
+          border: 1px solid #f00;
+        }
+      }
     }
 
     .endOfRound {
@@ -239,71 +109,60 @@ $card-background-image: url(../image/card-background.jpg);
       align-items: center;
     }
 
-    .playerHandContainer {
-      border: 0.1px solid gray;
+    .opponentLeft {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
       display: flex;
-      overflow: hidden;
-      
+      justify-content: center;
+      align-items: center;
 
-      .playerHand {
-        font-family: 'Inter', sans-serif;
-        font-size: 0.8rem;
-        font-weight: bold;
-        background: #DAA520;
-        width: fit-content;
-        height: fit-content;
-        padding: 1.5em; 
-        margin: 0 auto;
-        display: table-column;
-        justify-content: center;
-        float: left;
-        border: 2px solid white;
-        border-radius: 25px;
-        transition: border-style 1s ease-in-out;
-        overflow: hidden;
-        
-      }
-      
-      .playerHand:hover {
-        border-style: dashed;
-        border-color: darkred;
+      .overlay-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        max-width: 80%;
 
-      }
-      
+        h2 {
+          margin-top: 0;
+          font-size: 24px;
+        }
 
-      .selectedCard {
-        font-family: 'Inter', sans-serif;
-        font-size: 0.8rem;
-        font-weight: bold;
-        background: #DAA520;
-        width: fit-content;
-        height: fit-content;
-        padding: 1.5em;
-        margin: 0 auto;
-        display: table-column;
-        justify-content: center;
-        float: left;
-        border: 2px solid white;
-        border-radius: 25px;
-        transition: border-style 1s ease-in-out;
-        overflow: hidden;
-      }
+        p {
+          font-size: 18px;
+          margin-bottom: 20px;
+        }
 
-      .player-info {
-        font-family: 'Inter', sans-serif;
-        font-size: 0.8rem;
-        font-weight: bold;
-        background: #DAA520;
-        width: fit-content;
-        height: fit-content;
-        padding: 1.5em;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        float: left;
-        border: 2px solid white;
-        border-radius: 25px;
+        button {
+          background-color: #f00;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-size: 18px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #d00;
+          }
+        }
       }
+    }
+
+    .waitEndOfRound {
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

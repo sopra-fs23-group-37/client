@@ -18,8 +18,9 @@ class Round {
     this.oppTotalPoints = null;
 
     // cards
-    this.myCardsInHand = null;
+    this.myCardsInHand = [];
     this.myCardsInDiscard = null;
+    this.myLastCapture = null;
     this.oppCards = null;
     this.oppCardsInDiscard = null;
     this.cardsOnTable = null;

@@ -1,5 +1,4 @@
 import AppRouter from "components/routing/routers/AppRouter";
-import { useEffect } from "react";
 
 /**
  * Happy coding!

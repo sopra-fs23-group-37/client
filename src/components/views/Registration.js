@@ -16,7 +16,7 @@ const FormField = (props) => {
         placeholder="enter here.."
         value={props.value}
         type={props.type}
-        maxLength={20}
+        maxLength={12}
         onChange={(e) => props.onChange(e.target.value)}
         onKeyDown={(e) => {
           props.onKeyDown(e);
@@ -57,6 +57,8 @@ const Registration = (props) => {
         sessionStorage.getItem("token")
       );
 
+      sessionStorage.setItem("newUser", "true");
+
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push("/game");
     } catch (error) {
@@ -68,42 +70,42 @@ const Registration = (props) => {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && password && username) {
-      doRegistration();
+      doRegistration().catch((error) => {
+        console.error(error);
+      });
     }
   };
 
   return (
     <BaseContainer>
-      <div className="registration container">
-        <div className="registration form">
-          <h1 className="registration title">Welcome to 2-10</h1>
-          <h2 className="registration subtitle">Registration</h2>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-            onKeyDown={handleKeyDown}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            type="password"
-            onChange={(n) => setPassword(n)}
-            onKeyDown={handleKeyDown}
-          />
-          <div className="registration button-container">
-            <ButtonLight
-              disabled={!username || !password}
-              width="80%"
-              onClick={() => doRegistration()}
-            >
-              Register
-            </ButtonLight>
-            <div class="hr-sect"> or </div>
-            <Link to="/login">
-              <ButtonLight width="80%">Login</ButtonLight>
-            </Link>
-          </div>
+      <div className="registration form">
+        <h1 className="registration title">Welcome to 2-10</h1>
+        <h2 className="registration subtitle">Registration</h2>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+          onKeyDown={handleKeyDown}
+        />
+        <FormField
+          label="Password"
+          value={password}
+          type="password"
+          onChange={(n) => setPassword(n)}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="registration button-container">
+          <ButtonLight
+            disabled={!username || !password}
+            width="80%"
+            onClick={() => doRegistration()}
+          >
+            Register
+          </ButtonLight>
+          <div className="hr-sect"> or </div>
+          <Link to="/login">
+            <ButtonLight width="80%">Login</ButtonLight>
+          </Link>
         </div>
       </div>
     </BaseContainer>

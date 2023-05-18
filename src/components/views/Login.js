@@ -64,41 +64,42 @@ const Login = (props) => {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && password && username) {
-      doLogin();
+      doLogin().catch((error) => {
+        console.error(error);
+      });
     }
   };
 
   return (
     <BaseContainer>
-      <div className="login container">
-        <div className="login form">
-          <h1 className="login title">Welcome to 2-10</h1>
-          <h2 className="login subtitle">Login</h2>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-            onKeyDown={handleKeyDown}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            type="password"
-            onChange={(n) => setPassword(n)}
-            onKeyDown={handleKeyDown}
-          />
-          <div className="login button-container">
-            <ButtonLight
-              disabled={!username || !password}
-              width="80%"
-              onClick={() => doLogin()}>
-              Login
-            </ButtonLight>
-            <div class="hr-sect"> or </div>
-            <Link to="/registration">
-              <ButtonLight width="80%">Register</ButtonLight>
-            </Link>
-          </div>
+      <div className="login form">
+        <h1 className="login title">Welcome to 2-10</h1>
+        <h2 className="login subtitle">Login</h2>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+          onKeyDown={handleKeyDown}
+        />
+        <FormField
+          label="Password"
+          value={password}
+          type="password"
+          onChange={(n) => setPassword(n)}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="login button-container">
+          <ButtonLight
+            disabled={!username || !password}
+            width="80%"
+            onClick={() => doLogin()}
+          >
+            Login
+          </ButtonLight>
+          <div className="hr-sect"> or </div>
+          <Link to="/registration">
+            <ButtonLight width="80%">Register</ButtonLight>
+          </Link>
         </div>
       </div>
     </BaseContainer>
