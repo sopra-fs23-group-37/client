@@ -11,7 +11,7 @@ $font-family: "Inter", sans-serif;
   text-align: center;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: fit-content;
   font-family: "Inter", sans-serif;
   border: 2px solid #4a4e69;
   border-radius: 1rem;
@@ -98,7 +98,7 @@ $font-family: "Inter", sans-serif;
       &:hover {
         background-color: #fff;
         color: green;
-        border: 2px solid green;
+        border: 1px solid green;
       }
     }
   }

@@ -3,7 +3,6 @@
 .player-discards {
   text-align: center;
   width: 35%;
-
   min-width: fit-content;
   margin-left: 50px;
 
@@ -12,12 +11,11 @@
     flex-direction: row;
 
     .card-container-discard {
-      width: auto;
-      min-width: 85px;
-      height: 10vw;
       display: flex;
-      margin-right: -80px;
-      margin-top: 10%;
+      height: auto;
+      min-width: 60px;
+      width: 7vw;
+      margin-right: -50px;
 
       .cardback {
         width: 100%;

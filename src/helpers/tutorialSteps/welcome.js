@@ -103,7 +103,7 @@ export const welcome = () => {
     round: roundInfo,
     prompt: [
       "Welcome to the 2-and-10 Tutorial!",
-      "The goal in this game is to capture cards from the table (middle), using the cards in your hand (bottom).",
+      "Your goal is to capture cards from the table, using the cards in your hand.",
       "Let's try a one-to-one match now!",
     ],
     selectionRequired: false,
