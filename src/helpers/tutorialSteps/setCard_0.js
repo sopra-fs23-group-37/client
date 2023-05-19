@@ -1,7 +1,7 @@
 import Round from "models/Round";
 import TutorialStep from "models/TutorialStep";
 
-export const setCard_2 = () => {
+export const setCard_0 = () => {
   let roundInfo = new Round({
     myCardsInHand: [
       {
@@ -28,7 +28,12 @@ export const setCard_2 = () => {
         value: "10",
         suit: "HEARTS",
       },
-
+      {
+        code: "2C",
+        image: "https://deckofcardsapi.com/static/img/2C.png",
+        value: "2",
+        suit: "CLUBS",
+      },
       {
         code: "6D",
         image: "https://deckofcardsapi.com/static/img/6D.png",
@@ -71,6 +76,7 @@ export const setCard_2 = () => {
       },
     ],
     oppCards: 7,
+
     cardsOnTable: [
       {
         code: "4D",
@@ -85,14 +91,8 @@ export const setCard_2 = () => {
         value: "8",
         suit: "CLUBS",
       },
-      {
-        code: "2C",
-        image: "https://deckofcardsapi.com/static/img/2C.png",
-        value: "2",
-        suit: "CLUBS",
-      },
     ],
-    myTurn: false,
+    myTurn: true,
     oppLastCapture: [
       {
         code: "6S",
@@ -111,9 +111,11 @@ export const setCard_2 = () => {
   let stepData = new TutorialStep({
     round: roundInfo,
     prompt: [
-      "Your 2 of Clubs is now on the table and it's your opponent's turn.",
+      "When you can't make a match, or want to set up a better one, you can set a card on the table.",
     ],
     selectionRequired: false,
+    selectableCardsTable: null,
+    selectableCardHand: null,
   });
   console.log("returning step data: ", stepData);
   return stepData;

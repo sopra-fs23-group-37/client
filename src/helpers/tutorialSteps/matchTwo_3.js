@@ -124,7 +124,7 @@ export const matchTwo_3 = () => {
     round: roundInfo,
     prompt: [
       "You captured both cards! See all your captured cards by clicking on them.",
-      "Now it's your opponent's turn again",
+      "Now it's your opponent's turn again.",
     ],
     selectionRequired: false,
   });
