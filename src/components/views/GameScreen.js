@@ -126,10 +126,10 @@ const GameScreen = () => {
             selectedTableCards
           );
         }
+        setSelectedTableCards([]);
+        setSelectPutOnField(false);
+        setSelectedCard(null);
       }
-      setSelectedTableCards([]);
-      setSelectPutOnField(false);
-      setSelectedCard(null);
     }
   };
 
