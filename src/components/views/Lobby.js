@@ -217,9 +217,13 @@ const Lobby = () => {
             </div>
           </div>
           <div className="button-container">
-            <Button width="100%" onClick={() => homescreen()}>
-              Cancel Game
-            </Button>
+            {game?.gameStatus === "WAITING" ? (
+              <Button width="100%" onClick={() => homescreen()}>
+                Cancel Game
+              </Button>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       </div>
