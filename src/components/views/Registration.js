@@ -13,7 +13,7 @@ const FormField = (props) => {
       <label className="registration label">{props.label}</label>
       <input
         className="registration input"
-        placeholder="enter here.."
+        placeholder="enter here.. (max. 12 char)"
         value={props.value}
         type={props.type}
         maxLength={12}
