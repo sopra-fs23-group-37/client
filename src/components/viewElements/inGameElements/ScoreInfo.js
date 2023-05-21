@@ -29,10 +29,8 @@ const ScoreInfo = (props) => {
 };
 
 ScoreInfo.propTypes = {
-  guestAvatarUrl: PropTypes.string,
   guestPoints: PropTypes.any,
   guestUsername: PropTypes.string,
-  hostAvatarUrl: PropTypes.string,
   hostPoints: PropTypes.any,
   hostUsername: PropTypes.string,
 };
