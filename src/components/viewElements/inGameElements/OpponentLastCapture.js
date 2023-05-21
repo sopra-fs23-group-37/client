@@ -18,7 +18,7 @@ const OpponentLastCapture = (props) => {
       {props.cards?.length > 0 ? (
         <h2 className="container-title"> Opponent's last capture </h2>
       ) : (
-        <h1> - </h1>
+        <h1></h1>
       )}
     </div>
   );
