@@ -5,14 +5,12 @@ import TutorialStep from "models/TutorialStep";
 export const opponent_1 = () => {
   let gameInfo = new Game({
     gameStatus: "ONGOING",
-    hostAvatarUrl: null,
     hostPoints: 0,
     hostUsername: "Opponent",
     hostId: "X",
     guestPoints: 0,
     guestId: sessionStorage.getItem("userId"),
     guestUsername: sessionStorage.getItem("username"),
-    guestAvatarUrl: sessionStorage.getItem("avatarUrl"),
   });
   let roundInfo = new Round({
     roundStatus: "ONGOING",

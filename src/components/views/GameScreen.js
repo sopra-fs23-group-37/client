@@ -281,10 +281,8 @@ const GameScreen = () => {
         </div>
         {game && (
           <ScoreInfo
-            hostAvatarUrl={game.hostAvatarUrl}
             hostPoints={game.hostPoints}
             hostUsername={game.hostUsername}
-            guestAvatarUrl={game.guestAvatarUrl}
             guestPoints={game.guestPoints}
             guestUsername={game.guestUsername}
           />
