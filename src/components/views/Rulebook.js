@@ -27,7 +27,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("player-cards")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               Overview
@@ -37,7 +37,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("dealing")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               Round Setup
@@ -47,7 +47,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("play")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               Moves
@@ -57,7 +57,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("example")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               Example
@@ -67,7 +67,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("scoring")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               <strong>Scoring</strong>
@@ -77,7 +77,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("cheat-sheet")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               Cheat Sheet
@@ -87,7 +87,7 @@ const Rulebook = () => {
               onClick={() => handleTabClick("game-modes")}
               style={{
                 marginTop: "15px",
-                marginRight: "10px"
+                marginRight: "10px",
               }} // Hier wird der Abstand erhöht
             >
               Game Modes
@@ -128,8 +128,8 @@ const Rulebook = () => {
                     The primary goal is to capture more cards than your
                     opponent. Capturing certain cards yields extra points - the{" "}
                     <strong>2 of Clubs</strong>, the{" "}
-                    <strong> 10 of Diamond</strong>, and as more Clubs overall
-                    than the opponent.
+                    <strong> 10 of Diamond</strong>, and more Clubs overall than
+                    the opponent.
                   </li>
                   <li>
                     Cards are captured by matching them - see section on moves.
@@ -160,8 +160,12 @@ const Rulebook = () => {
                     round, and then switches after each round.
                   </li>
                   <li>
-                    At the top of the game screen, you can always see whether it
-                    is your turn or your opponent's turn.
+                    On the right side of the game screen, you can always see
+                    whether it is your turn or your opponent's turn.
+                  </li>
+                  <li>
+                    One round lasts until all cards from the deck are played
+                    through.
                   </li>
                 </ul>
               </div>
@@ -232,7 +236,8 @@ const Rulebook = () => {
                   <li>
                     If neither you nor your opponent have any cards left to
                     play, you will be dealt 8 new cards each. You keep playing
-                    until the 52 cards in the deck have been played through.
+                    until the 52 cards in the deck have been played through, at
+                    which point the round ends.
                   </li>
                   <li>
                     If there are any cards left on the table at the end of the
@@ -331,7 +336,10 @@ const Rulebook = () => {
                       until one player reaches 11 points and 2 more than their
                       opponent (see scoring).
                     </li>
-                    <li>Single Round: You will only play a single round.</li>
+                    <li>
+                      Single Round: You will only play a single round (one Round
+                      = playing through deck once).
+                    </li>
                   </ul>
                   <p>
                     If both players capture the same number of cards, neither
