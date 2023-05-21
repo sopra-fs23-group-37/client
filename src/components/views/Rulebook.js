@@ -26,10 +26,8 @@ const Rulebook = () => {
               className={activeTab === "player-cards" ? "active" : ""}
               onClick={() => handleTabClick("player-cards")}
               style={{
-                marginRight: "10px",
-                marginTop: "40px",
-                width: "120px",
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               Overview
@@ -38,11 +36,8 @@ const Rulebook = () => {
               className={activeTab === "dealing" ? "active" : ""}
               onClick={() => handleTabClick("dealing")}
               style={{
-                marginRight: "10px",
-                marginTop: "20px",
-                width: "120px",
-                padding: 0,
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               Round Setup
@@ -51,10 +46,8 @@ const Rulebook = () => {
               className={activeTab === "play" ? "active" : ""}
               onClick={() => handleTabClick("play")}
               style={{
-                marginRight: "10px",
-                marginTop: "20px",
-                width: "120px",
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               Moves
@@ -63,10 +56,8 @@ const Rulebook = () => {
               className={activeTab === "example" ? "active" : ""}
               onClick={() => handleTabClick("example")}
               style={{
-                marginRight: "10px",
-                marginTop: "20px",
-                width: "120px",
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               Example
@@ -75,10 +66,8 @@ const Rulebook = () => {
               className={activeTab === "scoring" ? "active" : ""}
               onClick={() => handleTabClick("scoring")}
               style={{
-                marginRight: "10px",
-                marginTop: "20px",
-                width: "120px",
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               <strong>Scoring</strong>
@@ -87,10 +76,8 @@ const Rulebook = () => {
               className={activeTab === "cheat-sheet" ? "active" : ""}
               onClick={() => handleTabClick("cheat-sheet")}
               style={{
-                marginRight: "10px",
-                marginTop: "20px",
-                width: "220px",
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               Cheat Sheet
@@ -99,10 +86,8 @@ const Rulebook = () => {
               className={activeTab === "game-modes" ? "active" : ""}
               onClick={() => handleTabClick("game-modes")}
               style={{
-                marginRight: "10px",
-                marginTop: "20px",
-                width: "220px",
-                height: "55px",
+                marginTop: "15px",
+                marginRight: "10px"
               }} // Hier wird der Abstand erhöht
             >
               Game Modes
@@ -110,12 +95,7 @@ const Rulebook = () => {
             <Button
               onClick={() => homescreen()}
               style={{
-                marginLeft: "300px",
-                color: "white",
-                backgroundColor: "E76F51",
-                marginTop: "20px",
-                width: "150px",
-                height: "55px",
+                marginTop: "15px",
               }}
             >
               Back to home
