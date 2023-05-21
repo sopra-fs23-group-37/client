@@ -13,10 +13,10 @@ const FormField = (props) => {
       <label className="registration label">{props.label}</label>
       <input
         className="registration input"
-        placeholder="enter here.."
+        placeholder={props.placeholder}
         value={props.value}
         type={props.type}
-        maxLength={12}
+        maxLength={props.maxLength}
         onChange={(e) => props.onChange(e.target.value)}
         onKeyDown={(e) => {
           props.onKeyDown(e);
@@ -30,6 +30,8 @@ FormField.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  maxLength: PropTypes.number,
+  placeholder: PropTypes.string
 };
 
 const Registration = (props) => {
@@ -84,13 +86,17 @@ const Registration = (props) => {
         <FormField
           label="Username"
           value={username}
+          placeholder="enter here... (max. 12)"
+          maxLength={12}
           onChange={(un) => setUsername(un)}
           onKeyDown={handleKeyDown}
         />
         <FormField
-          label="Password"
-          value={password}
+          label= "Password"
+          value= {password}
+          placeholder="enter here... (max. 32)"
           type="password"
+          maxLength={32}
           onChange={(n) => setPassword(n)}
           onKeyDown={handleKeyDown}
         />
