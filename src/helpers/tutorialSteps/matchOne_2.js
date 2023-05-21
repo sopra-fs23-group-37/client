@@ -87,7 +87,7 @@ export const matchOne_2 = () => {
   });
   let stepData = new TutorialStep({
     round: roundInfo,
-    prompt: ["Now, select the Queen of Diamonds from your hand to match it"],
+    prompt: ["Now, select the Queen of Diamonds from your hand to match it."],
     selectionRequired: true,
     selectableCardsTable: null,
     selectableCardHand: "QD",

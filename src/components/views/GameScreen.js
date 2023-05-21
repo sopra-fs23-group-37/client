@@ -126,10 +126,10 @@ const GameScreen = () => {
             selectedTableCards
           );
         }
+        setSelectedTableCards([]);
+        setSelectPutOnField(false);
+        setSelectedCard(null);
       }
-      setSelectedTableCards([]);
-      setSelectPutOnField(false);
-      setSelectedCard(null);
     }
   };
 
@@ -298,6 +298,7 @@ const GameScreen = () => {
             selectCardFromField={selectCardFromField}
             cards={tableCards}
             myTurn={round?.myTurn}
+            deck={round?.deckCards}
           />
         ) : (
           <div></div>

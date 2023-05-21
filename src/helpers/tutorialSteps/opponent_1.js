@@ -137,7 +137,8 @@ export const opponent_1 = () => {
     game: gameInfo,
     round: roundInfo,
     prompt: [
-      "Your opponent just captured the 6 of Spades with the 6 of Hearts. You can see their capture in the top left corner of the screen.",
+      "Your opponent just captured the 6 of Spades with the 6 of Hearts.",
+      "You can see their capture in the top left corner of the screen.",
     ],
     selectionRequired: false,
     selectableCardsTable: null,

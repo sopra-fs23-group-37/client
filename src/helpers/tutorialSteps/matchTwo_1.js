@@ -118,7 +118,7 @@ export const matchTwo_1 = () => {
   let stepData = new TutorialStep({
     round: roundInfo,
     prompt: [
-      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table",
+      "You can capture multiple cards by matching their sum. Select the 2 of Clubs and the 4 of Diamonds from the table.",
     ],
     selectionRequired: true,
     selectableCardsTable: ["2C", "4D"],

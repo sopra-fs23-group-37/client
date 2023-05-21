@@ -110,9 +110,7 @@ export const setCard_1 = () => {
   });
   let stepData = new TutorialStep({
     round: roundInfo,
-    prompt: [
-      "It's your turn again. When you can't make a match, or want to set up a better one, you can set a card on the table. Select the 2 of Clubs from your hand to set it on the table",
-    ],
+    prompt: ["Select the 2 of Clubs from your hand to set it on the table"],
     selectionRequired: true,
     selectableCardsTable: null,
     selectableCardHand: "2C",

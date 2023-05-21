@@ -94,7 +94,7 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
-    await delay(1000);
+    await delay(2000);
     history.push(`/game/play/${gameId}`);
   };
 
@@ -207,10 +207,20 @@ const Lobby = () => {
               <h4 className="name">Game Status</h4>
               <h4 className="host">{game.gameStatus}</h4>
             </div>
+            <div className="row-container">
+              <h4 className="name">Game Mode</h4>
+              <h4 className="host">
+                {(game.isPrivate ? "Private" : "Public") +
+                  ", " +
+                  (game.isSingleRound ? "Single Round" : "Full Length")}
+              </h4>
+            </div>
           </div>
-          <Button width="50%" onClick={() => homescreen()}>
-            Cancel Game
-          </Button>
+          <div className="button-container">
+            <Button width="100%" onClick={() => homescreen()}>
+              Cancel Game
+            </Button>
+          </div>
         </div>
       </div>
     </BaseContainer>

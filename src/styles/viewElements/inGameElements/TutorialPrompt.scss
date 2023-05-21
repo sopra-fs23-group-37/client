@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   margin-right: 3em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 
   .prompt-form {
     flex-direction: row;
@@ -18,7 +18,10 @@
     width: 80%;
     min-width: fit-content;
     margin: auto;
-    padding: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
     border: 2px dotted white;
     border-radius: 15px;
     margin-right: 3em;
@@ -29,6 +32,11 @@
       50% {
         opacity: 0.7;
       }
+    }
+
+    h1 {
+      margin-top: 0.2rem;
+      padding: 0;
     }
 
     input {

@@ -337,6 +337,7 @@ const Tutorial = () => {
             selectCardFromField={selectCardFromField}
             cards={tableCards}
             myTurn={round?.myTurn}
+            deck={true}
           />
         ) : (
           <div></div>

@@ -116,7 +116,7 @@ export const matchTwo_2 = () => {
   });
   let stepData = new TutorialStep({
     round: roundInfo,
-    prompt: ["Now select the 6 of Diamonds to capture the 2+4"],
+    prompt: ["Now select the 6 of Diamonds to capture the 2+4."],
     selectionRequired: true,
     selectableCardsTable: null,
     selectableCardHand: "6D",

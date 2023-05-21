@@ -4,6 +4,7 @@ import { matchOne_1 } from "./tutorialSteps/matchOne_1";
 import { matchOne_2 } from "./tutorialSteps/matchOne_2";
 import { matchOne_3 } from "./tutorialSteps/matchOne_3";
 import { opponent_1 } from "./tutorialSteps/opponent_1";
+import { setCard_0 } from "./tutorialSteps/setCard_0";
 import { setCard_1 } from "./tutorialSteps/setCard_1";
 import { setCard_2 } from "./tutorialSteps/setCard_2";
 import { opponent_2 } from "./tutorialSteps/opponent_2";
@@ -33,38 +34,40 @@ export const tutorialStepData = (step) => {
 
     case 5:
       return opponent_1();
-
     case 6:
-      return setCard_1();
+      return setCard_0();
 
     case 7:
-      return setCard_2();
+      return setCard_1();
 
     case 8:
-      return opponent_2();
+      return setCard_2();
 
     case 9:
-      return matchTwo_1();
+      return opponent_2();
 
     case 10:
-      return matchTwo_2();
+      return matchTwo_1();
 
     case 11:
-      return matchTwo_3();
+      return matchTwo_2();
 
     case 12:
-      return opponent_3();
+      return matchTwo_3();
 
     case 13:
-      return jack_1();
+      return opponent_3();
 
     case 14:
-      return deadJack_1();
+      return jack_1();
 
     case 15:
-      return deadJack_2();
+      return deadJack_1();
 
     case 16:
+      return deadJack_2();
+
+    case 17:
       return jack_2();
 
     default:
