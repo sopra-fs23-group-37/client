@@ -52,7 +52,7 @@ const GameScreen = () => {
     // take the game update data and set it in here
     console.log("game data received: ", data);
     setGame(new Game(data));
-    if (data.gameSatus === "ONGOING") {
+    if (data.gameStatus === "ONGOING") {
       setGameStarted(true);
     }
     if (data.gameStatus === "FINISHED") {

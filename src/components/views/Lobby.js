@@ -94,7 +94,9 @@ const Lobby = () => {
   };
 
   const goToGame = async () => {
-    await delay(2000);
+    if (game.gameStatus === "CONNECTED") {
+      await delay(2000);
+    }
     history.push(`/game/play/${gameId}`);
   };
 
