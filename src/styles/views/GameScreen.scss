@@ -27,13 +27,14 @@ $card-background-image: url(../image/card-background.jpg);
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      width: 90vw;
 
       .opponent {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         height: fit-content;
-        width: 80%;
+        width: 60vw;
       }
     }
 
@@ -43,11 +44,13 @@ $card-background-image: url(../image/card-background.jpg);
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      width: 90vw;
 
       .bottom-right {
         display: flex;
         flex-direction: column;
         max-width: 38.2%;
+        margin-bottom: auto;
 
         .menu-container {
           background: white;
@@ -63,6 +66,7 @@ $card-background-image: url(../image/card-background.jpg);
           justify-content: space-between;
           margin-right: 2em;
           margin-bottom: auto;
+          margin-top: 0px;
           align-self: right;
           margin-left: auto;
         }
