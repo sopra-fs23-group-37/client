@@ -12,15 +12,15 @@ $card-background-image: url(../image/card-background.jpg);
  */
 
 .gamescreen {
-  width: 100vw;
+  width: 100vw; /* Default width value */
+  height: 100vh; /* Default height value */
   padding: 2em;
   background: $card-background-image;
   background-size: cover;
 
-  height: 100vh; /* Default height value */
-
   &.exceeds-cards {
     height: 130vh; /* Height value when tableCards exceed 12 */
+    width: 120vw; /* Height value when tableCards exceed 12 */
   }
 
   

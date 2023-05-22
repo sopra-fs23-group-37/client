@@ -47,9 +47,22 @@ const GameScreen = () => {
   const [endOfGame, setEndOfGame] = useState(false);
 
   let containerHeight = "100vh";
+  let containerWidth = "100vw";
 
   let playerCardsHeight = "0px";
-
+  
+  //adjusts the width of the gamescreen container, if the oppLastCapture cards size changes
+  if (round.oppLastCapture !== null && round.oppLastCapture !== undefined && round.oppLastCapture.length > 16) {
+    containerWidth = "170vw";
+  } else if (round.oppLastCapture !== null && round.oppLastCapture !== undefined && round.oppLastCapture.length > 8) {
+    containerWidth = "111vw";
+  }
+  //adjusts the width of the gamescreen container, if the myLastCapture cards size changes
+  if (round.myLastCapture !== null && round.myLastCapture !== undefined && round.myLastCapture.length > 16) {
+    containerWidth = "140vw";
+  }
+  
+  //adjusts the height of the gamescreen container and player cards height, if the tableCards size changes
   if (tableCards.length > 27) {
     containerHeight = "173vh";
     playerCardsHeight = "-550px";
@@ -293,7 +306,7 @@ const GameScreen = () => {
   });
 
   return (
-    <div className="gamescreen container" style={{ height: containerHeight }}>
+    <div className="gamescreen container" style={{ height: containerHeight, width: containerWidth }}>
       <div className="top">
         <div className="opponent">
           {<OpponentLastCapture cards={round?.oppLastCapture} />}
