@@ -95,6 +95,7 @@ class SockClient {
           this.handleResponseByChannel(response);
         }
       );
+
       console.log("reconnecting to game with id: ", gameId);
       this.stompClient.send(
         "/game/reconnect/" + gameId,
