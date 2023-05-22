@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@dicebear/collection": "^6.0.3",
-    "@dicebear/core": "^6.0.3",
+    "@dicebear/core": "^6.0.4",
     "@stomp/stompjs": "^7.0.0",
     "axios": "^0.24.0",
     "dicebear": "^6.0.3",

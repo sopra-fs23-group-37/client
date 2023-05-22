@@ -13,11 +13,17 @@ $card-background-image: url(../image/card-background.jpg);
 
 .gamescreen {
   width: 100vw;
-  height: 100vh;
   padding: 2em;
   background: $card-background-image;
   background-size: cover;
 
+  height: 100vh; /* Default height value */
+
+  &.exceeds-cards {
+    height: 130vh; /* Height value when tableCards exceed 12 */
+  }
+
+  
   &.container {
     display: flex;
     flex-direction: column;
@@ -66,8 +72,10 @@ $card-background-image: url(../image/card-background.jpg);
           align-self: right;
           margin-left: auto;
         }
+
       }
     }
+
 
     .button-container {
       display: flex;

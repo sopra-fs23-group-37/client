@@ -5,7 +5,7 @@ import CapturePile from "components/viewElements/inGameElements/CapturePile";
 
 const PlayerHand = (props) => {
   return (
-    <div className="playerHandContainer">
+    <div className="playerHandContainer" style={{ bottom: props.playerCardsHeight }}>
       <div className="playerHand">
         {props.cards ? (
           props.cards.map((card) => (

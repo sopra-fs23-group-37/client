@@ -12,6 +12,10 @@
   padding-top: 20px;
   overflow: hidden;
 
+  &.exceeds-cards {
+    bottom: -100px; /* Height value when tableCards exceed 12 */
+  }
+
   .playerHand {
     display: flex;
     width: 65%;

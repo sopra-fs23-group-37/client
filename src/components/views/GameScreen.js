@@ -46,6 +46,24 @@ const GameScreen = () => {
   const [endOfRound, setEndOfRound] = useState(false);
   const [endOfGame, setEndOfGame] = useState(false);
 
+  let containerHeight = "100vh";
+
+  let playerCardsHeight = "0px";
+
+  if (tableCards.length > 27) {
+    containerHeight = "173vh";
+    playerCardsHeight = "-550px";
+  } else if (tableCards.length > 20) {
+    containerHeight = "155vh";
+    playerCardsHeight = "-414px";
+  } else if (tableCards.length > 13) {
+    containerHeight = "132vh";
+    playerCardsHeight = "-240px";
+  } else if (tableCards.length > 6) {
+    containerHeight = "108vh";
+    playerCardsHeight = "-60px";
+  }
+
   const history = useHistory();
 
   const updateGame = (data) => {
@@ -258,6 +276,8 @@ const GameScreen = () => {
     if (selectedCard) {
       makeMove();
     }
+
+
     // handle user leaving page
     const unlisten = history.listen(() => {
       console.log("User is leaving the page");
@@ -273,7 +293,7 @@ const GameScreen = () => {
   });
 
   return (
-    <div className="gamescreen container">
+    <div className="gamescreen container" style={{ height: containerHeight }}>
       <div className="top">
         <div className="opponent">
           {<OpponentLastCapture cards={round?.oppLastCapture} />}
@@ -314,14 +334,14 @@ const GameScreen = () => {
         </div>
       </div>
       {
-        <PlayerHand
-          cards={round?.myCardsInHand}
-          discardCards={round?.myCardsInDiscard}
-          lastCapCards={round?.myLastCapture}
-          handleClick={selectCardFromHand}
-        />
+      <PlayerHand
+            cards={round?.myCardsInHand}
+            discardCards={round?.myCardsInDiscard}
+            lastCapCards={round?.myLastCapture}
+            handleClick={selectCardFromHand}
+            playerCardsHeight={playerCardsHeight}
+      />
       }
-
       {game && round && endOfRound && (
         <div className="endOfRound">
           <EndOfRound
