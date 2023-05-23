@@ -89,6 +89,16 @@ npm install diceBear
 
 ### Illustrations
 
+Let's see how the Application works. Thereby a walk through will be conducted for the main functionalities. The following main steps have to be performed:
+
+1. Login or Register through corresponding page.
+   <img src= "src/image/LoginPage.png">
+
+2. After one has Logged in or registered, one comes to the homescreen page.
+   <img src= "src/image/HomePage.png">
+
+
+
 
 
 ### Roadmap
