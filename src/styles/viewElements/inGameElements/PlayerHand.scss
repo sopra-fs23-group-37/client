@@ -10,6 +10,7 @@
   bottom: 0px;
   padding-top: 20px;
   overflow: hidden;
+  pointer-events: none;
 
   .playerHand {
     display: flex;
@@ -17,6 +18,7 @@
     justify-content: center;
 
     .card-container-hand {
+      pointer-events: all;
       height: auto;
       min-width: 50px;
       width: 18%;

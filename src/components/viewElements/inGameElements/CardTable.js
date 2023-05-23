@@ -1,7 +1,6 @@
-import "styles/viewElements/inGameElements/CardTable.scss";
+import "styles/viewElements/inGameElements/CardDisplay.scss";
 
 import Card from "./Card";
-import CardDisplay from "./CardDisplay";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -49,14 +48,7 @@ const CardTable = ({
   );
 
   return (
-    <div className="table">
-      <CardDisplay
-        // if it works it works
-        cards={cardsOnTableContainer}
-        onClickSpace={() => toggleSelectPutOnField()}
-        selectPutOnField={selectPutOnField}
-      />
-    </div>
+    cardsOnTableContainer
   );
 };
 

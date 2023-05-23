@@ -9,6 +9,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    pointer-events: all;
 
     .card-container-discard {
       display: flex;
