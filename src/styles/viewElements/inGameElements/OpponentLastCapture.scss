@@ -2,8 +2,8 @@
 
 .opponent-discards {
   text-align: center;
-  margin-right: 25px;
-  width: 30%;
+  margin-right: 5vw;
+  max-width: 20vw;
 
   .cards {
     height: fit-content;
@@ -11,11 +11,11 @@
     margin-bottom: 5px;
 
     .card-container-opponent-discard {
+      display: flex;
       height: auto;
-      min-width: 45px;
-      width: 7vw;
-      max-width: 25%;
-      margin-right: -42px;
+      min-width: 30px;
+      width: 35%;
+      margin-right: -32%;
   
       .cardo {
         width: 100%;

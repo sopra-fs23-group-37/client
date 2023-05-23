@@ -1,34 +1,38 @@
 @import "styles/theme";
 
-.card-display {
-  width: 100%;
-  
-  .cards-on-table {
-    margin-right: 15px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-    align-items: center;
 
-    .card-container-field {
-      width: 12%;
-      min-width: 60px;
-      height: auto;
-      margin-right: 1vw;
+.cards-on-table {
+  margin-right: 15px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: baseline;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: auto;
+  padding: 15px;
+  row-gap: 10px ;
 
-      .cardback {
-        width: 100%;
-        height: 100%;
-      }
-    }
+  .card-container-field {
+    width: 10%;
+    min-width: 60px;
+    height: auto;
+    margin-right: 0.5vw;
 
-    .card:hover {
-      transform: translateY(-5px);
+    .cardback {
+      width: 100%;
+      height: 100%;
     }
   }
 
-  .selected {
-    box-shadow: 0px 8px 8px rgba(255, 0, 0, 0.5);
+  .card:hover {
+    transform: translateY(-5px);
   }
 }
+
+.selected {
+  box-shadow: 0px 8px 8px rgba(255, 0, 0, 0.5);
+}
+

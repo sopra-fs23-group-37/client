@@ -5,23 +5,24 @@
   flex-direction: row;
   flex-wrap: nowrap;
   height: 30%;
-  width: 95%;
-  min-width: fit-content;
+  width: 90vw;
   position: absolute;
   bottom: 0px;
   padding-top: 20px;
   overflow: hidden;
+  pointer-events: none;
 
   .playerHand {
     display: flex;
-    width: 65%;
+    width: 55vw;
     justify-content: center;
 
     .card-container-hand {
+      pointer-events: all;
       height: auto;
-      min-width: 90px;
-      width: 10vw;
-      margin-right: -50px;
+      min-width: 50px;
+      width: 18%;
+      margin-right: -12%;
     }
   }
 }
