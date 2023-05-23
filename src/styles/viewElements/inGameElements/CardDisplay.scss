@@ -8,9 +8,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-  align-items: center;
+  align-items: baseline;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-bottom: auto;
+  padding: 15px;
+  row-gap: 10px ;
 
   .card-container-field {
     width: 10%;
