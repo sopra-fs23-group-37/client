@@ -99,10 +99,18 @@ Let's see how the Application works. Thereby a walk through will be conducted fo
    
 3. On the home screen, users are provided with the option to access the rules by clicking on the ```Rulebook``` button or engage in a small tutorial by clicking on the ```Play Tutorial``` button to enhance their understanding of the game.
 
- <img src= "2src/image/PlayTutorial.png">
+ <img src= "src/image/PlayTutorial.png">
  <img src= "src/image/RuleBoook.png">
  
- 4. 
+ 4. The user has the ability to create a game by clicking on the ```Create Game``` button. The user can select the Game Mode, choosing between "Private Game" or "Public Game," as well as the round type, opting for either "Single Round" or "Full Round."
+
+<img src = "src/image/CreateGame.png">
+
+5. After creating a game, the user is directed to the "Game Lobby" where they wait for another player to join the game.
+
+<img src = "src/image/GameLobby.png">
+
+6. 
 
 
 
