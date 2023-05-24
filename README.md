@@ -96,6 +96,13 @@ Let's see how the Application works. Thereby a walk through will be conducted fo
 
 2. After one has Logged in or registered, one comes to the homescreen page.
    <img src= "src/image/HomePage.png">
+   
+3. On the home screen, users are provided with the option to access the rules by clicking on the ```Rulebook``` button or engage in a small tutorial by clicking on the ```Play Tutorial``` button to enhance their understanding of the game.
+
+ <img src= "2src/image/PlayTutorial.png">
+ <img src= "src/image/RuleBoook.png">
+ 
+ 4. 
 
 
 
