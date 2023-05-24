@@ -110,14 +110,28 @@ Let's see how the Application works. Thereby a walk through will be conducted fo
 
 <img src = "src/image/GameLobby.png">
 
-6. 
+6. A user can join the game by clicking on the ```Join any Game``` button or selecting ```Join with Code``` and entering the corresponding code.
 
+<img src = "src/image/JoinGameById.png">
 
+7. Once the players have joined, they will be redirected to the game screen, where they can proceed to start the game.
 
-
+<img src = "src/image/GameScreen.png">
 
 ### Roadmap
-### Illustrations
+1. In the future, you could add a speed mode, where the users had limited time to play a move and could set that before the game start.
+2. In addition, it would be nice to have a spectate mode, where other player could watch the card game.
+3. It would also be interesting if users could also use a chat function in the game.
+
 ### Authors and acknowledgment
+
+- [Benjamin Bajralija](https://github.com/bbajrari)
+- [Carol Ernst](https://github.com/carolernst-uzh)
+- [Niels Zweifel](https://github.com/itsniezwe)
+- [Sinthuyan Sivayogarajah](https://github.com/Sinthuyan97)
+- [Timon Fopp](https://github.com/trofej)
+
+
 ### License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
