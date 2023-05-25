@@ -1,4 +1,4 @@
-# SoPra Group 37
+# Project 2-and-10 (SoPra FS23 - Group 37)
 
 ### Introduction
 
@@ -9,11 +9,13 @@ One of the main appeals of 2-and-10 is the need for strategic thinking and calcu
 
 ### Technologies
 
-The technologies utilized in the course of this project included the Node Package Manager (npm) and ReactJS. Thereby, the programming languages adopted for code implementation were JavaScript, CSS and HTML. Furthermore, the Card Deck Application Programming Interface (API) was integrated into our development. 
-
+The technologies utilized in the course of this project included the Node Package Manager (npm) and ReactJS. Thereby, the programming languages adopted for code implementation were JavaScript, CSS and HTML. The auto-generated avatars rely on DiceBear. SockJS with STOMP protocols was used for communication with the server.
 
 
 ### High-level Components
+- Home.js and GameScreen.js are the primary views the user interacts with. The Home.js view includes options for the user to start and join games, as well as navigate to helpful pages such as the rulebook or the tutorial. Most of the viewElements are used in the GameScreen.js to pull together the various UI components such as the Card Table in the middle, the player's hand and their opponent's hand, the two card capture piles, as well as the game information with players, scores, and turn indication.
+- The sockClient.js helper class manages all websocket connections and subscriptions to the server, from the Home screen (to receive open games and statistics updates), to the lobby (to manage joining of players) to the game itself. 
+- The Tutorial.js is closely matched to the GameScreen and uses the same Styling sheet to ensure consistency for the user. The tutorialStepData.js and all helpers in the tutorialSteps folder provide the required information for all Tutorial elements in each step.
 
 ### Launch & Deployment
 #### Tutorials
@@ -80,7 +82,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 #### DiceBear
 Install the package diceBear that provides a collection of SVG avatar generators.
 ```
-npm install diceBear
+npm install @dicebear/core @dicebear/collection
 ```
 
 #### For more information about deploying a react app visit [react deployment](https://facebook.github.io/create-react-app/docs/deployment)
@@ -102,7 +104,7 @@ Let's see how the Application works. Thereby a walk through will be conducted fo
  <img src= "src/image/PlayTutorial.png">
  <img src= "src/image/RuleBoook.png">
  
- 4. The user has the ability to create a game by clicking on the ```Create Game``` button. The user can select the Game Mode, choosing between "Private Game" or "Public Game," as well as the round type, opting for either "Single Round" or "Full Round."
+ 4. The user has the ability to create a game by clicking on the ```Create Game``` button. The user can select the Game Mode, choosing between "Private Game" or "Public Game," as well as the Game length, opting for either "Single Round" or "Full Length." Full length means that the game is player over multiple rounds until the first player reaches at least 11 points and at least 2 more than their opponent.
 
 <img src = "src/image/CreateGame.png">
 
@@ -114,12 +116,12 @@ Let's see how the Application works. Thereby a walk through will be conducted fo
 
 <img src = "src/image/JoinGameById.png">
 
-7. Once the players have joined, they will be redirected to the game screen, where they can proceed to start the game.
+7. Once the players have joined, they will be redirected to the game screen, where they can proceed to play the game.
 
 <img src = "src/image/GameScreen.png">
 
 ### Roadmap
-1. In the future, you could add a speed mode, where the users had limited time to play a move and could set that before the game start.
+1. In the future, you could add a speed mode, where the users have limited time to play a move and could set that before the game start.
 2. In addition, it would be nice to have a spectate mode, where other player could watch the card game.
 3. It would also be interesting if users could also use a chat function in the game.
 
